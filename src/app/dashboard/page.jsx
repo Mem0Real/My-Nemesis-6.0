@@ -117,6 +117,8 @@ export default async function DashboardPage() {
   //     }
   //   }
   // }
+
+  let url;
   if (process.env.NODE_ENV === "development") url = process.env.LOCAL_URL;
   else url = process.env.PRODUCTION_URL;
 
