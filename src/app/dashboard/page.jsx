@@ -117,6 +117,8 @@ export default async function DashboardPage() {
   //     }
   //   }
   // }
+  if (process.env.NODE_ENV === "development") url = process.env.LOCAL_URL;
+  else url = process.env.PRODUCTION_URL;
 
   const res = await fetch("http://localhost:3000/api/getAll", {
     next: { tags: ["all"] },
