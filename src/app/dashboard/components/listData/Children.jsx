@@ -82,9 +82,7 @@ export default function Children({ category, parent }) {
                         <EditOutlined />
                       </button>
                       <button
-                        onClick={() =>
-                          handleDelete("children", null, null, child)
-                        }
+                        onClick={() => handleDelete("children", child.id)}
                         className="text-red-500"
                       >
                         <DeleteForeverOutlined />

@@ -7,7 +7,6 @@ export default function Home() {
     const name = formData.get("name");
     const id = formData.get("id");
     const description = formData.get("description");
-    console.log(name, id, description);
     // do something
   }
   return (

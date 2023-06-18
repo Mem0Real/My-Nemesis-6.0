@@ -6,20 +6,20 @@ import Link from "next/link";
 import Button from "@mui/material/Button";
 import Add from "./Add";
 import Edit from "./Edit";
-// import DeleteModal from "./DeleteModal";
-import LoadingIndicator from "@/app/utils/LoadingIndicator";
+import Delete from "./Delete";
 import ListTable from "./ListTable";
+import LoadingIndicator from "@/app/utils/LoadingIndicator";
 
 const DataContext = createContext({});
 
-export default function List({ data, create, update, url }) {
+export default function List({ data, create, update, deleteItem, url }) {
   const [addModal, showAddModal] = useState(false);
   const [addData, setAddData] = useState({});
 
   const [editModal, showEditModal] = useState(false);
   const [editData, setEditData] = useState({});
 
-  const [deleteModal, showDeleteModal] = useState(false);
+  const [deleteAlert, showDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState({});
 
   const handleAdd = (
@@ -65,13 +65,13 @@ export default function List({ data, create, update, url }) {
     showEditModal(false);
   };
 
-  const handleDelete = (entry, e) => {
-    setDeleteData({ entry: "categories", id: e.target.value });
-    showDeleteModal(true);
+  const handleDelete = (entry, id) => {
+    setDeleteData({ entry, id });
+    showDeleteAlert(true);
   };
 
   const closeDeleteModal = () => {
-    showDeleteModal(false);
+    showDeleteAlert(false);
   };
 
   const categories = data[0];
@@ -122,13 +122,13 @@ export default function List({ data, create, update, url }) {
         />
 
         {/* Delete Alert */}
-        {/* <DeleteModal
-            handleCloseAlert={handleCloseAlert}
-            deleteData={deleteData}
-            setDeleteData={setDeleteData}
-            alertDialog={alertDialog}
-            mutate={mutate}
-          /> */}
+        <Delete
+          deleteAlert={deleteAlert}
+          closeDeleteModal={closeDeleteModal}
+          deleteData={deleteData}
+          setDeleteData={setDeleteData}
+          deleteItem={deleteItem}
+        />
       </div>
     </DataContext.Provider>
   );

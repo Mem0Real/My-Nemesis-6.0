@@ -296,4 +296,14 @@ export async function update(formData) {
   }
 }
 
-export async function deleteItem(path) {}
+export async function deleteItem(entry, id) {
+  "use server";
+
+  const res = prisma[entry].delete({
+    where: {
+      id: id,
+    },
+  });
+  revalidateTag("all");
+  return res;
+}
