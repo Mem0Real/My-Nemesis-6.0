@@ -74,62 +74,56 @@ export default function List({ data, create, update, deleteItem, url }) {
     showDeleteAlert(false);
   };
 
-  const categories = data[0];
   return (
     <DataContext.Provider
       value={{ handleAdd, handleEdit, handleDelete, data, url }}
     >
-      <div className="flex flex-col w-full justify-center items-center bg-neutral-100 text-neutral-900 md:mt-6">
-        <h1 className="text-lg underline underline-offset-2 shadow-inner shadow-black px-5 py-2 rounded-md md:mb-6">
-          Admin Page
+      <div className="flex-flex-col w-full items-center justify-center relative min-h-screen h-fit bg-neutral-200 text-neutral-900 md:mt-6">
+        <h1 className="text-lg italic underline underline-offset-4 text-center">
+          List
         </h1>
-        <div className="flex-flex-col w-full items-center justify-center relative min-h-screen h-fit">
-          <h1 className="text-lg italic underline underline-offset-4 text-center">
-            List
-          </h1>
-          <div className="md:my-6 mb-6 md:pb-5 bg-white shadow-md shadow-black">
-            <ListTable />
+        <div className="md:my-6 mb-6 md:pb-5 shadow-md shadow-black">
+          <ListTable />
 
-            <div className="flex flex-col w-full justify-center items-center md:mt-3">
-              <Button
-                variant="contained"
-                color="success"
-                onClick={() => handleAdd("categories")}
-                className="bg-green-700"
-              >
-                Add Category
-              </Button>
-            </div>
+          <div className="flex flex-col w-full justify-center items-center md:mt-3">
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => handleAdd("categories")}
+              className="bg-green-700"
+            >
+              Add Category
+            </Button>
           </div>
         </div>
-
-        {/* Add Modal */}
-        <Add
-          modal={addModal}
-          closeAddModal={closeAddModal}
-          addData={addData}
-          setAddData={setAddData}
-          create={create}
-        />
-
-        {/* Edit Modal */}
-        <Edit
-          modal={editModal}
-          closeEditModal={closeEditModal}
-          editData={editData}
-          setEditData={setEditData}
-          update={update}
-        />
-
-        {/* Delete Alert */}
-        <Delete
-          deleteAlert={deleteAlert}
-          closeDeleteModal={closeDeleteModal}
-          deleteData={deleteData}
-          setDeleteData={setDeleteData}
-          deleteItem={deleteItem}
-        />
       </div>
+
+      {/* Add Modal */}
+      <Add
+        modal={addModal}
+        closeAddModal={closeAddModal}
+        addData={addData}
+        setAddData={setAddData}
+        create={create}
+      />
+
+      {/* Edit Modal */}
+      <Edit
+        modal={editModal}
+        closeEditModal={closeEditModal}
+        editData={editData}
+        setEditData={setEditData}
+        update={update}
+      />
+
+      {/* Delete Alert */}
+      <Delete
+        deleteAlert={deleteAlert}
+        closeDeleteModal={closeDeleteModal}
+        deleteData={deleteData}
+        setDeleteData={setDeleteData}
+        deleteItem={deleteItem}
+      />
     </DataContext.Provider>
   );
 }

@@ -77,9 +77,13 @@ export default function ListTable() {
     <ListContext.Provider
       value={{ catDropDown, parDropDown, childDropDown, cat, par, chi }}
     >
-      <Paper sx={{ width: "100%", overflow: "hidden" }}>
+      <Paper sx={{ width: "100%", overflow: "hidden" }} elevation={0}>
         <TableContainer component={Paper}>
-          <Table aria-label="table" stickyHeader size="large">
+          <Table
+            aria-label="Categories Table"
+            size="large"
+            className="bg-neutral-200"
+          >
             <TableHead>
               <TableRow>
                 <TableCell></TableCell>
