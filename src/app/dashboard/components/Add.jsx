@@ -5,12 +5,16 @@ import formatData from "@/app/utils/format";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
-export default function Add({ modal, closeAddModal, create }) {
+export default function Add({
+  modal,
+  closeAddModal,
+  create,
+  addData,
+  setAddData,
+}) {
   const [imageSrc, setImageSrc] = useState();
   const [uploadData, setUploadData] = useState();
   const imageRef = useRef();
-
-  const [input, setInput] = useState({});
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
@@ -21,18 +25,18 @@ export default function Add({ modal, closeAddModal, create }) {
     };
 
     reader.readAsDataURL(changeEvent.target.files[0]);
-    setInput({ ...input, image: changeEvent.target.files[0] });
+    setAddData({ ...addData, image: changeEvent.target.files[0] });
   };
 
   const handleChange = (e) => {
-    setInput({ ...input, [e.target.name]: e.target.value });
+    setAddData({ ...addData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     closeAddModal();
 
-    const formData = formatData(input);
+    const formData = formatData(addData);
 
     create(formData);
   };
@@ -42,7 +46,7 @@ export default function Add({ modal, closeAddModal, create }) {
       onClose={closeAddModal}
       aria-labelledby="Add Modal"
       aria-describedby="Create a new category"
-      className="absolute w-3/5 py-6 mt-12 md:mt-0 md:w-1/2 md:py-3 mx-auto overflow-y-auto rounded-lg"
+      className="absolute top-24 w-3/5 py-6 md:mt-0 md:w-1/2 md:py-3 mx-auto overflow-y-auto rounded-lg"
     >
       <Box className="">
         <div className="bg-white shadow dark:bg-gray-700">
@@ -73,7 +77,7 @@ export default function Add({ modal, closeAddModal, create }) {
             </h3>
             <form
               onSubmit={handleSubmit}
-              className="flex-1 flex flex-col justify-center items-center gap-12"
+              className="flex-1 flex flex-col justify-center items-center gap-4"
             >
               <div className="relative z-0 w-3/5 mb-6 group">
                 <input
@@ -82,7 +86,7 @@ export default function Add({ modal, closeAddModal, create }) {
                   id="name"
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
-                  value={input.name || ""}
+                  value={addData.name || ""}
                   onChange={handleChange}
                   required
                 />
@@ -102,7 +106,7 @@ export default function Add({ modal, closeAddModal, create }) {
                   type="text"
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
-                  value={input.id || ""}
+                  value={addData.id || ""}
                   onChange={handleChange}
                 />
                 <label
@@ -121,7 +125,7 @@ export default function Add({ modal, closeAddModal, create }) {
                   type="text"
                   className="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                   placeholder=" "
-                  value={input.description || ""}
+                  value={addData.description || ""}
                   onChange={handleChange}
                 />
                 <label

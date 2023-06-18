@@ -41,6 +41,8 @@ export async function create(formData) {
   let description = formData.get("description");
   let image = formData.get("image");
 
+  let category = { name: undefined, val: undefined };
+
   const writeToDb = async (dir) => {
     formData.set("image", dir);
     image = formData.get("image");
@@ -59,6 +61,17 @@ export async function create(formData) {
       description = formData.get("description");
     }
 
+    if (childId !== null) {
+      category = { name: "ChildId", val: childId };
+    } else if (parentId !== null) {
+      category = { name: "ParentId", val: parentId };
+    } else if (categoryId !== null) {
+      category = { name: "CategoryId", val: categoryId };
+    } else {
+      category.name = undefined;
+      category.val = undefined;
+    }
+
     try {
       const res = await prisma[entry].create({
         data: {
@@ -70,6 +83,7 @@ export async function create(formData) {
           price: price,
           description: description,
           image: image,
+          [category.name]: category.val,
         },
       });
       revalidatePath("/dashboard");
@@ -123,7 +137,7 @@ export async function create(formData) {
   }
 }
 
-export async function read() {
+export async function list() {
   "use server";
 
   const categories = prisma.categories.findMany({});
@@ -138,3 +152,5 @@ export async function read() {
 
   return data;
 }
+
+export async function deleteItem(path) {}
