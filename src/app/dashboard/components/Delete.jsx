@@ -31,15 +31,24 @@ export default function Delete({
       >
         <DialogTitle
           id="alert-dialog-title"
-          className="text-center bg-neutral-900 text-red-600"
+          className="text-center bg-neutral-900 text-red-600 underline underline-offset-4"
         >
           {`Delete ${deleteData.id}?`}
         </DialogTitle>
-        <DialogContent className="bg-neutral-900">
-          <DialogContentText id="alert-dialog-description">
-            <span className=" text-neutral-200">
-              If you proceed, it will be removed from the database permanently!
+        <span className="bg-neutral-900 text-neutral-200 text-md w-full border-y text-center py-3 ">
+          This Action is Irreversible !
+        </span>
+        <DialogContent className="bg-neutral-900 text-center">
+          <DialogContentText
+            id="alert-dialog-description"
+            className="flex flex-col items-center justify-between gap-5 text-neutral-200"
+          >
+            <span className=" ">
+              If you proceed, the <b>selected item</b> as well as{" "}
+              <b>all of it&apos;s children</b> will be removed from the database
+              permanently.
             </span>
+            <span className="font-semibold">Proceed with Caution</span>
           </DialogContentText>
         </DialogContent>
         <DialogActions className="bg-neutral-900">

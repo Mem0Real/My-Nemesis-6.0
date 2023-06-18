@@ -190,15 +190,19 @@ export async function update(formData) {
   }
 
   let id = formData.get("id");
+  let newId = formData.get("newId");
+
   let description = formData.get("description");
   let image = formData.get("image");
 
   let category = { name: undefined, val: undefined };
+  let updatedId = { name: undefined, val: undefined };
 
   const writeToDb = async (dir) => {
     formData.set("image", dir);
     image = formData.get("image");
 
+    if (newId && newId !== id) updatedId = { name: "id", val: newId };
     if (!id) {
       let idName = name.toLowerCase();
       let array = idName.split(/ and| &|, /);
@@ -230,6 +234,7 @@ export async function update(formData) {
       const res = await prisma[entry].update({
         where: { id: id },
         data: {
+          [updatedId.name]: updatedId.val,
           name: name,
           brand: brand,
           model: model,
