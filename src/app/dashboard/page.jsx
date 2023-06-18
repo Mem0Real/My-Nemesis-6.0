@@ -123,8 +123,7 @@ export default async function DashboardPage() {
   else url = process.env.PRODUCTION_URL;
 
   const res = await fetch("http://localhost:3000/api/getAll", {
-    next: { tags: ["all"] },
-    cache: "no-store",
+    next: { tags: ["all"], revalidate: 0 },
   });
 
   const data = await res.json();

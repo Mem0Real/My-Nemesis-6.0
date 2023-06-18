@@ -4,7 +4,7 @@ import { join } from "path";
 import { stat, mkdir, writeFile } from "fs/promises";
 import * as dateFn from "date-fns";
 
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function create(formData) {
   "use server";
@@ -72,6 +72,7 @@ export async function create(formData) {
           image: image,
         },
       });
+      revalidatePath("/dashboard");
       console.log("Success");
     } catch (error) {
       console.log("Error: ", error);
