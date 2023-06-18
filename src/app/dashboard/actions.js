@@ -6,6 +6,22 @@ import * as dateFn from "date-fns";
 
 import { revalidatePath, revalidateTag } from "next/cache";
 
+export async function list() {
+  "use server";
+
+  const categories = prisma.categories.findMany({});
+
+  const parents = prisma.parents.findMany({});
+
+  const children = prisma.children.findMany({});
+
+  const items = prisma.items.findMany({});
+
+  const data = await Promise.all([categories, parents, children, items]);
+
+  return data;
+}
+
 export async function create(formData) {
   "use server";
 
@@ -29,12 +45,14 @@ export async function create(formData) {
   if (!quantity) {
     quantity = undefined;
   } else {
-    quantity = parseInt(quantity, 10);
+    if (quantity === NaN) quantity = 0;
+    else quantity = parseInt(quantity, 10);
   }
   if (!price) {
     price = undefined;
   } else {
-    price = parseFloat(price);
+    if (price === NaN) price = 0;
+    else price = parseFloat(price);
   }
 
   let id = formData.get("id");
@@ -94,6 +112,7 @@ export async function create(formData) {
   };
   if (!file) {
     await writeToDb("");
+    revalidateTag("all");
   } else {
     const buffer = Buffer.from(await file.arrayBuffer());
 
@@ -137,20 +156,144 @@ export async function create(formData) {
   }
 }
 
-export async function list() {
+export async function update(formData) {
   "use server";
 
-  const categories = prisma.categories.findMany({});
+  let file = formData.get("image");
+  let entry = formData.get("entry");
 
-  const parents = prisma.parents.findMany({});
+  if (!entry) entry = "categories";
 
-  const children = prisma.children.findMany({});
+  let categoryId = formData.get("categories");
+  let parentId = formData.get("parents");
+  let childId = formData.get("children");
+  let name = formData.get("name");
 
-  const items = prisma.items.findMany({});
+  let brand = formData.get("brand");
+  let model = formData.get("model");
+  let quantity = formData.get("quantity");
+  let price = formData.get("price");
 
-  const data = await Promise.all([categories, parents, children, items]);
+  if (!brand) brand = undefined;
+  if (!model) model = undefined;
+  if (!quantity) {
+    quantity = undefined;
+  } else {
+    if (quantity === "null") quantity = 0;
+    else quantity = parseInt(quantity, 10);
+  }
+  if (!price) {
+    price = undefined;
+  } else {
+    if (price === "null") price = 0;
+    else price = parseFloat(price);
+  }
 
-  return data;
+  let id = formData.get("id");
+  let description = formData.get("description");
+  let image = formData.get("image");
+
+  let category = { name: undefined, val: undefined };
+
+  const writeToDb = async (dir) => {
+    formData.set("image", dir);
+    image = formData.get("image");
+
+    if (!id) {
+      let idName = name.toLowerCase();
+      let array = idName.split(/ and| &|, /);
+      idName = array[0];
+      idName = idName.replace(/\s/g, "-");
+      formData.set("id", idName);
+      id = formData.get("id");
+    }
+
+    if (!description) {
+      formData.set("description", name);
+      description = formData.get("description");
+    }
+
+    if (childId !== null) {
+      category = { name: "ChildId", val: childId };
+    } else if (parentId !== null) {
+      category = { name: "ParentId", val: parentId };
+    } else if (categoryId !== null) {
+      category = { name: "CategoryId", val: categoryId };
+    } else {
+      category.name = undefined;
+      category.val = undefined;
+    }
+    if (quantity === NaN) quantity = 0;
+    if (price === NaN) price = 0;
+
+    try {
+      const res = await prisma[entry].update({
+        where: { id: id },
+        data: {
+          name: name,
+          brand: brand,
+          model: model,
+          quantity: quantity,
+          price: price,
+          description: description,
+          image: image,
+          [category.name]: category.val,
+        },
+      });
+      revalidateTag("/all");
+      revalidatePath("/dashboard");
+      console.log("Success");
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+  };
+  if (!file) {
+    await writeToDb("");
+    revalidateTag("all");
+  } else if (typeof file === "string") {
+    writeToDb(file);
+    revalidateTag("all");
+  } else {
+    const buffer = Buffer.from(await file.arrayBuffer());
+
+    let relativeUploadDir;
+    if (process.env.NODE_ENV === "development") {
+      relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
+    } else {
+      relativeUploadDir = `/tmp/${dateFn.format(Date.now(), "dd-MM-Y")}`;
+    }
+
+    const uploadDir = join(process.cwd(), "public", relativeUploadDir);
+
+    try {
+      await stat(uploadDir);
+    } catch (e) {
+      if (e.code === "ENOENT") {
+        await mkdir(uploadDir, { recursive: true });
+      } else {
+        console.error(
+          "Error while trying to create directory when uploading a file\n",
+          e
+        );
+      }
+    }
+
+    try {
+      const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+      const filename = `${file.name.replace(
+        /\.[^/.]+$/,
+        ""
+      )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
+      await writeFile(`${uploadDir}/${filename}`, buffer);
+
+      let imageUrl = `${relativeUploadDir}/${filename}`;
+
+      await writeToDb(imageUrl);
+      revalidateTag("all");
+    } catch (e) {
+      console.error("Error while trying to upload a file\n", e);
+    }
+  }
 }
 
 export async function deleteItem(path) {}

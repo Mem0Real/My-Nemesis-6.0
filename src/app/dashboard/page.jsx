@@ -1,5 +1,5 @@
 import List from "./components/List";
-import { create, list } from "./actions";
+import { list, create, update } from "./actions";
 
 export default async function DashboardPage() {
   let url;
@@ -13,7 +13,7 @@ export default async function DashboardPage() {
   const data = await list();
   return (
     <div className="flex flex-col w-full min-h-screen justify-center py-12 items-center gap-6">
-      <List data={data} create={create} url={url} />
+      <List data={data} create={create} update={update} url={url} />
     </div>
   );
 }

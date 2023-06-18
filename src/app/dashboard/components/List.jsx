@@ -12,7 +12,7 @@ import ListTable from "./ListTable";
 
 const DataContext = createContext({});
 
-export default function List({ data, create, url }) {
+export default function List({ data, create, update, url }) {
   const [addModal, showAddModal] = useState(false);
   const [addData, setAddData] = useState({});
 
@@ -39,8 +39,25 @@ export default function List({ data, create, url }) {
     showAddModal(false);
   };
 
-  const handleEdit = (entry, e) => {
-    setEditData({ entry: entry, id: e.target.value });
+  const handleEdit = (entry, data = null) => {
+    setEditData({
+      entry: entry,
+      id: data.id,
+      name: data.name,
+      description: data.description,
+      image: data.image,
+    });
+    if (entry === "items") {
+      setEditData((editData) => {
+        return {
+          ...editData,
+          brand: data.brand,
+          model: data.model,
+          quantity: data.quantity,
+          price: data.price,
+        };
+      });
+    }
     showEditModal(true);
   };
 
@@ -101,7 +118,7 @@ export default function List({ data, create, url }) {
           closeEditModal={closeEditModal}
           editData={editData}
           setEditData={setEditData}
-          create={create}
+          update={update}
         />
 
         {/* Delete Alert */}
