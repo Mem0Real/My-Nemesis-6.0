@@ -1,0 +1,57 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+model Categories {
+  id            String           @id
+  name          String        
+  description   String?
+  image         String?
+  parents       Parents[]
+}
+
+model Parents {
+  id            String           @id 
+  name          String        
+  description   String?
+  image         String?
+  category      Categories    @relation(fields: [CategoryId], references: [id])
+  CategoryId    String
+  
+  children      Children[]
+}
+
+model Children {
+  id            String           @id
+  name          String        
+  description   String?
+  image         String?
+  parent        Parents       @relation(fields: [ParentId], references: [id])
+
+  ParentId      String
+
+  items         Items[]
+}
+
+model Items {
+  id            String           @id
+  name          String        
+  description   String?
+  brand         String?
+  model         String?
+  quantity      Int?
+  price         Float?
+  image         String?
+  child         Children      @relation(fields: [ChildId], references: [id])
+  
+  ChildId       String
+}
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
