@@ -40,19 +40,25 @@ export async function create(formData) {
   let quantity = formData.get("quantity");
   let price = formData.get("price");
 
-  if (!brand) brand = undefined;
-  if (!model) model = undefined;
+  if (!brand) {
+    if (entry !== "items") brand = undefined;
+    else brand = name;
+  }
+  if (!model) {
+    if (entry !== "items") model = undefined;
+    else model = name;
+  }
   if (!quantity) {
-    quantity = undefined;
+    if (entry !== "items") quantity = undefined;
+    else quantity = 0;
   } else {
-    if (quantity === NaN) quantity = 0;
-    else quantity = parseInt(quantity, 10);
+    quantity = parseInt(quantity, 10);
   }
   if (!price) {
-    price = undefined;
+    if (entry !== "items") price = undefined;
+    else price = 0;
   } else {
-    if (price === NaN) price = 0;
-    else price = parseFloat(price);
+    price = parseFloat(price);
   }
 
   let id = formData.get("id");
@@ -174,8 +180,14 @@ export async function update(formData) {
   let quantity = formData.get("quantity");
   let price = formData.get("price");
 
-  if (!brand) brand = undefined;
-  if (!model) model = undefined;
+  if (!brand) {
+    if (entry !== "items") brand = undefined;
+    else brand = name;
+  }
+  if (!model) {
+    if (entry !== "items") model = undefined;
+    else model = name;
+  }
   if (!quantity) {
     quantity = undefined;
   } else {

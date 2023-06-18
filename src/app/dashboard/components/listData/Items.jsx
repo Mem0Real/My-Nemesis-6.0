@@ -81,6 +81,7 @@ export default function Items({ category, parent, child }) {
           variant="contained"
           color="success"
           onClick={() => handleAdd("items", category.id, parent.id, child.id)}
+          className="bg-green-700"
         >
           Add Item
         </Button>
