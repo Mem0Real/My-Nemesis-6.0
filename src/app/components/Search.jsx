@@ -1,219 +1,167 @@
+"use client";
+
+import React, { useState } from "react";
+import Backdrop from "@mui/material/Backdrop";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import Fade from "@mui/material/Fade";
+import Button from "@mui/material/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-export default function Search({ modal, closeSearch, data }) {
+import getData from "./getData";
+
+const style = {
+  // position: "absolute",
+  // top: "50%",
+  // left: "50%",
+  transform: "translate(-50%, -50%)",
+  // width: 400,
+  // bgcolor: "background.paper",
+  // border: "2px solid #000",
+  // boxShadow: 48,
+  p: 4,
+};
+
+export default function Search({ modal, closeSearch }) {
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredCategoryData, setFilteredCategoryData] = useState();
+  const [filteredParentData, setFilteredParentData] = useState();
+  const [filteredChildData, setFilteredChildrenData] = useState();
+  const [filteredItemData, setFilteredItemData] = useState();
+
+  let content;
+  const { data, error, isLoading } = getData();
+
+  const isObjEmpty = (obj) => {
+    return Object.keys(obj).length === 0;
+  };
+
+  const handleChange = (e) => {
+    const searchWord = e.target.value.toLowerCase();
+    setSearchQuery(searchWord);
+
+    if (error) content = <div>Failed to load</div>;
+    else if (isLoading) content = <div>loading...</div>;
+    else {
+      const firstArray = data[0].filter((val) => {
+        let query = val.name.toLowerCase();
+
+        return query.includes(searchWord);
+      });
+      // setFilteredCategoryData(firstArray);
+
+      const secondArray = data[1].filter((val) => {
+        let query = val.name.toLowerCase();
+
+        return query.includes(searchWord);
+      });
+      // setFilteredParentData(secondArray);
+
+      const thirdArray = data[2].filter((val) => {
+        let query = val.name.toLowerCase();
+
+        return query.includes(searchWord);
+      });
+      // setFilteredChildrenData(thirdArray);
+
+      const fourthArray = data[3].filter((val) => {
+        let query = val.name.toLowerCase();
+
+        return query.includes(searchWord);
+      });
+
+      // setFilteredItemData(fourthArray);
+
+      content = (
+        <div className="flex flex-col gap-6">
+          {!isObjEmpty(firstArray) && (
+            <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
+              <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
+                Categories
+              </h1>
+              {firstArray.map((category) => {
+                return <p key={category.id}>{category.name}</p>;
+              })}
+            </div>
+          )}
+          {!isObjEmpty(secondArray) && (
+            <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
+              <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
+                Parents
+              </h1>
+              {secondArray.map((parent) => {
+                return <p key={parent.id}>{parent.name}</p>;
+              })}
+            </div>
+          )}
+          {!isObjEmpty(thirdArray) && (
+            <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
+              <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
+                Children
+              </h1>
+              {thirdArray.map((child) => {
+                return <p key={child.id}>{child.name}</p>;
+              })}
+            </div>
+          )}
+          {!isObjEmpty(fourthArray) && (
+            <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
+              <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
+                Products
+              </h1>
+              {fourthArray.map((item) => {
+                return <p key={item.id}>{item.name}</p>;
+              })}
+            </div>
+          )}
+        </div>
+      );
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <Modal
+      aria-labelledby="transition-modal-title"
+      aria-describedby="transition-modal-description"
       open={modal}
       onClose={closeSearch}
-      aria-labelledby="Add Modal"
-      aria-describedby="Create a new category"
-      className="absolute top-20 w-3/5 py-6 md:mt-0 md:w-1/3 md:h-fit md:py-3 mx-auto overflow-y-auto"
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      slotProps={{
+        backdrop: {
+          timeout: 500,
+        },
+      }}
+      className="backdrop-blur-sm bg-black/40"
     >
-      <Box className="">
-        <div className="bg-white text-neutral-900 shadow dark:bg-neutral-800 dark:text-white">
-          <button
-            type="button"
-            className="absolute top-6 right-2 md:top-5 md:right-5 text-black bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-neutral-800 dark:hover:text-white"
-            data-modal-hide="authentication-modal"
-            onClick={() => closeSearch()}
-          >
-            <svg
-              aria-hidden="true"
-              className="w-5 h-5"
-              fill="currentColor"
-              viewBox="0 0 20 20"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                fillRule="evenodd"
-                d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                clipRule="evenodd"
-              ></path>
-            </svg>
-            <span className="sr-only">Close modal</span>
-          </button>
-          <div className="px-2 md:px-11 pb-12 lg:py-6">
-            <h3 className="mb-4 py-4 text-xl text-center font-medium">
-              <p className="mt-5">Create New Category</p>
-            </h3>
-            <form
-              onSubmit={handleSubmit}
-              className="flex-1 flex flex-col justify-center items-center gap-4"
-            >
-              <div className="relative z-0 w-2/3 mb-6 group">
+      <Fade in={modal}>
+        <Box
+          sx={style}
+          className="bg-neutral-300 text-neutral-800 absolute top-1/3 left-1/2 w-2/5 border-2 border-none rounded-lg shadow-2xl shadow-black"
+        >
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center">
+              <div className="flex-none">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </div>
+              <div className="w-full border-b border-neutral-600/60">
                 <input
                   type="text"
-                  name="name"
-                  id="name"
-                  className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  value={addData.name || ""}
-                  onChange={handleChange}
-                  required
-                />
-
-                <label
-                  htmlFor="name"
-                  className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  <span className="text-red-500 md:-ml-4 md:mr-2">*</span>
-                  Name
-                </label>
-              </div>
-              <div className="relative z-0 w-2/3 mb-6 group">
-                <input
-                  id="id"
-                  name="id"
-                  type="text"
-                  className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  value={addData.id || ""}
+                  className="px-2 md:pl-4 md:pr-16 py-3 w-full rounded-md sm:py-2 flex-1 text-neutral-900 text-lg bg-transparent focus:border-none focus:outline-none"
+                  placeholder="Search products..."
                   onChange={handleChange}
                 />
-                <label
-                  htmlFor="id"
-                  className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  ShortName/URL
-                </label>
               </div>
-              {addData.entry === "items" && (
-                <>
-                  {/* Brand */}
-                  <div className="relative z-0 w-2/3 mb-6 group">
-                    <input
-                      id="brand"
-                      name="brand"
-                      type="text"
-                      className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      placeholder=" "
-                      value={addData.brand || ""}
-                      onChange={handleChange}
-                    />
-                    <label
-                      htmlFor="brand"
-                      className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                    >
-                      Brand
-                    </label>
-                  </div>
-
-                  {/* Model */}
-                  <div className="relative z-0 w-2/3 mb-6 group">
-                    <input
-                      id="model"
-                      name="model"
-                      type="text"
-                      className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      placeholder=" "
-                      value={addData.model || ""}
-                      onChange={handleChange}
-                    />
-                    <label
-                      htmlFor="model"
-                      className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                    >
-                      Model
-                    </label>
-                  </div>
-
-                  {/* Quantity */}
-                  <div className="relative z-0 w-2/3 mb-6 group">
-                    <input
-                      id="quantity"
-                      name="quantity"
-                      type="number"
-                      className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      placeholder=" "
-                      value={addData.quantity || ""}
-                      onChange={handleChange}
-                    />
-                    <label
-                      htmlFor="id"
-                      className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                    >
-                      Quantity
-                    </label>
-                  </div>
-
-                  {/* Price */}
-                  <div className="relative z-0 w-2/3 mb-6 group">
-                    <input
-                      id="price"
-                      name="price"
-                      type="number"
-                      className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                      placeholder=" "
-                      value={addData.price || ""}
-                      onChange={handleChange}
-                    />
-                    <label
-                      htmlFor="price"
-                      className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                    >
-                      Price
-                    </label>
-                  </div>
-                </>
-              )}
-              <div className="relative z-0 w-2/3 mb-6 group">
-                <textarea
-                  cols={5}
-                  rows={5}
-                  id="description"
-                  name="description"
-                  type="text"
-                  className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  value={addData.description || ""}
-                  onChange={handleChange}
-                />
-                <label
-                  htmlFor="description"
-                  className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Description
-                </label>
-              </div>
-              <div className="relative z-0 w-2/3 mb-6 group">
-                <label
-                  htmlFor="image"
-                  className="text-md text-neutral-500 dark:text-neutral-400 top-6 -z-10"
-                >
-                  Image
-                </label>
-                <input
-                  id="image"
-                  name="image"
-                  type="file"
-                  className="block py-2.5 px-0 w-full text-sm text-neutral-700 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  onChange={handleFileSelect}
-                  ref={imageRef}
-                />
-              </div>
-              {imageSrc && (
-                <div className="relative h-56 w-56 mb-6">
-                  <Image
-                    src={imageSrc}
-                    fill={true}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    alt="Image"
-                    className="object-contain"
-                  />
-                </div>
-              )}
-              <button
-                type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Submit
-              </button>
-            </form>
+            </div>
+            <div className="mt-6 bg-neutral-500">{content}</div>
           </div>
-        </div>
-      </Box>
+        </Box>
+      </Fade>
     </Modal>
   );
 }

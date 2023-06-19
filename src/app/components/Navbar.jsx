@@ -2,17 +2,28 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { Poppins } from "next/font/google";
+import { Poppins, Raleway } from "next/font/google";
 import { useState, useEffect, useRef } from "react";
-import SearchInput from "./SearchInput";
+// import SearchInput from "./SearchInput";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import Search from "./Search";
 
 const poppins = Poppins({
   subsets: ["latin"],
   weight: "400",
   fallback: ["system-ui", "arial"],
 });
+
+const raleway = Raleway({
+  subsets: ["cyrillic"],
+  display: "swap",
+});
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchModal, showSearchModal] = useState(false);
+
   const menuRef = useRef();
 
   useEffect(() => {
@@ -23,7 +34,17 @@ export const Navbar = () => {
     };
 
     document.addEventListener("mousedown", handler);
+
+    return () => document.removeEventListener("mousedown", handler);
   }, []);
+
+  const handleSearch = () => {
+    showSearchModal(true);
+  };
+
+  const closeSearch = () => {
+    showSearchModal(false);
+  };
 
   return (
     <div ref={menuRef}>
@@ -41,7 +62,9 @@ export const Navbar = () => {
                   priority
                 />
               </div>
-              <h1 className="lg:px-12 sm:px-6 px-6 hidden sm:block text-xl uppercase font-medium">
+              <h1
+                className={`lg:px-12 sm:px-6 px-6 hidden sm:block text-xl uppercase font-medium tracking-wider ${raleway.className}`}
+              >
                 Nemesis
               </h1>
             </div>
@@ -50,7 +73,19 @@ export const Navbar = () => {
             <ul className="hidden md:flex">
               <div className="flex justify-between items-center w-full">
                 <div className="md:px-11">
-                  <SearchInput />
+                  {/* <SearchInput /> */}
+                  <button
+                    type="submit"
+                    onClick={handleSearch}
+                    className="flex items-center cursor-pointer"
+                  >
+                    <p className="px-12 md:pl-4 md:pr-16 py-3 w-full rounded-md sm:py-2 flex-1 text-zinc-200 bg-zinc-800">
+                      Search products...
+                    </p>
+                    <span className="pr-4 -ml-7">
+                      <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    </span>
+                  </button>
                 </div>
                 <div className="flex">
                   <Link href="/collection">
@@ -78,9 +113,11 @@ export const Navbar = () => {
             </ul>
           </div>
           <div className="flex gap-4 md:hidden text-white">
-            <div className="">
-              <SearchInput />
-            </div>
+            <button className="" onClick={handleSearch}>
+              <span className="">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </span>
+            </button>
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="flex items-center px-3 py-2 rounded text-black-500 hover:text-black-400"
@@ -135,6 +172,8 @@ export const Navbar = () => {
           </Link>
         </ul>
       </div>
+
+      <Search modal={searchModal} closeSearch={closeSearch} />
     </div>
   );
 };
