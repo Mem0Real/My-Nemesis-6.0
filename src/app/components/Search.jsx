@@ -86,17 +86,19 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
       setContent(
         <div className="flex flex-col gap-6">
           {firstArray && !isObjEmpty(firstArray) && (
-            <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
+            <div className="flex flex-col itmes-start gap-4">
               <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
                 Categories
               </h1>
-              {firstArray.map((category, index) => {
-                return (
-                  <p key={category.id} className="list-disc text-black">
-                    {category.name}
-                  </p>
-                );
-              })}
+              <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
+                {firstArray.map((category, index) => {
+                  return (
+                    <p key={category.id} className="list-disc text-black ps-5">
+                      {category.name}
+                    </p>
+                  );
+                })}
+              </div>
             </div>
           )}
           {secondArray && !isObjEmpty(secondArray) && (
@@ -104,9 +106,15 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
               <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
                 Parents
               </h1>
-              {secondArray.map((parent, index) => {
-                return <p key={parent.id}>{parent.name}</p>;
-              })}
+              <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
+                {secondArray.map((parent, index) => {
+                  return (
+                    <p key={parent.id} className="ps-5">
+                      {parent.name}
+                    </p>
+                  );
+                })}
+              </div>
             </div>
           )}
           {thirdArray && !isObjEmpty(thirdArray) && (
@@ -114,9 +122,15 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
               <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
                 Children
               </h1>
-              {thirdArray.map((child, index) => {
-                return <p key={child.id}>{child.name}</p>;
-              })}
+              <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
+                {thirdArray.map((child, index) => {
+                  return (
+                    <p key={child.id} className="ps-5">
+                      {child.name}
+                    </p>
+                  );
+                })}
+              </div>
             </div>
           )}
           {fourthArray && !isObjEmpty(fourthArray) && (
@@ -124,9 +138,15 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
               <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
                 Products
               </h1>
-              {fourthArray.map((item, index) => {
-                return <p key={item.id}>{item.name}</p>;
-              })}
+              <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
+                {fourthArray.map((item, index) => {
+                  return (
+                    <p key={item.id} className="ps-5">
+                      {item.name}
+                    </p>
+                  );
+                })}
+              </div>
             </div>
           )}
         </div>
@@ -157,8 +177,8 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
         <Box
           sx={style}
           className={`bg-neutral-300 text-neutral-800 absolute ${
-            searchQuery ? "top-[40%]" : "top-1/4"
-          } left-1/2 w-2/5 max-h-96 overflow-y-scroll no-scrollbar border-2 border-none rounded-lg shadow-2xl shadow-black`}
+            searchQuery ? "top-[46%]" : "top-[25%]"
+          } left-1/2 w-[96%] md:w-2/5 max-h-96 overflow-y-scroll no-scrollbar border-2 border-none rounded-lg shadow-2xl shadow-black`}
         >
           <div className="flex flex-col gap-4">
             <div className="flex items-center">
@@ -176,7 +196,7 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
               </div>
             </div>
             {searchQuery && (
-              <div className="mt-6 h-56 overflow-y-scroll no-scrollbar text-center">
+              <div className="mt-6 h-56 overflow-y-scroll overflow-x-hidden text-start">
                 {content}
               </div>
             )}
