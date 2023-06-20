@@ -9,7 +9,6 @@ import Button from "@mui/material/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-import getData from "./getData";
 import Link from "next/link";
 
 const style = {
@@ -24,12 +23,11 @@ const style = {
   p: 4,
 };
 
-export default function Search({ modal, closeSearch }) {
+export default function Search({ modal, closeSearch, data, isLoading, error }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [content, setContent] = useState();
   let stat;
-  const { data, error, isLoading } = getData();
 
   const isObjEmpty = (obj) => {
     return Object.keys(obj).length === 0;
@@ -94,11 +92,9 @@ export default function Search({ modal, closeSearch }) {
               </h1>
               {firstArray.map((category, index) => {
                 return (
-                  <ul className="list-disc">
-                    <li key={category.id} className="list-disc text-black">
-                      {category.name}
-                    </li>
-                  </ul>
+                  <p key={category.id} className="list-disc text-black">
+                    {category.name}
+                  </p>
                 );
               })}
             </div>

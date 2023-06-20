@@ -3,12 +3,13 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Poppins, Raleway } from "next/font/google";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Suspense } from "react";
 // import SearchInput from "./SearchInput";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import Search from "./Search";
+import useSWR from "swr";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -20,9 +21,13 @@ const raleway = Raleway({
   subsets: ["cyrillic"],
   display: "swap",
 });
+
 export const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [searchModal, showSearchModal] = useState(false);
+
+  const fetcher = (...args) => fetch(...args).then((res) => res.json());
+  const { data, error, isLoading } = useSWR("/api/getAll", fetcher);
 
   const menuRef = useRef();
 
@@ -38,7 +43,7 @@ export const Navbar = () => {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     showSearchModal(true);
   };
 
@@ -173,7 +178,15 @@ export const Navbar = () => {
         </ul>
       </div>
 
-      <Search modal={searchModal} closeSearch={closeSearch} />
+      <Suspense>
+        <Search
+          modal={searchModal}
+          closeSearch={closeSearch}
+          data={data}
+          isLoading={isLoading}
+          error={error}
+        />
+      </Suspense>
     </div>
   );
 };
