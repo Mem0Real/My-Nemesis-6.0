@@ -9,6 +9,22 @@ export async function getOne(entry, id) {
   });
   return data;
 }
+
+export async function getAll() {
+  "use server";
+  const categories = prisma.categories.findMany({});
+
+  const parents = prisma.parents.findMany({});
+
+  const children = prisma.children.findMany({});
+
+  const items = prisma.items.findMany({});
+
+  const data = await Promise.all([categories, parents, children, items]);
+
+  return data;
+}
+
 export async function search(query) {
   "use server";
 

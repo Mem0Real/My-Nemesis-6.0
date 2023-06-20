@@ -9,7 +9,8 @@ import Button from "@mui/material/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
-import Link from "next/link";
+import { useRouter } from "next/navigation";
+import filterData from "../utils/filterData";
 
 const style = {
   // position: "absolute",
@@ -27,7 +28,7 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [content, setContent] = useState();
-  let stat;
+  const router = useRouter();
 
   const isObjEmpty = (obj) => {
     return Object.keys(obj).length === 0;
@@ -43,35 +44,10 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
       setContent("loading...");
     }
     if (data) {
-      const firstArray = data[0].filter((val) => {
-        let name = val.name.toLowerCase();
-        let description = val.description?.toLowerCase();
-
-        return (name || description).includes(searchWord);
-      });
-
-      const secondArray = data[1].filter((val) => {
-        let name = val.name.toLowerCase();
-        let description = val.description?.toLowerCase();
-
-        return (name || description).includes(searchWord);
-      });
-
-      const thirdArray = data[2].filter((val) => {
-        let name = val.name.toLowerCase();
-        let description = val.description?.toLowerCase();
-
-        return (name || description).includes(searchWord);
-      });
-
-      const fourthArray = data[3].filter((val) => {
-        let name = val.name.toLowerCase();
-        let brand = val.brand?.toLowerCase();
-        let model = val.model?.toLowerCase();
-        let description = val.description?.toLowerCase();
-
-        return (name || brand || model || description).includes(searchWord);
-      });
+      const { firstArray, secondArray, thirdArray, fourthArray } = filterData(
+        searchWord,
+        data
+      );
 
       if (
         !isObjEmpty(firstArray) ||
@@ -79,83 +55,84 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
         !isObjEmpty(thirdArray) ||
         !isObjEmpty(fourthArray)
       )
-        stat = true;
-      else stat = false;
-
-      console.log(stat);
-      setContent(
-        <div className="flex flex-col gap-6">
-          {firstArray && !isObjEmpty(firstArray) && (
-            <div className="flex flex-col itmes-start gap-4">
-              <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
-                Categories
-              </h1>
-              <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
-                {firstArray.map((category, index) => {
-                  return (
-                    <p key={category.id} className="list-disc text-black ps-5">
-                      {category.name}
-                    </p>
-                  );
-                })}
+        setContent(
+          <div className="flex flex-col gap-6">
+            {firstArray && !isObjEmpty(firstArray) && (
+              <div className="flex flex-col itmes-start gap-4">
+                <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
+                  Categories
+                </h1>
+                <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
+                  {firstArray.map((category, index) => {
+                    return (
+                      <p
+                        key={category.id}
+                        className="list-disc text-black ps-5"
+                      >
+                        {category.name}
+                      </p>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          )}
-          {secondArray && !isObjEmpty(secondArray) && (
-            <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
-              <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
-                Parents
-              </h1>
-              <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
-                {secondArray.map((parent, index) => {
-                  return (
-                    <p key={parent.id} className="ps-5">
-                      {parent.name}
-                    </p>
-                  );
-                })}
+            )}
+            {secondArray && !isObjEmpty(secondArray) && (
+              <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
+                <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
+                  Parents
+                </h1>
+                <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
+                  {secondArray.map((parent, index) => {
+                    return (
+                      <p key={parent.id} className="ps-5">
+                        {parent.name}
+                      </p>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          )}
-          {thirdArray && !isObjEmpty(thirdArray) && (
-            <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
-              <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
-                Children
-              </h1>
-              <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
-                {thirdArray.map((child, index) => {
-                  return (
-                    <p key={child.id} className="ps-5">
-                      {child.name}
-                    </p>
-                  );
-                })}
+            )}
+            {thirdArray && !isObjEmpty(thirdArray) && (
+              <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
+                <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
+                  Children
+                </h1>
+                <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
+                  {thirdArray.map((child, index) => {
+                    return (
+                      <p key={child.id} className="ps-5">
+                        {child.name}
+                      </p>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          )}
-          {fourthArray && !isObjEmpty(fourthArray) && (
-            <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
-              <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
-                Products
-              </h1>
-              <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
-                {fourthArray.map((item, index) => {
-                  return (
-                    <p key={item.id} className="ps-5">
-                      {item.name}
-                    </p>
-                  );
-                })}
+            )}
+            {fourthArray && !isObjEmpty(fourthArray) && (
+              <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
+                <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
+                  Products
+                </h1>
+                <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
+                  {fourthArray.map((item, index) => {
+                    return (
+                      <p key={item.id} className="ps-5">
+                        {item.name}
+                      </p>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          )}
-        </div>
-      );
+            )}
+          </div>
+        );
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    closeSearch();
+    router.push(`/search?q=${searchQuery}`);
   };
 
   return (
@@ -183,16 +160,20 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
           <div className="flex flex-col gap-4">
             <div className="flex items-center">
               <div className="flex-none">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                <button onClick={handleSubmit}>
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </button>
               </div>
-              <div className="w-full border-b border-neutral-600/60">
-                <input
-                  type="text"
-                  value={searchQuery || ""}
-                  className="px-2 md:pl-4 md:pr-16 py-3 w-full rounded-md sm:py-2 flex-1 text-neutral-900 text-lg bg-transparent focus:border-none focus:outline-none"
-                  placeholder="Search products..."
-                  onChange={handleChange}
-                />
+              <div className="flex items-center w-full border-b border-neutral-600/60">
+                <form onSubmit={handleSubmit}>
+                  <input
+                    type="text"
+                    value={searchQuery || ""}
+                    className="px-2 md:pl-4 md:pr-16 py-3 w-full rounded-md sm:py-2 flex-1 text-neutral-900 text-lg bg-transparent focus:border-none focus:outline-none"
+                    placeholder="Search products..."
+                    onChange={handleChange}
+                  />
+                </form>
               </div>
             </div>
             {searchQuery && (
