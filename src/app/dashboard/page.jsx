@@ -8,7 +8,7 @@ export default async function DashboardPage() {
 
   const data = await list();
   return (
-    <div className="flex flex-col w-full min-h-screen justify-center py-12 items-center gap-6">
+    <div className="flex flex-col w-full min-h-screen justify-center items-center gap-6">
       <List
         data={data}
         create={create}

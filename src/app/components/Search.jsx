@@ -36,7 +36,7 @@ export default function Search({ modal, closeSearch, data }) {
 
   const handleChange = (e) => {
     const searchWord = e.target.value.toLowerCase();
-    setSearchQuery(searchWord);
+    setSearchQuery(e.target.value);
 
     if (data) {
       const { firstArray, secondArray, thirdArray, fourthArray } = filterData(
@@ -127,6 +127,7 @@ export default function Search({ modal, closeSearch, data }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     closeSearch();
+    setSearchQuery(searchQuery.toLowerCase());
     router.push(`/search?q=${searchQuery}`);
   };
 
@@ -154,7 +155,7 @@ export default function Search({ modal, closeSearch, data }) {
         >
           <div className="flex flex-col gap-4">
             <div className="flex items-center">
-              <div className="flex-none">
+              <div className="flex-none -ml-2 mr-2">
                 <button onClick={handleSubmit}>
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
@@ -162,9 +163,10 @@ export default function Search({ modal, closeSearch, data }) {
               <div className="flex items-center w-full border-b border-neutral-600/60">
                 <form onSubmit={handleSubmit}>
                   <input
+                    autoFocus
                     type="text"
                     value={searchQuery || ""}
-                    className="px-2 md:pl-4 md:pr-16 py-3 w-full rounded-md sm:py-2 flex-1 text-neutral-900 text-lg bg-transparent focus:border-none focus:outline-none"
+                    className="px-2 pl-4 md:pr-16 py-3 w-full rounded-md sm:py-2 flex-1 text-neutral-900 text-lg bg-transparent focus:border-none focus:outline-none"
                     placeholder="Search products..."
                     onChange={handleChange}
                   />

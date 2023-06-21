@@ -121,6 +121,7 @@ export default function NavComponents({ data }) {
           </svg>
         </button>
       </div>
+
       {/* Hamburger Menu */}
       <div
         className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-20 ${
@@ -143,13 +144,14 @@ export default function NavComponents({ data }) {
               About
             </li>
           </Link>
-          <Link href="/admin">
+          <Link href="/dashboard">
             <li className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium">
-              Admin
+              Dashboard
             </li>
           </Link>
         </ul>
       </div>
+
       <Suspense>
         <Search
           modal={searchModal}
