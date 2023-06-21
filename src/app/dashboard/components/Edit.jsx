@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
 import formatData from "@/app/utils/format";
@@ -16,6 +16,10 @@ export default function Edit({
   const [uploadData, setUploadData] = useState();
   const imageRef = useRef();
 
+  useEffect(() => {
+    editData.image && setImageSrc(editData.image);
+  }, [editData.image]);
+
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
 
@@ -25,7 +29,7 @@ export default function Edit({
     };
 
     reader.readAsDataURL(changeEvent.target.files[0]);
-    setEditData({ ...editData, image: changeEvent.target.files[0] });
+    setEditData({ ...editData, newImage: changeEvent.target.files[0] });
   };
 
   const handleChange = (e) => {
@@ -40,19 +44,25 @@ export default function Edit({
 
     update(formData);
   };
+
+  let title;
+  if (editData.id) {
+    title = editData.id;
+    title = title[0].toUpperCase() + title.slice(1);
+  }
   return (
     <Modal
       open={modal}
       onClose={closeEditModal}
       aria-labelledby="Edit Modal"
       aria-describedby="Update category"
-      className="absolute w-3/5 py-6 mt-12 md:mt-0 md:w-1/2 md:py-3 mx-auto overflow-y-auto rounded-lg"
+      className="absolute top-20 w-[85%] md:w-2/5 h-screen my-6 md:mt-0 md:py-3 mx-auto overflow-y-auto no-scrollbar rounded-lg"
     >
       <Box className="">
-        <div className="bg-white shadow dark:bg-gray-700">
+        <div className="shadow bg-neutral-800 text-white rounded-2xl">
           <button
             type="button"
-            className="absolute top-6 right-2 md:top-5 md:right-5 text-black bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white"
+            className="absolute top-10 right-5 md:top-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
             data-modal-hide="authentication-modal"
             onClick={() => closeEditModal()}
           >
@@ -72,14 +82,16 @@ export default function Edit({
             <span className="sr-only">Close modal</span>
           </button>
           <div className="px-2 md:px-11 pb-12 lg:py-6">
-            <h3 className="mb-4 py-4 text-xl text-center font-medium text-gray-900 dark:text-white">
-              <p className="mt-5">Update Category</p>
+            <h3 className="mb-4 py-4 text-xl text-center font-medium">
+              <p className="mt-5">
+                Update <em className="tracking-wider ">{title}</em>
+              </p>
             </h3>
             <form
               onSubmit={handleSubmit}
               className="flex-1 flex flex-col justify-center items-center gap-12"
             >
-              <div className="relative z-0 w-3/5 mb-6 group">
+              <div className="relative z-0 w-2/3 mb-6 group">
                 <input
                   type="text"
                   name="name"
@@ -91,11 +103,11 @@ export default function Edit({
                   required
                 />
 
+                <span className="text-red-500 absolute top-3 -left-5 ">*</span>
                 <label
                   htmlFor="name"
                   className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  <span className="text-red-500 md:-ml-4 md:mr-2">*</span>
                   Name
                 </label>
               </div>
@@ -242,7 +254,7 @@ export default function Edit({
                     fill={true}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     alt="Image"
-                    className="object-contain"
+                    className="object-contain rounded-lg"
                   />
                 </div>
               )}

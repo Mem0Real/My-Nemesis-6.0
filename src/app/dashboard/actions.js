@@ -1,7 +1,7 @@
 import prisma from "@/prisma";
 import mime from "mime";
 import { join } from "path";
-import { stat, mkdir, writeFile } from "fs/promises";
+import { stat, mkdir, writeFile, unlink } from "fs/promises";
 import * as dateFn from "date-fns";
 
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -169,7 +169,7 @@ export async function create(formData) {
 export async function update(formData) {
   "use server";
 
-  let file = formData.get("image");
+  let file = formData.get("newImage");
   let entry = formData.get("entry");
 
   if (!entry) entry = "categories";
@@ -278,16 +278,19 @@ export async function update(formData) {
     revalidateTag("all");
     revalidateTag("search");
   } else {
+    const oldFile = formData.get("image");
     const buffer = Buffer.from(await file.arrayBuffer());
 
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
       relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
     } else {
-      relativeUploadDir = `/tmp/${dateFn.format(Date.now(), "dd-MM-Y")}`;
+      relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
     }
 
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);
+
+    const delDir = join(process.cwd(), "public");
 
     try {
       await stat(uploadDir);
@@ -309,6 +312,8 @@ export async function update(formData) {
         ""
       )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
       await writeFile(`${uploadDir}/${filename}`, buffer);
+
+      await unlink(`${delDir}/${oldFile}`);
 
       let imageUrl = `${relativeUploadDir}/${filename}`;
 

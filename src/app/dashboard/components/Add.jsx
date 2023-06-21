@@ -46,13 +46,13 @@ export default function Add({
       onClose={closeAddModal}
       aria-labelledby="Add Modal"
       aria-describedby="Create a new category"
-      className="absolute top-20 w-3/5 py-6 md:mt-0 md:w-1/3 md:h-fit md:py-3 mx-auto overflow-y-auto"
+      className="absolute top-20 w-[85%] md:w-2/5 h-screen my-6 md:mt-0 md:py-3 mx-auto overflow-y-scroll no-scrollbar rounded-lg"
     >
       <Box className="">
-        <div className="bg-white text-neutral-900 shadow dark:bg-neutral-800 dark:text-white">
+        <div className="shadow bg-neutral-800 text-white rounded-2xl">
           <button
             type="button"
-            className="absolute top-6 right-2 md:top-5 md:right-5 text-black bg-transparent hover:bg-neutral-200 hover:text-neutral-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-neutral-800 dark:hover:text-white"
+            className="absolute top-10 right-5 md:top-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
             data-modal-hide="authentication-modal"
             onClick={() => closeAddModal()}
           >
@@ -73,7 +73,24 @@ export default function Add({
           </button>
           <div className="px-2 md:px-11 pb-12 lg:py-6">
             <h3 className="mb-4 py-4 text-xl text-center font-medium">
-              <p className="mt-5">Create New Category</p>
+              {addData.entry === "categories" && (
+                <p className="mt-5">Create New Category</p>
+              )}
+              {addData.entry === "parents" && (
+                <p className="mt-5">
+                  Create New Parent Inside <br /> {addData.categories}
+                </p>
+              )}
+              {addData.entry === "children" && (
+                <p className="mt-5">
+                  Create New Child Inside <br /> {addData.parents}
+                </p>
+              )}
+              {addData.entry === "items" && (
+                <p className="mt-5">
+                  Create New Item Inside <br /> {addData.children}
+                </p>
+              )}
             </h3>
             <form
               onSubmit={handleSubmit}
@@ -91,11 +108,11 @@ export default function Add({
                   required
                 />
 
+                <span className="text-red-500 absolute top-3 -left-5 ">*</span>
                 <label
                   htmlFor="name"
                   className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
                 >
-                  <span className="text-red-500 md:-ml-4 md:mr-2">*</span>
                   Name
                 </label>
               </div>

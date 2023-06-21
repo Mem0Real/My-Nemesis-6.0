@@ -71,22 +71,22 @@ export default function NavComponents({ data, getAll, getOne }) {
             </div>
             <div className="flex justify-end">
               <Link href="/collection">
-                <li className="ml-10 underline underline-offset-8 hover:underline-offset-2">
+                <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
                   Collection
                 </li>
               </Link>
               <Link href="/services">
-                <li className="ml-10 underline underline-offset-8 hover:underline-offset-2">
+                <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
                   Services
                 </li>
               </Link>
               <Link href="/about">
-                <li className="ml-10 underline underline-offset-8 hover:underline-offset-2">
+                <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
                   About
                 </li>
               </Link>
               <Link href="/dashboard">
-                <li className="ml-10 underline underline-offset-8 hover:underline-offset-2">
+                <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
                   Dashboard
                 </li>
               </Link>
