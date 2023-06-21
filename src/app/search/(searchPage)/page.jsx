@@ -1,10 +1,10 @@
 import { getAll } from "../searchActions";
-import filterData from "../utils/filterData";
+import filterData from "@/app/utils/filterData";
 
-import Categories from "./Categories";
-import Parents from "./Parents";
-import Children from "./Children";
-import Items from "./Items";
+import Categories from "./(searchData)/Categories";
+import Parents from "./(searchData)/Parents";
+import Children from "./(searchData)/Children";
+import Items from "./(searchData)/Items";
 
 const SearchPage = async ({ searchParams }) => {
   let searchQuery = searchParams ? searchParams.q : null;
@@ -38,10 +38,10 @@ const SearchPage = async ({ searchParams }) => {
             <Parents>{secondArray}</Parents>
           )}
           {thirdArray && !isObjEmpty(thirdArray) && (
-            <Children>{thirdArray}</Children>
+            <Children data={searchResult}>{thirdArray}</Children>
           )}
           {fourthArray && !isObjEmpty(fourthArray) && (
-            <Items>{fourthArray} </Items>
+            <Items data={searchResult}>{fourthArray} </Items>
           )}
         </div>
       </div>

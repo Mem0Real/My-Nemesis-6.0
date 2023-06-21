@@ -1,16 +1,27 @@
 import Link from "next/link";
-import { getOne } from "./searchActions";
 
-export default function Items({ children }) {
+export default function Items({ data, children }) {
   return (
     <div className="flex flex-col justify-evenly gap-6 items-center w-full">
       <p className="text-zinc-500 text-lg ">Products </p>
 
       {children[0].map(async (item) => {
-        const childData = await getOne("children", item.ChildId);
-        const parentData = await getOne("parents", childData.ParentId);
-        const categoryData = await getOne("categories", parentData.CategoryId);
-
+        let category, parent, child;
+        data[2].map((chi) => {
+          if (chi.id === item.ChildId) {
+            child = chi;
+            data[1].map((par) => {
+              if (par.id === child.ParentId) {
+                parent = par;
+                data[0].map((cat) => {
+                  if (cat.id === parent.CategoryId) {
+                    category = cat;
+                  }
+                });
+              }
+            });
+          }
+        });
         return (
           <div
             key={item.id}
@@ -18,7 +29,7 @@ export default function Items({ children }) {
           >
             <ul className="list-disc">
               <Link
-                href={`/collection/${categoryData.id}/${parentData.id}/${childData.id}/${item.id}`}
+                href={`/collection/${category.id}/${parent.id}/${child.id}/${item.id}`}
               >
                 <li>{item.name}</li>
               </Link>
