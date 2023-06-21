@@ -10,7 +10,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 import { useRouter } from "next/navigation";
-import filterData from "../utils/filterData";
+import filterData from "@/app/utils/filterData";
+import Categories from "./(searchData)/Categories";
+import Parents from "./(searchData)/Parents";
+import Children from "./(searchData)/Children";
+import Items from "./(searchData)/Items";
 
 const style = {
   // position: "absolute",
@@ -24,7 +28,7 @@ const style = {
   p: 4,
 };
 
-export default function Search({ modal, closeSearch, data }) {
+export default function Search({ modal, closeSearch, data, getOne }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [content, setContent] = useState();
@@ -53,72 +57,17 @@ export default function Search({ modal, closeSearch, data }) {
         setContent(
           <div className="flex flex-col gap-6">
             {firstArray && !isObjEmpty(firstArray) && (
-              <div className="flex flex-col itmes-start gap-4">
-                <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
-                  Categories
-                </h1>
-                <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
-                  {firstArray.map((category, index) => {
-                    return (
-                      <p
-                        key={category.id}
-                        className="list-disc text-black ps-5"
-                      >
-                        {category.name}
-                      </p>
-                    );
-                  })}
-                </div>
-              </div>
+              <Categories>{firstArray} </Categories>
             )}
             {secondArray && !isObjEmpty(secondArray) && (
-              <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
-                <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
-                  Parents
-                </h1>
-                <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
-                  {secondArray.map((parent, index) => {
-                    return (
-                      <p key={parent.id} className="ps-5">
-                        {parent.name}
-                      </p>
-                    );
-                  })}
-                </div>
-              </div>
+              <Parents>{secondArray}</Parents>
             )}
-            {thirdArray && !isObjEmpty(thirdArray) && (
-              <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
-                <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
-                  Children
-                </h1>
-                <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
-                  {thirdArray.map((child, index) => {
-                    return (
-                      <p key={child.id} className="ps-5">
-                        {child.name}
-                      </p>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
-            {fourthArray && !isObjEmpty(fourthArray) && (
-              <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
-                <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
-                  Products
-                </h1>
-                <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
-                  {fourthArray.map((item, index) => {
-                    return (
-                      <p key={item.id} className="ps-5">
-                        {item.name}
-                      </p>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
+            {/* {thirdArray && !isObjEmpty(thirdArray) && (
+              <Children thirdArray={thirdArray} />
+            )} */}
+            {/* {fourthArray && !isObjEmpty(fourthArray) && (
+              <Items fourthArray={fourthArray} />
+            )} */}
           </div>
         );
     }

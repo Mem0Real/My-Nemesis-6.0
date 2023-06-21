@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, createContext, useContext } from "react";
 
 import Link from "next/link";
 import { Poppins, Raleway } from "next/font/google";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { Suspense } from "react";
-import Search from "./Search";
+import SearchModal from "../search/(searchModal)/SearchModal";
+
+const FunctionsContext = createContext({});
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -21,7 +22,7 @@ const raleway = Raleway({
   display: "swap",
 });
 
-export default function NavComponents({ data }) {
+export default function NavComponents({ data, getAll, getOne }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchModal, showSearchModal] = useState(false);
 
@@ -152,15 +153,18 @@ export default function NavComponents({ data }) {
         </ul>
       </div>
 
-      <Suspense>
-        <Search
+      <FunctionsContext.Provider value={{ getOne, getAll }}>
+        <SearchModal
           modal={searchModal}
           closeSearch={closeSearch}
           data={data}
+          getOne={getOne}
           // isLoading={isLoading}
           // error={error}
         />
-      </Suspense>
+      </FunctionsContext.Provider>
     </div>
   );
 }
+
+export const useFunctionsContext = () => useContext(FunctionsContext);

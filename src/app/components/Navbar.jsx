@@ -8,7 +8,8 @@ const raleway = Raleway({
   subsets: ["cyrillic"],
   display: "swap",
 });
-import { getAll } from "../search/searchActions";
+import { getAll } from "../search/(searchPage)/searchActions";
+import { getOne } from "../search/(searchPage)/searchActions";
 
 export const Navbar = async () => {
   const data = await getAll();
@@ -37,7 +38,7 @@ export const Navbar = async () => {
           </Link>
         </div>
         <div className="flex flex-col justify-end w-full">
-          <NavComponents data={data} />
+          <NavComponents data={data} getAll={getAll} getOne={getOne} />
         </div>
       </div>
     </nav>
