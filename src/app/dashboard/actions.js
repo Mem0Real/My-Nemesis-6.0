@@ -313,7 +313,7 @@ export async function update(formData) {
       )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
       await writeFile(`${uploadDir}/${filename}`, buffer);
 
-      await unlink(`${delDir}/${oldFile}`);
+      if (oldFile) await unlink(`${delDir}/${oldFile}`);
 
       let imageUrl = `${relativeUploadDir}/${filename}`;
 
@@ -326,14 +326,18 @@ export async function update(formData) {
   }
 }
 
-export async function deleteItem(entry, id) {
+export async function deleteItem(entry, data) {
   "use server";
 
   const res = prisma[entry].delete({
     where: {
-      id: id,
+      id: data.id,
     },
   });
+  const delDir = join(process.cwd(), "public");
+
+  if (data.image) unlink(`${delDir}/${data.image}`);
+
   revalidateTag("all");
   revalidateTag("search");
   return res;

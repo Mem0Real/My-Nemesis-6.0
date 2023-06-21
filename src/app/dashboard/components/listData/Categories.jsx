@@ -58,7 +58,7 @@ export default function Categories() {
               <EditOutlined />
             </button>
             <button
-              onClick={() => handleDelete("categories", category.id)}
+              onClick={() => handleDelete("categories", category)}
               className="text-red-500"
             >
               <DeleteForeverOutlined />

@@ -15,7 +15,7 @@ export default function Delete({
 }) {
   const confirmDelete = async (deleteData) => {
     try {
-      deleteItem(deleteData.entry, deleteData.id);
+      deleteItem(deleteData.entry, deleteData.data);
       closeDeleteModal();
     } catch (err) {
       console.log(err);
@@ -33,7 +33,7 @@ export default function Delete({
           id="alert-dialog-title"
           className="text-center bg-neutral-900 text-red-600 underline underline-offset-4"
         >
-          {`Delete ${deleteData.id}?`}
+          {`Delete ${deleteData.data.id}?`}
         </DialogTitle>
         <span className="bg-neutral-900 text-neutral-200 text-md w-full border-y text-center py-3 ">
           This Action is Irreversible !

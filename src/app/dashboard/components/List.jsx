@@ -65,8 +65,8 @@ export default function List({ data, create, update, deleteItem, url }) {
     showEditModal(false);
   };
 
-  const handleDelete = (entry, id) => {
-    setDeleteData({ entry, id });
+  const handleDelete = (entry, data) => {
+    setDeleteData({ entry, data });
     showDeleteAlert(true);
   };
 
