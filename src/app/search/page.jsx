@@ -17,8 +17,6 @@ const SearchPage = async ({ searchParams }) => {
     return Object.keys(obj).length === 0;
   }
 
-  let categoryContent, parentContent, childContent, itemContent, empty;
-
   if (searchResult) {
     const { firstArray, secondArray, thirdArray, fourthArray } = filterData(
       searchQuery,

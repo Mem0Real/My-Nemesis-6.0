@@ -24,7 +24,7 @@ const style = {
   p: 4,
 };
 
-export default function Search({ modal, closeSearch, data, isLoading, error }) {
+export default function Search({ modal, closeSearch, data }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [content, setContent] = useState();
@@ -38,11 +38,6 @@ export default function Search({ modal, closeSearch, data, isLoading, error }) {
     const searchWord = e.target.value.toLowerCase();
     setSearchQuery(searchWord);
 
-    if (error) {
-      setContent("Failed to load");
-    } else if (isLoading) {
-      setContent("loading...");
-    }
     if (data) {
       const { firstArray, secondArray, thirdArray, fourthArray } = filterData(
         searchWord,

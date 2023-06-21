@@ -1,8 +1,7 @@
 import prisma from "@/prisma";
 import { NextResponse } from "next/server";
 
-export const revalidate = 60;
-export async function GET() {
+export async function GET(request) {
   const categories = prisma.categories.findMany({});
 
   const parents = prisma.parents.findMany({});

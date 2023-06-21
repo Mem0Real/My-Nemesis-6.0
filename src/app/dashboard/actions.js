@@ -111,6 +111,7 @@ export async function create(formData) {
         },
       });
       revalidatePath("/dashboard");
+      revalidateTag("search");
       console.log("Success");
     } catch (error) {
       console.log("Error: ", error);
@@ -119,6 +120,8 @@ export async function create(formData) {
   if (!file) {
     await writeToDb("");
     revalidateTag("all");
+    revalidateTag("search");
+    revalidateTag("search");
   } else {
     const buffer = Buffer.from(await file.arrayBuffer());
 
@@ -156,6 +159,7 @@ export async function create(formData) {
 
       await writeToDb(imageUrl);
       revalidateTag("all");
+      revalidateTag("search");
     } catch (e) {
       console.error("Error while trying to upload a file\n", e);
     }
@@ -257,7 +261,8 @@ export async function update(formData) {
           [category.name]: category.val,
         },
       });
-      revalidateTag("/all");
+      revalidateTag("all");
+      revalidateTag("search");
       revalidatePath("/dashboard");
       console.log("Success");
     } catch (error) {
@@ -267,9 +272,11 @@ export async function update(formData) {
   if (!file) {
     await writeToDb("");
     revalidateTag("all");
+    revalidateTag("search");
   } else if (typeof file === "string") {
     writeToDb(file);
     revalidateTag("all");
+    revalidateTag("search");
   } else {
     const buffer = Buffer.from(await file.arrayBuffer());
 
@@ -307,6 +314,7 @@ export async function update(formData) {
 
       await writeToDb(imageUrl);
       revalidateTag("all");
+      revalidateTag("search");
     } catch (e) {
       console.error("Error while trying to upload a file\n", e);
     }
@@ -322,5 +330,6 @@ export async function deleteItem(entry, id) {
     },
   });
   revalidateTag("all");
+  revalidateTag("search");
   return res;
 }
