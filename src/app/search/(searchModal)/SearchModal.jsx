@@ -16,6 +16,8 @@ import Parents from "./(searchData)/Parents";
 import Children from "./(searchData)/Children";
 import Items from "./(searchData)/Items";
 
+import { useFunctionsContext } from "@/app/components/NavComponents";
+
 const style = {
   // position: "absolute",
   // top: "50%",
@@ -28,11 +30,13 @@ const style = {
   p: 4,
 };
 
-export default function Search({ modal, closeSearch, data, getOne }) {
+export default function SearchModal({ modal }) {
   const [searchQuery, setSearchQuery] = useState("");
 
   const [content, setContent] = useState();
   const router = useRouter();
+
+  const { data, closeSearch } = useFunctionsContext();
 
   const isObjEmpty = (obj) => {
     return Object.keys(obj).length === 0;
@@ -62,12 +66,12 @@ export default function Search({ modal, closeSearch, data, getOne }) {
             {secondArray && !isObjEmpty(secondArray) && (
               <Parents>{secondArray}</Parents>
             )}
-            {/* {thirdArray && !isObjEmpty(thirdArray) && (
-              <Children thirdArray={thirdArray} />
-            )} */}
-            {/* {fourthArray && !isObjEmpty(fourthArray) && (
-              <Items fourthArray={fourthArray} />
-            )} */}
+            {thirdArray && !isObjEmpty(thirdArray) && (
+              <Children>{thirdArray}</Children>
+            )}
+            {fourthArray && !isObjEmpty(fourthArray) && (
+              <Items>{fourthArray}</Items>
+            )}
           </div>
         );
     }

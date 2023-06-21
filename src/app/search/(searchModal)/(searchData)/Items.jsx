@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { useFunctionsContext } from "@/app/components/NavComponents";
 
-export default function Items({ fourthArray }) {
-  const { getOne } = useFunctionsContext();
+export default function Items({ children }) {
+  const { data, closeSearch } = useFunctionsContext();
 
   return (
     <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
@@ -10,20 +10,29 @@ export default function Items({ fourthArray }) {
         Products
       </h1>
       <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
-        {fourthArray.map(async (item) => {
-          const childData = await getOne("children", item.ChildId);
-          const parentData = await getOne("parents", childData.ParentId);
-          const categoryData = await getOne(
-            "categories",
-            parentData.CategoryId
-          );
-
+        {children.map((item) => {
+          let category, parent, child;
+          data[2].map((chi) => {
+            if (chi.id === item.ChildId) {
+              child = chi;
+              data[1].map((par) => {
+                if (par.id === child.ParentId) {
+                  parent = par;
+                  data[0].map((cat) => {
+                    if (cat.id === parent.CategoryId) {
+                      category = cat;
+                    }
+                  });
+                }
+              });
+            }
+          });
           return (
             <div key={item.id} className="ps-5">
               <Link
-                href={`/collection/${categoryData.id}/${parentData.id}/${childData.id}/${item.id}`}
+                href={`/collection/${category.id}/${parent.id}/${child.id}/${item.id}`}
               >
-                <p>{item.name}</p>
+                <p onClick={closeSearch}>{item.name}</p>
               </Link>
             </div>
           );

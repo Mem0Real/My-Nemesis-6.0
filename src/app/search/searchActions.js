@@ -6,6 +6,7 @@ export async function getOne(entry, id) {
 
   const data = await prisma[entry].findUnique({
     where: { id: id },
+    select: { id: true },
   });
   return data;
 }
@@ -118,4 +119,24 @@ export async function search(query) {
 
   const data = await Promise.all([categories, parents, children, items]);
   return data;
+}
+
+export async function getEntry(entry, id) {
+  "use server";
+  let res1, res2, res3, data1, data2, data3;
+
+  res1 = await prisma[entry].findUnique({
+    where: { id: id },
+  });
+
+  data1 = JSON.stringify(res1);
+
+  console.log(res1);
+  //   if(entry === "parents") {
+
+  //     res2 = await prisma.categories.findUnique({
+  //       where: {}
+  //     })
+  //   }
+  // return data;
 }

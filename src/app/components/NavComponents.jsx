@@ -153,15 +153,8 @@ export default function NavComponents({ data, getAll, getOne }) {
         </ul>
       </div>
 
-      <FunctionsContext.Provider value={{ getOne, getAll }}>
-        <SearchModal
-          modal={searchModal}
-          closeSearch={closeSearch}
-          data={data}
-          getOne={getOne}
-          // isLoading={isLoading}
-          // error={error}
-        />
+      <FunctionsContext.Provider value={{ getOne, getAll, data, closeSearch }}>
+        <SearchModal modal={searchModal} />
       </FunctionsContext.Provider>
     </div>
   );

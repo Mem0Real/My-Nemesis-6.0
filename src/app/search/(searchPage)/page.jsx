@@ -1,4 +1,4 @@
-import { getAll } from "./searchActions";
+import { getAll } from "../searchActions";
 import filterData from "../utils/filterData";
 
 import Categories from "./Categories";
