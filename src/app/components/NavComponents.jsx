@@ -21,7 +21,7 @@ const raleway = Raleway({
   display: "swap",
 });
 
-export default function NavComponents() {
+export default function NavComponents({ data }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchModal, showSearchModal] = useState(false);
 
@@ -154,7 +154,7 @@ export default function NavComponents() {
         <Search
           modal={searchModal}
           closeSearch={closeSearch}
-          // data={data}
+          data={data}
           // isLoading={isLoading}
           // error={error}
         />

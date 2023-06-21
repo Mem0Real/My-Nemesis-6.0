@@ -1,3 +1,5 @@
+import NavComponents from "./NavComponents";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Raleway } from "next/font/google";
@@ -6,10 +8,10 @@ const raleway = Raleway({
   subsets: ["cyrillic"],
   display: "swap",
 });
+import { getAll } from "../search/searchActions";
 
-import NavComponents from "./NavComponents";
-
-export const Navbar = () => {
+export const Navbar = async () => {
+  const data = await getAll();
   return (
     <nav className="w-full md:h-16 h-fit shadow-xl bg-neutral-900 text-white navbar drop-shadow-xl">
       <div className="md:flex justify-between md:justify-normal items-center w-full h-full px-8 py-4 text-sm">
@@ -35,7 +37,7 @@ export const Navbar = () => {
           </Link>
         </div>
         <div className="flex flex-col justify-end w-full">
-          <NavComponents />
+          <NavComponents data={data} />
         </div>
       </div>
     </nav>

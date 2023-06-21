@@ -1,7 +1,7 @@
 import prisma from "@/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(request) {
+export async function GET() {
   const categories = prisma.categories.findMany({});
 
   const parents = prisma.parents.findMany({});
