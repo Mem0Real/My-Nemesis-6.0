@@ -129,7 +129,7 @@ export async function create(formData) {
     if (process.env.NODE_ENV === "development") {
       relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
     } else {
-      relativeUploadDir = `/tmp/${dateFn.format(Date.now(), "dd-MM-Y")}`;
+      relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
     }
 
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);
@@ -313,7 +313,8 @@ export async function update(formData) {
       )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
       await writeFile(`${uploadDir}/${filename}`, buffer);
 
-      if (oldFile) await unlink(`${delDir}/${oldFile}`);
+      console.log(oldFile);
+      if (oldFile && oldFile !== null) await unlink(`${delDir}/${oldFile}`);
 
       let imageUrl = `${relativeUploadDir}/${filename}`;
 

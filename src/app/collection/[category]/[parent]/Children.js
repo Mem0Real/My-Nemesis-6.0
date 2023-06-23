@@ -48,13 +48,15 @@ export default async function Children(props) {
                       <h1 className="text-center text-lg rounded-md sm:my-9 underline underline-offset-8 hover:underline-offset-4 my-3">
                         {item.name}
                       </h1>
-                      {/* <Image
-                        src={`/images/${item.id}/${item.id}.png`}
-                        width="200"
-                        height="200"
-                        alt={`${item.name}-image`}
-                        className="md:mb-12 md:h-40"
-                      /> */}
+                      {item.image && (
+                        <Image
+                          src={item.image}
+                          width="200"
+                          height="200"
+                          alt={`${item.name}-image`}
+                          className="md:mb-12 md:h-40"
+                        />
+                      )}
                     </div>
                   </Link>
                 );

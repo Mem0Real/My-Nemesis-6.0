@@ -22,7 +22,7 @@ export default function Delete({
     }
   };
   return (
-    <div>
+    <div className="bg-neutral-900 text-neutral-200">
       <Dialog
         open={deleteAlert}
         onClose={closeDeleteModal}
@@ -31,22 +31,22 @@ export default function Delete({
       >
         <DialogTitle
           id="alert-dialog-title"
-          className="text-center bg-neutral-900 text-red-600 underline underline-offset-4"
+          className="text-center text-red-600 underline underline-offset-4 bg-neutral-900"
         >
-          {`Delete ${deleteData.data.id}?`}
+          {`Delete ${deleteData?.data?.id}?`}
         </DialogTitle>
-        <span className="bg-neutral-900 text-neutral-200 text-md w-full border-y text-center py-3 ">
+        <span className="text-md w-full border-y text-center py-3 bg-neutral-900 text-neutral-200 ">
           This Action is Irreversible !
         </span>
-        <DialogContent className="bg-neutral-900 text-center">
+        <DialogContent className="text-center bg-neutral-900 text-neutral-200">
           <DialogContentText
             id="alert-dialog-description"
-            className="flex flex-col items-center justify-between gap-5 text-neutral-200"
+            className="flex flex-col items-center justify-between gap-5 bg-neutral-900 text-neutral-200"
           >
             <span className=" ">
-              If you proceed, the <b>selected item</b> as well as{" "}
-              <b>all of it&apos;s children</b> will be removed from the database
-              permanently.
+              If you proceed, the <b>selected item</b> as well as
+              <b> all of it&apos;s children</b> will be removed from the
+              database permanently.
             </span>
             <span className="font-semibold">Proceed with Caution</span>
           </DialogContentText>

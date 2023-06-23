@@ -17,7 +17,17 @@ export default function Edit({
   const imageRef = useRef();
 
   useEffect(() => {
-    editData.image && setImageSrc(editData.image);
+    let img;
+
+    if (editData.image && editData.image !== "") {
+      typeof editData.image !== "string"
+        ? (img = editData.image.toString())
+        : (img = editData.image);
+      setImageSrc(img);
+    } else {
+      setImageSrc(null);
+    }
+    console.log(editData.image);
   }, [editData.image]);
 
   const handleFileSelect = (changeEvent) => {
@@ -43,6 +53,13 @@ export default function Edit({
     const formData = formatData(editData);
 
     update(formData);
+    setImageSrc({});
+  };
+
+  const handleClose = () => {
+    closeEditModal();
+    setImageSrc({});
+    setEditData({});
   };
 
   let title;
@@ -53,7 +70,7 @@ export default function Edit({
   return (
     <Modal
       open={modal}
-      onClose={closeEditModal}
+      onClose={handleClose}
       aria-labelledby="Edit Modal"
       aria-describedby="Update category"
       className="absolute top-20 w-[85%] md:w-2/5 h-screen my-6 md:mt-0 md:py-3 mx-auto overflow-y-auto no-scrollbar rounded-lg"
@@ -64,7 +81,7 @@ export default function Edit({
             type="button"
             className="absolute top-10 right-5 md:top-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
             data-modal-hide="authentication-modal"
-            onClick={() => closeEditModal()}
+            onClick={handleClose}
           >
             <svg
               aria-hidden="true"
@@ -252,7 +269,7 @@ export default function Edit({
                   <Image
                     src={imageSrc}
                     fill={true}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
                     alt="Image"
                     className="object-contain rounded-lg"
                   />
