@@ -24,9 +24,16 @@ import { useListContext } from "../ListTable";
 
 export default function Children({ category, parent }) {
   const { handleAdd, handleEdit, handleDelete, data } = useDataContext();
-  const children = data[2];
-
   const { childDropDown, chi } = useListContext();
+
+  const children = data[2].sort((a, b) => {
+    const name1 = a.name.toUpperCase();
+    const name2 = b.name.toUpperCase();
+
+    if (name1 < name2) return -1;
+    else if (name1 > name2) return 1;
+    else return 0;
+  });
 
   return (
     <Table size="large" aria-label="children">

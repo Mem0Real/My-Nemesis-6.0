@@ -30,8 +30,8 @@ export default function ListTable() {
           setChi({ ...chi, open: false });
         }
       } else {
-        setCat({ ...cat, open: false });
-        setCat({ id: categoryId, open: !cat.open });
+        setCat({ id: cat.id, open: false });
+        setCat({ id: categoryId, open: true });
       }
     }
   };
@@ -50,8 +50,8 @@ export default function ListTable() {
           setChi({ ...chi, open: false });
         }
       } else {
-        setPar({ ...par, open: false });
-        setPar({ id: parentId, open: !par.open });
+        setPar({ id: par.id, open: false });
+        setPar({ id: parentId, open: true });
       }
     }
   };
@@ -67,8 +67,8 @@ export default function ListTable() {
       if (chi.id === childId) {
         setChi({ ...chi, open: !chi.open });
       } else {
-        setChi({ ...chi, open: false });
-        setChi({ id: childId, open: !chi.open });
+        setChi({ id: chi.id, open: false });
+        setChi({ id: childId, open: true });
       }
     }
   };

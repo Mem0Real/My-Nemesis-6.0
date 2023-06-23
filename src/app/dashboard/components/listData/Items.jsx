@@ -13,7 +13,14 @@ import { useDataContext } from "../List";
 
 export default function Items({ category, parent, child }) {
   const { handleAdd, handleEdit, handleDelete, data } = useDataContext();
-  const items = data[3];
+  const items = data[3].sort((a, b) => {
+    const name1 = a.name.toUpperCase();
+    const name2 = b.name.toUpperCase();
+
+    if (name1 < name2) return -1;
+    else if (name1 > name2) return 1;
+    else return 0;
+  });
 
   return (
     <>

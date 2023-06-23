@@ -53,7 +53,7 @@ export default function Edit({
     const formData = formatData(editData);
 
     update(formData);
-    setImageSrc({});
+    setImageSrc(null);
   };
 
   const handleClose = () => {
