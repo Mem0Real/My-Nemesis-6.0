@@ -4,10 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "rm -rf ./.next && prisma generate && prisma migrate deploy && next build",
+    "build": "rm -rf ./.next && prisma generate && prisma migrate deploy && next build --force",
     "start": "next start",
     "lint": "next lint",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
+    "vercel-build": "prisma generate && prisma migrate deploy && next build --force",
     "postinstall": "prisma generate"
   },
   "dependencies": {
