@@ -6,7 +6,6 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { ArrowBackIos } from "@mui/icons-material";
 
 export default function MultiCarousel({ category, parents }) {
-  const style = {};
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2, pagination: false },
@@ -33,10 +32,11 @@ export default function MultiCarousel({ category, parents }) {
   const pagination = ({ pages, activePage, onClick }) => {
     return (
       <div className="flex gap-4 my-3">
-        {pages.map((page) => {
+        {pages.map((page, index) => {
           const isActivePage = activePage === page;
           return (
             <div
+              key={index}
               className="p-1 rounded-full ring-2 ring-neutral-800 flex items-center cursor-pointer"
               onClick={() => onClick(page)}
               active={isActivePage}
