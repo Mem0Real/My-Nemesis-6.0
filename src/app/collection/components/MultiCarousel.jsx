@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Carousel, { consts } from "react-elastic-carousel";
+import Carousel, { consts } from "@itseasy21/react-elastic-carousel";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { ArrowBackIos } from "@mui/icons-material";
 
