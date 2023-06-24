@@ -21,7 +21,7 @@ export default async function CollectionPage() {
             {category.name}
           </h1>
         </Link>
-        <div className="w-[96%] mx-auto">
+        <div className="w-[95%] mx-auto">
           <MultiCarousel category={category} parents={category.parents} />
         </div>
       </div>
