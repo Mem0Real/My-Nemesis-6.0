@@ -14,7 +14,7 @@ export default async function Children(props) {
   function isObjEmpty(obj) {
     return Object.keys(obj).length === 0;
   }
-  const childData = await getEntries("children", childrenProp);
+  let childData = await getEntries("children", childrenProp);
 
   if (isObjEmpty(childData)) {
     content = (
@@ -23,6 +23,14 @@ export default async function Children(props) {
       </div>
     );
   } else {
+    childData = childData.sort((a, b) => {
+      const name1 = a.name.toUpperCase();
+      const name2 = b.name.toUpperCase();
+
+      if (name1 < name2) return -1;
+      else if (name1 > name2) return 1;
+      else return 0;
+    });
     content = childData.map((child) => {
       return (
         <div

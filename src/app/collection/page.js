@@ -1,12 +1,18 @@
-import Image from "next/image";
 import Link from "next/link";
 import { getEntries } from "./actions";
 import { notFound } from "next/navigation";
-// import DataCarousel from "./components/DataCarousel";
 import MultiCarousel from "./components/MultiCarousel";
 
 export default async function CollectionPage() {
-  const categories = await getEntries("categories");
+  let categories = await getEntries("categories");
+  categories = categories.sort((a, b) => {
+    const name1 = a.name.toUpperCase();
+    const name2 = b.name.toUpperCase();
+
+    if (name1 < name2) return -1;
+    else if (name1 > name2) return 1;
+    else return 0;
+  });
 
   if (!categories[0].name) return notFound();
 

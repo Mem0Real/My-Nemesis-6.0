@@ -110,6 +110,7 @@ export async function create(formData) {
           [category.name]: category.val,
         },
       });
+      revalidatePath("/collection");
       revalidatePath("/dashboard");
       revalidateTag("search");
       console.log("Success");
@@ -264,6 +265,7 @@ export async function update(formData) {
       revalidateTag("all");
       revalidateTag("search");
       revalidatePath("/dashboard");
+      revalidatePath("/collection");
       console.log("Success");
     } catch (error) {
       console.log("Error: ", error);

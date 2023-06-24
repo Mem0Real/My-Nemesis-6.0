@@ -14,6 +14,14 @@ export default function MultiCarousel({ category, parents }) {
     { width: 1450, itemsToShow: 5 },
     { width: 1750, itemsToShow: 6 },
   ];
+  let parentsData = parents.sort((a, b) => {
+    const name1 = a.name.toUpperCase();
+    const name2 = b.name.toUpperCase();
+
+    if (name1 < name2) return -1;
+    else if (name1 > name2) return 1;
+    else return 0;
+  });
 
   const arrows = ({ type, onClick, isEdge }) => {
     const pointer =
@@ -53,6 +61,7 @@ export default function MultiCarousel({ category, parents }) {
       </div>
     );
   };
+
   return (
     <Carousel
       breakPoints={breakPoints}
@@ -60,7 +69,7 @@ export default function MultiCarousel({ category, parents }) {
       renderPagination={pagination}
       pagination={false}
     >
-      {parents.map((parent) => {
+      {parentsData.map((parent) => {
         return (
           <Link
             key={parent.id}

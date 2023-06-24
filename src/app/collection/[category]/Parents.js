@@ -10,7 +10,7 @@ export default async function Parents(props) {
     return Object.keys(obj).length === 0;
   }
   const categoryId = props.CategoryId;
-  const parentData = await getEntries("parents", props);
+  let parentData = await getEntries("parents", props);
 
   if (isObjEmpty(parentData)) {
     content = (
@@ -19,6 +19,14 @@ export default async function Parents(props) {
       </div>
     );
   } else {
+    parentData = parentData.sort((a, b) => {
+      const name1 = a.name.toUpperCase();
+      const name2 = b.name.toUpperCase();
+
+      if (name1 < name2) return -1;
+      else if (name1 > name2) return 1;
+      else return 0;
+    });
     content = parentData.map((parent) => {
       return (
         <div
