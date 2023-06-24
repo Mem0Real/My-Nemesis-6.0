@@ -21,7 +21,7 @@ const raleway = Raleway({
   display: "swap",
 });
 export const metadata = {
-  title: "My Nemesis 5.0",
+  title: "My Nemesis 6.0",
   description: "Full Stack page offering product market",
 };
 
