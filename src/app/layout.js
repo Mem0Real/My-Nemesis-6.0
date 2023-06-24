@@ -22,7 +22,8 @@ const raleway = Raleway({
 });
 export const metadata = {
   title: "My Nemesis 6.0",
-  description: "Full Stack page offering product market",
+  description:
+    "Full Stack page offering product market display based on ethio machineries",
 };
 
 export default function RootLayout({ children }) {
