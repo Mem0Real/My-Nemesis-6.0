@@ -109,7 +109,7 @@ export default function SearchModal({ modal }) {
           <div className="flex flex-col gap-4">
             <div className="flex items-center">
               <div className="flex-none -ml-2 mr-2">
-                <button onClick={handleSubmit}>
+                <button onClick={handleSubmit} name="search">
                   <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
               </div>

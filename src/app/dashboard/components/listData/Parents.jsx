@@ -76,6 +76,7 @@ export default function Parents({ category }) {
                   <TableCell align="center">
                     <div className="flex justify-evenly items-center">
                       <button
+                        name="add"
                         className="text-green-500"
                         onClick={() =>
                           handleAdd("children", category.id, parent.id)
@@ -84,12 +85,14 @@ export default function Parents({ category }) {
                         <AddOutlined />
                       </button>
                       <button
+                        name="edit"
                         onClick={() => handleEdit("parents", parent)}
                         className="text-blue-500"
                       >
                         <EditOutlined />
                       </button>
                       <button
+                        name="delete"
                         onClick={() => handleDelete("parents", parent)}
                         className="text-red-500"
                       >

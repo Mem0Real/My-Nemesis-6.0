@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { Suspense } from "react";
 import Parents from "./parents";
 
 export default async function Categories() {
@@ -6,7 +7,7 @@ export default async function Categories() {
   if (process.env.NODE_ENV === "development")
     url = process.env.NEXT_PUBLIC_LOCAL_URL;
   else if (process.env.NODE_ENV === "production")
-    url = process.env.NEXT_PUBLIC_PRODUCTION_URL;
+    url = process.env.NEXT_PUBLIC_BUILD_URL;
   const res = await fetch(`${url}/api/getCategoryData?entry=categories`, {
     next: { tags: ["categories"] },
   });
@@ -37,7 +38,15 @@ export default async function Categories() {
         </Link>
 
         <div className="w-[90%] mx-auto">
-          <Parents categoryId={category.id} parents={category.parents} />
+          <Suspense
+            fallback={
+              <h1 className="text-md text-center mx-auto">
+                Loading parents...
+              </h1>
+            }
+          >
+            <Parents categoryId={category.id} parents={category.parents} />
+          </Suspense>
         </div>
       </div>
     );

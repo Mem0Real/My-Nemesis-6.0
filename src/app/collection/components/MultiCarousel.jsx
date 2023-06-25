@@ -21,6 +21,7 @@ export default function MultiCarousel({ categoryId, parents, children }) {
       type === consts.PREV ? <ArrowBackIos /> : <ArrowForwardIosIcon />;
     return (
       <button
+        name="arrows"
         onClick={onClick}
         disabled={isEdge}
         className="hover:animate-pulse transition-all ease-in-out h-fit m-auto disabled:invisible"

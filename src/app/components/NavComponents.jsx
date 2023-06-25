@@ -52,57 +52,57 @@ export default function NavComponents({ data, getAll, getOne }) {
     <div ref={menuRef} className="w-full">
       {/* Buttons */}
       <div className="w-full">
-        <ul className="hidden lg:flex">
-          <div className="flex justify-between items-center w-full">
-            <div className="md:px-11">
-              {/* <SearchInput /> */}
-              <button
-                type="submit"
-                onClick={handleSearch}
-                className="flex items-center cursor-pointer"
-              >
-                <p className="px-12 md:pl-4 md:pr-16 py-3 w-full rounded-md sm:py-2 flex-1 text-zinc-200 bg-zinc-800">
-                  Search products...
-                </p>
-                <span className="pr-4 -ml-7">
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </span>
-              </button>
-            </div>
-            <div className="flex justify-end">
-              <Link href="/collection">
-                <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
-                  Collection
-                </li>
-              </Link>
-              <Link href="/services">
-                <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
-                  Services
-                </li>
-              </Link>
-              <Link href="/about">
-                <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
-                  About
-                </li>
-              </Link>
-              <Link href="/dashboard">
-                <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
-                  Dashboard
-                </li>
-              </Link>
-            </div>
-          </div>
+        <ul className="hidden lg:flex justify-between items-center w-full">
+          <li className="md:px-11">
+            {/* <SearchInput /> */}
+            <button
+              name="search"
+              type="submit"
+              onClick={handleSearch}
+              className="flex items-center cursor-pointer"
+            >
+              <p className="px-12 md:pl-4 md:pr-16 py-3 w-full rounded-md sm:py-2 flex-1 text-zinc-200 bg-zinc-800">
+                Search products...
+              </p>
+              <span className="pr-4 -ml-7">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </span>
+            </button>
+          </li>
+          <li className="flex justify-end">
+            <Link href="/collection">
+              <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+                Collection
+              </li>
+            </Link>
+            <Link href="/services">
+              <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+                Services
+              </li>
+            </Link>
+            <Link href="/about">
+              <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+                About
+              </li>
+            </Link>
+            <Link href="/dashboard">
+              <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+                Dashboard
+              </li>
+            </Link>
+          </li>
         </ul>
       </div>
 
       {/* Hamburger */}
       <div className="flex gap-4 justify-end lg:hidden text-white relative">
-        <button className="" onClick={handleSearch}>
+        <button className="" onClick={handleSearch} name="search">
           <span className="">
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </span>
         </button>
         <button
+          name="dropdown-btn"
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center px-3 py-2 rounded text-black-500 hover:text-black-400"
         >
@@ -130,26 +130,38 @@ export default function NavComponents({ data, getAll, getOne }) {
         }`}
       >
         <ul className="text-sm sm:hidden block bg-neutral-900 py-5 mt-0 md:mt-9">
-          <Link href="/collection">
-            <li className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium">
+          <li>
+            <Link
+              href="/collection"
+              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
+            >
               Collection
-            </li>
-          </Link>
-          <Link href="/services">
-            <li className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium">
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/services"
+              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
+            >
               Services
-            </li>
-          </Link>
-          <Link href="/about">
-            <li className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium">
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/about"
+              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
+            >
               About
-            </li>
-          </Link>
-          <Link href="/dashboard">
-            <li className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium">
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/dashboard"
+              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
+            >
               Dashboard
-            </li>
-          </Link>
+            </Link>
+          </li>
         </ul>
       </div>
 

@@ -64,12 +64,14 @@ export default function Items({ category, parent, child }) {
                   <TableCell align="center">
                     <div className="flex justify-evenly items-center">
                       <button
+                        name="add"
                         onClick={() => handleEdit("items", item)}
                         className="text-blue-500"
                       >
                         <EditOutlined />
                       </button>
                       <button
+                        name="edit"
                         onClick={() => handleDelete("items", item)}
                         className="text-red-500"
                       >
@@ -85,6 +87,7 @@ export default function Items({ category, parent, child }) {
       </Table>
       <div className="flex flex-col w-full justify-center items-center md:mt-3">
         <Button
+          name="delete"
           variant="contained"
           color="success"
           onClick={() => handleAdd("items", category.id, parent.id, child.id)}

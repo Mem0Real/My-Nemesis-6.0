@@ -54,18 +54,21 @@ export default function Categories() {
         <TableCell align="center" colSpan={5}>
           <div className="flex justify-evenly items-center">
             <button
+              name="add"
               onClick={() => handleAdd("parents", category.id)}
               className="text-green-500"
             >
               <AddOutlined />
             </button>
             <button
+              name="edit"
               onClick={() => handleEdit("categories", category)}
               className="text-blue-500"
             >
               <EditOutlined />
             </button>
             <button
+              name="delete"
               onClick={() => handleDelete("categories", category)}
               className="text-red-500"
             >
