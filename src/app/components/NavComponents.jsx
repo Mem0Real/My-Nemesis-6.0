@@ -52,7 +52,7 @@ export default function NavComponents({ data, getAll, getOne }) {
     <div ref={menuRef} className="w-full">
       {/* Buttons */}
       <div className="w-full">
-        <ul className="hidden md:flex">
+        <ul className="hidden lg:flex">
           <div className="flex justify-between items-center w-full">
             <div className="md:px-11">
               {/* <SearchInput /> */}
@@ -96,7 +96,7 @@ export default function NavComponents({ data, getAll, getOne }) {
       </div>
 
       {/* Hamburger */}
-      <div className="flex gap-4 justify-end md:hidden text-white relative">
+      <div className="flex gap-4 justify-end lg:hidden text-white relative">
         <button className="" onClick={handleSearch}>
           <span className="">
             <FontAwesomeIcon icon={faMagnifyingGlass} />

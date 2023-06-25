@@ -1,7 +1,4 @@
-import { Suspense } from "react";
 import Link from "next/link";
-import LoadingIndicator from "./utils/LoadingIndicator";
-import prisma from "@/prisma";
 
 export default async function Home() {
   return (

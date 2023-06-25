@@ -1,4 +1,4 @@
-import prisma from "@/prisma";
+import prisma from "@/lib/prisma";
 
 export async function getEntries(entry, currentItem) {
   "use server";

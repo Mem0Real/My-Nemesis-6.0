@@ -1,4 +1,4 @@
-import prisma from "@/prisma";
+import prisma from "@/lib/prisma";
 import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function getOne(entry, id) {

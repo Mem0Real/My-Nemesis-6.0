@@ -1,11 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { Suspense } from "react";
 import Carousel, { consts } from "@itseasy21/react-elastic-carousel";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { ArrowBackIos } from "@mui/icons-material";
 
-export default function MultiCarousel({ category, parents }) {
+export default function MultiCarousel({ categoryId, parents, children }) {
   const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2, pagination: false },
@@ -14,14 +15,6 @@ export default function MultiCarousel({ category, parents }) {
     { width: 1450, itemsToShow: 5 },
     { width: 1750, itemsToShow: 6 },
   ];
-  let parentsData = parents.sort((a, b) => {
-    const name1 = a.name.toUpperCase();
-    const name2 = b.name.toUpperCase();
-
-    if (name1 < name2) return -1;
-    else if (name1 > name2) return 1;
-    else return 0;
-  });
 
   const arrows = ({ type, onClick, isEdge }) => {
     const pointer =
@@ -37,63 +30,9 @@ export default function MultiCarousel({ category, parents }) {
     );
   };
 
-  const pagination = ({ pages, activePage, onClick }) => {
-    return (
-      <div className="flex gap-4 my-3">
-        {pages.map((page, index) => {
-          const isActivePage = activePage === page;
-          return (
-            <div
-              key={index}
-              className="p-1 rounded-full ring-2 ring-neutral-800 flex items-center cursor-pointer"
-              onClick={() => onClick(page)}
-              active={isActivePage}
-            >
-              <h1 className="text-4xl">Hi</h1>
-              <div
-                className={`p-0.5 rounded-full bg-neutral-200 transition-all ease-in-out duration-700 ${
-                  isActivePage && "bg-neutral-900"
-                }`}
-              ></div>
-            </div>
-          );
-        })}
-      </div>
-    );
-  };
-
   return (
-    <Carousel
-      breakPoints={breakPoints}
-      renderArrow={arrows}
-      renderPagination={pagination}
-      pagination={false}
-    >
-      {parentsData.map((parent) => {
-        return (
-          <Link
-            key={parent.id}
-            href={`/collection/${category.id}/${parent.id}`}
-          >
-            <div className="flex flex-col items-center group md:my-5">
-              {parent.image && (
-                <div
-                  className="w-56 h-44 border border-black rounded-t-3xl shadow-inner shadow-neutral-950 hover:shadow-neutral-700 transition-all ease-in-out "
-                  style={{
-                    backgroundImage: `url(${parent.image})`,
-                    backgroundSize: "contain",
-                    backgroundRepeat: "no-repeat",
-                    backgroundPosition: "center",
-                  }}
-                ></div>
-              )}
-              <div className="h-12 flex flex-col items-start ps-4 pt-3 rounded-b-2xl w-full bg-neutral-800 text-neutral-200 shadow-xl shadow-neutral-950 transition-all ease-in-out duration-500 group-hover:shadow-neutral-700 ">
-                <h1>{parent.name}</h1>
-              </div>
-            </div>
-          </Link>
-        );
-      })}
+    <Carousel breakPoints={breakPoints} renderArrow={arrows} pagination={false}>
+      {children}
     </Carousel>
   );
 }

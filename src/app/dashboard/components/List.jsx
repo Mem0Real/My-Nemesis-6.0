@@ -40,12 +40,23 @@ export default function List({ data, create, update, deleteItem, url }) {
   };
 
   const handleEdit = (entry, data = null) => {
+    let ref = { name: undefined, val: undefined };
+
+    if (data.ChildId) {
+      ref = { name: "ChildId", val: data.ChildId };
+    } else if (data.ParentId) {
+      ref = { name: "ParentId", val: data.ParentId };
+    } else if (data.CategoryId) {
+      ref = { name: "CategoryId", val: data.CategoryId };
+    }
+
     setEditData({
       entry: entry,
       id: data.id,
       name: data.name,
       description: data.description,
       image: data.image,
+      [ref.name]: ref.val,
     });
     if (entry === "items") {
       setEditData((editData) => {

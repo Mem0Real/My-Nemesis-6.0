@@ -1,4 +1,4 @@
-import prisma from "@/prisma";
+import prisma from "@/lib/prisma";
 import mime from "mime";
 import { join } from "path";
 import { stat, mkdir, writeFile, unlink } from "fs/promises";
@@ -120,17 +120,17 @@ export async function create(formData) {
   };
   if (!file) {
     await writeToDb("");
-    revalidateTag("all");
-    revalidateTag("search");
+    revalidatePath("/collection");
+    revalidatePath("/dashboard");
     revalidateTag("search");
   } else {
     const buffer = Buffer.from(await file.arrayBuffer());
 
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
-      relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
+      relativeUploadDir = `/uploads/${entry}/${category.val}`;
     } else {
-      relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
+      relativeUploadDir = `/uploads/${entry}/${category.val}`;
     }
 
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);
@@ -175,9 +175,9 @@ export async function update(formData) {
 
   if (!entry) entry = "categories";
 
-  let categoryId = formData.get("categories");
-  let parentId = formData.get("parents");
-  let childId = formData.get("children");
+  let categoryId = formData.get("CategoryId");
+  let parentId = formData.get("ParentId");
+  let childId = formData.get("ChildId");
   let name = formData.get("name");
 
   let brand = formData.get("brand");
@@ -215,37 +215,35 @@ export async function update(formData) {
   let category = { name: undefined, val: undefined };
   let updatedId = { name: undefined, val: undefined };
 
+  if (newId && newId !== id) updatedId = { name: "id", val: newId };
+  if (!id) {
+    let idName = name.toLowerCase();
+    let array = idName.split(/ and| &|, /);
+    idName = array[0];
+    idName = idName.replace(/\s/g, "-");
+    formData.set("id", idName);
+    id = formData.get("id");
+  }
+
+  if (!description) {
+    formData.set("description", name);
+    description = formData.get("description");
+  }
+
+  if (childId !== null) {
+    category = { name: "ChildId", val: childId };
+  } else if (parentId !== null) {
+    category = { name: "ParentId", val: parentId };
+  } else if (categoryId !== null) {
+    category = { name: "CategoryId", val: categoryId };
+  }
+
+  if (quantity === NaN) quantity = 0;
+  if (price === NaN) price = 0;
+
   const writeToDb = async (dir) => {
     formData.set("image", dir);
     image = formData.get("image");
-
-    if (newId && newId !== id) updatedId = { name: "id", val: newId };
-    if (!id) {
-      let idName = name.toLowerCase();
-      let array = idName.split(/ and| &|, /);
-      idName = array[0];
-      idName = idName.replace(/\s/g, "-");
-      formData.set("id", idName);
-      id = formData.get("id");
-    }
-
-    if (!description) {
-      formData.set("description", name);
-      description = formData.get("description");
-    }
-
-    if (childId !== null) {
-      category = { name: "ChildId", val: childId };
-    } else if (parentId !== null) {
-      category = { name: "ParentId", val: parentId };
-    } else if (categoryId !== null) {
-      category = { name: "CategoryId", val: categoryId };
-    } else {
-      category.name = undefined;
-      category.val = undefined;
-    }
-    if (quantity === NaN) quantity = 0;
-    if (price === NaN) price = 0;
 
     try {
       const res = await prisma[entry].update({
@@ -262,7 +260,6 @@ export async function update(formData) {
           [category.name]: category.val,
         },
       });
-      revalidateTag("all");
       revalidateTag("search");
       revalidatePath("/dashboard");
       revalidatePath("/collection");
@@ -273,21 +270,23 @@ export async function update(formData) {
   };
   if (!file) {
     await writeToDb("");
-    revalidateTag("all");
     revalidateTag("search");
+    revalidatePath("/dashboard");
+    revalidatePath("/collection");
   } else if (typeof file === "string") {
     writeToDb(file);
-    revalidateTag("all");
     revalidateTag("search");
+    revalidatePath("/dashboard");
+    revalidatePath("/collection");
   } else {
     const oldFile = formData.get("image");
     const buffer = Buffer.from(await file.arrayBuffer());
 
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
-      relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
+      relativeUploadDir = `/uploads/${entry}/${category.val}`;
     } else {
-      relativeUploadDir = `/uploads/${dateFn.format(Date.now(), "dd-MM-Y")}`;
+      relativeUploadDir = `/uploads/${entry}/${category.val}`;
     }
 
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);
@@ -315,14 +314,14 @@ export async function update(formData) {
       )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
       await writeFile(`${uploadDir}/${filename}`, buffer);
 
-      console.log(oldFile);
-      if (oldFile && oldFile !== null) await unlink(`${delDir}/${oldFile}`);
+      if (oldFile && oldFile !== "null") await unlink(`${delDir}/${oldFile}`);
 
       let imageUrl = `${relativeUploadDir}/${filename}`;
 
       await writeToDb(imageUrl);
-      revalidateTag("all");
       revalidateTag("search");
+      revalidatePath("/dashboard");
+      revalidatePath("/collection");
     } catch (e) {
       console.error("Error while trying to upload a file\n", e);
     }
@@ -341,7 +340,8 @@ export async function deleteItem(entry, data) {
 
   if (data.image) unlink(`${delDir}/${data.image}`);
 
-  revalidateTag("all");
   revalidateTag("search");
+  revalidatePath("/dashboard");
+  revalidatePath("/collection");
   return res;
 }

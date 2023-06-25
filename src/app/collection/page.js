@@ -1,41 +1,18 @@
-import Link from "next/link";
-import { getEntries } from "./actions";
-import { notFound } from "next/navigation";
-import MultiCarousel from "./components/MultiCarousel";
+import { Suspense } from "react";
+import Categories from "./categories";
 
 export default async function CollectionPage() {
-  let categories = await getEntries("categories");
-  categories = categories.sort((a, b) => {
-    const name1 = a.name.toUpperCase();
-    const name2 = b.name.toUpperCase();
-
-    if (name1 < name2) return -1;
-    else if (name1 > name2) return 1;
-    else return 0;
-  });
-
-  if (!categories[0].name) return notFound();
-
-  const content = categories.map((category) => {
-    return (
-      <div
-        key={category.id}
-        className="flex flex-col items-center md:items-start text-sm mb-1 w-full bg-neutral-200/80 text-neutral-800"
-      >
-        <Link href={`/collection/${category.id}`} className="flex-none">
-          <h1 className="md:ml-12 text-lg my-5 sm:my-9 ring ring-neutral-600 bg-neutral-100 ring-offset-4 hover:ring-offset-2 hover:ring-neutral-800 ring-opacity-40 shadow-lg shadow-neutral-800 px-5 rounded-md">
-            {category.name}
-          </h1>
-        </Link>
-        <div className="w-[95%] mx-auto">
-          <MultiCarousel category={category} parents={category.parents} />
-        </div>
-      </div>
-    );
-  });
   return (
-    <div className="flex flex-col justify-evenly items-center w-screen">
-      {content}
+    <div className="flex flex-col items-center gap-20 text-neutral-800 mt-6">
+      <div className="flex flex-col items-center gap-7">
+        <h1 className="text-4xl underline underline-offset-2">Welcome!</h1>
+        <p className="md:ps-5">Take a look at the products we offer</p>
+      </div>
+      <Suspense
+        fallback={<h1 className="text-black m-auto">Loading Categories</h1>}
+      >
+        <Categories />
+      </Suspense>
     </div>
   );
 }

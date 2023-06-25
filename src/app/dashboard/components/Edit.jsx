@@ -27,7 +27,6 @@ export default function Edit({
     } else {
       setImageSrc(null);
     }
-    console.log(editData.image);
   }, [editData.image]);
 
   const handleFileSelect = (changeEvent) => {
