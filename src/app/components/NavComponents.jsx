@@ -52,8 +52,8 @@ export default function NavComponents({ data, getAll, getOne }) {
     <div ref={menuRef} className="w-full">
       {/* Buttons */}
       <div className="w-full">
-        <ul className="hidden lg:flex justify-between items-center w-full">
-          <li className="md:px-11">
+        <div className="hidden lg:flex justify-between items-center w-full">
+          <div className="md:px-11">
             {/* <SearchInput /> */}
             <button
               name="search"
@@ -68,30 +68,30 @@ export default function NavComponents({ data, getAll, getOne }) {
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               </span>
             </button>
-          </li>
-          <li className="flex justify-end">
+          </div>
+          <div className="flex justify-end">
             <Link href="/collection">
-              <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+              <div className="ml-10 underline underline-offset-8 hover:underline-offset-4">
                 Collection
-              </li>
+              </div>
             </Link>
             <Link href="/services">
-              <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+              <div className="ml-10 underline underline-offset-8 hover:underline-offset-4">
                 Services
-              </li>
+              </div>
             </Link>
             <Link href="/about">
-              <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+              <div className="ml-10 underline underline-offset-8 hover:underline-offset-4">
                 About
-              </li>
+              </div>
             </Link>
             <Link href="/dashboard">
-              <li className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+              <div className="ml-10 underline underline-offset-8 hover:underline-offset-4">
                 Dashboard
-              </li>
+              </div>
             </Link>
-          </li>
-        </ul>
+          </div>
+        </div>
       </div>
 
       {/* Hamburger */}
@@ -129,7 +129,7 @@ export default function NavComponents({ data, getAll, getOne }) {
           isOpen ? "block" : "hidden"
         }`}
       >
-        <ul className="text-sm sm:hidden block bg-neutral-900 py-5 mt-0 md:mt-9">
+        <ul className="text-sm sm:hidden block bg-neutral-900 py-5 mt-0 md:mt-9 list-none">
           <li>
             <Link
               href="/collection"
