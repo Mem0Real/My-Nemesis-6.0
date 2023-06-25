@@ -11,6 +11,7 @@ export async function ParentData({ categoryId }) {
 
   let parentsData = await res.json();
 
+  // Sort by name
   let parents;
   parents = parentsData.sort((a, b) => {
     const name1 = a.name.toUpperCase();
