@@ -2,10 +2,14 @@ import Link from "next/link";
 import Parents from "./parents";
 
 export default async function Categories() {
-  const res = await fetch(
-    "http://localhost:3000/api/getCategoryData?entry=categories",
-    { next: { tags: ["categories"] } }
-  );
+  let url;
+  if (process.env.NODE_ENV === "development")
+    url = process.env.NEXT_PUBLIC_LOCAL_URL;
+  else if (process.env.NODE_ENV === "production")
+    url = process.env.NEXT_PUBLIC_PRODUCTION_URL;
+  const res = await fetch(`${url}/api/getCategoryData?entry=categories`, {
+    next: { tags: ["categories"] },
+  });
 
   let categories = await res.json();
 
