@@ -1,5 +1,5 @@
 import CarouselData from "./carouselData";
-import SplideCarousel from "./components/SplideCarousel";
+import SwiperCarousel from "./components/SwiperCarousel";
 
 export default function Parents({ categoryId, parents }) {
   let parentsData;
@@ -12,8 +12,8 @@ export default function Parents({ categoryId, parents }) {
     else return 0;
   });
   return (
-    <SplideCarousel categoryId={categoryId} parentsData={parentsData}>
+    <SwiperCarousel categoryId={categoryId} parentsData={parentsData}>
       <CarouselData parentsData={parentsData} />
-    </SplideCarousel>
+    </SwiperCarousel>
   );
 }
