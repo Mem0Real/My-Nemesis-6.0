@@ -11,9 +11,14 @@ export default function Parents({ categoryId, parents }) {
     else if (name1 > name2) return 1;
     else return 0;
   });
+
+  parentsData = parentsData.map(
+    (parent) => parent.CategoryId === categoryId && parent
+  );
+
   return (
     <SwiperCarousel categoryId={categoryId} parentsData={parentsData}>
-      <CarouselData parentsData={parentsData} />
+      <CarouselData categoryId={categoryId} parentsData={parentsData} />
     </SwiperCarousel>
   );
 }
