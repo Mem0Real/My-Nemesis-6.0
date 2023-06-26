@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -16,7 +17,8 @@ import {
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import { useDataContext } from "../List";
-import Parents from "./Parents";
+const Parents = dynamic(() => import("./Parents"));
+
 import { useListContext } from "../ListTable";
 
 export default function Categories() {

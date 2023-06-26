@@ -1,12 +1,12 @@
 "use client";
-
+import dynamic from "next/dynamic";
 import { useState, createContext, useContext } from "react";
 import Link from "next/link";
 
 import Button from "@mui/material/Button";
-import Add from "./Add";
-import Edit from "./Edit";
-import Delete from "./Delete";
+const Add = dynamic(() => import("./Add"));
+const Edit = dynamic(() => import("./Edit"));
+const Delete = dynamic(() => import("./Delete"));
 import ListTable from "./ListTable";
 import LoadingIndicator from "@/app/utils/LoadingIndicator";
 

@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import dynamic from "next/dynamic";
 
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -18,7 +19,9 @@ import {
 
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
-import Children from "./Children";
+
+const Children = dynamic(() => import("./Children"));
+
 import { useDataContext } from "../List";
 import { useListContext } from "../ListTable";
 
