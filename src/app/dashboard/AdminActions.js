@@ -2,7 +2,6 @@
 
 import dynamic from "next/dynamic";
 import { Suspense, useState } from "react";
-import Link from "next/link";
 
 const List = dynamic(() => import("./components/List"));
 

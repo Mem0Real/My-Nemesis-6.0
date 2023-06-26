@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, Suspense } from "react";
+import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -10,7 +12,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 
-import Categories from "./listData/Categories";
+const Categories = dynamic(() => import("./listData/Categories"));
 
 const ListContext = createContext({});
 
@@ -96,7 +98,9 @@ export default function ListTable() {
               </TableRow>
             </TableHead>
             <TableBody>
-              <Categories />
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <Categories />
+              </Suspense>
             </TableBody>
           </Table>
         </TableContainer>

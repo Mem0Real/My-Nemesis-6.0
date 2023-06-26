@@ -2,6 +2,7 @@
 
 import React from "react";
 import dynamic from "next/dynamic";
+import { Suspense } from "react";
 
 import Box from "@mui/material/Box";
 import Collapse from "@mui/material/Collapse";
@@ -87,7 +88,9 @@ export default function Categories() {
             unmountOnExit
           >
             <Box sx={{ margin: 1 }}>
-              <Parents category={category} />
+              <Suspense fallback={<h1>Loading...</h1>}>
+                <Parents category={category} />
+              </Suspense>
             </Box>
           </Collapse>
         </TableCell>

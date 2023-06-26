@@ -1,6 +1,8 @@
 "use client";
+
 import dynamic from "next/dynamic";
 import { useState, createContext, useContext } from "react";
+import { Suspense } from "react";
 
 import Button from "@mui/material/Button";
 const Add = dynamic(() => import("./Add"));
@@ -93,7 +95,9 @@ export default function List({ data, create, update, deleteItem, url }) {
           Category list
         </h1>
         <div className="md:mt-6 md:pb-5 shadow-md shadow-black">
-          <ListTable />
+          <Suspense fallback={<h1>Loading...</h1>}>
+            <ListTable />
+          </Suspense>
 
           <div className="flex flex-col w-full justify-center items-center md:mt-3">
             <Button
