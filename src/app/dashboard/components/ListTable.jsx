@@ -84,7 +84,7 @@ export default function ListTable() {
             size="large"
             className="bg-neutral-200"
           >
-            <TableHead>
+            <TableHead elevation={1}>
               <TableRow>
                 <TableCell></TableCell>
                 <TableCell>

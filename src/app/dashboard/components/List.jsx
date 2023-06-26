@@ -1,7 +1,6 @@
 "use client";
 import dynamic from "next/dynamic";
 import { useState, createContext, useContext } from "react";
-import Link from "next/link";
 
 import Button from "@mui/material/Button";
 const Add = dynamic(() => import("./Add"));
@@ -90,10 +89,10 @@ export default function List({ data, create, update, deleteItem, url }) {
       value={{ handleAdd, handleEdit, handleDelete, data, url }}
     >
       <div className="flex-flex-col w-full items-center justify-center relative min-h-screen h-fit bg-neutral-200 text-neutral-900 md:mt-6">
-        <h1 className="text-lg italic underline underline-offset-4 text-center">
-          List
+        <h1 className="text-2xl font-mono font-thin mt-2 underline underline-offset-4 text-center">
+          Category list
         </h1>
-        <div className="md:my-6 mb-6 md:pb-5 shadow-md shadow-black">
+        <div className="md:mt-6 md:pb-5 shadow-md shadow-black">
           <ListTable />
 
           <div className="flex flex-col w-full justify-center items-center md:mt-3">
