@@ -15,7 +15,6 @@ export default async function Categories() {
 
   let categories = await res.json();
 
-  console.log(categories);
   if (!categories[0].name) return notFound();
 
   const content = categories.map((category, index) => {
@@ -30,7 +29,7 @@ export default async function Categories() {
           </h1>
         </Link>
 
-        <div className="w-[90%] mx-auto">
+        <div className="w-full flex items-center">
           <Suspense
             fallback={
               <h1 className="text-md text-center mx-auto">

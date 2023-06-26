@@ -16,7 +16,6 @@ export default function SwiperCarousel({ categoryId, parents }) {
   return (
     <Swiper
       modules={[Navigation, Scrollbar, A11y]}
-      spaceBetween={15}
       slidesPerView={3}
       navigation
       scrollbar={{ draggable: true }}
@@ -29,17 +28,17 @@ export default function SwiperCarousel({ categoryId, parents }) {
         // when window width is >= 640px
         640: {
           slidesPerView: 2,
-          spaceBetween: 30,
+          spaceBetween: 20,
         },
         // when window width is >= 768px
         768: {
           slidesPerView: 3,
-          spaceBetween: 35,
+          spaceBetween: 25,
         },
         // when window width is >= 1024px
         1024: {
           slidesPerView: 4,
-          spaceBetween: 45,
+          spaceBetween: 25,
         },
       }}
       className={styles.className}
