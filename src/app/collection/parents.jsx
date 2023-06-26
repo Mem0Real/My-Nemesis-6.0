@@ -1,4 +1,3 @@
-import CarouselData from "./carouselData";
 import SwiperCarousel from "./components/SwiperCarousel";
 
 export default function Parents({ categoryId, parents }) {
@@ -17,8 +16,8 @@ export default function Parents({ categoryId, parents }) {
   );
 
   return (
-    <SwiperCarousel categoryId={categoryId} parentsData={parentsData}>
-      <CarouselData categoryId={categoryId} parentsData={parentsData} />
-    </SwiperCarousel>
+    <Suspense fallback={<h1>Loading Carousel</h1>}>
+      <SwiperCarousel categoryId={categoryId} parentsData={parentsData} />
+    </Suspense>
   );
 }
