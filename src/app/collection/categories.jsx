@@ -8,21 +8,14 @@ export default async function Categories() {
     url = process.env.NEXT_PUBLIC_LOCAL_URL;
   else if (process.env.NODE_ENV === "production")
     url = process.env.NEXT_PUBLIC_BUILD_URL;
+
   const res = await fetch(`${url}/api/getCategoryData?entry=categories`, {
     next: { tags: ["categories"] },
   });
 
   let categories = await res.json();
 
-  categories = categories.sort((a, b) => {
-    const name1 = a.name.toUpperCase();
-    const name2 = b.name.toUpperCase();
-
-    if (name1 < name2) return -1;
-    else if (name1 > name2) return 1;
-    else return 0;
-  });
-
+  console.log(categories);
   if (!categories[0].name) return notFound();
 
   const content = categories.map((category, index) => {

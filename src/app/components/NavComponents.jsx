@@ -52,16 +52,16 @@ export default function NavComponents({ data, getAll, getOne }) {
     <div ref={menuRef} className="w-full">
       {/* Buttons */}
       <div className="w-full">
-        <div className="hidden lg:flex justify-between items-center w-full">
-          <div className="md:px-11">
+        <div className="hidden md:flex justify-between items-center w-full">
+          <div className="">
             {/* <SearchInput /> */}
             <button
               name="search"
               type="submit"
               onClick={handleSearch}
-              className="flex items-center cursor-pointer"
+              className="flex items-center cursor-pointer py-16 justify-between md:w-56"
             >
-              <p className="px-12 md:pl-4 md:pr-16 py-3 w-full rounded-md sm:py-2 flex-1 text-zinc-200 bg-zinc-800">
+              <p className="px-6 md:pl-4 py-3 w-full rounded-md sm:py-2 flex-1 text-zinc-200 bg-zinc-800">
                 Search products...
               </p>
               <span className="pr-4 -ml-7">
@@ -69,24 +69,24 @@ export default function NavComponents({ data, getAll, getOne }) {
               </span>
             </button>
           </div>
-          <div className="flex justify-end">
+          <div className="flex justify-end gap-2 md:gap-7 lg:gap-10">
             <Link href="/collection">
-              <div className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+              <div className="underline underline-offset-8 hover:underline-offset-4">
                 Collection
               </div>
             </Link>
             <Link href="/services">
-              <div className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+              <div className="underline underline-offset-8 hover:underline-offset-4">
                 Services
               </div>
             </Link>
             <Link href="/about">
-              <div className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+              <div className="underline underline-offset-8 hover:underline-offset-4">
                 About
               </div>
             </Link>
             <Link href="/dashboard">
-              <div className="ml-10 underline underline-offset-8 hover:underline-offset-4">
+              <div className="underline underline-offset-8 hover:underline-offset-4">
                 Dashboard
               </div>
             </Link>
@@ -95,7 +95,7 @@ export default function NavComponents({ data, getAll, getOne }) {
       </div>
 
       {/* Hamburger */}
-      <div className="flex gap-4 justify-end lg:hidden text-white relative">
+      <div className="flex gap-4 justify-end md:hidden text-white relative">
         <button className="" onClick={handleSearch} name="search modal">
           <span className="">
             <FontAwesomeIcon icon={faMagnifyingGlass} />

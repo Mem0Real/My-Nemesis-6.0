@@ -15,7 +15,7 @@ export const Navbar = async () => {
   const data = await getAll();
   return (
     <nav className="w-full md:h-16 h-fit shadow-xl bg-neutral-900 text-white navbar drop-shadow-xl">
-      <div className="md:flex justify-between md:justify-normal items-center w-full h-full px-8 py-4 text-sm">
+      <div className="md:flex justify-between md:justify-normal items-center w-full h-full px-4 lg:px-8 py-4 text-sm">
         <div className="absolute md:static z-40 -mt-[8px] md:mt-0">
           <Link href="/">
             <div className="flex justify-evenly items-center">
@@ -30,7 +30,7 @@ export const Navbar = async () => {
                 />
               </div>
               <h1
-                className={`lg:px-12 sm:px-6 px-6 hidden sm:block text-xl uppercase font-medium tracking-wider ${raleway.className}`}
+                className={`lg:px-12 px-6 hidden sm:block text-xl uppercase font-medium tracking-wider ${raleway.className}`}
               >
                 Nemesis
               </h1>

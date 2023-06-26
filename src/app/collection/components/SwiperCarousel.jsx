@@ -12,7 +12,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 
-export default function SwiperCarousel({ parentsData, categoryId }) {
+export default function SwiperCarousel({ categoryId, parents }) {
   return (
     <Swiper
       modules={[Navigation, Scrollbar, A11y]}
@@ -20,37 +20,31 @@ export default function SwiperCarousel({ parentsData, categoryId }) {
       slidesPerView={3}
       navigation
       scrollbar={{ draggable: true }}
-      onSlideChange={() => console.log("slide change")}
-      onSwiper={(swiper) => console.log(swiper)}
       breakpoints={{
         // when window width is >= 320px
         320: {
           slidesPerView: 1,
           spaceBetween: 20,
-          width: 320,
         },
         // when window width is >= 640px
         640: {
           slidesPerView: 2,
           spaceBetween: 30,
-          width: 640,
         },
         // when window width is >= 768px
         768: {
           slidesPerView: 3,
           spaceBetween: 35,
-          width: 768,
         },
         // when window width is >= 1024px
         1024: {
           slidesPerView: 4,
           spaceBetween: 45,
-          width: 1024,
         },
       }}
       className={styles.className}
     >
-      {parentsData.map((parent) => {
+      {parents.map((parent) => {
         return (
           <SwiperSlide key={parent.id}>
             <div className="flex flex-col items-center group md:my-5">

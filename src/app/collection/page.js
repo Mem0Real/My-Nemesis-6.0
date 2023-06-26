@@ -1,5 +1,7 @@
+import dynamic from "next/dynamic";
 import { Suspense } from "react";
-import Categories from "./categories";
+
+const Categories = dynamic(() => import("./categories"));
 
 export default function CollectionPage() {
   return (

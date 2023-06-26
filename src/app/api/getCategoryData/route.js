@@ -5,7 +5,18 @@ export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const entry = searchParams.get("entry");
   const names = await prisma[entry].findMany({
-    select: { id: true, name: true, parents: true },
+    select: {
+      id: true,
+      name: true,
+      parents: {
+        orderBy: {
+          name: "asc",
+        },
+      },
+    },
+    orderBy: {
+      name: "asc",
+    },
   });
   return NextResponse.json(names);
 }
