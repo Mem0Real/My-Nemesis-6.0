@@ -29,7 +29,7 @@ export default async function Categories() {
           </h1>
         </Link>
 
-        <div className="w-full flex items-center">
+        <div className="w-full">
           <Suspense
             fallback={
               <h1 className="text-md text-center mx-auto">

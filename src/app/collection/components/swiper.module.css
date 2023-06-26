@@ -13,3 +13,28 @@
     width: 768px;
   }
 }
+
+.image-swiper-button-next {
+  color: black;
+  background-color: #444444ad;
+  border-radius: 10px;
+  size: 20px;
+}
+.image-swiper-button-prev {
+  color: black;
+  background-color: #444444ad;
+  border-radius: 10px;
+  size: 20px;
+}
+.image-swiper-button-disabled {
+  color: black;
+  background-color: #444444ad;
+  border-radius: 10px;
+  size: 20px;
+}
+
+.swiper-slide {
+  background-position: center;
+  background-size: cover;
+  background: transparent;
+}

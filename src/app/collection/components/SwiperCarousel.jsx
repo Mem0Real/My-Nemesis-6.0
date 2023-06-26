@@ -6,17 +6,18 @@ import { Suspense } from "react";
 import styles from "./swiper.module.css";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Scrollbar, A11y } from "swiper";
+import { Navigation, Scrollbar, A11y, EffectCoverflow } from "swiper";
 
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
+import "swiper/css/effect-coverflow";
 
 export default function SwiperCarousel({ categoryId, parents }) {
   return (
     <Swiper
-      modules={[Navigation, Scrollbar, A11y]}
-      slidesPerView={3}
+      modules={[Navigation, Scrollbar, A11y, EffectCoverflow]}
+      effect={"coverflow"}
       navigation
       scrollbar={{ draggable: true }}
       breakpoints={{
@@ -41,12 +42,21 @@ export default function SwiperCarousel({ categoryId, parents }) {
           spaceBetween: 25,
         },
       }}
+      coverflowEffect={{
+        rotate: 20,
+        stretch: 0,
+        depth: 100,
+        modifier: 1,
+        slideShadows: false,
+      }}
+      centerInsufficientSlides="true"
+      lazyPreloadPrevNext={0}
       className={styles.className}
     >
       {parents.map((parent) => {
         return (
           <SwiperSlide key={parent.id}>
-            <div className="flex flex-col items-center group md:my-5">
+            <div className="flex flex-col items-center group md:my-5 bg-transparent ">
               <Link
                 key={parent.id}
                 href={`/collection/${categoryId}/${parent.id}`}
@@ -60,11 +70,14 @@ export default function SwiperCarousel({ categoryId, parents }) {
                     >
                       <Image
                         src={parent.image}
+                        srcSet={parent.id}
                         alt={parent.id}
                         fill={true}
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="absolute object-contain"
                         priority={true}
+                        blurDataURL="URL"
+                        placeholder="blur"
                       />
                     </Suspense>
                   )}
