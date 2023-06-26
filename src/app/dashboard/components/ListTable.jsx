@@ -2,7 +2,6 @@
 
 import React, { useState, createContext, useContext, Suspense } from "react";
 import dynamic from "next/dynamic";
-import { Suspense } from "react";
 
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";

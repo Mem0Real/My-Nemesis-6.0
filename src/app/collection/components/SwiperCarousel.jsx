@@ -15,8 +15,8 @@ export default function SwiperCarousel({ parentsData, categoryId }) {
   return (
     <Swiper
       modules={[Navigation, Scrollbar, A11y]}
-      spaceBetween={35}
-      slidesPerView={3}
+      spaceBetween={15}
+      slidesPerView={4}
       navigation
       scrollbar={{ draggable: true }}
       onSlideChange={() => console.log("slide change")}
