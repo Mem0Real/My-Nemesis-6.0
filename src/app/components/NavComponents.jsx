@@ -129,7 +129,7 @@ export default function NavComponents({ data, getAll, getOne }) {
           isOpen ? "block" : "hidden"
         }`}
       >
-        <ul className="text-sm sm:hidden block bg-neutral-900 py-5 mt-0 md:mt-9 list-none">
+        <ul className="text-sm md:hidden block bg-neutral-900 py-5 mt-0 md:mt-9 list-none">
           <li>
             <Link
               href="/collection"
