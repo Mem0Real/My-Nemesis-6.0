@@ -3,9 +3,10 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Suspense } from "react";
+import styles from "./swiper.module.css";
 
-import { Navigation, Scrollbar, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Scrollbar, A11y } from "swiper";
 
 import "swiper/css";
 import "swiper/css/navigation";
@@ -16,11 +17,36 @@ export default function SwiperCarousel({ parentsData, categoryId }) {
     <Swiper
       modules={[Navigation, Scrollbar, A11y]}
       spaceBetween={15}
-      slidesPerView={4}
+      slidesPerView={3}
       navigation
       scrollbar={{ draggable: true }}
       onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
+      breakpoints={{
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+          width: 320,
+        },
+        // when window width is >= 640px
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 30,
+          width: 640,
+        },
+        // when window width is >= 768px
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 35,
+          width: 768,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 45,
+          width: 1024,
+        },
+      }}
+      className={styles.className}
     >
       {parentsData.map((parent) => {
         return (
