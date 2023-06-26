@@ -23,6 +23,7 @@ export default function SwiperCarousel({ parentsData, categoryId }) {
       onSlideChange={() => console.log("slide change")}
       onSwiper={(swiper) => console.log(swiper)}
       breakpoints={{
+        // when window width is >= 320px
         320: {
           slidesPerView: 1,
           spaceBetween: 20,
@@ -40,6 +41,7 @@ export default function SwiperCarousel({ parentsData, categoryId }) {
           spaceBetween: 35,
           width: 768,
         },
+        // when window width is >= 1024px
         1024: {
           slidesPerView: 4,
           spaceBetween: 45,

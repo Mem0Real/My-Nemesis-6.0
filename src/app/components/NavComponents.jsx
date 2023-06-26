@@ -96,13 +96,13 @@ export default function NavComponents({ data, getAll, getOne }) {
 
       {/* Hamburger */}
       <div className="flex gap-4 justify-end lg:hidden text-white relative">
-        <button className="" onClick={handleSearch} name="search">
+        <button className="" onClick={handleSearch} name="search modal">
           <span className="">
             <FontAwesomeIcon icon={faMagnifyingGlass} />
           </span>
         </button>
         <button
-          name="dropdown-btn"
+          name="dropdown button"
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center px-3 py-2 rounded text-black-500 hover:text-black-400"
         >
