@@ -21,7 +21,7 @@ export default function SlickCarousel({ categoryId, parents }) {
     nextArrow: <NextArrow data={parents} />,
     prevArrow: <PrevArrow data={parents} />,
     slidesToScroll: 1,
-    slidesToShow: 3,
+    slidesToShow: 4,
     responsive: [
       {
         breakpoint: 1366,
