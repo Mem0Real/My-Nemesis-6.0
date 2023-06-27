@@ -1,20 +1,21 @@
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
-export async function GET(request) {
-  const { searchParams } = new URL(request.url);
-  const entry = searchParams.get("entry");
-  const names = await prisma[entry].findMany({
-    orderBy: {
-      id: "asc",
-    },
-    include: {
+export async function GET() {
+  const categories = await prisma.categories.findMany({
+    select: {
+      id: true,
+      name: true,
       parents: {
         orderBy: {
           id: "asc",
         },
       },
     },
+    orderBy: {
+      id: "asc",
+    },
   });
-  return NextResponse.json(names);
+
+  return NextResponse.json(categories);
 }

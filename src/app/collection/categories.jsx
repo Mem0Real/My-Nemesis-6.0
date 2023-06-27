@@ -2,6 +2,13 @@ import Link from "next/link";
 import { Suspense } from "react";
 import Parents from "./parents";
 
+async function getCategories(url) {
+  const res = await fetch(`${url}/api/getCategoryData`, {
+    next: { tags: ["categories"] },
+  });
+  return res.json();
+}
+
 export default async function Categories() {
   let url;
   if (process.env.NODE_ENV === "development")
@@ -9,15 +16,11 @@ export default async function Categories() {
   else if (process.env.NODE_ENV === "production")
     url = process.env.NEXT_PUBLIC_BUILD_URL;
 
-  const res = await fetch(`${url}/api/getCategoryData?entry=categories`, {
-    next: { tags: ["categories"] },
-  });
-
-  let categories = await res.json();
+  const categories = await getCategories(url);
 
   if (!categories[0].name) return notFound();
 
-  const content = categories.map((category, index) => {
+  const content = categories.map((category) => {
     return (
       <div
         key={category.id}
@@ -28,7 +31,6 @@ export default async function Categories() {
             {category.name}
           </h1>
         </Link>
-
         <div className="w-full">
           <Suspense
             fallback={
@@ -43,6 +45,7 @@ export default async function Categories() {
       </div>
     );
   });
+
   return (
     <div className="flex flex-col justify-evenly items-center w-screen">
       {content}
