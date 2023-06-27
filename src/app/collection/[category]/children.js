@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import SlickCarousel from "../components/SlickCarousel";
 
 export default function Children({ categoryId, parentId, children }) {

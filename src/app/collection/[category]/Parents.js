@@ -26,7 +26,10 @@ export default async function Parents({ categoryId }) {
           key={parent.id}
           className="flex flex-col items-center md:items-start text-sm mb-1 w-full bg-neutral-200/80 text-neutral-800"
         >
-          <Link href={`/collection/${parent.id}`} className="flex-none">
+          <Link
+            href={`/collection/${categoryId}/${parent.id}`}
+            className="flex-none"
+          >
             <h1 className="md:ml-12 text-lg my-5 sm:my-9 ring ring-neutral-600 bg-neutral-100 ring-offset-4 hover:ring-offset-2 hover:ring-neutral-800 ring-opacity-40 shadow-lg shadow-neutral-800 px-5 rounded-md">
               {parent.name}
             </h1>
@@ -35,7 +38,7 @@ export default async function Parents({ categoryId }) {
             <Suspense
               fallback={
                 <h1 className="text-md text-center mx-auto">
-                  Loading children...
+                  Loading children data...
                 </h1>
               }
             >

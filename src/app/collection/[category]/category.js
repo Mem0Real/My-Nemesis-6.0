@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 
-import { getDetail } from "../lib/fetchFunctions";
+import { getDetail } from "@/app/collection/lib/fetchFunctions";
 import Parents from "./parents";
 
 export default async function Category({ categoryId }) {
@@ -16,7 +16,7 @@ export default async function Category({ categoryId }) {
         {categoryData.description}
       </p>
       <div className="flex-initial min-h-screen w-full">
-        <Suspense fallback={<h1>Loading parents</h1>}>
+        <Suspense fallback={<h1>Loading parents...</h1>}>
           <Parents categoryId={categoryId} />
         </Suspense>
       </div>
