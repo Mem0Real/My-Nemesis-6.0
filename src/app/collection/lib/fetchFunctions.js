@@ -19,7 +19,6 @@ export async function getCollectionData(entry, reference) {
     include = "";
   }
 
-  console.log(reference);
   const res = await prisma[entry].findMany({
     orderBy: {
       id: "asc",

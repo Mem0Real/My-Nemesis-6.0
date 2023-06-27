@@ -1,5 +1,5 @@
+import Children from "./children";
 import Link from "next/link";
-import Image from "next/image";
 import { Suspense } from "react";
 
 import { getCollectionData } from "../lib/fetchFunctions";
