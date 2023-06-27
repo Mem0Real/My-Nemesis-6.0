@@ -1,4 +1,4 @@
-import Parents from "./Parents";
+import Parents from "../parents";
 import { Suspense } from "react";
 import Link from "next/link";
 import { getDetail, getParams } from "../lib/fetchFunctions";
@@ -36,7 +36,7 @@ export default async function Category({ params: { category } }) {
       </p>
       <div className="flex-initial min-h-screen w-full">
         <Suspense fallback={<h1>Loading...</h1>}>
-          {/* <Parents CategoryId={category.params.category} /> */}
+          <Parents categoryId={category} />
         </Suspense>
       </div>
     </div>

@@ -6,29 +6,25 @@ if (process.env.NODE_ENV === "development")
 else if (process.env.NODE_ENV === "production")
   url = process.env.NEXT_PUBLIC_BUILD_URL;
 
-export async function getCollectionData(entry, id = null) {
-  let include, option;
+export async function getCollectionData(entry, reference) {
+  let include;
 
   if (entry === "categories") {
     include = "parents";
   } else if (entry === "parents") {
     include = "children";
-    reference = { name: "CategoryId", val: id };
   } else if (entry === "children") {
     include = "items";
-    reference = { name: "ParentId", val: id };
   } else {
     include = "";
-    reference = { name: "ChildId", val: id };
   }
 
-  let reference = { name: undefined, val: undefined };
-
+  console.log(reference);
   const res = await prisma[entry].findMany({
     orderBy: {
       id: "asc",
     },
-    where: { [reference.name]: reference.val },
+    where: reference,
     select: {
       id: true,
       name: true,

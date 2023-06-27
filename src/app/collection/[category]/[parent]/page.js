@@ -1,8 +1,8 @@
-import Children from "./Children";
+import Children from "./children";
 import { Suspense } from "react";
 import Link from "next/link";
 
-import { getEntry } from "@/app/collection/actions";
+import { getDetail } from "../../lib/fetchFunctions";
 
 export async function generateMetadata({ params: { parent } }) {
   let firstLetter = parent[0];
@@ -17,7 +17,7 @@ export async function generateMetadata({ params: { parent } }) {
 export default async function Parent({ params: { parent, category } }) {
   let currentParent = parent;
   let currentCategory = category;
-  const parentData = await getEntry("parents", currentParent);
+  const parentData = await getDetail("parents", currentParent);
 
   const content = (
     <div
@@ -37,7 +37,7 @@ export default async function Parent({ params: { parent, category } }) {
       <p className="h-24 text-center mt-4 md:mt-2">{parentData.description}</p>
       <div className="flex-initial min-h-screen w-full">
         <Suspense fallback={<h1>Loading...</h1>}>
-          <Children ParentId={currentParent} CategoryId={currentCategory} />
+          <Children categoryId={currentCategory} parentId={currentParent} />
         </Suspense>
       </div>
     </div>

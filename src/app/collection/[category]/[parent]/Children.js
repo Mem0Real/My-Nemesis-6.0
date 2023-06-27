@@ -4,17 +4,15 @@ import { Suspense } from "react";
 
 import { getEntries } from "@/app/collection/actions";
 
-export default async function Children(props) {
+export default async function Children({ categoryId, parentId }) {
   let content;
-  const CategoryId = props.CategoryId;
-  const ParentId = props.ParentId;
 
-  const childrenProp = { ParentId: ParentId };
+  const reference = { ParentId: parentId };
 
   function isObjEmpty(obj) {
     return Object.keys(obj).length === 0;
   }
-  let childData = await getEntries("children", childrenProp);
+  let childData = await getEntries("children", reference);
 
   if (isObjEmpty(childData)) {
     content = (
@@ -23,14 +21,6 @@ export default async function Children(props) {
       </div>
     );
   } else {
-    childData = childData.sort((a, b) => {
-      const name1 = a.name.toUpperCase();
-      const name2 = b.name.toUpperCase();
-
-      if (name1 < name2) return -1;
-      else if (name1 > name2) return 1;
-      else return 0;
-    });
     content = childData.map((child) => {
       return (
         <div
@@ -38,7 +28,7 @@ export default async function Children(props) {
           className="flex flex-col justify-center items-center ps-2 text-sm mb-1 bg-neutral-100 text-neutral-900"
         >
           <div className="flex flex-col justify-center items-center">
-            <Link href={`/collection/${CategoryId}/${ParentId}/${child.id}`}>
+            <Link href={`/collection/${categoryId}/${parentId}/${child.id}`}>
               <h1 className="text-center text-lg my-5 sm:my-9 ring ring-neutral-600 ring-offset-4 hover:ring-offset-2 hover:ring-neutral-800 ring-opacity-40 shadow-lg shadow-neutral-800 px-5 rounded-md">
                 {child.name}
               </h1>
@@ -50,7 +40,7 @@ export default async function Children(props) {
                 return (
                   <Link
                     key={item.id}
-                    href={`/collection/${CategoryId}/${ParentId}/${child.id}/${item.id}`}
+                    href={`/collection/${categoryId}/${parentId}/${child.id}/${item.id}`}
                   >
                     <div className="flex flex-col justify-evenly items-center cursor-pointer group mb-12 mt-6 md:mb-0 md:mx-6">
                       <h1 className="text-center text-lg rounded-md sm:my-9 underline underline-offset-8 hover:underline-offset-4 my-3">
