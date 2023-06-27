@@ -20,6 +20,7 @@ export default function SwiperCarousel({ categoryId, parents }) {
       effect={"coverflow"}
       navigation
       scrollbar={{ draggable: true }}
+      slidesPerView={4}
       breakpoints={{
         // when window width is >= 320px
         320: {
