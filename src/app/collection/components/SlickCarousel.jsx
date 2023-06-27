@@ -11,7 +11,7 @@ import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
-export default function SlickCarousel({ categoryId, parents, children }) {
+export default function SlickCarousel({ children }) {
   const [activeSlide, setActiveSlide] = useState();
 
   const settings = {

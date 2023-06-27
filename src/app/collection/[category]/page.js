@@ -1,9 +1,7 @@
 import Parents from "./Parents";
 import { Suspense } from "react";
 import Link from "next/link";
-
-import { getEntries } from "../actions";
-import { getEntry } from "@/app/collection/actions";
+import { getDetail, getParams } from "../lib/fetchFunctions";
 
 export async function generateMetadata({ params: { category } }) {
   let firstLetter = category[0];
@@ -15,9 +13,8 @@ export async function generateMetadata({ params: { category } }) {
   };
 }
 
-export default async function Category(category) {
-  let currentCategory = category.params.category;
-  const categoryData = await getEntry("categories", currentCategory);
+export default async function Category({ params: { category } }) {
+  const categoryData = await getDetail("categories", category);
 
   const content = (
     <div
@@ -39,7 +36,7 @@ export default async function Category(category) {
       </p>
       <div className="flex-initial min-h-screen w-full">
         <Suspense fallback={<h1>Loading...</h1>}>
-          <Parents CategoryId={category.params.category} />
+          {/* <Parents CategoryId={category.params.category} /> */}
         </Suspense>
       </div>
     </div>
@@ -52,8 +49,8 @@ export default async function Category(category) {
   );
 }
 
-export async function generateStaticParams(category) {
-  const categories = await getEntries("categories");
+export async function generateStaticParams({ params: { category } }) {
+  const categories = await getParams("categories");
   return categories.map((category) => ({
     category: category.id.toString(),
   }));

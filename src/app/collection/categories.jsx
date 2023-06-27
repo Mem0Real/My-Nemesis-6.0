@@ -1,22 +1,10 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import Parents from "./parents";
-
-async function getCategories(url) {
-  const res = await fetch(`${url}/api/getCategoryData`, {
-    next: { tags: ["categories"] },
-  });
-  return res.json();
-}
+import { getCollectionData } from "./lib/fetchFunctions";
 
 export default async function Categories() {
-  let url;
-  if (process.env.NODE_ENV === "development")
-    url = process.env.NEXT_PUBLIC_LOCAL_URL;
-  else if (process.env.NODE_ENV === "production")
-    url = process.env.NEXT_PUBLIC_BUILD_URL;
-
-  const categories = await getCategories(url);
+  const categories = await getCollectionData("categories");
 
   if (!categories[0].name) return notFound();
 

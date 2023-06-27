@@ -2,12 +2,11 @@ import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const categories = await prisma.categories.findMany({
+  const parents = await prisma.parents.findMany({
     select: {
       id: true,
       name: true,
-      description: true,
-      parents: {
+      children: {
         orderBy: {
           id: "asc",
         },
@@ -18,5 +17,5 @@ export async function GET() {
     },
   });
 
-  return NextResponse.json(categories);
+  return NextResponse.json(parents);
 }
