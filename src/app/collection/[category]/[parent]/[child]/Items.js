@@ -1,20 +1,18 @@
 import Link from "next/link";
-import Image from "next/image";
 import { Suspense } from "react";
 
-import { getEntries } from "@/app/collection/actions";
+import { getCollectionData } from "@/app/collection/lib/fetchFunctions";
+import Images from "./images";
 
-export default async function Children(props) {
+export default async function Items({ categoryId, parentId, childId }) {
   let content;
-  const CategoryId = props.CategoryId;
-  const ParentId = props.ParentId;
-  const ChildId = props.ChildId;
-  const itemsProp = { ChildId: ChildId };
+
+  const reference = { ChildId: childId };
 
   function isObjEmpty(obj) {
     return Object.keys(obj).length === 0;
   }
-  let itemsData = await getEntries("items", itemsProp);
+  let itemsData = await getCollectionData("items", reference);
 
   if (isObjEmpty(itemsData)) {
     content = (
@@ -23,37 +21,36 @@ export default async function Children(props) {
       </div>
     );
   } else {
-    itemsData = itemsData.sort((a, b) => {
-      const name1 = a.name.toUpperCase();
-      const name2 = b.name.toUpperCase();
-
-      if (name1 < name2) return -1;
-      else if (name1 > name2) return 1;
-      else return 0;
-    });
     content = itemsData.map((item) => {
       return (
         <div
           key={item.id}
-          className="flex flex-col justify-between items-center"
+          className="flex flex-col items-center md:items-start text-sm mb-1 w-full bg-neutral-200/80 text-neutral-800"
         >
           <Link
-            href={`/collection/${CategoryId}/${ParentId}/${ChildId}/${item.id}`}
+            href={`/collection/${categoryId}/${parentId}/${childId}/${item.id}`}
+            className="flex-none"
           >
-            <h1 className="text-center text-lg my-5 underline underline-offset-8 hover:underline-offset-4">
+            <h1 className="md:ml-12 text-lg my-5 sm:my-9 ring ring-neutral-600 bg-neutral-100 ring-offset-4 hover:ring-offset-2 hover:ring-neutral-800 ring-opacity-40 shadow-lg shadow-neutral-800 px-5 rounded-md">
               {item.name}
             </h1>
           </Link>
-          <div className="w-56 h-56"></div>
-          {item.image && (
-            <Image
-              src={item.image}
-              width="200"
-              height="200"
-              alt={`${item.name}-image`}
-              className="md:mb-12 md:h-40"
-            />
-          )}
+          <div className="w-full">
+            <Suspense
+              fallback={
+                <h1 className="text-md text-center mx-auto">
+                  Loading Images...
+                </h1>
+              }
+            >
+              <Images
+                categoryId={categoryId}
+                parentId={parentId}
+                childId={childId}
+                image={item.images}
+              />
+            </Suspense>
+          </div>
         </div>
       );
     });

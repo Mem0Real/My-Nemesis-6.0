@@ -19,22 +19,32 @@ export async function getCollectionData(entry, reference) {
     include = "";
   }
 
-  const res = await prisma[entry].findMany({
-    orderBy: {
-      id: "asc",
-    },
-    where: reference,
-    select: {
-      id: true,
-      name: true,
-      description: true,
-      [include]: {
-        orderBy: {
-          id: "asc",
+  let res;
+  if (entry !== "items") {
+    res = await prisma[entry].findMany({
+      orderBy: {
+        id: "asc",
+      },
+      where: reference,
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        [include]: {
+          orderBy: {
+            id: "asc",
+          },
         },
       },
-    },
-  });
+    });
+  } else {
+    res = await prisma[entry].findMany({
+      orderBy: {
+        id: "asc",
+      },
+      where: reference,
+    });
+  }
   return res;
 }
 

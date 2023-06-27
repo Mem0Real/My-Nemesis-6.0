@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import SlickCarousel from "../../components/SlickCarousel";
+import SlickCarousel from "@/app/collection/components/SlickCarousel";
 
 export default function Items({ categoryId, parentId, childId, items }) {
   return (

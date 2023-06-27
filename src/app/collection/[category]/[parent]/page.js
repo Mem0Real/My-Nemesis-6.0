@@ -28,7 +28,13 @@ export default async function ParentData({ params: { parent, category } }) {
           </h2>
         </Link>
       </div>
-      <Parent categoryId={currentCategory} parentId={currentParent} />
+      <Suspense
+        fallback={
+          <h1 className="text-3xl mx-auto">Loading current parent...</h1>
+        }
+      >
+        <Parent categoryId={currentCategory} parentId={currentParent} />
+      </Suspense>
     </div>
   );
 
