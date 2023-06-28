@@ -52,55 +52,79 @@ export async function create(formData) {
 
   let category = { name: undefined, val: undefined };
 
+  if (!id) {
+    let idName = name.toLowerCase();
+    let array = idName.split(/ and| &|, /);
+    idName = array[0];
+    idName = idName.replace(/\s/g, "-");
+    formData.set("id", idName);
+    id = formData.get("id");
+  }
+
+  if (!description) {
+    formData.set("description", name);
+    description = formData.get("description");
+  }
+
+  if (childId !== null) {
+    category = { name: "ChildId", val: childId };
+  } else if (parentId !== null) {
+    category = { name: "ParentId", val: parentId };
+  } else if (categoryId !== null) {
+    category = { name: "CategoryId", val: categoryId };
+  }
+
+  if (quantity === NaN) quantity = 0;
+  if (price === NaN) price = 0;
+
   const writeToDb = async (dir) => {
-    formData.set("image", dir);
-    image = formData.get("image");
+    if (entry !== "items") {
+      formData.set("image", dir);
+      image = formData.get("image");
 
-    if (!id) {
-      let idName = name.toLowerCase();
-      let array = idName.split(/ and| &|, /);
-      idName = array[0];
-      idName = idName.replace(/\s/g, "-");
-      formData.set("id", idName);
-      id = formData.get("id");
-    }
-
-    if (!description) {
-      formData.set("description", name);
-      description = formData.get("description");
-    }
-
-    if (childId !== null) {
-      category = { name: "ChildId", val: childId };
-    } else if (parentId !== null) {
-      category = { name: "ParentId", val: parentId };
-    } else if (categoryId !== null) {
-      category = { name: "CategoryId", val: categoryId };
+      try {
+        const res = await prisma[entry].create({
+          data: {
+            id: id,
+            name: name,
+            brand: brand,
+            model: model,
+            quantity: quantity,
+            price: price,
+            description: description,
+            image: image,
+            [category.name]: category.val,
+          },
+        });
+        revalidatePath("/collection");
+        revalidatePath("/dashboard");
+        revalidateTag("search");
+        console.log("Success");
+      } catch (error) {
+        console.log("Error: ", error);
+      }
     } else {
-      category.name = undefined;
-      category.val = undefined;
-    }
-
-    try {
-      const res = await prisma[entry].create({
-        data: {
-          id: id,
-          name: name,
-          brand: brand,
-          model: model,
-          quantity: quantity,
-          price: price,
-          description: description,
-          images: image,
-          [category.name]: category.val,
-        },
-      });
-      revalidatePath("/collection");
-      revalidatePath("/dashboard");
-      revalidateTag("search");
-      console.log("Success");
-    } catch (error) {
-      console.log("Error: ", error);
+      try {
+        const res = await prisma[entry].create({
+          data: {
+            id: id,
+            name: name,
+            brand: brand,
+            model: model,
+            quantity: quantity,
+            price: price,
+            description: description,
+            images: dir,
+            [category.name]: category.val,
+          },
+        });
+        revalidatePath("/collection");
+        revalidatePath("/dashboard");
+        revalidateTag("search");
+        console.log("Success");
+      } catch (error) {
+        console.log("Error: ", error);
+      }
     }
   };
   if (!file) {
@@ -109,8 +133,6 @@ export async function create(formData) {
     revalidatePath("/dashboard");
     revalidateTag("search");
   } else {
-    const buffer = Buffer.from(await file.arrayBuffer());
-
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
       relativeUploadDir = `/uploads/${entry}/${category.val}`;
@@ -134,8 +156,9 @@ export async function create(formData) {
     }
 
     try {
-      const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
       if (entry !== "items") {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
         const filename = `${file.name.replace(
           /\.[^/.]+$/,
           ""
@@ -146,20 +169,21 @@ export async function create(formData) {
 
         await writeToDb(imageUrl);
       } else {
+        const formDataEntryValues = Array.from(formData.values());
         let imageUrl = [];
-        for (img in file) {
-          const filename = `${img.name.replace(
-            /\.[^/.]+$/,
-            ""
-          )}-${uniqueSuffix}.${mime.getExtension(img.type)}`;
-
-          console.log(`${uploadDir}/${filename}`);
-          // await writeFile(`${uploadDir}/${filename}`, buffer);
-
-          imageUrl.push(`${relativeUploadDir}/${filename}`);
+        for (const formDataEntryValue of formDataEntryValues) {
+          if (
+            typeof formDataEntryValue === "object" &&
+            "arrayBuffer" in formDataEntryValue
+          ) {
+            const file = formDataEntryValue;
+            const buffer = Buffer.from(await file.arrayBuffer());
+            fs.writeFileSync(`${uploadDir}/${file.name}`, buffer);
+            imageUrl.push(`${relativeUploadDir}/${file.name}`);
+          }
         }
+        await writeToDb(imageUrl);
       }
-      // await writeToDb(imageUrl);
 
       revalidateTag("all");
       revalidateTag("search");
@@ -307,8 +331,6 @@ export async function update(formData) {
     revalidatePath("/dashboard");
     revalidatePath("/collection");
   } else {
-    const oldFile = formData.get("image");
-
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
       relativeUploadDir = `/uploads/${entry}/${category.val}`;
@@ -335,6 +357,7 @@ export async function update(formData) {
 
     try {
       if (entry !== "items") {
+        const oldFile = formData.get("image");
         const buffer = Buffer.from(await file.arrayBuffer());
         const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
 
@@ -354,6 +377,11 @@ export async function update(formData) {
 
         await writeToDb(imageUrl);
       } else {
+        const oldFile = formData.get("images");
+        if (oldFile && oldFile !== "null") {
+          oldFile.map(async (oldImg) => await unlink(`${delDir}/${oldImg}`));
+          formData.delete("images");
+        }
         const formDataEntryValues = Array.from(formData.values());
         let imageUrl = [];
         for (const formDataEntryValue of formDataEntryValues) {
@@ -388,7 +416,14 @@ export async function deleteItem(entry, data) {
   });
   const delDir = join(process.cwd(), "public");
 
-  if (data.image) unlink(`${delDir}/${data.image}`);
+  if (entry !== "items") {
+    if (data.image) unlink(`${delDir}/${data.image}`);
+  } else {
+    const images = data.images;
+    if (images) {
+      images.map((file) => unlink(`${delDir}/${images}`));
+    }
+  }
 
   revalidateTag("search");
   revalidatePath("/dashboard");
