@@ -68,12 +68,13 @@ export default function Edit({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    closeEditModal();
     const formData = formatData(editData);
 
     update(formData);
-    setImageSrc(null);
-    setImages([]);
+
+    // closeEditModal();
+    // setImageSrc(null);
+    // setImages([]);
   };
 
   const handleClose = () => {

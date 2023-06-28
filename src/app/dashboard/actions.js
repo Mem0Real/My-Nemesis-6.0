@@ -320,12 +320,14 @@ export async function update(formData) {
     }
   };
   if (!file) {
-    await writeToDb("");
+    // await writeToDb("");
+    console.log("No image");
     revalidateTag("search");
     revalidatePath("/dashboard");
     revalidatePath("/collection");
   } else if (typeof file === "string" && entry !== "items") {
-    writeToDb(file);
+    // writeToDb(file);
+    console.log("No change");
     revalidateTag("search");
     revalidatePath("/dashboard");
     revalidatePath("/collection");
@@ -376,9 +378,10 @@ export async function update(formData) {
 
         await writeToDb(imageUrl);
       } else {
-        const oldFile = formData.get("images");
+        let oldFile = formData.get("images");
         if (oldFile && oldFile !== "null") {
-          oldFile.map(async (oldImg) => await unlink(`${delDir}/${oldImg}`));
+          oldFile = oldFile.split(",");
+          oldFile.map((oldImg) => unlink(`${delDir}/${oldImg}`));
           formData.delete("images");
         }
         const formDataEntryValues = Array.from(formData.values());
