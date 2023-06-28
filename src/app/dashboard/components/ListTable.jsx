@@ -1,6 +1,12 @@
 "use client";
 
-import React, { useState, createContext, useContext, Suspense } from "react";
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  Suspense,
+} from "react";
 import dynamic from "next/dynamic";
 
 import Table from "@mui/material/Table";
@@ -19,6 +25,33 @@ export default function ListTable() {
   const [cat, setCat] = useState({});
   const [par, setPar] = useState({});
   const [chi, setChi] = useState({});
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("CATEGORY");
+    if (data !== null) setCat(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("PARENT");
+    if (data !== null) setPar(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("CHILD");
+    if (data !== null) setChi(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("CATEGORY", JSON.stringify(cat));
+  }, [cat]);
+
+  useEffect(() => {
+    window.localStorage.setItem("PARENT", JSON.stringify(par));
+  }, [par]);
+
+  useEffect(() => {
+    window.localStorage.setItem("CHILD", JSON.stringify(chi));
+  }, [chi]);
 
   const catDropDown = (categoryId) => {
     if (!cat.id) {
@@ -76,7 +109,17 @@ export default function ListTable() {
 
   return (
     <ListContext.Provider
-      value={{ catDropDown, parDropDown, childDropDown, cat, par, chi }}
+      value={{
+        catDropDown,
+        parDropDown,
+        childDropDown,
+        cat,
+        par,
+        chi,
+        setCat,
+        setPar,
+        setChi,
+      }}
     >
       <Paper sx={{ width: "100%", overflow: "hidden" }} elevation={0}>
         <TableContainer component={Paper}>

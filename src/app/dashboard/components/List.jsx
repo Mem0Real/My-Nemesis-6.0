@@ -9,7 +9,6 @@ const Add = dynamic(() => import("./Add"));
 const Edit = dynamic(() => import("./Edit"));
 const Delete = dynamic(() => import("./Delete"));
 import ListTable from "./ListTable";
-import LoadingIndicator from "@/app/utils/LoadingIndicator";
 
 const DataContext = createContext({});
 

@@ -7,22 +7,6 @@ import * as dateFn from "date-fns";
 
 import { revalidatePath, revalidateTag } from "next/cache";
 
-export async function list() {
-  "use server";
-
-  const categories = prisma.categories.findMany({});
-
-  const parents = prisma.parents.findMany({});
-
-  const children = prisma.children.findMany({});
-
-  const items = prisma.items.findMany({});
-
-  const data = await Promise.all([categories, parents, children, items]);
-
-  return data;
-}
-
 export async function create(formData) {
   "use server";
 

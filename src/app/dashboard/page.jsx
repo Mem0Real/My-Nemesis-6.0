@@ -1,5 +1,20 @@
-import { list, create, update, deleteItem } from "./actions";
+import prisma from "@/lib/prisma";
+import { create, update, deleteItem } from "./actions";
 import AdminActions from "./AdminActions";
+
+async function list() {
+  const categories = prisma.categories.findMany({});
+
+  const parents = prisma.parents.findMany({});
+
+  const children = prisma.children.findMany({});
+
+  const items = prisma.items.findMany({});
+
+  const data = await Promise.all([categories, parents, children, items]);
+
+  return data;
+}
 
 export default async function DashboardPage() {
   let url;

@@ -16,6 +16,7 @@ export default function Edit({
   const [imageSrc, setImageSrc] = useState();
   const [images, setImages] = useState([]);
 
+  // Show image if any
   useEffect(() => {
     let img;
 
@@ -28,8 +29,18 @@ export default function Edit({
       } else {
         setImageSrc(null);
       }
+    } else {
+      console.log(editData.images);
+      if (editData.images) {
+        editData.images.foreach((image) => {
+          setImages({ ...images, image });
+          console.log(image);
+        });
+      } else {
+        setImages([]);
+      }
     }
-  }, [editData.image]);
+  }, [editData]);
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
@@ -58,11 +69,11 @@ export default function Edit({
   const handleSubmit = async (e) => {
     e.preventDefault();
     // closeEditModal();
-
     const formData = formatData(editData);
 
     update(formData);
-    // setImageSrc(null);
+    setImageSrc(null);
+    setImages([]);
   };
 
   const handleClose = () => {
