@@ -27,14 +27,7 @@ export default function Categories() {
   const { handleAdd, handleEdit, handleDelete, data } = useDataContext();
   const { catDropDown, cat } = useListContext();
 
-  const categories = data[0].sort((a, b) => {
-    const name1 = a.name.toUpperCase();
-    const name2 = b.name.toUpperCase();
-
-    if (name1 < name2) return -1;
-    else if (name1 > name2) return 1;
-    else return 0;
-  });
+  const categories = data[0];
 
   return categories.map((category, index) => (
     <React.Fragment key={category.id}>

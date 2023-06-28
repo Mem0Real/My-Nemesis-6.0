@@ -50,23 +50,27 @@ export default function List({ data, create, update, deleteItem, url }) {
       ref = { name: "CategoryId", val: data.CategoryId };
     }
 
-    setEditData({
-      entry: entry,
-      id: data.id,
-      name: data.name,
-      description: data.description,
-      image: data.image,
-      [ref.name]: ref.val,
-    });
     if (entry === "items") {
-      setEditData((editData) => {
-        return {
-          ...editData,
-          brand: data.brand,
-          model: data.model,
-          quantity: data.quantity,
-          price: data.price,
-        };
+      setEditData({
+        entry: entry,
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        images: data.images,
+        [ref.name]: ref.val,
+        brand: data.brand,
+        model: data.model,
+        quantity: data.quantity,
+        price: data.price,
+      });
+    } else {
+      setEditData({
+        entry: entry,
+        id: data.id,
+        name: data.name,
+        description: data.description,
+        image: data.image,
+        [ref.name]: ref.val,
       });
     }
     showEditModal(true);

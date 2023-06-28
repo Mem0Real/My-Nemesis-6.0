@@ -30,14 +30,11 @@ export default function Edit({
         setImageSrc(null);
       }
     } else {
-      console.log(editData.images);
-      if (editData.images) {
-        editData.images.foreach((image) => {
-          setImages({ ...images, image });
-          console.log(image);
-        });
-      } else {
-        setImages([]);
+      if (editData.images !== []) {
+        let imgData = editData.images;
+        let prevImg = [];
+        imgData.map((img) => prevImg.push(img));
+        setImages(prevImg);
       }
     }
   }, [editData]);
@@ -316,7 +313,7 @@ export default function Edit({
                       multiple
                     />
                   </div>
-                  {images.length > 0 && <ImagePreview images={images} />}
+                  {images && <ImagePreview images={images} />}
                 </>
               )}
 
