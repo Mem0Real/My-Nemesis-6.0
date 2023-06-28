@@ -4,7 +4,6 @@ import Image from "next/image";
 import formatData from "@/app/utils/format";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
-import ImagePreview from "./ImagePreview";
 
 export default function Edit({
   modal,
@@ -14,12 +13,16 @@ export default function Edit({
   setEditData,
 }) {
   const [imageSrc, setImageSrc] = useState();
+  const [uploadData, setUploadData] = useState();
+  const imageRef = useRef();
+
+  const [imageFiles, setImageFiles] = useState([]);
   const [images, setImages] = useState([]);
 
-  useEffect(() => {
-    let img;
+  if (editData.entry !== "items") {
+    useEffect(() => {
+      let img;
 
-    if (editData.entry !== "items") {
       if (editData.image && editData.image !== "") {
         typeof editData.image !== "string"
           ? (img = editData.image.toString())
@@ -28,8 +31,38 @@ export default function Edit({
       } else {
         setImageSrc(null);
       }
-    }
-  }, [editData.image]);
+    }, [editData.image]);
+  } else {
+    useEffect(() => {
+      const images = [],
+        fileReaders = [];
+      let isCancel = false;
+      if (imageFiles.length) {
+        imageFiles.forEach((file) => {
+          const fileReader = new FileReader();
+          fileReaders.push(fileReader);
+          fileReader.onload = (e) => {
+            const { result } = e.target;
+            if (result) {
+              images.push(result);
+            }
+            if (images.length === imageFiles.length && !isCancel) {
+              setImages(images);
+            }
+          };
+          fileReader.readAsDataURL(file);
+        });
+      }
+      return () => {
+        isCancel = true;
+        fileReaders.forEach((fileReader) => {
+          if (fileReader.readyState === 1) {
+            fileReader.abort();
+          }
+        });
+      };
+    }, [imageFiles]);
+  }
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
@@ -44,10 +77,18 @@ export default function Edit({
   };
 
   const handleMultipleSelect = (e) => {
-    if (e.target.files) {
-      const _files = Array.from(e.target.files);
-      setImages(_files);
-      setEditData({ ...editData, newImage: _files });
+    const { files } = e.target;
+    const validImageFiles = [],
+      fileReaders = [],
+      images = [],
+      itemsImg = [];
+    for (const file of files) {
+      validImageFiles.push(file);
+      images.push(file);
+
+      if (validImageFiles.length) {
+        setImageFiles(validImageFiles);
+      }
     }
   };
 
@@ -57,6 +98,26 @@ export default function Edit({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const images = [],
+      fileReaders = [];
+    let isCancel = false;
+    if (imageFiles.length) {
+      imageFiles.forEach((file) => {
+        const fileReader = new FileReader();
+        fileReaders.push(fileReader);
+        fileReader.onload = (e) => {
+          const { result } = e.target;
+          if (result) {
+            images.push(result);
+          }
+          if (images.length === imageFiles.length && !isCancel) {
+            setEditData({ ...editData, newImage: images });
+          }
+        };
+        fileReader.readAsDataURL(file);
+      });
+    }
     // closeEditModal();
 
     const formData = formatData(editData);
@@ -305,7 +366,23 @@ export default function Edit({
                       multiple
                     />
                   </div>
-                  {images.length > 0 && <ImagePreview images={images} />}
+                  {images.length > 0 && (
+                    <div className="flex flex-col gap-4">
+                      {images.map((img, index) => {
+                        return (
+                          <div key={index} className="relative h-36 w-36 mb-6 ">
+                            <Image
+                              src={img}
+                              fill={true}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+                              alt="Image"
+                              className="object-contain rounded-lg"
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
                 </>
               )}
 

@@ -2,6 +2,7 @@ import prisma from "@/lib/prisma";
 import mime from "mime";
 import { join } from "path";
 import { stat, mkdir, writeFile, unlink } from "fs/promises";
+import fs from "fs";
 import * as dateFn from "date-fns";
 
 import { revalidatePath, revalidateTag } from "next/cache";
@@ -259,46 +260,69 @@ export async function update(formData) {
   if (price === NaN) price = 0;
 
   const writeToDb = async (dir) => {
-    formData.set("image", dir);
-    image = formData.get("image");
+    if (entry !== "items") {
+      formData.set("image", dir);
+      image = formData.get("image");
 
-    try {
-      const res = await prisma[entry].update({
-        where: { id: id },
-        data: {
-          [updatedId.name]: updatedId.val,
-          name: name,
-          brand: brand,
-          model: model,
-          quantity: quantity,
-          price: price,
-          description: description,
-          image: image,
-          [category.name]: category.val,
-        },
-      });
-      revalidateTag("search");
-      revalidatePath("/dashboard");
-      revalidatePath("/collection");
-      console.log("Success");
-    } catch (error) {
-      console.log("Error: ", error);
+      try {
+        const res = await prisma[entry].update({
+          where: { id: id },
+          data: {
+            [updatedId.name]: updatedId.val,
+            name: name,
+            brand: brand,
+            model: model,
+            quantity: quantity,
+            price: price,
+            description: description,
+            image: image,
+            [category.name]: category.val,
+          },
+        });
+        revalidateTag("search");
+        revalidatePath("/dashboard");
+        revalidatePath("/collection");
+        console.log("Success");
+      } catch (error) {
+        console.log("Error: ", error);
+      }
+    } else {
+      try {
+        const res = await prisma[entry].update({
+          where: { id: id },
+          data: {
+            [updatedId.name]: updatedId.val,
+            name: name,
+            brand: brand,
+            model: model,
+            quantity: quantity,
+            price: price,
+            description: description,
+            images: dir,
+            [category.name]: category.val,
+          },
+        });
+        revalidateTag("search");
+        revalidatePath("/dashboard");
+        revalidatePath("/collection");
+        console.log("Success");
+      } catch (error) {
+        console.log("Error: ", error);
+      }
     }
   };
   if (!file) {
-    console.log("no image");
-    // await writeToDb("");
+    await writeToDb("");
     revalidateTag("search");
     revalidatePath("/dashboard");
     revalidatePath("/collection");
-  }
-  // else if (typeof file === "string") {
-  //   // writeToDb(file);
-  //   revalidateTag("search");
-  //   revalidatePath("/dashboard");
-  //   revalidatePath("/collection");
-  // }
-  else {
+  } else if (typeof file === "string" && entry !== "items") {
+    console.log("stringg");
+    writeToDb(file);
+    revalidateTag("search");
+    revalidatePath("/dashboard");
+    revalidatePath("/collection");
+  } else {
     const oldFile = formData.get("image");
 
     let relativeUploadDir;
@@ -325,54 +349,42 @@ export async function update(formData) {
       }
     }
 
-    // try {
-    //   const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-    //   const filename = `${file.name.replace(
-    //     /\.[^/.]+$/,
-    //     ""
-    //   )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
-    //   await writeFile(`${uploadDir}/${filename}`, buffer);
-
-    //   if (oldFile && oldFile !== "null") await unlink(`${delDir}/${oldFile}`);
-
-    //   let imageUrl = `${relativeUploadDir}/${filename}`;
-
-    //   await writeToDb(imageUrl);
-    //   revalidateTag("search");
-    //   revalidatePath("/dashboard");
-    //   revalidatePath("/collection");
-    // }
-
     try {
-      const buffer = Buffer.from(await file.arrayBuffer());
-      const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
       if (entry !== "items") {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+
         const filename = `${file.name.replace(
           /\.[^/.]+$/,
           ""
         )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
+
+        // Delete existing file if any
+        if (oldFile && oldFile !== "null") {
+          await unlink(`${delDir}/${oldFile}`);
+        }
+
         await writeFile(`${uploadDir}/${filename}`, buffer);
 
         let imageUrl = `${relativeUploadDir}/${filename}`;
-        if (oldFile && oldFile !== "null") await unlink(`${delDir}/${oldFile}`);
 
-        // await writeToDb(imageUrl);
+        await writeToDb(imageUrl);
       } else {
-        const buffer = Buffer.from(await file.arrayBuffer());
-        console.log(file);
-        // let imageUrl = [];
-        // for (let img in file) {
-        //   console.log(img);
-        // const filename = `${img.name.replace(
-        //   /\.[^/.]+$/,
-        //   ""
-        // )}-${uniqueSuffix}.${mime.getExtension(img.type)}`;
-        // console.log(`${uploadDir}/${filename}`);
-        // await writeFile(`${uploadDir}/${filename}`, buffer);
-        // imageUrl.push(`${relativeUploadDir}/${filename}`);
-        // }
+        const formDataEntryValues = Array.from(formData.values());
+        let imageUrl = [];
+        for (const formDataEntryValue of formDataEntryValues) {
+          if (
+            typeof formDataEntryValue === "object" &&
+            "arrayBuffer" in formDataEntryValue
+          ) {
+            const file = formDataEntryValue;
+            const buffer = Buffer.from(await file.arrayBuffer());
+            fs.writeFileSync(`${uploadDir}/${file.name}`, buffer);
+            imageUrl.push(`${relativeUploadDir}/${file.name}`);
+          }
+        }
+        await writeToDb(imageUrl);
       }
-      // await writeToDb(imageUrl);
 
       revalidateTag("all");
       revalidateTag("search");
