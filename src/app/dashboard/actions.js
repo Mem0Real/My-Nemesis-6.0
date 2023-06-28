@@ -106,7 +106,7 @@ export async function create(formData) {
           quantity: quantity,
           price: price,
           description: description,
-          image: image,
+          images: image,
           [category.name]: category.val,
         },
       });
@@ -150,15 +150,32 @@ export async function create(formData) {
 
     try {
       const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-      const filename = `${file.name.replace(
-        /\.[^/.]+$/,
-        ""
-      )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
-      await writeFile(`${uploadDir}/${filename}`, buffer);
+      if (entry !== "items") {
+        const filename = `${file.name.replace(
+          /\.[^/.]+$/,
+          ""
+        )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
+        await writeFile(`${uploadDir}/${filename}`, buffer);
 
-      let imageUrl = `${relativeUploadDir}/${filename}`;
+        let imageUrl = `${relativeUploadDir}/${filename}`;
 
-      await writeToDb(imageUrl);
+        await writeToDb(imageUrl);
+      } else {
+        let imageUrl = [];
+        for (img in file) {
+          const filename = `${img.name.replace(
+            /\.[^/.]+$/,
+            ""
+          )}-${uniqueSuffix}.${mime.getExtension(img.type)}`;
+
+          console.log(`${uploadDir}/${filename}`);
+          // await writeFile(`${uploadDir}/${filename}`, buffer);
+
+          imageUrl.push(`${relativeUploadDir}/${filename}`);
+        }
+      }
+      // await writeToDb(imageUrl);
+
       revalidateTag("all");
       revalidateTag("search");
     } catch (e) {
@@ -269,18 +286,20 @@ export async function update(formData) {
     }
   };
   if (!file) {
-    await writeToDb("");
+    console.log("no image");
+    // await writeToDb("");
     revalidateTag("search");
     revalidatePath("/dashboard");
     revalidatePath("/collection");
-  } else if (typeof file === "string") {
-    writeToDb(file);
-    revalidateTag("search");
-    revalidatePath("/dashboard");
-    revalidatePath("/collection");
-  } else {
+  }
+  // else if (typeof file === "string") {
+  //   // writeToDb(file);
+  //   revalidateTag("search");
+  //   revalidatePath("/dashboard");
+  //   revalidatePath("/collection");
+  // }
+  else {
     const oldFile = formData.get("image");
-    const buffer = Buffer.from(await file.arrayBuffer());
 
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
@@ -306,22 +325,57 @@ export async function update(formData) {
       }
     }
 
+    // try {
+    //   const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+    //   const filename = `${file.name.replace(
+    //     /\.[^/.]+$/,
+    //     ""
+    //   )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
+    //   await writeFile(`${uploadDir}/${filename}`, buffer);
+
+    //   if (oldFile && oldFile !== "null") await unlink(`${delDir}/${oldFile}`);
+
+    //   let imageUrl = `${relativeUploadDir}/${filename}`;
+
+    //   await writeToDb(imageUrl);
+    //   revalidateTag("search");
+    //   revalidatePath("/dashboard");
+    //   revalidatePath("/collection");
+    // }
+
     try {
+      const buffer = Buffer.from(await file.arrayBuffer());
       const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-      const filename = `${file.name.replace(
-        /\.[^/.]+$/,
-        ""
-      )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
-      await writeFile(`${uploadDir}/${filename}`, buffer);
+      if (entry !== "items") {
+        const filename = `${file.name.replace(
+          /\.[^/.]+$/,
+          ""
+        )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
+        await writeFile(`${uploadDir}/${filename}`, buffer);
 
-      if (oldFile && oldFile !== "null") await unlink(`${delDir}/${oldFile}`);
+        let imageUrl = `${relativeUploadDir}/${filename}`;
+        if (oldFile && oldFile !== "null") await unlink(`${delDir}/${oldFile}`);
 
-      let imageUrl = `${relativeUploadDir}/${filename}`;
+        // await writeToDb(imageUrl);
+      } else {
+        const buffer = Buffer.from(await file.arrayBuffer());
+        console.log(file);
+        // let imageUrl = [];
+        // for (let img in file) {
+        //   console.log(img);
+        // const filename = `${img.name.replace(
+        //   /\.[^/.]+$/,
+        //   ""
+        // )}-${uniqueSuffix}.${mime.getExtension(img.type)}`;
+        // console.log(`${uploadDir}/${filename}`);
+        // await writeFile(`${uploadDir}/${filename}`, buffer);
+        // imageUrl.push(`${relativeUploadDir}/${filename}`);
+        // }
+      }
+      // await writeToDb(imageUrl);
 
-      await writeToDb(imageUrl);
+      revalidateTag("all");
       revalidateTag("search");
-      revalidatePath("/dashboard");
-      revalidatePath("/collection");
     } catch (e) {
       console.error("Error while trying to upload a file\n", e);
     }

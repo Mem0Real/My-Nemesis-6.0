@@ -11,7 +11,7 @@ export default function Images({
 }) {
   return (
     <SlickCarousel>
-      {images.map((img, index) => {
+      {/* {images.map((img, index) => {
         return (
           <div key={index} className="flex gap-4">
             <Link
@@ -38,7 +38,7 @@ export default function Images({
             </Link>
           </div>
         );
-      })}
+      })} */}
     </SlickCarousel>
   );
 }

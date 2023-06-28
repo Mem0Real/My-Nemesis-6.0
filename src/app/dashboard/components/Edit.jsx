@@ -16,29 +16,80 @@ export default function Edit({
   const [uploadData, setUploadData] = useState();
   const imageRef = useRef();
 
-  useEffect(() => {
-    let img;
+  const [imageFiles, setImageFiles] = useState([]);
+  const [images, setImages] = useState([]);
 
-    if (editData.image && editData.image !== "") {
-      typeof editData.image !== "string"
-        ? (img = editData.image.toString())
-        : (img = editData.image);
-      setImageSrc(img);
-    } else {
-      setImageSrc(null);
-    }
-  }, [editData.image]);
+  if (editData.entry !== "items") {
+    useEffect(() => {
+      let img;
+
+      if (editData.image && editData.image !== "") {
+        typeof editData.image !== "string"
+          ? (img = editData.image.toString())
+          : (img = editData.image);
+        setImageSrc(img);
+      } else {
+        setImageSrc(null);
+      }
+    }, [editData.image]);
+  } else {
+    useEffect(() => {
+      const images = [],
+        fileReaders = [];
+      let isCancel = false;
+      if (imageFiles.length) {
+        imageFiles.forEach((file) => {
+          const fileReader = new FileReader();
+          fileReaders.push(fileReader);
+          fileReader.onload = (e) => {
+            const { result } = e.target;
+            if (result) {
+              images.push(result);
+            }
+            if (images.length === imageFiles.length && !isCancel) {
+              setImages(images);
+            }
+          };
+          fileReader.readAsDataURL(file);
+        });
+      }
+      return () => {
+        isCancel = true;
+        fileReaders.forEach((fileReader) => {
+          if (fileReader.readyState === 1) {
+            fileReader.abort();
+          }
+        });
+      };
+    }, [imageFiles]);
+  }
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
 
     reader.onload = (onLoadEvent) => {
-      setImageSrc(onLoadEvent.target.result);
+      setImageSrc(...imageSrc, onLoadEvent.target.result);
       setUploadData(undefined);
     };
 
     reader.readAsDataURL(changeEvent.target.files[0]);
     setEditData({ ...editData, newImage: changeEvent.target.files[0] });
+  };
+
+  const handleMultipleSelect = (e) => {
+    const { files } = e.target;
+    const validImageFiles = [],
+      fileReaders = [],
+      images = [],
+      itemsImg = [];
+    for (const file of files) {
+      validImageFiles.push(file);
+      images.push(file);
+
+      if (validImageFiles.length) {
+        setImageFiles(validImageFiles);
+      }
+    }
   };
 
   const handleChange = (e) => {
@@ -47,12 +98,32 @@ export default function Edit({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    closeEditModal();
+
+    const images = [],
+      fileReaders = [];
+    let isCancel = false;
+    if (imageFiles.length) {
+      imageFiles.forEach((file) => {
+        const fileReader = new FileReader();
+        fileReaders.push(fileReader);
+        fileReader.onload = (e) => {
+          const { result } = e.target;
+          if (result) {
+            images.push(result);
+          }
+          if (images.length === imageFiles.length && !isCancel) {
+            setEditData({ ...editData, newImage: images });
+          }
+        };
+        fileReader.readAsDataURL(file);
+      });
+    }
+    // closeEditModal();
 
     const formData = formatData(editData);
 
     update(formData);
-    setImageSrc(null);
+    // setImageSrc(null);
   };
 
   const handleClose = () => {
@@ -71,7 +142,7 @@ export default function Edit({
       open={modal}
       onClose={handleClose}
       aria-labelledby="Edit Modal"
-      aria-describedby="Update category"
+      aria-describedby="Update"
       className="absolute top-20 w-[85%] md:w-2/5 h-screen my-6 md:mt-0 md:py-3 mx-auto overflow-y-auto no-scrollbar rounded-lg"
     >
       <Box className="">
@@ -247,34 +318,74 @@ export default function Edit({
                   Description
                 </label>
               </div>
-              <div className="relative z-0 w-2/3 mb-6 group">
-                <label
-                  htmlFor="image"
-                  className="text-md text-gray-500 dark:text-gray-400 top-6 -z-10"
-                >
-                  Image
-                </label>
-                <input
-                  id="image"
-                  name="image"
-                  type="file"
-                  className="block py-2.5 px-0 w-full text-sm text-neutral-700 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  onChange={handleFileSelect}
-                  ref={imageRef}
-                />
-              </div>
-              {imageSrc && (
-                <div className="relative h-56 w-56 mb-6">
-                  <Image
-                    src={imageSrc}
-                    fill={true}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
-                    alt="Image"
-                    className="object-contain rounded-lg"
-                  />
-                </div>
+              {editData.entry !== "items" ? (
+                <>
+                  <div className="relative z-0 w-2/3 mb-6 group">
+                    <label
+                      htmlFor="image"
+                      className="text-md text-gray-500 dark:text-gray-400 top-6 -z-10"
+                    >
+                      Image
+                    </label>
+                    <input
+                      id="image"
+                      name="image"
+                      type="file"
+                      className="block py-2.5 px-0 w-full text-sm text-neutral-700 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      onChange={handleFileSelect}
+                    />
+                  </div>
+
+                  {imageSrc && (
+                    <div className="relative h-56 w-56 mb-6">
+                      <Image
+                        src={imageSrc}
+                        fill={true}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+                        alt="Image"
+                        className="object-contain rounded-lg"
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="relative z-0 w-2/3 mb-6 group">
+                    <label
+                      htmlFor="images"
+                      className="text-md text-gray-500 dark:text-gray-400 top-6 -z-10"
+                    >
+                      Images
+                    </label>
+                    <input
+                      id="images"
+                      name="image"
+                      type="file"
+                      className="block py-2.5 px-0 w-full text-sm text-neutral-700 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      onChange={handleMultipleSelect}
+                      multiple
+                    />
+                  </div>
+                  {images.length > 0 && (
+                    <div className="flex flex-col gap-4">
+                      {images.map((img, index) => {
+                        return (
+                          <div key={index} className="relative h-36 w-36 mb-6 ">
+                            <Image
+                              src={img}
+                              fill={true}
+                              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+                              alt="Image"
+                              className="object-contain rounded-lg"
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </>
               )}
+
               <button
                 name="submit"
                 type="submit"
