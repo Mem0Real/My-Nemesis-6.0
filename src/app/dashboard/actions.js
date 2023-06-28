@@ -211,27 +211,6 @@ export async function update(formData) {
   let quantity = formData.get("quantity");
   let price = formData.get("price");
 
-  if (!brand) {
-    if (entry !== "items") brand = undefined;
-    else brand = name;
-  }
-  if (!model) {
-    if (entry !== "items") model = undefined;
-    else model = name;
-  }
-  if (!quantity) {
-    quantity = undefined;
-  } else {
-    if (quantity === "null") quantity = 0;
-    else quantity = parseInt(quantity, 10);
-  }
-  if (!price) {
-    price = undefined;
-  } else {
-    if (price === "null") price = 0;
-    else price = parseFloat(price);
-  }
-
   let id = formData.get("id");
   let newId = formData.get("newId");
 
@@ -251,11 +230,6 @@ export async function update(formData) {
     id = formData.get("id");
   }
 
-  if (!description) {
-    formData.set("description", name);
-    description = formData.get("description");
-  }
-
   if (childId !== null) {
     category = { name: "ChildId", val: childId };
   } else if (parentId !== null) {
@@ -267,7 +241,7 @@ export async function update(formData) {
   if (quantity === NaN) quantity = 0;
   if (price === NaN) price = 0;
 
-  const writeToDb = async (dir) => {
+  const writeToDb = async (dir = null) => {
     if (entry !== "items") {
       formData.set("image", dir);
       image = formData.get("image");
@@ -278,12 +252,12 @@ export async function update(formData) {
           data: {
             [updatedId.name]: updatedId.val,
             name: name,
-            brand: brand,
-            model: model,
-            quantity: quantity,
-            price: price,
-            description: description,
-            image: image,
+            brand: brand ? brand : undefined,
+            model: model ? model : undefined,
+            quantity: quantity ? quantity : undefined,
+            price: price ? price : undefined,
+            description: description ? description : undefined,
+            image: image ? image : undefined,
             [category.name]: category.val,
           },
         });
@@ -301,12 +275,12 @@ export async function update(formData) {
           data: {
             [updatedId.name]: updatedId.val,
             name: name,
-            brand: brand,
-            model: model,
-            quantity: quantity,
-            price: price,
-            description: description,
-            images: dir,
+            brand: brand ? brand : undefined,
+            model: model ? model : undefined,
+            quantity: quantity ? quantity : undefined,
+            price: price ? price : undefined,
+            description: description ? description : undefined,
+            images: dir ? dir : undefined,
             [category.name]: category.val,
           },
         });
@@ -320,13 +294,13 @@ export async function update(formData) {
     }
   };
   if (!file) {
-    // await writeToDb("");
+    await writeToDb("");
     console.log("No image");
     revalidateTag("search");
     revalidatePath("/dashboard");
     revalidatePath("/collection");
   } else if (typeof file === "string" && entry !== "items") {
-    // writeToDb(file);
+    writeToDb(file);
     console.log("No change");
     revalidateTag("search");
     revalidatePath("/dashboard");

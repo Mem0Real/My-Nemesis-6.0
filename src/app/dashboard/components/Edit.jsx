@@ -31,7 +31,7 @@ export default function Edit({
       }
     } else {
       if (editData.images !== []) {
-        // console.log(editData.images);
+        console.log(editData.images);
         let imgData = editData.images;
         let prevImg = [];
         imgData.map((img) => prevImg.push(img));
@@ -72,9 +72,9 @@ export default function Edit({
 
     update(formData);
 
-    // closeEditModal();
-    // setImageSrc(null);
-    // setImages([]);
+    closeEditModal();
+    setImageSrc(null);
+    setImages([]);
   };
 
   const handleClose = () => {
