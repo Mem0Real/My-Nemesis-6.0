@@ -31,20 +31,23 @@ export default function Edit({
       }
     } else {
       if (editData.images !== []) {
+        // console.log(editData.images);
         let imgData = editData.images;
         let prevImg = [];
         imgData.map((img) => prevImg.push(img));
         setImages(prevImg);
+      } else {
+        console.log("Empty");
+        setImages([]);
       }
     }
-  }, [editData]);
+  }, [editData.image, editData.images]);
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
 
     reader.onload = (onLoadEvent) => {
-      setImageSrc(...imageSrc, onLoadEvent.target.result);
-      setUploadData(undefined);
+      setImageSrc(onLoadEvent.target.result);
     };
 
     reader.readAsDataURL(changeEvent.target.files[0]);
@@ -65,7 +68,7 @@ export default function Edit({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // closeEditModal();
+    closeEditModal();
     const formData = formatData(editData);
 
     update(formData);

@@ -325,7 +325,6 @@ export async function update(formData) {
     revalidatePath("/dashboard");
     revalidatePath("/collection");
   } else if (typeof file === "string" && entry !== "items") {
-    console.log("stringg");
     writeToDb(file);
     revalidateTag("search");
     revalidatePath("/dashboard");
