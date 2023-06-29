@@ -371,11 +371,28 @@ export async function deleteItem(entry, data) {
   const delDir = join(process.cwd(), "public");
 
   if (entry !== "items") {
-    if (data.image) unlink(`${delDir}/${data.image}`);
+    if (data.image) {
+      unlink(`${delDir}/${data.image}`);
+    }
   } else {
     let images = data.images;
+    let dir = `${delDir}/uploads/${entry}/${data.ChildId}/${data.id}/`;
+
     if (images) {
-      images.map((file) => unlink(`${delDir}/${file}`));
+      fs.rm(
+        dir,
+        {
+          recursive: true,
+          force: true,
+        },
+        (err) => {
+          if (err) {
+            throw err;
+          }
+
+          console.log(`${dir} is deleted!`);
+        }
+      );
     }
   }
 
