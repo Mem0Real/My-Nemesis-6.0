@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import AddToCart from "@/app/collection/[category]/[parent]/[child]/[item]/components/AddToCart";
+import { useCartContext } from "@/context/context";
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");

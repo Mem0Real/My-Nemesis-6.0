@@ -61,18 +61,24 @@ export default function Cart({ closeCart, modal }) {
           <div className="min-h-48 flex flex-col items-center gap-12">
             <h1 className="text-xl text-center font-black">Cart</h1>
             <div className="border border-1 border-neutral-200 rounded w-[95%]">
-              {cartData ? (
+              {cartData[0] && cartData[0].data ? (
                 <div className="flex flex-col items-start md:ms-4">
-                  {/* {cartData.map((cartItem) => { */}
-                  {/* return ( */}
-                  <div className="px-5 outline outline-2 flex items-center gap-5">
-                    <h1 className="text-lg font-semibold">
-                      {cartData.data.name}
-                    </h1>
-                    <div className="text-base italic">{cartData.quantity}</div>
-                  </div>
-                  {/* ); */}
-                  {/* })} */}
+                  {cartData.map((cartItem) => {
+                    console.log(cartItem);
+                    return (
+                      <div
+                        key={cartItem.data.id}
+                        className="px-5 outline outline-2 flex items-center gap-5"
+                      >
+                        <h1 className="text-lg font-semibold">
+                          {cartItem.data.name}
+                        </h1>
+                        <div className="text-base italic">
+                          {cartItem.quantity}
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               ) : (
                 <div className="flex flex-col-items-center justify-center">
@@ -80,6 +86,10 @@ export default function Cart({ closeCart, modal }) {
                 </div>
               )}
             </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <button>Confirm</button>
+            <button onClick={() => setCartData([])}>Clear</button>
           </div>
         </div>
       </Box>

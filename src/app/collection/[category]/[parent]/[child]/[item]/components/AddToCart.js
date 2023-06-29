@@ -21,7 +21,8 @@ export default function AddToCart({ modal, closeModal, item }) {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    setCartData({ ...cartData, data: item, quantity: quantity });
+    // setCartData({ ...cartData, data: item, quantity: quantity });
+    cartData.push({ data: item, quantity: quantity });
     closeModal();
   };
 

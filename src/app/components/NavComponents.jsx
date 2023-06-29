@@ -110,7 +110,7 @@ export default function NavComponents({ data, getAll, getOne }) {
             className="relative"
           >
             <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
-            {cartData && (
+            {cartData[0] && (
               <div className="absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5" />
             )}
           </button>
@@ -124,7 +124,7 @@ export default function NavComponents({ data, getAll, getOne }) {
         </button>
         <button className="relative" onClick={showCart} name="cart modal">
           <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
-          {cartData && (
+          {cartData[0] && (
             <div className="absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5" />
           )}
         </button>
