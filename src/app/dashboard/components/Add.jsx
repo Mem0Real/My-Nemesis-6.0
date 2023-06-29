@@ -27,10 +27,6 @@ export default function Add({
     setAddData({ ...addData, image: changeEvent.target.files[0] });
   };
 
-  const handleChange = (e) => {
-    setAddData({ ...addData, [e.target.name]: e.target.value });
-  };
-
   const handleMultipleSelect = (e) => {
     if (e.target.files) {
       const _files = Array.from(e.target.files);
@@ -38,13 +34,18 @@ export default function Add({
       setAddData({ ...addData, image: _files });
     }
   };
+
+  const handleChange = (e) => {
+    setAddData({ ...addData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    closeAddModal();
 
     const formData = formatData(addData);
 
     create(formData);
+    closeAddModal();
     setImageSrc(null);
     setImages([]);
   };
@@ -288,7 +289,7 @@ export default function Add({
                       multiple
                     />
                   </div>
-                  {/* {images && <ImagePreview images={images} />} */}
+                  {images && <ImagePreview images={images} />}
                 </>
               )}
               <button

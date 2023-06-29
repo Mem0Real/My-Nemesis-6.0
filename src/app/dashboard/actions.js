@@ -25,27 +25,6 @@ export async function create(formData) {
   let quantity = formData.get("quantity");
   let price = formData.get("price");
 
-  if (!brand) {
-    if (entry !== "items") brand = undefined;
-    else brand = name;
-  }
-  if (!model) {
-    if (entry !== "items") model = undefined;
-    else model = name;
-  }
-  if (!quantity) {
-    if (entry !== "items") quantity = undefined;
-    else quantity = 0;
-  } else {
-    quantity = parseInt(quantity, 10);
-  }
-  if (!price) {
-    if (entry !== "items") price = undefined;
-    else price = 0;
-  } else {
-    price = parseFloat(price);
-  }
-
   let id = formData.get("id");
   let description = formData.get("description");
   let image = formData.get("image");
@@ -61,11 +40,6 @@ export async function create(formData) {
     id = formData.get("id");
   }
 
-  if (!description) {
-    formData.set("description", name);
-    description = formData.get("description");
-  }
-
   if (childId !== null) {
     category = { name: "ChildId", val: childId };
   } else if (parentId !== null) {
@@ -74,10 +48,7 @@ export async function create(formData) {
     category = { name: "CategoryId", val: categoryId };
   }
 
-  if (quantity === NaN) quantity = 0;
-  if (price === NaN) price = 0;
-
-  const writeToDb = async (dir) => {
+  const writeToDb = async (dir = null) => {
     if (entry !== "items") {
       formData.set("image", dir);
       image = formData.get("image");
@@ -87,12 +58,12 @@ export async function create(formData) {
           data: {
             id: id,
             name: name,
-            brand: brand,
-            model: model,
-            quantity: quantity,
-            price: price,
-            description: description,
-            image: image,
+            brand: brand ? brand : undefined,
+            model: model ? model : undefined,
+            quantity: quantity ? parseInt(quantity, 10) : undefined,
+            price: price ? parseFloat(price) : undefined,
+            description: description ? description : undefined,
+            image: image ? image : undefined,
             [category.name]: category.val,
           },
         });
@@ -109,12 +80,12 @@ export async function create(formData) {
           data: {
             id: id,
             name: name,
-            brand: brand,
-            model: model,
-            quantity: quantity,
-            price: price,
-            description: description,
-            images: dir,
+            brand: brand ? brand : undefined,
+            model: model ? model : undefined,
+            quantity: quantity ? parseInt(quantity, 10) : undefined,
+            price: price ? parseFloat(price) : undefined,
+            description: description ? description : undefined,
+            images: dir ? dir : undefined,
             [category.name]: category.val,
           },
         });
@@ -128,16 +99,20 @@ export async function create(formData) {
     }
   };
   if (!file) {
-    await writeToDb("");
+    await writeToDb();
+    revalidateTag("search");
     revalidatePath("/collection");
     revalidatePath("/dashboard");
-    revalidateTag("search");
   } else {
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
-      relativeUploadDir = `/uploads/${entry}/${category.val}`;
+      if (entry !== "items") {
+        relativeUploadDir = `/uploads/${entry}/${category.val}`;
+      } else relativeUploadDir = `/uploads/${entry}/${category.val}/${id}`;
     } else {
-      relativeUploadDir = `/uploads/${entry}/${category.val}`;
+      if (entry !== "items") {
+        relativeUploadDir = `/uploads/${entry}/${category.val}`;
+      } else relativeUploadDir = `/uploads/${entry}/${category.val}/${id}`;
     }
 
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);
@@ -185,8 +160,9 @@ export async function create(formData) {
         await writeToDb(imageUrl);
       }
 
-      revalidateTag("all");
       revalidateTag("search");
+      revalidatePath("/dashboard");
+      revalidatePath("/collection");
     } catch (e) {
       console.error("Error while trying to upload a file\n", e);
     }
@@ -238,9 +214,6 @@ export async function update(formData) {
     category = { name: "CategoryId", val: categoryId };
   }
 
-  if (quantity === NaN) quantity = 0;
-  if (price === NaN) price = 0;
-
   const writeToDb = async (dir = null) => {
     if (entry !== "items") {
       formData.set("image", dir);
@@ -254,8 +227,8 @@ export async function update(formData) {
             name: name,
             brand: brand ? brand : undefined,
             model: model ? model : undefined,
-            quantity: quantity ? quantity : undefined,
-            price: price ? price : undefined,
+            quantity: quantity ? parseInt(quantity, 10) : undefined,
+            price: price ? parseFloat(price) : undefined,
             description: description ? description : undefined,
             image: image ? image : undefined,
             [category.name]: category.val,
@@ -277,8 +250,8 @@ export async function update(formData) {
             name: name,
             brand: brand ? brand : undefined,
             model: model ? model : undefined,
-            quantity: quantity ? quantity : undefined,
-            price: price ? price : undefined,
+            quantity: quantity ? parseInt(quantity, 10) : undefined,
+            price: price ? parseFloat(price) : undefined,
             description: description ? description : undefined,
             images: dir ? dir : undefined,
             [category.name]: category.val,
@@ -294,7 +267,7 @@ export async function update(formData) {
     }
   };
   if (!file) {
-    await writeToDb("");
+    await writeToDb();
     console.log("No image");
     revalidateTag("search");
     revalidatePath("/dashboard");
@@ -308,9 +281,13 @@ export async function update(formData) {
   } else {
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
-      relativeUploadDir = `/uploads/${entry}/${category.val}`;
+      if (entry !== "items") {
+        relativeUploadDir = `/uploads/${entry}/${category.val}`;
+      } else relativeUploadDir = `/uploads/${entry}/${category.val}/${id}`;
     } else {
-      relativeUploadDir = `/uploads/${entry}/${category.val}`;
+      if (entry !== "items") {
+        relativeUploadDir = `/uploads/${entry}/${category.val}`;
+      } else relativeUploadDir = `/uploads/${entry}/${category.val}/${id}`;
     }
 
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);
@@ -374,8 +351,9 @@ export async function update(formData) {
         await writeToDb(imageUrl);
       }
 
-      revalidateTag("all");
       revalidateTag("search");
+      revalidatePath("/dashboard");
+      revalidatePath("/collection");
     } catch (e) {
       console.error("Error while trying to upload a file\n", e);
     }
@@ -395,9 +373,9 @@ export async function deleteItem(entry, data) {
   if (entry !== "items") {
     if (data.image) unlink(`${delDir}/${data.image}`);
   } else {
-    const images = data.images;
+    let images = data.images;
     if (images) {
-      images.map((file) => unlink(`${delDir}/${images}`));
+      images.map((file) => unlink(`${delDir}/${file}`));
     }
   }
 
