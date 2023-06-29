@@ -16,7 +16,7 @@ export default function Delete({
   const confirmDelete = async (deleteData) => {
     try {
       deleteItem(deleteData.entry, deleteData.data);
-      // closeDeleteModal();
+      closeDeleteModal();
     } catch (err) {
       console.log(err);
     }
