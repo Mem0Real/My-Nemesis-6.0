@@ -4,18 +4,24 @@ import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Add, Remove } from "@mui/icons-material";
+import { useCartContext } from "@/context/context";
 
 export default function AddToCart({ modal, closeModal, item }) {
   const [order, setOrder] = useState();
   const [quantity, setQuantity] = useState(1);
+
+  const { cartData, setCartData } = useCartContext();
+
+  useEffect(() => {
+    // setCartData({ ...cartData, data: item, quantity: quantity });
+  }, [item, quantity]);
 
   const handleChange = (e) => {
     setQuantity(e.target.value);
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    setOrder(quantity);
-    // Add item to cart
+    setCartData({ ...cartData, data: item, quantity: quantity });
     closeModal();
   };
 

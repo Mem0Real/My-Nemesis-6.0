@@ -1,11 +1,10 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import AddToCart from "./components/AddToCart";
+import AddToCart from "@/app/collection/[category]/[parent]/[child]/[item]/components/AddToCart";
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
-  const [amount, setAmount] = useState(1);
   const [modal, showModal] = useState(false);
 
   useEffect(() => {

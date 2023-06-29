@@ -1,15 +1,15 @@
-import NavComponents from "./NavComponents";
-
 import Image from "next/image";
 import Link from "next/link";
 import { Raleway } from "next/font/google";
+
+import NavComponents from "./NavComponents";
+import { getAll } from "../search/searchActions";
 
 const raleway = Raleway({
   subsets: ["cyrillic"],
   display: "swap",
 });
-import { getAll } from "../search/searchActions";
-import { getEntry } from "../search/searchActions";
+// import { getEntry } from "../search/searchActions";
 
 export const Navbar = async () => {
   const data = await getAll();
@@ -38,7 +38,7 @@ export const Navbar = async () => {
           </Link>
         </div>
         <div className="flex flex-col justify-end w-full">
-          <NavComponents data={data} getAll={getAll} getOne={getEntry} />
+          <NavComponents data={data} getAll={getAll} />
         </div>
       </div>
     </nav>

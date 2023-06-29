@@ -5,9 +5,11 @@ import { useEffect, useState, useRef, createContext, useContext } from "react";
 import Link from "next/link";
 import { Poppins, Raleway } from "next/font/google";
 
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import SearchModal from "../search/(searchModal)/SearchModal";
+import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
+import { SearchOutlined } from "@mui/icons-material";
+import Cart from "../cart/Cart";
+import { useCartContext } from "@/context/context";
 
 const FunctionsContext = createContext({});
 
@@ -25,6 +27,10 @@ const raleway = Raleway({
 export default function NavComponents({ data, getAll, getOne }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchModal, showSearchModal] = useState(false);
+  // const [cartData, setCartData] = useState();
+  const [cartModal, showCartModal] = useState(false);
+
+  const { cartData } = useCartContext();
 
   const menuRef = useRef();
 
@@ -40,7 +46,7 @@ export default function NavComponents({ data, getAll, getOne }) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  const handleSearch = async () => {
+  const handleSearch = () => {
     showSearchModal(true);
   };
 
@@ -48,6 +54,13 @@ export default function NavComponents({ data, getAll, getOne }) {
     showSearchModal(false);
   };
 
+  const showCart = () => {
+    showCartModal(true);
+  };
+
+  const closeCart = () => {
+    showCartModal(false);
+  };
   return (
     <div ref={menuRef} className="w-full">
       {/* Buttons */}
@@ -64,7 +77,8 @@ export default function NavComponents({ data, getAll, getOne }) {
               Search products...
             </p>
             <span className="pr-4 -ml-7">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
+              {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
+              <SearchOutlined fontSize="small" />
             </span>
           </button>
         </div>
@@ -89,20 +103,35 @@ export default function NavComponents({ data, getAll, getOne }) {
               Dashboard
             </div>
           </Link>
+          <button
+            name="cart"
+            type="button"
+            onClick={showCart}
+            className="relative"
+          >
+            <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
+            {cartData && (
+              <div className="absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5" />
+            )}
+          </button>
         </div>
       </div>
 
       {/* Hamburger */}
-      <div className="flex gap-4 justify-end md:hidden text-white relative">
-        <button className="" onClick={handleSearch} name="search modal">
-          <span className="">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </span>
+      <div className="flex gap-7 justify-end items-center md:hidden text-white relative">
+        <button name="search" type="submit" onClick={handleSearch}>
+          <SearchOutlined fontSize="small" />
+        </button>
+        <button className="relative" onClick={showCart} name="cart modal">
+          <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
+          {cartData && (
+            <div className="absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5" />
+          )}
         </button>
         <button
           name="dropdown button"
           onClick={() => setIsOpen(!isOpen)}
-          className="flex items-center px-3 py-2 rounded text-black-500 hover:text-black-400"
+          className="flex items-center py-2 rounded text-black-500 hover:text-black-400"
         >
           <svg
             className={`fill-current h-3 w-3 ${isOpen ? "hidden" : "block"}`}
@@ -165,6 +194,7 @@ export default function NavComponents({ data, getAll, getOne }) {
 
       <FunctionsContext.Provider value={{ getOne, getAll, data, closeSearch }}>
         <SearchModal modal={searchModal} />
+        <Cart modal={cartModal} closeCart={closeCart} />
       </FunctionsContext.Provider>
     </div>
   );
