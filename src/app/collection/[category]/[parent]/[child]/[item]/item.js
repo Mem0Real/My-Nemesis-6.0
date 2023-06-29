@@ -1,9 +1,12 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
+import AddToCart from "./components/AddToCart";
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
+  const [amount, setAmount] = useState(1);
+  const [modal, showModal] = useState(false);
 
   useEffect(() => {
     let image = item.images;
@@ -15,6 +18,14 @@ export default function Item({ item }) {
 
   const openImage = (image) => {
     setActiveImage(image);
+  };
+
+  const handleOrder = () => {
+    showModal(true);
+  };
+
+  const closeModal = () => {
+    showModal(false);
   };
 
   return (
@@ -62,15 +73,15 @@ export default function Item({ item }) {
             <h2 className="ms-3 text-md"> {item.name}</h2>
           </div>
           <div className="flex gap-4 w-full">
-            <h1 className="text-md font-semibold">Product Type: </h1>
-            <h2 className="ms-3 text-md"> {item.type}</h2>
+            <h1 className="text-md font-semibold">Product Brand: </h1>
+            <h2 className="ms-3 text-md"> {item.brand}</h2>
           </div>
           <div className="flex gap-4 w-full">
             <h1 className="text-md font-semibold">Product Model:</h1>
             <h2 className="ms-3 text-md"> {item.model}</h2>
           </div>
           <div className="w-[96%]">
-            <h1 className="text-md font-semibold md:mb-3">Details:</h1>
+            <h1 className="text-md font-semibold md:mb-3">Description</h1>
             <div className="h-48 border border-neutral-500 rounded-md">
               <h2 className="ms-3 text-md"> {item.description}</h2>
             </div>
@@ -90,88 +101,17 @@ export default function Item({ item }) {
               </h2>
             )}
           </div>
+          <div className="self-center">
+            <button
+              className="py-2 px-2 rounded-lg outline outline-1 outline-neutral-200 hover:outline-2 ring-offset-2 active:ring-2"
+              onClick={handleOrder}
+            >
+              Add to Cart
+            </button>
+          </div>
         </div>
       </div>
+      <AddToCart item={item} modal={modal} closeModal={closeModal} />
     </div>
-
-    // <div className="grid grid-cols-8 w-[95%] gap-7 mb-6">
-    //   {item.images && (
-    //     <div className="flex items-center">
-    //       <div className="basis-1/5 flex flex-col items-start gap-6 mt-12 border-l-2 border-neutral-200">
-    //         {item.images.map((url, index) => {
-    //           return (
-    //             <button
-    //               key={index}
-    //               className={`relative h-24 w-24 ms-1 bg-neutral-900 rounded-3xl cursor-pointer hover:outline outline-2 outline-neutral-200 ${
-    //                 activeImage === url && "translate-x-8  outline "
-    //               }`}
-    //               onClick={() => openImage(url)}
-    //             >
-    //               <Image
-    //                 src={url}
-    //                 fill={true}
-    //                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
-    //                 alt="Image"
-    //                 className="object-contain rounded-lg"
-    //               />
-    //             </button>
-    //           );
-    //         })}
-    //       </div>
-    //     </div>
-    //   )}
-    //   <div className="col-span-4 flex flex-col items-center justify-center ">
-    //     <div className="relative w-full h-[70%] mt-5 rounded-3xl border-2 shadow-lg shadow-black border-neutral-900">
-    //       {activeImage && (
-    //         <Image
-    //           src={activeImage}
-    //           fill={true}
-    //           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
-    //           alt="Image"
-    //           className="object-contain rounded-lg"
-    //           priority
-    //         />
-    //       )}
-    //     </div>
-    //   </div>
-    //   <div className="col-span-3">
-    //     <h1 className="text-4xl font-bold ms-4 mb-2">Product Details</h1>
-    //     <div className="flex flex-col items-start ps-5 gap-7 py-6 w-[90%] mx-auto bg-neutral-900 border border-neutral-200 text-neutral-200 rounded-xl">
-    //       <div className="flex gap-4 w-full">
-    //         <h1 className=" text-md font-semibold">Product Name: </h1>
-    //         <h2 className="ms-3 text-md"> {item.name}</h2>
-    //       </div>
-    //       <div className="flex gap-4 w-full">
-    //         <h1 className="text-md font-semibold">Product Brand: </h1>
-    //         <h2 className="ms-3 text-md"> {item.brand}</h2>
-    //       </div>
-    //       <div className="flex gap-4 w-full">
-    //         <h1 className="text-md font-semibold">Product Model:</h1>
-    //         <h2 className="ms-3 text-md"> {item.model}</h2>
-    //       </div>
-    //       <div className="w-[96%]">
-    //         <h1 className="text-md font-semibold md:mb-3">Details:</h1>
-    //         <div className="h-48 border border-neutral-500 rounded-md">
-    //           <h2 className="ms-3 text-md"> {item.description}</h2>
-    //         </div>
-    //       </div>
-    //       <div className="flex gap-4 w-full">
-    //         <h1 className="text-md font-semibold">Quantity:</h1>
-    //         <h2 className="ms-3 text-md"> {item.quantity}</h2>
-    //       </div>
-    //       <div className="flex gap-4 w-full">
-    //         <h1 className="text-md font-semibold">Price:</h1>
-    //         {item.price && (
-    //           <h2 className="ms-3 text-md flex gap-2">
-    //             {item.price}
-    //             <span className="text-neutral-400 my-auto text-sm italic tracking-wider">
-    //               ETB
-    //             </span>
-    //           </h2>
-    //         )}
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
   );
 }
