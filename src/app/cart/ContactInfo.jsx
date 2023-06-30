@@ -27,6 +27,9 @@ export default function ContactInfo({
 
     let productData = [];
 
+    let firstName = user.fullname;
+    firstName = firstName.split(" ")[0];
+
     orderData.map((item) => {
       let id = item.data.id;
       let name = item.data.name;
@@ -34,9 +37,18 @@ export default function ContactInfo({
       let price = item.data.price;
 
       productData.push({
-        data: { id: id, name: name, quantity: qty, price: price },
+        data: {
+          id: id,
+          name: name,
+          quantity: qty,
+          price: price,
+          customerid: firstName,
+        },
       });
     });
+
+    console.log("FirstName: ", firstName);
+    console.log("Product Data: ", productData);
 
     const res = await fetch(`${url}/api/sendOrder`, {
       headers: {

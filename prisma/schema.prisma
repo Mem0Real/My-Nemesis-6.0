@@ -49,19 +49,19 @@ model Items {
 model Customers {
   id                String           @id
   name              String
-  phone             String
-  totalPurchase     Int
+  phone             Int
+  totalPurchase     Float
   order             Order[]
-
 } 
 
 model Order {
   id                      Int               @id @default(autoincrement())
   productId               String
   productName             String
-  productPrice            Int            
   orderedQuantity         Int
-  product                 Customers         @relation(fields: [productId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  productPrice            Float            
+  product                 Customers         @relation(fields: [customerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  customerId              String
 }
 
 generator client {
