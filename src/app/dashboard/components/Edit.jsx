@@ -41,7 +41,7 @@ export default function Edit({
         setImages([]);
       }
     }
-  }, [editData.image, editData.images]);
+  }, [editData.image, editData.images, editData.entry]);
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();

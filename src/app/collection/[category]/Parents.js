@@ -45,7 +45,7 @@ export default async function Parents({ categoryId }) {
               <Children
                 categoryId={categoryId}
                 parentId={parent.id}
-                children={parent.children}
+                childrenData={parent.children}
               />
             </Suspense>
           </div>

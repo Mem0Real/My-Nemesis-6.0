@@ -1,14 +1,14 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Raleway } from "next/font/google";
+// import { Raleway } from "next/font/google";
 
 import NavComponents from "./NavComponents";
 import { getAll } from "../search/searchActions";
 
-const raleway = Raleway({
-  subsets: ["cyrillic"],
-  display: "swap",
-});
+// const raleway = Raleway({
+//   subsets: ["cyrillic"],
+//   display: "swap",
+// });
 // import { getEntry } from "../search/searchActions";
 
 export const Navbar = async () => {
@@ -30,7 +30,7 @@ export const Navbar = async () => {
                 />
               </div>
               <h1
-                className={`lg:px-12 px-6 hidden sm:block text-xl uppercase font-medium tracking-wider ${raleway.className}`}
+                className={`lg:px-12 px-6 hidden sm:block text-xl uppercase font-medium tracking-wider`}
               >
                 Nemesis
               </h1>

@@ -9,7 +9,7 @@ import { useCartContext } from "@/context/context";
 export default function AddToCart({ modal, closeModal, item }) {
   const [order, setOrder] = useState();
   const [quantity, setQuantity] = useState(1);
-  const [totalprice, setTotalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const [newCart, setNewCart] = useState(false);
 
@@ -21,11 +21,11 @@ export default function AddToCart({ modal, closeModal, item }) {
         ...prev,
         data: item,
         quantity: quantity,
-        price: totalprice,
+        price: totalPrice,
       }));
     else setOrder([]);
     // setCartData({ ...cartData, data: item, quantity: quantity });
-  }, [quantity]);
+  }, [quantity, item, totalPrice]);
 
   useEffect(() => {
     window.localStorage.setItem("Cart_State", JSON.stringify(newCart));

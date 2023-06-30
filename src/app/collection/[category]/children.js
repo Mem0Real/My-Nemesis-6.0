@@ -2,10 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import SlickCarousel from "@/app/collection/components/SlickCarousel";
 
-export default function Children({ categoryId, parentId, children }) {
+export default function Children({ categoryId, parentId, childrenData }) {
   return (
     <SlickCarousel>
-      {children.map((child) => {
+      {childrenData.map((child) => {
         {
           /* child.image && console.log(child.image); */
         }

@@ -88,6 +88,7 @@ export async function create(formData) {
       }
     }
     revalidatePath("/collection");
+    revalidatePath("/dashboard");
     revalidateTag("search");
   };
   if (!file) {
@@ -249,6 +250,7 @@ export async function update(formData) {
 
     revalidateTag("search");
     revalidatePath("/collection");
+    revalidatePath("/dashboard");
   };
   if (!file) {
     await writeToDb();
@@ -371,5 +373,6 @@ export async function deleteItem(entry, data) {
 
   revalidateTag("search");
   revalidatePath("/collection");
+  revalidatePath("/dashboard");
   return res;
 }

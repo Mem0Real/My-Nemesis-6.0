@@ -14,7 +14,7 @@ export default function Item({ item }) {
     if (image && activeImage === "") {
       setActiveImage(image[0]);
     }
-  }, [activeImage]);
+  }, [activeImage, item.images]);
 
   const openImage = (image) => {
     setActiveImage(image);
