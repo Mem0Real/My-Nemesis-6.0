@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import Image from "next/image";
+import ImagePreview from "./ImagePreview";
 
 import formatData from "@/app/utils/format";
 import Box from "@mui/material/Box";
@@ -13,19 +14,25 @@ export default function Add({
   setAddData,
 }) {
   const [imageSrc, setImageSrc] = useState();
-  const [uploadData, setUploadData] = useState();
-  const imageRef = useRef();
+  const [images, setImages] = useState([]);
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
 
     reader.onload = (onLoadEvent) => {
       setImageSrc(onLoadEvent.target.result);
-      setUploadData(undefined);
     };
 
     reader.readAsDataURL(changeEvent.target.files[0]);
     setAddData({ ...addData, image: changeEvent.target.files[0] });
+  };
+
+  const handleMultipleSelect = (e) => {
+    if (e.target.files) {
+      const _files = Array.from(e.target.files);
+      setImages(_files);
+      setAddData({ ...addData, image: _files });
+    }
   };
 
   const handleChange = (e) => {
@@ -34,11 +41,13 @@ export default function Add({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    closeAddModal();
 
     const formData = formatData(addData);
 
     create(formData);
+    closeAddModal();
+    setImageSrc(null);
+    setImages([]);
   };
   return (
     <Modal
@@ -232,33 +241,56 @@ export default function Add({
                   Description
                 </label>
               </div>
-              <div className="relative z-0 w-2/3 mb-6 group">
-                <label
-                  htmlFor="image"
-                  className="text-md text-neutral-500 dark:text-neutral-400 top-6 -z-10"
-                >
-                  Image
-                </label>
-                <input
-                  id="image"
-                  name="image"
-                  type="file"
-                  className="block py-2.5 px-0 w-full text-sm text-neutral-700 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  onChange={handleFileSelect}
-                  ref={imageRef}
-                />
-              </div>
-              {imageSrc && (
-                <div className="relative h-56 w-56 mb-6">
-                  <Image
-                    src={imageSrc}
-                    fill={true}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    alt="Image"
-                    className="object-contain"
-                  />
-                </div>
+              {addData.entry !== "items" ? (
+                <>
+                  <div className="relative z-0 w-2/3 mb-6 group">
+                    <label
+                      htmlFor="image"
+                      className="text-md text-gray-500 dark:text-gray-400 top-6 -z-10"
+                    >
+                      Image
+                    </label>
+                    <input
+                      id="image"
+                      name="image"
+                      type="file"
+                      className="block py-2.5 px-0 w-full text-sm text-neutral-700 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      onChange={handleFileSelect}
+                    />
+                  </div>
+
+                  {imageSrc && (
+                    <div className="relative h-56 w-56 mb-6">
+                      <Image
+                        src={imageSrc}
+                        fill={true}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+                        alt="Image"
+                        className="object-contain rounded-lg"
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="relative z-0 w-2/3 mb-6 group">
+                    <label
+                      htmlFor="images"
+                      className="text-md text-gray-500 dark:text-gray-400 top-6 -z-10"
+                    >
+                      Images
+                    </label>
+                    <input
+                      id="images"
+                      name="images"
+                      type="file"
+                      className="block py-2.5 px-0 w-full text-sm text-neutral-700 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      onChange={handleMultipleSelect}
+                      multiple
+                    />
+                  </div>
+                  {images && <ImagePreview images={images} />}
+                </>
               )}
               <button
                 name="submit"

@@ -4,6 +4,7 @@ import Image from "next/image";
 import formatData from "@/app/utils/format";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import ImagePreview from "./ImagePreview";
 
 export default function Edit({
   modal,
@@ -13,32 +14,52 @@ export default function Edit({
   setEditData,
 }) {
   const [imageSrc, setImageSrc] = useState();
-  const [uploadData, setUploadData] = useState();
-  const imageRef = useRef();
+  const [images, setImages] = useState([]);
 
+  // Show image if any
   useEffect(() => {
     let img;
 
-    if (editData.image && editData.image !== "") {
-      typeof editData.image !== "string"
-        ? (img = editData.image.toString())
-        : (img = editData.image);
-      setImageSrc(img);
+    if (editData.entry !== "items") {
+      if (editData.image && editData.image !== "") {
+        typeof editData.image !== "string"
+          ? (img = editData.image.toString())
+          : (img = editData.image);
+        setImageSrc(img);
+      } else {
+        setImageSrc(null);
+      }
     } else {
-      setImageSrc(null);
+      if (editData.images !== []) {
+        console.log(editData.images);
+        let imgData = editData.images;
+        let prevImg = [];
+        imgData.map((img) => prevImg.push(img));
+        setImages(prevImg);
+      } else {
+        console.log("Empty");
+        setImages([]);
+      }
     }
-  }, [editData.image]);
+  }, [editData.image, editData.images]);
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
 
     reader.onload = (onLoadEvent) => {
       setImageSrc(onLoadEvent.target.result);
-      setUploadData(undefined);
     };
 
     reader.readAsDataURL(changeEvent.target.files[0]);
     setEditData({ ...editData, newImage: changeEvent.target.files[0] });
+  };
+
+  const handleMultipleSelect = (e) => {
+    if (e.target.files) {
+      const _files = Array.from(e.target.files);
+      setImages(_files);
+      setEditData({ ...editData, newImage: _files });
+    }
   };
 
   const handleChange = (e) => {
@@ -47,12 +68,13 @@ export default function Edit({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    closeEditModal();
-
     const formData = formatData(editData);
 
     update(formData);
+
+    closeEditModal();
     setImageSrc(null);
+    setImages([]);
   };
 
   const handleClose = () => {
@@ -71,7 +93,7 @@ export default function Edit({
       open={modal}
       onClose={handleClose}
       aria-labelledby="Edit Modal"
-      aria-describedby="Update category"
+      aria-describedby="Update"
       className="absolute top-20 w-[85%] md:w-2/5 h-screen my-6 md:mt-0 md:py-3 mx-auto overflow-y-auto no-scrollbar rounded-lg"
     >
       <Box className="">
@@ -247,34 +269,58 @@ export default function Edit({
                   Description
                 </label>
               </div>
-              <div className="relative z-0 w-2/3 mb-6 group">
-                <label
-                  htmlFor="image"
-                  className="text-md text-gray-500 dark:text-gray-400 top-6 -z-10"
-                >
-                  Image
-                </label>
-                <input
-                  id="image"
-                  name="image"
-                  type="file"
-                  className="block py-2.5 px-0 w-full text-sm text-neutral-700 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                  placeholder=" "
-                  onChange={handleFileSelect}
-                  ref={imageRef}
-                />
-              </div>
-              {imageSrc && (
-                <div className="relative h-56 w-56 mb-6">
-                  <Image
-                    src={imageSrc}
-                    fill={true}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
-                    alt="Image"
-                    className="object-contain rounded-lg"
-                  />
-                </div>
+              {editData.entry !== "items" ? (
+                <>
+                  <div className="relative z-0 w-2/3 mb-6 group">
+                    <label
+                      htmlFor="image"
+                      className="text-md text-gray-500 dark:text-gray-400 top-6 -z-10"
+                    >
+                      Image
+                    </label>
+                    <input
+                      id="image"
+                      name="image"
+                      type="file"
+                      className="block py-2.5 px-0 w-full text-sm text-neutral-700 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      onChange={handleFileSelect}
+                    />
+                  </div>
+
+                  {imageSrc && (
+                    <div className="relative h-56 w-56 mb-6">
+                      <Image
+                        src={imageSrc}
+                        fill={true}
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+                        alt="Image"
+                        className="object-contain rounded-lg"
+                      />
+                    </div>
+                  )}
+                </>
+              ) : (
+                <>
+                  <div className="relative z-0 w-2/3 mb-6 group">
+                    <label
+                      htmlFor="images"
+                      className="text-md text-gray-500 dark:text-gray-400 top-6 -z-10"
+                    >
+                      Images
+                    </label>
+                    <input
+                      id="images"
+                      name="image"
+                      type="file"
+                      className="block py-2.5 px-0 w-full text-sm text-neutral-700 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                      onChange={handleMultipleSelect}
+                      multiple
+                    />
+                  </div>
+                  {images && <ImagePreview images={images} />}
+                </>
               )}
+
               <button
                 name="submit"
                 type="submit"

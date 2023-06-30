@@ -47,7 +47,7 @@ export default async function Items({ categoryId, parentId, childId }) {
                 categoryId={categoryId}
                 parentId={parentId}
                 childId={childId}
-                image={item.images}
+                images={item.images}
               />
             </Suspense>
           </div>
@@ -55,5 +55,5 @@ export default async function Items({ categoryId, parentId, childId }) {
       );
     });
   }
-  return <div className="flex justify-around items-center"> {content}</div>;
+  return content;
 }

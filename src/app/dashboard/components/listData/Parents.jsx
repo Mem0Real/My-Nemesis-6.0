@@ -31,14 +31,7 @@ export default function Parents({ category }) {
 
   const { parDropDown, par } = useListContext();
 
-  const parents = data[1].sort((a, b) => {
-    const name1 = a.name.toUpperCase();
-    const name2 = b.name.toUpperCase();
-
-    if (name1 < name2) return -1;
-    else if (name1 > name2) return 1;
-    else return 0;
-  });
+  const parents = data[1];
 
   return (
     <Table size="medium" aria-label="parents">

@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 
 const List = dynamic(() => import("./components/List"));
 
@@ -13,6 +13,15 @@ export default function AdminActions({
   url,
 }) {
   const [showList, setShowList] = useState(false);
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("LIST");
+    if (data !== null) setShowList(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("LIST", JSON.stringify(showList));
+  }, [showList]);
 
   return (
     <div className="w-full flex flex-col items-center gap-8">
