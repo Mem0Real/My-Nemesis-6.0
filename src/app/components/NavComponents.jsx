@@ -27,12 +27,14 @@ const raleway = Raleway({
 export default function NavComponents({ data, getAll, getOne }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchModal, showSearchModal] = useState(false);
-  // const [cartData, setCartData] = useState();
   const [cartModal, showCartModal] = useState(false);
+  const [newCart, setNewCart] = useState(false);
 
   const { cartData } = useCartContext();
 
   const menuRef = useRef();
+
+  // console.log(cartData, cartData.length);
 
   useEffect(() => {
     let handler = (e) => {
@@ -45,6 +47,17 @@ export default function NavComponents({ data, getAll, getOne }) {
 
     return () => document.removeEventListener("mousedown", handler);
   }, []);
+
+  useEffect(() => {
+    if (cartData.length > 0) {
+      setNewCart(true);
+    } else setNewCart(false);
+  }, [cartData]);
+
+  // useEffect(() => {
+  //   const data = window.localStorage.getItem("Cart_State");
+  //   if (data) setNewCart(data);
+  // }, [cartData]);
 
   const handleSearch = () => {
     showSearchModal(true);
@@ -110,7 +123,7 @@ export default function NavComponents({ data, getAll, getOne }) {
             className="relative"
           >
             <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
-            {cartData[0] && (
+            {newCart && (
               <div className="absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5" />
             )}
           </button>
@@ -124,7 +137,7 @@ export default function NavComponents({ data, getAll, getOne }) {
         </button>
         <button className="relative" onClick={showCart} name="cart modal">
           <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
-          {cartData[0] && (
+          {newCart && (
             <div className="absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5" />
           )}
         </button>

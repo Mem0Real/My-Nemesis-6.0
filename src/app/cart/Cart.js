@@ -1,45 +1,65 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCartContext } from "@/context/context";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 
 export default function Cart({ closeCart, modal }) {
-  //   const [data, setData] = useState();
-  //   const [amount, setAmount] = useState();
+  const [order, setOrder] = useState([]);
+  const [buttons, showButtons] = useState(false);
+  const [totalPrice, setTotalPrice] = useState(0);
 
   const { cartData, setCartData } = useCartContext();
 
-  console.log(cartData);
-  //   useEffect(() => {
-  //     if (cartData) {
-  //       if (!data && !amount) {
-  //         setData(cartData.data);
-  //         setAmount(cartData.quantity);
-  //       } else {
-  //         setData(...data, cartData.data);
-  //         setAmount(...amount, cartData.quantity);
-  //       }
-  //       console.log(cartData);
-  //     }
-  //   }, [cartData]);
+  useEffect(() => {
+    if (cartData.length > 0) {
+      setOrder(() => cartData);
+      showButtons(true);
+    }
+  }, [cartData]);
 
+  const TAX_RATE = 0.07;
+
+  function ccyFormat(num) {
+    return `${num.toFixed(2)}`;
+  }
+
+  function priceRow(qty, unit) {
+    return qty * unit;
+  }
+
+  function subtotal(items) {
+    return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+  }
+
+  const invoiceSubtotal = subtotal(order);
+  const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+  const invoiceTotal = invoiceTaxes + invoiceSubtotal;
+
+  // console.log(order);
   return (
     <Modal
       open={modal}
       onClose={closeCart}
       aria-labelledby="Cart Modal"
-      aria-describedby=""
+      aria-describedby="list of cart items"
       className="bg-neutral-900/20 backdrop-blur-sm"
     >
       <Box>
-        <div className="shadow bg-neutral-800 text-neutral-200 rounded-2xl py-6 absolute w-1/3 right-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="shadow bg-neutral-800 text-neutral-200 rounded-2xl py-6 absolute w-[90%] md:w-1/2 right-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <button
             name="close-modal"
             type="button"
-            className="absolute top-10 right-5 md:top-5 text-neutral-200 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+            className="absolute top-1 right-1 md:top-3 text-neutral-200 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
             data-modal-hide="authentication-modal"
             onClick={closeCart}
           >
@@ -58,38 +78,85 @@ export default function Cart({ closeCart, modal }) {
             </svg>
             <span className="sr-only">Close modal</span>
           </button>
-          <div className="min-h-48 flex flex-col items-center gap-12">
-            <h1 className="text-xl text-center font-black">Cart</h1>
-            <div className="border border-1 border-neutral-200 rounded w-[95%]">
-              {cartData[0] && cartData[0].data ? (
-                <div className="flex flex-col items-start md:ms-4">
-                  {cartData.map((cartItem) => {
-                    console.log(cartItem);
-                    return (
-                      <div
-                        key={cartItem.data.id}
-                        className="px-5 outline outline-2 flex items-center gap-5"
-                      >
-                        <h1 className="text-lg font-semibold">
-                          {cartItem.data.name}
-                        </h1>
-                        <div className="text-base italic">
-                          {cartItem.quantity}
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="flex flex-col-items-center justify-center">
-                  <h1 className="text-md font-light">Empty</h1>
-                </div>
+          <div className="flex flex-col items-center gap-4">
+            <h1 className="text-lg md:text-xl xl:text-2xl text-center font-semibold border-b border-neutral-200 w-full pb-3">
+              Cart
+            </h1>
+            <h1 className="py-1 self-start text-lg px-2 underline underline-offset-2">
+              List of items
+            </h1>
+            <table className="shadow-inner bg-neutral-900 shadow-black/60 w-[95%] rounded rounded-b-2xl border-collapse">
+              <tr className="border-b border-1 border-neutral-200">
+                <th className="text-left py-4 ps-2">Product</th>
+                <th className="text-center py-4 ps-2">Quantity</th>
+                <th className="text-right py-4 pe-2" colSpan={2} align="right">
+                  Price
+                </th>
+              </tr>
+              {order.map((item) => (
+                <tr key={item.data.id} className="border-b border-neutral-200">
+                  <td className="py-3 ps-2">{item.data.name}</td>
+                  <td className="text-center py-3 ps-2">{item.quantity}</td>
+                  <td className="text-right py-3 pe-2" colSpan={2}>
+                    {item.price}
+                    <span className="text-sm px-1 text-neutral-600 italic items-center">
+                      ETB
+                    </span>
+                  </td>
+                </tr>
+              ))}
+
+              <tr>
+                <td rowSpan={3} />
+                <td colSpan={2} className="py-2">
+                  SubTotal
+                </td>
+                <td align="right">
+                  {ccyFormat(invoiceSubtotal)}
+                  <span className="text-sm px-1 text-neutral-600 italic items-center">
+                    ETB
+                  </span>
+                </td>
+              </tr>
+              <tr>
+                <td>Tax</td>
+                <td align="right" className="py-2">{`${(TAX_RATE * 100).toFixed(
+                  0
+                )} %`}</td>
+                <td align="right">
+                  {ccyFormat(invoiceTaxes)}
+                  <span className="text-sm px-1 text-neutral-600 italic items-center">
+                    ETB
+                  </span>
+                </td>
+              </tr>
+              <tr className="border-t border-neutral-200">
+                <td colSpan={2} className="py-4">
+                  Total
+                </td>
+                <td align="right" className="py-4">
+                  {ccyFormat(invoiceTotal)}
+                  <span className="text-sm px-1 text-neutral-600 italic items-center">
+                    ETB
+                  </span>
+                </td>
+              </tr>
+            </table>
+            <div className="flex items-center justify-center gap-12 w-full text-base">
+              {buttons && (
+                <>
+                  <button className="w-24 py-2 rounded outline outline-1 outline-green-600 hover:outline-2 active:outline-4 font-thin">
+                    Order
+                  </button>
+                  <button
+                    onClick={() => setCartData([])}
+                    className="w-24 py-2 rounded outline outline-1 outline-red-600 hover:outline-2 active:outline-4 font-thin"
+                  >
+                    Clear
+                  </button>
+                </>
               )}
             </div>
-          </div>
-          <div className="flex items-center gap-4">
-            <button>Confirm</button>
-            <button onClick={() => setCartData([])}>Clear</button>
           </div>
         </div>
       </Box>

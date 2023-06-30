@@ -9,28 +9,68 @@ import { useCartContext } from "@/context/context";
 export default function AddToCart({ modal, closeModal, item }) {
   const [order, setOrder] = useState();
   const [quantity, setQuantity] = useState(1);
+  const [totalprice, setTotalPrice] = useState(0);
+
+  const [newCart, setNewCart] = useState(false);
 
   const { cartData, setCartData } = useCartContext();
 
   useEffect(() => {
+    if (quantity >= 1)
+      setOrder((prev) => ({
+        ...prev,
+        data: item,
+        quantity: quantity,
+        price: totalprice,
+      }));
+    else setOrder([]);
     // setCartData({ ...cartData, data: item, quantity: quantity });
-  }, [item, quantity]);
+  }, [quantity]);
 
-  const handleChange = (e) => {
-    setQuantity(e.target.value);
-  };
+  useEffect(() => {
+    window.localStorage.setItem("Cart_State", JSON.stringify(newCart));
+  }, [newCart]);
+
+  useEffect(() => {
+    if (cartData[0] && cartData[0].data) setNewCart(true);
+    else setNewCart(false);
+  }, [cartData]);
+
+  // const handleChange = (e) => {
+  //   // const price = e.target.value * item.price;
+  //   setQuantity(() => e.target.value);
+  //   setTotalPrice(() => quantity * item.price)
+  // };
   const handleSubmit = (e) => {
     e.preventDefault();
     // setCartData({ ...cartData, data: item, quantity: quantity });
-    cartData.push({ data: item, quantity: quantity });
+    // setCartData(current => [...current, ])
+    if (order) {
+      if (cartData.length > 0) {
+        const cartList = [...cartData];
+        const itemName = cartList.find(
+          (item) => item.data.name === order.data.name
+        );
+        if (itemName) {
+          itemName.quantity = order.quantity;
+          setCartData(cartList);
+        } else {
+          setCartData((prev) => [...prev, order]);
+        }
+      } else {
+        setCartData((prev) => [...prev, order]);
+      }
+    }
     closeModal();
   };
 
   const handleMinus = () => {
-    setQuantity(quantity - 1);
+    setQuantity((prev) => --prev);
+    setTotalPrice(() => quantity * item.price);
   };
   const handlePlus = () => {
-    setQuantity(quantity + 1);
+    setQuantity((prev) => ++prev);
+    setTotalPrice(() => quantity * item.price);
   };
   return (
     <div className="h-screen">
@@ -90,7 +130,7 @@ export default function AddToCart({ modal, closeModal, item }) {
                   id="amount"
                   className="text-center pl-2.5 py-2 rounded-xl bg-neutral-800 text-neutral-200 border border-neutral-200"
                   value={quantity || ""}
-                  onChange={handleChange}
+                  // onChange={handleChange}
                   required
                   min={1}
                   max={item.quantity}
