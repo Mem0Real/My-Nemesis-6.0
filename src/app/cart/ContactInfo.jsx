@@ -9,14 +9,48 @@ export default function ContactInfo({
   orderTotalPrice,
   closeInfoModal,
   modal,
+  clearCart,
 }) {
   const [user, setUser] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("User Data: ", user);
-    console.log("Order Data: ", orderData);
-    console.log("Order Total Price: ", orderTotalPrice);
+    // console.log("User Data: ", user);
+    // console.log("Order Data: ", orderData);
+    // console.log("Order Total Price: ", orderTotalPrice);
+
+    let url;
+    if (process.env.NODE_ENV === "development")
+      url = process.env.NEXT_PUBLIC_LOCAL_URL;
+    else if (process.env.NODE_ENV === "production")
+      url = process.env.NEXT_PUBLIC_PRODUCTION_URL;
+
+    let productData = [];
+
+    orderData.map((item) => {
+      let id = item.data.id;
+      let qty = item.data.name;
+      let price = item.data.price;
+
+      productData.push({ data: { id: id, quantity: qty, price: price } });
+    });
+
+    const res = await fetch(`${url}/api/sendOrder`, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+      method: "POST",
+      body: JSON.stringify({ user, productData }),
+    });
+
+    if (!res.ok) {
+      throw new Error(
+        "Error sending order. Please check your network and try again."
+      );
+    }
+    console.log("Order sent! One of our employees will reach out to you soon.");
+    // clearCart();
+    // setUser(() => {});
   };
   const handleChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));

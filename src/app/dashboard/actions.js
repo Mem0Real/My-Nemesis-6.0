@@ -3,7 +3,6 @@ import mime from "mime";
 import { join } from "path";
 import { stat, mkdir, writeFile, unlink } from "fs/promises";
 import fs from "fs";
-import * as dateFn from "date-fns";
 
 import { revalidatePath, revalidateTag } from "next/cache";
 
@@ -50,9 +49,6 @@ export async function create(formData) {
 
   const writeToDb = async (dir = null) => {
     if (entry !== "items") {
-      formData.set("image", dir);
-      image = formData.get("image");
-
       try {
         const res = await prisma[entry].create({
           data: {
@@ -67,9 +63,6 @@ export async function create(formData) {
             [category.name]: category.val,
           },
         });
-        revalidatePath("/collection");
-        revalidatePath("/dashboard");
-        revalidateTag("search");
         console.log("Success");
       } catch (error) {
         console.log("Error: ", error);
@@ -89,20 +82,16 @@ export async function create(formData) {
             [category.name]: category.val,
           },
         });
-        revalidatePath("/collection");
-        revalidatePath("/dashboard");
-        revalidateTag("search");
         console.log("Success");
       } catch (error) {
         console.log("Error: ", error);
       }
     }
+    revalidatePath("/collection");
+    revalidateTag("search");
   };
   if (!file) {
     await writeToDb();
-    revalidateTag("search");
-    revalidatePath("/collection");
-    revalidatePath("/dashboard");
   } else {
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
@@ -159,10 +148,6 @@ export async function create(formData) {
         }
         await writeToDb(imageUrl);
       }
-
-      revalidateTag("search");
-      revalidatePath("/dashboard");
-      revalidatePath("/collection");
     } catch (e) {
       console.error("Error while trying to upload a file\n", e);
     }
@@ -234,9 +219,7 @@ export async function update(formData) {
             [category.name]: category.val,
           },
         });
-        revalidateTag("search");
-        revalidatePath("/dashboard");
-        revalidatePath("/collection");
+
         console.log("Success");
       } catch (error) {
         console.log("Error: ", error);
@@ -257,27 +240,22 @@ export async function update(formData) {
             [category.name]: category.val,
           },
         });
-        revalidateTag("search");
-        revalidatePath("/dashboard");
-        revalidatePath("/collection");
+
         console.log("Success");
       } catch (error) {
         console.log("Error: ", error);
       }
     }
+
+    revalidateTag("search");
+    revalidatePath("/collection");
   };
   if (!file) {
     await writeToDb();
     console.log("No image");
-    revalidateTag("search");
-    revalidatePath("/dashboard");
-    revalidatePath("/collection");
   } else if (typeof file === "string" && entry !== "items") {
     writeToDb(file);
     console.log("No change");
-    revalidateTag("search");
-    revalidatePath("/dashboard");
-    revalidatePath("/collection");
   } else {
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
@@ -319,10 +297,9 @@ export async function update(formData) {
         )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
 
         // Delete existing file if any
-        if (oldFile && oldFile !== "null") {
+        if (oldFile) {
           await unlink(`${delDir}/${oldFile}`);
         }
-
         await writeFile(`${uploadDir}/${filename}`, buffer);
 
         let imageUrl = `${relativeUploadDir}/${filename}`;
@@ -350,10 +327,6 @@ export async function update(formData) {
         }
         await writeToDb(imageUrl);
       }
-
-      revalidateTag("search");
-      revalidatePath("/dashboard");
-      revalidatePath("/collection");
     } catch (e) {
       console.error("Error while trying to upload a file\n", e);
     }
@@ -397,7 +370,6 @@ export async function deleteItem(entry, data) {
   }
 
   revalidateTag("search");
-  revalidatePath("/dashboard");
   revalidatePath("/collection");
   return res;
 }

@@ -21,7 +21,7 @@ export default function Cart({ closeCart, modal }) {
     }
   }, [cartData]);
 
-  const handleClear = () => {
+  const clearCart = () => {
     setCartData(() => []);
     setOrder(() => []);
   };
@@ -168,7 +168,7 @@ export default function Cart({ closeCart, modal }) {
                       Order
                     </button>
                     <button
-                      onClick={handleClear}
+                      onClick={clearCart}
                       className="w-24 py-2 rounded outline outline-1 outline-red-600 hover:outline-2 active:outline-4 font-thin"
                     >
                       Clear
@@ -185,6 +185,7 @@ export default function Cart({ closeCart, modal }) {
         orderTotalPrice={invoiceTotal}
         closeInfoModal={closeInfoModal}
         modal={infoModal}
+        clearCart={clearCart}
       />
     </>
   );
