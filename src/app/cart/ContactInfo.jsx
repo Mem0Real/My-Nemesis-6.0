@@ -30,7 +30,7 @@ export default function ContactInfo({
       className="bg-neutral-900/20 backdrop-blur-sm"
     >
       <Box>
-        <div className="shadow bg-neutral-800 text-neutral-200 rounded-2xl py-6 absolute w-[90%] sm:w-1/2 md:w-1/3 right-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+        <div className="shadow bg-neutral-800 text-neutral-200 rounded-2xl py-6 absolute w-[90%] sm:w-[80%] md:w-[70%] lg:w-1/2 right-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
           <button
             name="close-modal"
             type="button"
@@ -64,8 +64,8 @@ export default function ContactInfo({
               onSubmit={handleSubmit}
               className="flex-1 flex flex-col justify-center items-center gap-4 w-[90%]"
             >
-              <div className=" border p-5 rounded-md shadow-inner shadow-neutral-500">
-                <div className="relative z-0 lg:w-2/3 mb-6 group">
+              <div className=" border p-5 rounded-md shadow-inner shadow-neutral-500 w-[75%]">
+                <div className="relative z-0 mb-6 group">
                   <input
                     id="fullname"
                     name="fullname"
@@ -83,7 +83,7 @@ export default function ContactInfo({
                   </label>
                 </div>
 
-                <div className="relative lg:w-2/3 z-0 w-full mb-6 group flex flex-row-reverse items-center border-0 border-b-2 border-neutral-600 gap-2 ">
+                <div className="relative z-0 mb-6 group flex flex-row-reverse items-center border-0 border-b-2 border-neutral-600 gap-2 ">
                   <input
                     id="phone"
                     name="phone"
@@ -104,7 +104,7 @@ export default function ContactInfo({
                   </label>
                 </div>
               </div>
-              <div className="flex items-center w-full">
+              <div className="flex items-center justify-center gap-6 w-full">
                 <>
                   <button
                     name="submit"
