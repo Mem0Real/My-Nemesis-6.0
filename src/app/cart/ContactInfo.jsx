@@ -29,10 +29,13 @@ export default function ContactInfo({
 
     orderData.map((item) => {
       let id = item.data.id;
-      let qty = item.data.name;
+      let name = item.data.name;
+      let qty = item.quantity;
       let price = item.data.price;
 
-      productData.push({ data: { id: id, quantity: qty, price: price } });
+      productData.push({
+        data: { id: id, name: name, quantity: qty, price: price },
+      });
     });
 
     const res = await fetch(`${url}/api/sendOrder`, {
@@ -40,7 +43,7 @@ export default function ContactInfo({
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ user, productData }),
+      body: JSON.stringify({ user, productData, orderTotalPrice }),
     });
 
     if (!res.ok) {

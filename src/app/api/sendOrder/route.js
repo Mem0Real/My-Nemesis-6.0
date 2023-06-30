@@ -5,13 +5,11 @@ export async function POST(request) {
   const data = await request.json();
 
   console.log(data);
+  console.log(data.productData);
 
-  // const res = await prisma.orders.create({
-  //     data: {
-  //         id: orderData.data.id,
-  //         name: orderData
-  //     }
-  // })
+  //   const res = await prisma.orders.createMany({
+  //       data:
+  //   })
 
   //   return new NextResponse.json(data);
 }
