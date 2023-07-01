@@ -114,11 +114,9 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
 
   const handleMinus = () => {
     setQuantity((prev) => --prev);
-    // setTotalPrice(() => quantity * item.price);
   };
   const handlePlus = () => {
     setQuantity((prev) => ++prev);
-    // setTotalPrice(() => quantity * item.price);
   };
 
   return (
@@ -182,7 +180,6 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
                   required
                   min={1}
                   max={item.quantity}
-                  disabled
                 />
                 <button
                   onClick={handlePlus}
