@@ -36,15 +36,9 @@ export default function AddToCart({ modal, closeModal, item }) {
     else setNewCart(false);
   }, [cartData]);
 
-  // const handleChange = (e) => {
-  //   // const price = e.target.value * item.price;
-  //   setQuantity(() => e.target.value);
-  //   setTotalPrice(() => quantity * item.price)
-  // };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setCartData({ ...cartData, data: item, quantity: quantity });
-    // setCartData(current => [...current, ])
+
     if (order) {
       if (cartData.length > 0) {
         const cartList = [...cartData];

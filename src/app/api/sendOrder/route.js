@@ -1,4 +1,5 @@
 import prisma from "@/lib/prisma";
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
@@ -11,10 +12,12 @@ export async function POST(request) {
   let data = await res.productData.map((item) => ({
     productId: item.data.id,
     productName: item.data.name,
-    orderedQuantity: item.data.quantity,
     productPrice: parseFloat(item.data.price),
-    customerid: item.data.customerid,
+    orderedQuantity: item.data.quantity,
+    customerId: item.data.customerid,
   }));
+
+  let dateNow = new Date().toISOString();
 
   const res1 = prisma.customers.upsert({
     where: {
@@ -22,22 +25,43 @@ export async function POST(request) {
     },
     update: {
       totalPurchase: res.orderTotalPrice,
+      updatedAt: dateNow,
     },
     create: {
       id: firstName,
       name: res.user.fullname,
       phone: parseInt(res.user.phone),
       totalPurchase: res.orderTotalPrice,
+      updatedAt: dateNow,
     },
   });
 
   const res2 = prisma.order.createMany({
     data,
   });
-  //   console.log(res);
-  console.log(data);
 
   const result = await Promise.all([res1, res2]);
 
-  return new NextResponse(JSON.stringify(result));
+  if (!result) throw new Error("Error creating order");
+
+  let tran = await res.productData.map((item) => ({
+    productId: item.data.id,
+    orderedQuantity: item.data.quantity,
+    productQuantity: item.data.pquantity,
+    remainingQuantity: item.data.pquantity - item.data.quantity,
+  }));
+
+  // tran.map((product) => console.log(product));
+  // console.log(tran);
+  const transaction = await prisma.$transaction(
+    tran.map((product) =>
+      prisma.items.update({
+        where: { id: product.productId },
+        data: { quantity: product.remainingQuantity },
+      })
+    )
+  );
+
+  revalidatePath("/collection");
+  return new NextResponse(JSON.stringify(transaction));
 }

@@ -2,7 +2,7 @@ import prisma from "@/lib/prisma";
 import { create, update, deleteItem } from "./actions";
 import AdminActions from "./AdminActions";
 
-async function list() {
+async function categoryList() {
   const categories = prisma.categories.findMany({ orderBy: { id: "asc" } });
 
   const parents = prisma.parents.findMany({ orderBy: { id: "asc" } });
@@ -16,12 +16,18 @@ async function list() {
   return data;
 }
 
+async function orderList() {
+  const order = prisma.customers.findMany({
+    orderBy: { createdAt: "asc" },
+  });
+}
+
 export default async function DashboardPage() {
   let url;
   if (process.env.NODE_ENV === "development") url = process.env.LOCAL_URL;
   else url = process.env.PRODUCTION_URL;
 
-  const data = await list();
+  const data = await categoryList();
   return (
     <div className="flex flex-col items-center gap-6 bg-neutral-200 text-neutral-800">
       <div className="flex items-center mt-7">

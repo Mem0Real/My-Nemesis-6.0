@@ -35,6 +35,7 @@ export default function ContactInfo({
       let id = item.data.id;
       let name = item.data.name;
       let qty = item.quantity;
+      let pqty = item.data.quantity;
       let price = item.data.price;
 
       productData.push({
@@ -42,6 +43,7 @@ export default function ContactInfo({
           id: id,
           name: name,
           quantity: qty,
+          pquantity: pqty,
           price: price,
           customerid: firstName,
         },
@@ -102,8 +104,8 @@ export default function ContactInfo({
             <span className="sr-only">Close modal</span>
           </button>
           <div className="flex flex-col items-center gap-4">
-            <h1 className="text-lg md:text-xl xl:text-2xl text-center font-semibold border-b border-neutral-200 w-full pb-3">
-              Your order is processed
+            <h1 className="text-base md:text-lg xl:text-xl text-center font-semibold border-b border-neutral-200 w-full pb-3">
+              Your order is being processed
             </h1>
             <h1 className="py-1 text-xl px-2 underline underline-offset-2 text-center">
               Please enter your information below
