@@ -10,22 +10,29 @@ export default function AddToCart({ modal, closeModal, item }) {
   const [order, setOrder] = useState();
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
-
   const [newCart, setNewCart] = useState(false);
+  const [remainingQuantity, setRemainingQuantity] = useState();
 
   const { cartData, setCartData } = useCartContext();
 
+  // Add new order
   useEffect(() => {
-    if (quantity >= 1)
+    if (quantity >= 1) {
       setOrder((prev) => ({
         ...prev,
         data: item,
         quantity: quantity,
         price: totalPrice,
       }));
-    else setOrder([]);
-    // setCartData({ ...cartData, data: item, quantity: quantity });
+    } else setOrder([]);
   }, [quantity, item, totalPrice]);
+
+  useEffect(() => {
+    if (quantity >= 1) {
+      let remaining = item.quantity - quantity;
+      setRemainingQuantity(remaining);
+    }
+  }, [quantity, item.quantity]);
 
   useEffect(() => {
     window.localStorage.setItem("Cart_State", JSON.stringify(newCart));
@@ -66,6 +73,7 @@ export default function AddToCart({ modal, closeModal, item }) {
     setQuantity((prev) => ++prev);
     setTotalPrice(() => quantity * item.price);
   };
+
   return (
     <div className="h-screen">
       <Modal
@@ -124,7 +132,6 @@ export default function AddToCart({ modal, closeModal, item }) {
                   id="amount"
                   className="text-center pl-2.5 py-2 rounded-xl bg-neutral-800 text-neutral-200 border border-neutral-200"
                   value={quantity || ""}
-                  // onChange={handleChange}
                   required
                   min={1}
                   max={item.quantity}
@@ -140,6 +147,12 @@ export default function AddToCart({ modal, closeModal, item }) {
                 </button>
               </div>
               <div className="flex gap-2 md:self-end md:mr-5 md:mt-6">
+                <h1 className="m-auto">Product Remaining: </h1>
+                <p className="text-sm m-auto font-light italic">
+                  {remainingQuantity}
+                </p>
+              </div>
+              <div className="flex gap-2 md:self-end md:mr-5">
                 <h1 className="m-auto">Total Price: </h1>
                 <p className="text-sm m-auto font-light italic">
                   {item.price * quantity} ETB

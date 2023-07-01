@@ -1,8 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import AddToCart from "@/app/collection/[category]/[parent]/[child]/[item]/components/AddToCart";
-import { useCartContext } from "@/context/context";
+import AddToCart from "./components/AddToCart";
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
@@ -92,7 +91,7 @@ export default function Item({ item }) {
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Quantity:</h1>
-              <h2 className="ms-3 text-md"> {item.quantity}</h2>
+              <h2 className="ms-3 text-md">{item.quantity}</h2>
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Price:</h1>
