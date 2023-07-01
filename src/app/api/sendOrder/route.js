@@ -51,8 +51,6 @@ export async function POST(request) {
     remainingQuantity: item.data.pquantity - item.data.quantity,
   }));
 
-  // tran.map((product) => console.log(product));
-  // console.log(tran);
   const transaction = await prisma.$transaction(
     tran.map((product) =>
       prisma.items.update({
