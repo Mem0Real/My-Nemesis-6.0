@@ -17,6 +17,10 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
 
   const { cartData, setCartData } = useCartContext();
 
+  useEffect(() => {
+    setTotalPrice(() => quantity * item.price);
+  }, [item.price, quantity]);
+
   // Add new order
   useEffect(() => {
     if (quantity >= 1) {
@@ -106,11 +110,11 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
 
   const handleMinus = () => {
     setQuantity((prev) => --prev);
-    setTotalPrice(() => quantity * item.price);
+    // setTotalPrice(() => quantity * item.price);
   };
   const handlePlus = () => {
     setQuantity((prev) => ++prev);
-    setTotalPrice(() => quantity * item.price);
+    // setTotalPrice(() => quantity * item.price);
   };
 
   return (
