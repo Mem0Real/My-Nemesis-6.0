@@ -11,11 +11,6 @@ export default function Item({ item }) {
   useEffect(() => {
     const data = JSON.parse(window.localStorage.getItem("Product_Data"));
     if (data?.length > 0) {
-      // const productCached = data.some((product) => {
-      //   if (product.id === item.id) {
-      //     return setCurrentQuantity(() => product.remainingQty);
-      //   }
-      // });
       for (let i = 0; i <= data.length; i++) {
         if (data[i]?.id === item.id) {
           setCurrentQuantity(() => data[i].remainingQty);

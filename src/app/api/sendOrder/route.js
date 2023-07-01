@@ -19,7 +19,7 @@ export async function POST(request) {
 
   let dateNow = new Date().toISOString();
 
-  const res1 = prisma.customers.upsert({
+  const res1 = await prisma.customers.upsert({
     where: {
       id: firstName,
     },
@@ -36,13 +36,13 @@ export async function POST(request) {
     },
   });
 
-  const res2 = prisma.order.createMany({
+  if (!res1) throw new Error("Error creating order");
+
+  const res2 = await prisma.order.createMany({
     data,
   });
 
-  const result = await Promise.all([res1, res2]);
-
-  if (!result) throw new Error("Error creating order");
+  if (!res2) throw new Error("Error creating order");
 
   let tran = await res.productData.map((item) => ({
     productId: item.data.id,
@@ -61,5 +61,5 @@ export async function POST(request) {
   );
 
   revalidatePath("/collection");
-  return new NextResponse(JSON.stringify(transaction));
+  return new NextResponse(JSON.stringify(transaction, res1, res2));
 }
