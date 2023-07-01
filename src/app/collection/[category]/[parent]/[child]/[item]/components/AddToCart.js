@@ -8,7 +8,7 @@ import { useCartContext } from "@/context/context";
 
 export default function AddToCart({ modal, closeModal, item, fetchCache }) {
   const [order, setOrder] = useState();
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState();
   const [totalPrice, setTotalPrice] = useState(0);
   const [newCart, setNewCart] = useState(false);
   const [remainingQuantity, setRemainingQuantity] = useState();
@@ -16,6 +16,10 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
   const [productData, setProductData] = useState([]);
 
   const { cartData, setCartData } = useCartContext();
+
+  useEffect(() => {
+    setQuantity(() => 1);
+  }, []);
 
   useEffect(() => {
     setTotalPrice(() => quantity * item.price);
