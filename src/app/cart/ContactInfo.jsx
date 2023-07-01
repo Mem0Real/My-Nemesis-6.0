@@ -64,6 +64,7 @@ export default function ContactInfo({
     console.log("Order sent! One of our employees will reach out to you soon.");
     clearCart();
     setUser(() => {});
+    closeInfoModal();
   };
   const handleChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
