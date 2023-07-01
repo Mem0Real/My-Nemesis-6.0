@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
 
-import { getParams } from "../lib/fetchFunctions";
 import Category from "./category";
 
 export async function generateMetadata({ params: { category } }) {
