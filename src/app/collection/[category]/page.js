@@ -41,9 +41,9 @@ export default async function CategoryPage({ params: { category } }) {
   );
 }
 
-export async function generateStaticParams({ params: { category } }) {
-  const categories = await getParams("categories");
-  return categories.map((category) => ({
-    category: category.id.toString(),
-  }));
-}
+// export async function generateStaticParams({ params: { category } }) {
+//   const categories = await getParams("categories");
+//   return categories.map((category) => ({
+//     category: category.id.toString(),
+//   }));
+// }
