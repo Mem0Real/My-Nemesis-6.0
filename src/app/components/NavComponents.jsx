@@ -9,7 +9,7 @@ import SearchModal from "../search/(searchModal)/SearchModal";
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import { SearchOutlined } from "@mui/icons-material";
 import Cart from "../cart/Cart";
-import { useCartContext } from "@/context/context";
+import { useCartContext } from "@/context/cartContext";
 
 const FunctionsContext = createContext({});
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useCartContext } from "@/context/context";
+import { useCartContext } from "@/context/cartContext";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";

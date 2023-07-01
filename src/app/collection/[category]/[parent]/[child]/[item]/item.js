@@ -2,11 +2,14 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import AddToCart from "./components/AddToCart";
+import { useItemContext } from "@/context/itemContext";
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);
-  const [currentQuantity, setCurrentQuantity] = useState();
+  // const [currentQuantity, setCurrentQuantity] = useState();
+
+  const { currentQuantity, setCurrentQuantity } = useItemContext();
 
   useEffect(() => {
     const data = JSON.parse(window.localStorage.getItem("Product_Data"));
@@ -33,18 +36,18 @@ export default function Item({ item }) {
     }
   }, [activeImage, item.images]);
 
-  const fetchCache = () => {
-    const data = JSON.parse(window.localStorage.getItem("Product_Data"));
-    if (data.length > 0) {
-      data.map((product) => {
-        if (product.id === item.id) {
-          console.log("PI", product.id);
-          console.log("Item", item.id);
-          setCurrentQuantity(() => product.remainingQty);
-        }
-      });
-    }
-  };
+  // const fetchCache = () => {
+  //   const data = JSON.parse(window.localStorage.getItem("Product_Data"));
+  //   if (data.length > 0) {
+  //     data.map((product) => {
+  //       if (product.id === item.id) {
+  //         console.log("PI", product.id);
+  //         console.log("Item", item.id);
+  //         setCurrentQuantity(() => product.remainingQty);
+  //       }
+  //     });
+  //   } else setCurrentQuantity(() => item.quantity);
+  // };
 
   const openImage = (image) => {
     setActiveImage(image);
@@ -150,7 +153,7 @@ export default function Item({ item }) {
         item={item}
         modal={modal}
         closeModal={closeModal}
-        fetchCache={fetchCache}
+        // fetchCache={fetchCache}
       />
     </div>
   );

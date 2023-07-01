@@ -4,7 +4,8 @@ import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Add, Remove } from "@mui/icons-material";
-import { useCartContext } from "@/context/context";
+import { useCartContext } from "@/context/cartContext";
+import { useItemContext } from "@/context/itemContext";
 
 export default function AddToCart({ modal, closeModal, item, fetchCache }) {
   const [order, setOrder] = useState();
@@ -16,6 +17,7 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
   const [productData, setProductData] = useState([]);
 
   const { cartData, setCartData } = useCartContext();
+  const { fetchCache } = useItemContext();
 
   useEffect(() => {
     setQuantity(() => 1);
@@ -95,14 +97,14 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
             "Product_Data",
             JSON.stringify(updatedCache)
           );
-          fetchCache();
+          fetchCache(item);
         } else {
           cache.push({
             id: order.data.id,
             remainingQty: remainingQuantity,
           });
           window.localStorage.setItem("Product_Data", JSON.stringify(cache));
-          fetchCache();
+          fetchCache(item);
         }
       } else {
         let data = [];
@@ -112,7 +114,7 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
         });
         console.log(data);
         window.localStorage.setItem("Product_Data", JSON.stringify(data));
-        fetchCache();
+        fetchCache(item);
       }
     }
 

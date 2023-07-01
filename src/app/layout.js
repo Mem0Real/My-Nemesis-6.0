@@ -2,7 +2,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 import "./globals.css";
-import Context from "@/context/context";
+import CartDataContext from "@/context/cartContext";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -14,7 +14,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <Context>
+        <CartDataContext>
           <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative">
             <Navbar />
             <div className={`min-h-screen`}>{children}</div>
@@ -22,7 +22,7 @@ export default function RootLayout({ children }) {
               <Footer />
             </div>
           </div>
-        </Context>
+        </CartDataContext>
       </body>
     </html>
   );

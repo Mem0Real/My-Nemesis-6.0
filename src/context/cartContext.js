@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext({});
 
-export default function Context({ children }) {
+export default function CartDataContext({ children }) {
   const [cartData, setCartData] = useState([]);
 
   // Peristent Cart Data
