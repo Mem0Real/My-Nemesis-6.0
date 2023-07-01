@@ -7,9 +7,13 @@ import { useItemContext } from "@/context/itemContext";
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);
-  // const [currentQuantity, setCurrentQuantity] = useState();
+  const [qty, setQty] = useState();
 
   const { currentQuantity, setCurrentQuantity } = useItemContext();
+
+  useEffect(() => {
+    setQty(() => currentQuantity);
+  }, [currentQuantity]);
 
   useEffect(() => {
     const data = JSON.parse(window.localStorage.getItem("Product_Data"));
@@ -17,14 +21,14 @@ export default function Item({ item }) {
     if (data && data.length > 0) {
       for (let i = 0; i < data.length; i++) {
         if (data[i].id === item.id) {
-          setCurrentQuantity(() => data[i].remainingQty);
+          setQty(() => data[i].remainingQty);
           break;
         } else {
-          setCurrentQuantity(() => item.quantity);
+          setQty(() => item.quantity);
         }
       }
     } else {
-      setCurrentQuantity(() => item.quantity);
+      setQty(() => item.quantity);
     }
   }, [currentQuantity, item]);
 
@@ -125,7 +129,7 @@ export default function Item({ item }) {
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Quantity:</h1>
-              <h2 className="ms-3 text-md">{currentQuantity}</h2>
+              <h2 className="ms-3 text-md">{qty}</h2>
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Price:</h1>

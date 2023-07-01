@@ -7,14 +7,12 @@ import { Add, Remove } from "@mui/icons-material";
 import { useCartContext } from "@/context/cartContext";
 import { useItemContext } from "@/context/itemContext";
 
-export default function AddToCart({ modal, closeModal, item, fetchCache }) {
+export default function AddToCart({ modal, closeModal, item }) {
   const [order, setOrder] = useState();
   const [quantity, setQuantity] = useState();
   const [totalPrice, setTotalPrice] = useState(0);
   const [newCart, setNewCart] = useState(false);
   const [remainingQuantity, setRemainingQuantity] = useState();
-
-  const [productData, setProductData] = useState([]);
 
   const { cartData, setCartData } = useCartContext();
   const { fetchCache } = useItemContext();
@@ -97,14 +95,14 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
             "Product_Data",
             JSON.stringify(updatedCache)
           );
-          fetchCache(item);
+          fetchCache(order.data.id, order.data.quantity);
         } else {
           cache.push({
             id: order.data.id,
             remainingQty: remainingQuantity,
           });
           window.localStorage.setItem("Product_Data", JSON.stringify(cache));
-          fetchCache(item);
+          fetchCache(order.data.id, order.data.quantity);
         }
       } else {
         let data = [];
@@ -114,7 +112,7 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
         });
         console.log(data);
         window.localStorage.setItem("Product_Data", JSON.stringify(data));
-        fetchCache(item);
+        fetchCache(order.data.id, order.data.quantity);
       }
     }
 

@@ -6,6 +6,7 @@ import { useCartContext } from "@/context/cartContext";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import ContactInfo from "./ContactInfo";
+import { useItemContext } from "@/context/itemContext";
 
 export default function Cart({ closeCart, modal }) {
   const [order, setOrder] = useState([]);
@@ -13,6 +14,8 @@ export default function Cart({ closeCart, modal }) {
   const [infoModal, showInfoModal] = useState(false);
 
   const { cartData, setCartData } = useCartContext();
+
+  const { fetchCache } = useItemContext();
 
   useEffect(() => {
     if (cartData.length > 0) {
@@ -22,10 +25,16 @@ export default function Cart({ closeCart, modal }) {
   }, [cartData]);
 
   const clearCart = () => {
-    setCartData(() => []);
-    setOrder(() => []);
     window.localStorage.removeItem("Cart_Data");
     window.localStorage.removeItem("Product_Data");
+
+    order.map((item) => {
+      fetchCache(item.data.id, item.data.quantity);
+    });
+
+    setCartData(() => []);
+    setOrder(() => []);
+
     closeCart();
   };
 
