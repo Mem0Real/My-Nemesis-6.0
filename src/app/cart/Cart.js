@@ -26,6 +26,7 @@ export default function Cart({ closeCart, modal }) {
     setOrder(() => []);
     window.localStorage.removeItem("Cart_Data");
     window.localStorage.removeItem("Product_Data");
+    closeCart();
   };
 
   const handleOrder = () => {
@@ -91,7 +92,7 @@ export default function Cart({ closeCart, modal }) {
               <h1 className="py-1 self-start text-lg px-2 underline underline-offset-2">
                 List of items
               </h1>
-              <table className="shadow-inner bg-neutral-900 shadow-black/60 rounded rounded-b-2xl border-collapse">
+              <table className="shadow-inner w-auto md:w-[90%] bg-neutral-900 shadow-black/60 rounded rounded-b-2xl border-collapse">
                 <thead>
                   <tr className="border-b border-1 border-neutral-200">
                     <th className="text-left py-4 ps-2">Product</th>

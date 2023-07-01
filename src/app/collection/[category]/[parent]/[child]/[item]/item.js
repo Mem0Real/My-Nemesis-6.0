@@ -38,6 +38,8 @@ export default function Item({ item }) {
     if (data.length > 0) {
       data.map((product) => {
         if (product.id === item.id) {
+          console.log("PI", product.id);
+          console.log("Item", item.id);
           setCurrentQuantity(() => product.remainingQty);
         }
       });

@@ -79,7 +79,7 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
       const cache = JSON.parse(window.localStorage.getItem("Product_Data"));
 
       // If cache exists check id for current product
-      if (cache?.length > 0) {
+      if (cache && cache.length > 0) {
         // Update
         const productCache = cache.find(
           (product) => product.id === order.data.id
@@ -90,17 +90,19 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
               ? { ...prod, remainingQty: remainingQuantity }
               : prod
           );
+          console.log("UpdatedCache", updatedCache);
           window.localStorage.setItem(
             "Product_Data",
             JSON.stringify(updatedCache)
           );
           fetchCache();
         } else {
-          let data = cache.push({
+          cache.push({
             id: order.data.id,
             remainingQty: remainingQuantity,
           });
           window.localStorage.setItem("Product_Data", JSON.stringify(cache));
+          fetchCache();
         }
       } else {
         let data = [];
@@ -108,6 +110,7 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
           id: order.data.id,
           remainingQty: remainingQuantity,
         });
+        console.log(data);
         window.localStorage.setItem("Product_Data", JSON.stringify(data));
         fetchCache();
       }
