@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import { getCollectionData } from "@/app/collection/lib/fetchFunctions";
-import Items from "./items";
+import Items from "./Items";
 
 export default async function Children({ categoryId, parentId }) {
   let content;

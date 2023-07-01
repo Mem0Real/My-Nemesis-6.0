@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import { getParams } from "../lib/fetchFunctions";
-import Category from "./category";
+import Category from "./Category";
 
 export async function generateMetadata({ params: { category } }) {
   let firstLetter = category[0];

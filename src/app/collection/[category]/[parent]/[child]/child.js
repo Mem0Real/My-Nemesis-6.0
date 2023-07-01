@@ -1,4 +1,4 @@
-import Items from "./items";
+import Items from "./Items";
 import { Suspense } from "react";
 
 import { getDetail } from "@/app/collection/lib/fetchFunctions";

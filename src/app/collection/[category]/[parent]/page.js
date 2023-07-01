@@ -1,9 +1,7 @@
-import Children from "./children";
 import { Suspense } from "react";
 import Link from "next/link";
 
-import { getDetail } from "../../lib/fetchFunctions";
-import Parent from "./parent";
+import Parent from "./Parent";
 
 export async function generateMetadata({ params: { parent } }) {
   let firstLetter = parent[0];

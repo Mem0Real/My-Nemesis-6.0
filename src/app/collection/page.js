@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import Categories from "./categories";
+import Categories from "./Categories";
 export default function CollectionPage() {
   return (
     <div className="flex flex-col items-center gap-20 text-neutral-800 mt-6">

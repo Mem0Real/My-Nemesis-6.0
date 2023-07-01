@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 
 import { getDetail } from "@/app/collection/lib/fetchFunctions";
-import Item from "./item";
+import Item from "./Item";
 
 export async function generateMetadata({ params: { item } }) {
   let firstLetter = item[0];

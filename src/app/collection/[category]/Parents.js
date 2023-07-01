@@ -1,4 +1,4 @@
-import Children from "./children";
+import Children from "./Children";
 import Link from "next/link";
 import { Suspense } from "react";
 
