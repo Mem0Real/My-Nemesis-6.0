@@ -6,7 +6,13 @@ import Modal from "@mui/material/Modal";
 import { Add, Remove } from "@mui/icons-material";
 import { useCartContext } from "@/context/context";
 
-export default function AddToCart({ modal, closeModal, item }) {
+export default function AddToCart({
+  modal,
+  closeModal,
+  item,
+  productData,
+  setProductData,
+}) {
   const [order, setOrder] = useState();
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
@@ -31,6 +37,7 @@ export default function AddToCart({ modal, closeModal, item }) {
     if (quantity >= 1) {
       let remaining = item.quantity - quantity;
       setRemainingQuantity(remaining);
+      setProductData(() => ({ id: item.id, quantity: remaining }));
     }
   }, [quantity, item.quantity]);
 

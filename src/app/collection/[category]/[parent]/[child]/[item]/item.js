@@ -7,6 +7,8 @@ export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);
 
+  const [productData, setProductData] = useState();
+
   useEffect(() => {
     let image = item.images;
 
@@ -14,6 +16,10 @@ export default function Item({ item }) {
       setActiveImage(image[0]);
     }
   }, [activeImage, item.images]);
+
+  useEffect(() => {
+    setProductData(() => ({ id: item.id, quantity: item.quantity }));
+  }, [item]);
 
   const openImage = (image) => {
     setActiveImage(image);
@@ -91,7 +97,9 @@ export default function Item({ item }) {
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Quantity:</h1>
-              <h2 className="ms-3 text-md">{item.quantity}</h2>
+              <h2 className="ms-3 text-md">
+                {productData?.id === item.id && productData.quantity}
+              </h2>
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Price:</h1>
@@ -115,7 +123,13 @@ export default function Item({ item }) {
           </div>
         </div>
       </div>
-      <AddToCart item={item} modal={modal} closeModal={closeModal} />
+      <AddToCart
+        item={item}
+        modal={modal}
+        closeModal={closeModal}
+        productData={productData}
+        setProductData={setProductData}
+      />
     </div>
   );
 }
