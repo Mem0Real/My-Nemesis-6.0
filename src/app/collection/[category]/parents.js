@@ -1,53 +1,51 @@
+import Children from "./children";
 import Link from "next/link";
 import { Suspense } from "react";
 
-import { getCollectionData } from "@/app/collection/lib/fetchFunctions";
-import Items from "./Items";
+import { getCollectionData } from "../lib/fetchFunctions";
 
-export default async function Children({ categoryId, parentId }) {
+export default async function Parents({ categoryId }) {
   let content;
-
-  const reference = { ParentId: parentId };
-
   function isObjEmpty(obj) {
     return Object.keys(obj).length === 0;
   }
-  let childData = await getCollectionData("children", reference);
+  const reference = { CategoryId: categoryId };
 
-  if (isObjEmpty(childData)) {
+  let parentData = await getCollectionData("parents", reference);
+
+  if (isObjEmpty(parentData)) {
     content = (
       <div className="flex flex-col justify-around items-center text-sm mb-1 w-screen bg-neutral-300 text-neutral-900 h-fit">
         <h1>Empty</h1>
       </div>
     );
   } else {
-    content = childData.map((child) => {
+    content = parentData.map((parent) => {
       return (
         <div
-          key={child.id}
+          key={parent.id}
           className="flex flex-col items-center md:items-start text-sm mb-1 w-full bg-neutral-200/80 text-neutral-800"
         >
           <Link
-            href={`/collection/${categoryId}/${parentId}/${child.id}`}
+            href={`/collection/${categoryId}/${parent.id}`}
             className="flex-none"
           >
             <h1 className="md:ml-12 text-lg my-5 sm:my-9 ring ring-neutral-600 bg-neutral-100 ring-offset-4 hover:ring-offset-2 hover:ring-neutral-800 ring-opacity-40 shadow-lg shadow-neutral-800 px-5 rounded-md">
-              {child.name}
+              {parent.name}
             </h1>
           </Link>
           <div className="w-full">
             <Suspense
               fallback={
                 <h1 className="text-md text-center mx-auto">
-                  Loading items data...
+                  Loading children data...
                 </h1>
               }
             >
-              <Items
+              <Children
                 categoryId={categoryId}
-                parentId={parentId}
-                childId={child.id}
-                items={child.items}
+                parentId={parent.id}
+                childrenData={parent.children}
               />
             </Suspense>
           </div>

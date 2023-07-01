@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import { getParams } from "../lib/fetchFunctions";
-import Category from "./Category";
+import Category from "./category";
 
 export async function generateMetadata({ params: { category } }) {
   let firstLetter = category[0];
@@ -40,10 +40,3 @@ export default async function CategoryPage({ params: { category } }) {
     </div>
   );
 }
-
-// export async function generateStaticParams({ params: { category } }) {
-//   const categories = await getParams("categories");
-//   return categories.map((category) => ({
-//     category: category.id.toString(),
-//   }));
-// }
