@@ -55,7 +55,7 @@ export default function AddToCart({ modal, closeModal, item, fetchCache }) {
           (item) => item.data.name === order.data.name
         );
         if (itemName) {
-          itemName.quantity = order.quantity;
+          itemName.quantity = quantity;
           setCartData(cartList);
         } else {
           setCartData((prev) => [...prev, order]);

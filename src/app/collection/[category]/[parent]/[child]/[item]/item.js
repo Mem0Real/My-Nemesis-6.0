@@ -22,7 +22,7 @@ export default function Item({ item }) {
     } else {
       setCurrentQuantity(() => item.quantity);
     }
-  }, []);
+  }, [currentQuantity]);
 
   useEffect(() => {
     let image = item.images;
