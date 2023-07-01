@@ -6,8 +6,28 @@ import AddToCart from "./components/AddToCart";
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);
+  const [currentQuantity, setCurrentQuantity] = useState();
 
-  const [productData, setProductData] = useState();
+  useEffect(() => {
+    const data = JSON.parse(window.localStorage.getItem("Product_Data"));
+    if (data?.length > 0) {
+      // const productCached = data.some((product) => {
+      //   if (product.id === item.id) {
+      //     return setCurrentQuantity(() => product.remainingQty);
+      //   }
+      // });
+      for (let i = 0; i <= data.length; i++) {
+        if (data[i]?.id === item.id) {
+          setCurrentQuantity(() => data[i].remainingQty);
+          break;
+        } else {
+          setCurrentQuantity(() => item.quantity);
+        }
+      }
+    } else {
+      setCurrentQuantity(() => item.quantity);
+    }
+  }, []);
 
   useEffect(() => {
     let image = item.images;
@@ -17,9 +37,16 @@ export default function Item({ item }) {
     }
   }, [activeImage, item.images]);
 
-  useEffect(() => {
-    setProductData(() => ({ id: item.id, quantity: item.quantity }));
-  }, [item]);
+  const fetchCache = () => {
+    const data = JSON.parse(window.localStorage.getItem("Product_Data"));
+    if (data.length > 0) {
+      data.map((product) => {
+        if (product.id === item.id) {
+          setCurrentQuantity(() => product.remainingQty);
+        }
+      });
+    }
+  };
 
   const openImage = (image) => {
     setActiveImage(image);
@@ -97,9 +124,7 @@ export default function Item({ item }) {
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Quantity:</h1>
-              <h2 className="ms-3 text-md">
-                {productData?.id === item.id && productData.quantity}
-              </h2>
+              <h2 className="ms-3 text-md">{currentQuantity}</h2>
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Price:</h1>
@@ -127,8 +152,7 @@ export default function Item({ item }) {
         item={item}
         modal={modal}
         closeModal={closeModal}
-        productData={productData}
-        setProductData={setProductData}
+        fetchCache={fetchCache}
       />
     </div>
   );

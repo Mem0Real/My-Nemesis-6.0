@@ -47,6 +47,7 @@ export default async function Items({ categoryId, parentId, childId }) {
                 categoryId={categoryId}
                 parentId={parentId}
                 childId={childId}
+                itemId={item.id}
                 images={item.images}
               />
             </Suspense>

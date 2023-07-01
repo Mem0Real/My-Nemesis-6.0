@@ -6,18 +6,14 @@ import Modal from "@mui/material/Modal";
 import { Add, Remove } from "@mui/icons-material";
 import { useCartContext } from "@/context/context";
 
-export default function AddToCart({
-  modal,
-  closeModal,
-  item,
-  productData,
-  setProductData,
-}) {
+export default function AddToCart({ modal, closeModal, item, fetchCache }) {
   const [order, setOrder] = useState();
   const [quantity, setQuantity] = useState(1);
   const [totalPrice, setTotalPrice] = useState(0);
   const [newCart, setNewCart] = useState(false);
   const [remainingQuantity, setRemainingQuantity] = useState();
+
+  const [productData, setProductData] = useState([]);
 
   const { cartData, setCartData } = useCartContext();
 
@@ -37,7 +33,6 @@ export default function AddToCart({
     if (quantity >= 1) {
       let remaining = item.quantity - quantity;
       setRemainingQuantity(remaining);
-      setProductData(() => ({ id: item.id, quantity: remaining }));
     }
   }, [quantity, item.quantity]);
 
@@ -68,7 +63,44 @@ export default function AddToCart({
       } else {
         setCartData((prev) => [...prev, order]);
       }
+
+      const cache = JSON.parse(window.localStorage.getItem("Product_Data"));
+
+      // If cache exists check id for current product
+      if (cache?.length > 0) {
+        // Update
+        const productCache = cache.find(
+          (product) => product.id === order.data.id
+        );
+        if (productCache) {
+          const updatedCache = cache.map((prod) =>
+            prod.id === order.data.id
+              ? { ...prod, remainingQty: remainingQuantity }
+              : prod
+          );
+          window.localStorage.setItem(
+            "Product_Data",
+            JSON.stringify(updatedCache)
+          );
+          fetchCache();
+        } else {
+          let data = cache.push({
+            id: order.data.id,
+            remainingQty: remainingQuantity,
+          });
+          window.localStorage.setItem("Product_Data", JSON.stringify(cache));
+        }
+      } else {
+        let data = [];
+        data.push({
+          id: order.data.id,
+          remainingQty: remainingQuantity,
+        });
+        window.localStorage.setItem("Product_Data", JSON.stringify(data));
+        fetchCache();
+      }
     }
+
     closeModal();
   };
 

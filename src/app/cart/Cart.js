@@ -24,10 +24,11 @@ export default function Cart({ closeCart, modal }) {
   const clearCart = () => {
     setCartData(() => []);
     setOrder(() => []);
+    window.localStorage.removeItem("Cart_Data");
+    window.localStorage.removeItem("Product_Data");
   };
 
   const handleOrder = () => {
-    // await placeOrder(order, invoiceTotal)
     closeCart();
     showInfoModal(() => true);
   };
