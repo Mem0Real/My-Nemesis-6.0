@@ -6,6 +6,7 @@ export async function POST(request) {
 
   let firstName = res.user.fullname;
   firstName = firstName.split(" ")[0];
+  firstName = firstName.toLowerCase();
 
   let data = await res.productData.map((item) => ({
     productId: item.data.id,

@@ -29,6 +29,7 @@ export default function ContactInfo({
 
     let firstName = user.fullname;
     firstName = firstName.split(" ")[0];
+    firstName = firstName.toLowerCase();
 
     orderData.map((item) => {
       let id = item.data.id;
@@ -47,9 +48,6 @@ export default function ContactInfo({
       });
     });
 
-    console.log("FirstName: ", firstName);
-    console.log("Product Data: ", productData);
-
     const res = await fetch(`${url}/api/sendOrder`, {
       headers: {
         "Content-Type": "application/json",
@@ -64,8 +62,8 @@ export default function ContactInfo({
       );
     }
     console.log("Order sent! One of our employees will reach out to you soon.");
-    // clearCart();
-    // setUser(() => {});
+    clearCart();
+    setUser(() => {});
   };
   const handleChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -121,7 +119,7 @@ export default function ContactInfo({
                     type="text"
                     className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
-                    value={user.fullname || ""}
+                    value={user?.fullname || ""}
                     onChange={handleChange}
                   />
                   <label
@@ -138,7 +136,7 @@ export default function ContactInfo({
                     name="phone"
                     type="tel"
                     className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    value={user.phone || ""}
+                    value={user?.phone || ""}
                     placeholder=" "
                     onChange={handleChange}
                   />
