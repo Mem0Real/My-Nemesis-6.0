@@ -61,7 +61,7 @@ export default function Cart({ closeCart, modal }) {
         className="bg-neutral-900/20 backdrop-blur-sm"
       >
         <Box>
-          <div className="shadow bg-neutral-800 text-neutral-200 rounded-2xl py-6 absolute w-[90%] md:w-1/2 right-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <div className="shadow bg-neutral-800 text-neutral-200 rounded-2xl py-6 absolute w-[95%] mx-auto md:w-1/2 right-0 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <button
               name="close-modal"
               type="button"
@@ -91,7 +91,7 @@ export default function Cart({ closeCart, modal }) {
               <h1 className="py-1 self-start text-lg px-2 underline underline-offset-2">
                 List of items
               </h1>
-              <table className="shadow-inner bg-neutral-900 shadow-black/60 w-[95%] rounded rounded-b-2xl border-collapse">
+              <table className="shadow-inner bg-neutral-900 shadow-black/60 rounded rounded-b-2xl border-collapse">
                 <thead>
                   <tr className="border-b border-1 border-neutral-200">
                     <th className="text-left py-4 ps-2">Product</th>
