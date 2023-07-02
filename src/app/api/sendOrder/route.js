@@ -9,12 +9,12 @@ export async function POST(request) {
   firstName = firstName.split(" ")[0];
   firstName = firstName.toLowerCase();
 
-  let data = await res.productData.map((item) => ({
-    productId: item.data.id,
-    productName: item.data.name,
-    productPrice: parseFloat(item.data.price),
-    orderedQuantity: item.data.quantity,
-    customerId: item.data.customerid,
+  let data = await res.cartItems.map((item) => ({
+    productId: item.id,
+    productName: item.name,
+    productPrice: parseFloat(item.totalPrice),
+    orderedQuantity: item.selectedQuantity,
+    customerId: firstName,
   }));
 
   let dateNow = new Date().toISOString();
@@ -44,11 +44,11 @@ export async function POST(request) {
 
   if (!res2) throw new Error("Error creating order");
 
-  let tran = await res.productData.map((item) => ({
-    productId: item.data.id,
-    orderedQuantity: item.data.quantity,
-    productQuantity: item.data.pquantity,
-    remainingQuantity: item.data.pquantity - item.data.quantity,
+  let tran = await res.cartItems.map((item) => ({
+    productId: item.id,
+    orderedQuantity: item.selectedQuantity,
+    productQuantity: item.originalQuantity,
+    remainingQuantity: item.originalQuantity - item.selectedQuantity,
   }));
 
   const transaction = await prisma.$transaction(

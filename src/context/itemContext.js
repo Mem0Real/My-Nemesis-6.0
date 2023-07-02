@@ -11,7 +11,6 @@ export default function ItemDataContext({ children }) {
 
   useEffect(() => {
     if (restoredData) {
-      console.log(restoredData.id, restoredData.quantity);
       localStorage.setItem(
         "Restored_Item",
         JSON.stringify(restoredData.id, restoredData.quantity)
@@ -30,13 +29,11 @@ export default function ItemDataContext({ children }) {
         } else setCurrentQuantity(() => quantity);
       }
     } else {
-      console.log("Empty");
       setCurrentQuantity(() => quantity);
     }
   };
 
   const updateQuantity = (id, quantity) => {
-    console.log("Setting currentQuantity...");
     const data = JSON.parse(window.localStorage.getItem("Product_Data"));
     if (data && data.length > 0) {
       for (let i = 0; i < data.length; i++) {
@@ -46,13 +43,11 @@ export default function ItemDataContext({ children }) {
         } else setCurrentQuantity(() => quantity);
       }
     } else {
-      console.log("Empty");
       setCurrentQuantity(() => quantity);
     }
   };
 
   const restoreQuantity = (id, quantity) => {
-    console.log("Restoring quantity to: ", quantity);
     const data = JSON.parse(window.localStorage.getItem("Product_Data"));
     if (data && data.length > 0) {
       for (let i = 0; i < data.length; i++) {

@@ -16,24 +16,6 @@ export default function Item({ item }) {
     restoredData,
   } = useItemContext();
 
-  useEffect(() => {
-    restoredData && console.log("Restoring Item!!!!! in page");
-  }, [restoredData]);
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("Restored_Item"));
-    if (data !== null) console.log("Updated item");
-  }, []);
-
-  useEffect(() => {
-    console.log("Current quantity changed");
-    refetch(item.id, item.quantity);
-  }, [currentQuantity]);
-
-  useEffect(() => {
-    updateQuantity(item.id, item.quantity);
-  }, [productData, item]);
-
   // Show image if any
   useEffect(() => {
     let image = item.images;
@@ -42,6 +24,10 @@ export default function Item({ item }) {
       setActiveImage(image[0]);
     }
   }, [activeImage, item.images]);
+
+  useEffect(() => {
+    refetch(item.id, item.quantity);
+  }, []);
 
   const openImage = (image) => {
     setActiveImage(image);

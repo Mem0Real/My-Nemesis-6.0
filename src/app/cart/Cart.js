@@ -7,12 +7,14 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import ContactInfo from "./ContactInfo";
 import { useItemContext } from "@/context/itemContext";
-import { Clear } from "@mui/icons-material";
+import { Add, Remove, Clear } from "@mui/icons-material";
 
 export default function Cart({ closeCart, modal }) {
   const [order, setOrder] = useState([]);
   const [buttons, showButtons] = useState(false);
   const [infoModal, showInfoModal] = useState(false);
+
+  const [cartItems, setCartItems] = useState([]);
 
   const { cartData, setCartData } = useCartContext();
 
@@ -20,7 +22,7 @@ export default function Cart({ closeCart, modal }) {
     useItemContext();
 
   useEffect(() => {
-    if (cartData.length > 0) {
+    if (cartData?.length > 0) {
       setOrder(() => cartData);
       showButtons(true);
     } else {
@@ -29,17 +31,73 @@ export default function Cart({ closeCart, modal }) {
     }
   }, [cartData]);
 
+  useEffect(() => {
+    if (cartData?.length > 0) {
+      let arr = [];
+      cartData.forEach((item) =>
+        arr.push({
+          id: item.data.id,
+          name: item.data.name,
+          originalQuantity: item.data.quantity,
+          selectedQuantity: parseInt(item.quantity),
+          productPrice: item.data.price,
+          totalPrice: item.price,
+        })
+      );
+      console.log(arr);
+      setCartItems(arr);
+    }
+  }, [cartData]);
+
   const clearCart = () => {
     window.localStorage.removeItem("Cart_Data");
+    window.localStorage.removeItem("Product_Data");
 
-    order.map(async (item) => {
-      await fetchCache(item.data.id, item.data.quantity);
+    cartItems.map((item) => {
+      refetch(item.id, item.quantity);
     });
 
     setCartData(() => []);
-    setOrder(() => []);
+    setCartItems(() => []);
 
     closeCart();
+  };
+
+  const handleMinus = (id) => {
+    const updatedQuantity = cartItems.map((item) => {
+      if (item.id === id) {
+        return { ...item, selectedQuantity: item.selectedQuantity - 1 };
+      }
+      return item;
+    });
+    setCartItems(updatedQuantity);
+  };
+
+  const handlePlus = (id) => {
+    const updatedQuantity = cartItems.map((item) => {
+      if (item.id === id) {
+        return { ...item, selectedQuantity: item.selectedQuantity + 1 };
+      }
+      return item;
+    });
+    setCartItems(updatedQuantity);
+  };
+
+  const handleChange = (id, e) => {
+    const updatedQuantity = cartItems.map((item) => {
+      if (item.id === id) {
+        if (e.target.value > item.originalQuantity) {
+          return { ...item, selectedQuantity: item.originalQuantity };
+        }
+        if (e.target.value < 1) {
+          return { ...item, selectedQuantity: 1 };
+        }
+
+        return { ...item, selectedQuantity: e.target.value };
+      }
+      return item;
+    });
+    setCartItems(updatedQuantity);
   };
 
   const handleRemove = (id, quantity) => {
@@ -58,7 +116,6 @@ export default function Cart({ closeCart, modal }) {
     // If cache exists check id for current product
     const productCache = cache.find((product) => product.id === id);
     if (productCache) {
-      console.log("Product found to restore");
       const updatedCache = cache.map((prod) =>
         prod.id === id
           ? {
@@ -69,14 +126,13 @@ export default function Cart({ closeCart, modal }) {
       );
       window.localStorage.setItem("Product_Data", JSON.stringify(updatedCache));
       refetch(id, quantity);
-    } else {
-      console.log("error");
     }
 
     window.localStorage.setItem("Cart_Data", JSON.stringify(updatedCart));
-    // window.localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
+    window.localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
     setCartData(updatedCart);
   };
+
   const handleOrder = () => {
     closeCart();
     showInfoModal(() => true);
@@ -156,19 +212,50 @@ export default function Cart({ closeCart, modal }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {order.length > 0 ? (
+                  {cartItems.length > 0 ? (
                     <>
-                      {order.map((item) => (
+                      {cartItems.map((item) => (
                         <tr
-                          key={item.data.id}
+                          key={item.id}
                           className="border-b border-neutral-200"
                         >
-                          <td className="py-3 ps-2">{item.data.name}</td>
+                          <td className="py-3 ps-2">{item.name}</td>
                           <td className="text-center py-3 ps-2">
-                            {item.quantity}
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => handleMinus(item.id)}
+                                type="button"
+                                disabled={item.selectedQuantity <= 1}
+                                className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed "
+                              >
+                                <Remove />
+                              </button>
+                              <input
+                                type="number"
+                                name="quantity"
+                                id="quantity"
+                                className="text-center pl-2.5 py-2 rounded-xl bg-neutral-800 text-neutral-200 border border-neutral-200"
+                                value={item.selectedQuantity || ""}
+                                onChange={(e) => handleChange(item.id, e)}
+                                required
+                                min={1}
+                                max={item.originalQuantity}
+                              />
+                              <button
+                                onClick={() => handlePlus(item.id)}
+                                type="button"
+                                disabled={
+                                  item.selectedQuantity ===
+                                  item.originalQuantity
+                                }
+                                className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed"
+                              >
+                                <Add />
+                              </button>
+                            </div>
                           </td>
                           <td className="text-right py-3 pe-2" colSpan={2}>
-                            {item.price}
+                            {item.totalPrice}
                             <span className="text-sm px-1 text-neutral-600 italic items-center">
                               ETB
                             </span>
@@ -254,10 +341,11 @@ export default function Cart({ closeCart, modal }) {
         </Box>
       </Modal>
       <ContactInfo
+        modal={infoModal}
+        closeInfoModal={closeInfoModal}
+        cartItems={cartItems}
         orderData={order}
         orderTotalPrice={invoiceTotal}
-        closeInfoModal={closeInfoModal}
-        modal={infoModal}
         clearCart={clearCart}
       />
     </>

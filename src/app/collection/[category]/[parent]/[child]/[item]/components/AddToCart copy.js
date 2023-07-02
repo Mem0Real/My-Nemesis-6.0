@@ -93,7 +93,6 @@ export default function AddToCart({ modal, closeModal, item }) {
                 }
               : prod
           );
-          console.log("UpdatedCache", updatedCache);
           window.localStorage.setItem(
             "Product_Data",
             JSON.stringify(updatedCache)
@@ -113,7 +112,6 @@ export default function AddToCart({ modal, closeModal, item }) {
           id: order.data.id,
           remainingQty: remainingQuantity,
         });
-        console.log(data);
         window.localStorage.setItem("Product_Data", JSON.stringify(data));
         fetchCache(order.data.id);
       }

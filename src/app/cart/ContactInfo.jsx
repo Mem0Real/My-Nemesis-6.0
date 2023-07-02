@@ -5,10 +5,10 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
 export default function ContactInfo({
-  orderData,
-  orderTotalPrice,
-  closeInfoModal,
   modal,
+  closeInfoModal,
+  cartItems,
+  orderTotalPrice,
   clearCart,
 }) {
   const [user, setUser] = useState({});
@@ -21,37 +21,12 @@ export default function ContactInfo({
     else if (process.env.NODE_ENV === "production")
       url = process.env.NEXT_PUBLIC_PRODUCTION_URL;
 
-    let productData = [];
-
-    let firstName = user.fullname;
-    firstName = firstName.split(" ")[0];
-    firstName = firstName.toLowerCase();
-
-    orderData.map((item) => {
-      let id = item.data.id;
-      let name = item.data.name;
-      let qty = item.quantity;
-      let pqty = item.data.quantity;
-      let price = item.data.price;
-
-      productData.push({
-        data: {
-          id: id,
-          name: name,
-          quantity: qty,
-          pquantity: pqty,
-          price: price,
-          customerid: firstName,
-        },
-      });
-    });
-
     const res = await fetch(`${url}/api/sendOrder`, {
       headers: {
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ user, productData, orderTotalPrice }),
+      body: JSON.stringify({ user, cartItems, orderTotalPrice }),
     });
 
     if (!res.ok) {
@@ -64,6 +39,7 @@ export default function ContactInfo({
     setUser(() => {});
     closeInfoModal();
   };
+
   const handleChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
