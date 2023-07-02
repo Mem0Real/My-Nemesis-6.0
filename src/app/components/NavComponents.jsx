@@ -10,6 +10,7 @@ import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCh
 import { SearchOutlined } from "@mui/icons-material";
 import Cart from "../cart/Cart";
 import { useCartContext } from "@/context/cartContext";
+import { useItemContext } from "@/context/itemContext";
 
 const FunctionsContext = createContext({});
 
@@ -31,6 +32,7 @@ export default function NavComponents({ data, getAll, getOne }) {
   const [newCart, setNewCart] = useState(false);
 
   const { cartData } = useCartContext();
+  const { refetch, updateQuantity } = useItemContext();
 
   const menuRef = useRef();
 
@@ -73,6 +75,7 @@ export default function NavComponents({ data, getAll, getOne }) {
 
   const closeCart = () => {
     showCartModal(false);
+    refetch();
   };
   return (
     <div ref={menuRef} className="w-full">

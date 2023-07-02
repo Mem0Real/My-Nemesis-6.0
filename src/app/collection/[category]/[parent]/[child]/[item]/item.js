@@ -8,17 +8,19 @@ export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);
 
-  const { currentQuantity, fetchCache } = useItemContext();
+  const { refetch, productData, updateQuantity, currentQuantity } =
+    useItemContext();
+
+  // The first time a page loads
+  useEffect(() => {
+    refetch();
+  }, []);
 
   useEffect(() => {
-    console.log("Qty change: ", currentQuantity);
-  }, [currentQuantity]);
+    updateQuantity(item.id, item.quantity);
+  }, [productData, item]);
 
-  useEffect(() => {
-    fetchCache(item.id, item.quantity);
-    console.log("Refresh");
-  }, [currentQuantity, item]);
-
+  // Show image if any
   useEffect(() => {
     let image = item.images;
 
@@ -26,19 +28,6 @@ export default function Item({ item }) {
       setActiveImage(image[0]);
     }
   }, [activeImage, item.images]);
-
-  // const fetchCache = () => {
-  //   const data = JSON.parse(window.localStorage.getItem("Product_Data"));
-  //   if (data.length > 0) {
-  //     data.map((product) => {
-  //       if (product.id === item.id) {
-  //         console.log("PI", product.id);
-  //         console.log("Item", item.id);
-  //         setCurrentQuantity(() => product.remainingQty);
-  //       }
-  //     });
-  //   } else setCurrentQuantity(() => item.quantity);
-  // };
 
   const openImage = (image) => {
     setActiveImage(image);
@@ -144,7 +133,7 @@ export default function Item({ item }) {
         item={item}
         modal={modal}
         closeModal={closeModal}
-        // fetchCache={fetchCache}
+        // refetch={refetch}
       />
     </div>
   );

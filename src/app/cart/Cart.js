@@ -16,7 +16,7 @@ export default function Cart({ closeCart, modal }) {
 
   const { cartData, setCartData } = useCartContext();
 
-  const { fetchCache } = useItemContext();
+  const { refetch } = useItemContext();
 
   useEffect(() => {
     if (cartData.length > 0) {
@@ -26,7 +26,6 @@ export default function Cart({ closeCart, modal }) {
       setOrder([]);
       showButtons(false);
     }
-    console.log(cartData);
   }, [cartData]);
 
   const clearCart = () => {
@@ -49,7 +48,7 @@ export default function Cart({ closeCart, modal }) {
 
     for (let i = 0; i < cartData.length; i++) {
       if (cartData[i].data.id !== id) {
-        fetchCache(id);
+        // fetchCache(id);
         updatedCart.push(cartData[i]);
         updatedProduct.push({
           id: cartData[i].data.id,
@@ -60,6 +59,8 @@ export default function Cart({ closeCart, modal }) {
     setCartData(updatedCart);
     window.localStorage.setItem("Cart_Data", JSON.stringify(updatedCart));
     window.localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
+    refetch();
+    // updateQuantity()
   };
   const handleOrder = () => {
     closeCart();

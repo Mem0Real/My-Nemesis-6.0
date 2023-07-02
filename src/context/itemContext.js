@@ -4,62 +4,39 @@ import { createContext, useContext, useState, useEffect } from "react";
 const ItemContext = createContext({});
 
 export default function ItemDataContext({ children }) {
+  const [productData, setProductData] = useState();
   const [currentQuantity, setCurrentQuantity] = useState();
-  //   const fetchCache = (id) => {
-  //     const data = JSON.parse(window.localStorage.getItem("Product_Data"));
-  //     if (data && data.length > 0) {
-  //       data.map((product) => {
-  //         if (product.id === id) {
-  //           setCurrentQuantity(() => product.remainingQty);
-  //           console.log("Set updated qty: ", product.remainingQty);
-  //         }
-  //         setCurrentQuantity(() => product.originalQty);
-  //       });
-  //     }
-  //   };
 
-  const fetchCache = (id, quantity = null) => {
+  const refetch = () => {
     const data = JSON.parse(window.localStorage.getItem("Product_Data"));
     if (data && data.length > 0) {
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].id === id) {
-          setCurrentQuantity(() => data[i].remainingQty);
-          break;
-        } else {
-          setCurrentQuantity(() => quantity);
-        }
-      }
+      setProductData(() => data);
+      console.log("Product data updated with cache: ", data);
+    }
+  };
+
+  const updateQuantity = (id, quantity) => {
+    console.log("Setting currentQuantity...");
+    const data = JSON.parse(window.localStorage.getItem("Product_Data"));
+    if (data && data.length > 0) {
+      data.map((item) => {
+        if (item.id === id) setCurrentQuantity(() => item.remainingQty);
+      });
     } else {
+      console.log("Empty");
       setCurrentQuantity(() => quantity);
     }
   };
-  const clearCache = (id) => {
-    const data = JSON.parse(window.localStorage.getItem("Product_Data"));
-    if (data && data.length > 0) {
-      data.map((product) => {
-        if (product.id === id) {
-          setCurrentQuantity(() => product.originalQty);
-        }
-      });
-    }
-  };
-
-  //   const clearCache = (id, quantity) => {
-  //     const data = JSON.parse(window.localStorage.getItem("Product_Data"));
-  //     if (data && data.length > 0) {
-  //       for (let i = 0; i < data.length; i++) {
-  //         if (data[i].id === id) {
-  //           setCurrentQuantity(() => quantity);
-  //           console.log("Set updated qty: ", quantity);
-  //           break;
-  //         }
-  //       }
-  //     }
-  //   };
-
   return (
     <ItemContext.Provider
-      value={{ fetchCache, clearCache, currentQuantity, setCurrentQuantity }}
+      value={{
+        refetch,
+        productData,
+        setProductData,
+        updateQuantity,
+        currentQuantity,
+        setCurrentQuantity,
+      }}
     >
       {children}
     </ItemContext.Provider>

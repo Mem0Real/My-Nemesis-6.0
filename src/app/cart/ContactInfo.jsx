@@ -15,10 +15,6 @@ export default function ContactInfo({
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // console.log("User Data: ", user);
-    // console.log("Order Data: ", orderData);
-    // console.log("Order Total Price: ", orderTotalPrice);
-
     let url;
     if (process.env.NODE_ENV === "development")
       url = process.env.NEXT_PUBLIC_LOCAL_URL;
