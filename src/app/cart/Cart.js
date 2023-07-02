@@ -28,8 +28,8 @@ export default function Cart({ closeCart, modal }) {
     window.localStorage.removeItem("Cart_Data");
     window.localStorage.removeItem("Product_Data");
 
-    order.map((item) => {
-      fetchCache(item.data.id, item.data.quantity);
+    order.map(async (item) => {
+      await fetchCache(item.data.id, item.data.quantity);
     });
 
     setCartData(() => []);

@@ -7,29 +7,29 @@ import { useItemContext } from "@/context/itemContext";
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);
-  const [qty, setQty] = useState();
 
-  const { currentQuantity, setCurrentQuantity } = useItemContext();
+  const { currentQuantity, fetchCache } = useItemContext();
 
   useEffect(() => {
-    setQty(() => currentQuantity);
+    console.log("Qty change: ", currentQuantity);
   }, [currentQuantity]);
 
   useEffect(() => {
-    const data = JSON.parse(window.localStorage.getItem("Product_Data"));
-    console.log("Remaining");
-    if (data && data.length > 0) {
-      for (let i = 0; i < data.length; i++) {
-        if (data[i].id === item.id) {
-          setQty(() => data[i].remainingQty);
-          break;
-        } else {
-          setQty(() => item.quantity);
-        }
-      }
-    } else {
-      setQty(() => item.quantity);
-    }
+    fetchCache(item.id, item.quantity);
+    console.log("Refresh");
+    // const data = JSON.parse(window.localStorage.getItem("Product_Data"));
+    // if (data && data.length > 0) {
+    //   for (let i = 0; i < data.length; i++) {
+    //     if (data[i].id === item.id) {
+    //         setCurrentQuantity(() => data[i].remainingQty);
+    //       break;
+    //     } else {
+    //       setCurrentQuantity(() => item.quantity);
+    //     }
+    //   }
+    // } else {
+    //       setCurrentQuantity(() => item.quantity);
+    //     }
   }, [currentQuantity, item]);
 
   useEffect(() => {
@@ -129,7 +129,7 @@ export default function Item({ item }) {
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Quantity:</h1>
-              <h2 className="ms-3 text-md">{qty}</h2>
+              <h2 className="ms-3 text-md">{currentQuantity}</h2>
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Price:</h1>
