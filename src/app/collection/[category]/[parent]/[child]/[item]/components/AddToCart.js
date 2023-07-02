@@ -7,7 +7,7 @@ import { Add, Remove } from "@mui/icons-material";
 import { useCartContext } from "@/context/cartContext";
 import { useItemContext } from "@/context/itemContext";
 
-export default function AddToCart({ modal, closeModal, item, fetchCache }) {
+export default function AddToCart({ modal, closeModal, item }) {
   const [order, setOrder] = useState();
   const [quantity, setQuantity] = useState();
   const [totalPrice, setTotalPrice] = useState(0);
