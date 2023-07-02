@@ -21,6 +21,7 @@ export default function ItemDataContext({ children }) {
     if (data && data.length > 0) {
       data.map((item) => {
         if (item.id === id) setCurrentQuantity(() => item.remainingQty);
+        else setCurrentQuantity(() => quantity);
       });
     } else {
       console.log("Empty");
