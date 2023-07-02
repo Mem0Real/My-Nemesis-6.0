@@ -7,6 +7,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import ContactInfo from "./ContactInfo";
 import { useItemContext } from "@/context/itemContext";
+import { Clear } from "@mui/icons-material";
 
 export default function Cart({ closeCart, modal }) {
   const [order, setOrder] = useState([]);
@@ -21,7 +22,11 @@ export default function Cart({ closeCart, modal }) {
     if (cartData.length > 0) {
       setOrder(() => cartData);
       showButtons(true);
+    } else {
+      setOrder([]);
+      showButtons(false);
     }
+    console.log(cartData);
   }, [cartData]);
 
   const clearCart = () => {
@@ -38,6 +43,24 @@ export default function Cart({ closeCart, modal }) {
     closeCart();
   };
 
+  const handleRemove = (id) => {
+    const updatedCart = [];
+    const updatedProduct = [];
+
+    for (let i = 0; i < cartData.length; i++) {
+      if (cartData[i].data.id !== id) {
+        fetchCache(id);
+        updatedCart.push(cartData[i]);
+        updatedProduct.push({
+          id: cartData[i].data.id,
+          remainingQty: cartData[i].data.quantity - cartData[i].quantity,
+        });
+      }
+    }
+    setCartData(updatedCart);
+    window.localStorage.setItem("Cart_Data", JSON.stringify(updatedCart));
+    window.localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
+  };
   const handleOrder = () => {
     closeCart();
     showInfoModal(() => true);
@@ -113,60 +136,79 @@ export default function Cart({ closeCart, modal }) {
                     >
                       Price
                     </th>
+                    <th className="py-3"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {order.map((item) => (
-                    <tr
-                      key={item.data.id}
-                      className="border-b border-neutral-200"
-                    >
-                      <td className="py-3 ps-2">{item.data.name}</td>
-                      <td className="text-center py-3 ps-2">{item.quantity}</td>
-                      <td className="text-right py-3 pe-2" colSpan={2}>
-                        {item.price}
-                        <span className="text-sm px-1 text-neutral-600 italic items-center">
-                          ETB
-                        </span>
+                  {order.length > 0 ? (
+                    <>
+                      {order.map((item) => (
+                        <tr
+                          key={item.data.id}
+                          className="border-b border-neutral-200"
+                        >
+                          <td className="py-3 ps-2">{item.data.name}</td>
+                          <td className="text-center py-3 ps-2">
+                            {item.quantity}
+                          </td>
+                          <td className="text-right py-3 pe-2" colSpan={2}>
+                            {item.price}
+                            <span className="text-sm px-1 text-neutral-600 italic items-center">
+                              ETB
+                            </span>
+                          </td>
+                          <td>
+                            <button onClick={() => handleRemove(item.data.id)}>
+                              <Clear color="error" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <td rowSpan={3} />
+                        <td colSpan={2} className="py-2">
+                          SubTotal
+                        </td>
+                        <td align="right">
+                          {ccyFormat(invoiceSubtotal)}
+                          <span className="text-sm px-1 text-neutral-600 italic items-center">
+                            ETB
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Tax</td>
+                        <td align="right" className="py-2">{`${(
+                          TAX_RATE * 100
+                        ).toFixed(0)} %`}</td>
+                        <td align="right">
+                          {ccyFormat(invoiceTaxes)}
+                          <span className="text-sm px-1 text-neutral-600 italic items-center">
+                            ETB
+                          </span>
+                        </td>
+                      </tr>
+                      <tr className="border-t border-neutral-200">
+                        <td colSpan={2} className="py-4">
+                          Total
+                        </td>
+                        <td align="right" className="py-4">
+                          {ccyFormat(invoiceTotal)}
+                          <span className="text-sm px-1 text-neutral-600 italic items-center">
+                            ETB
+                          </span>
+                        </td>
+                      </tr>
+                    </>
+                  ) : (
+                    <tr rowSpan={4}>
+                      <td colSpan={5} rowSpan={4} className="py-20">
+                        <h1 className="text-center text-lg mx-auto font-semibold">
+                          Cart Empty
+                        </h1>
                       </td>
                     </tr>
-                  ))}
-
-                  <tr>
-                    <td rowSpan={3} />
-                    <td colSpan={2} className="py-2">
-                      SubTotal
-                    </td>
-                    <td align="right">
-                      {ccyFormat(invoiceSubtotal)}
-                      <span className="text-sm px-1 text-neutral-600 italic items-center">
-                        ETB
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Tax</td>
-                    <td align="right" className="py-2">{`${(
-                      TAX_RATE * 100
-                    ).toFixed(0)} %`}</td>
-                    <td align="right">
-                      {ccyFormat(invoiceTaxes)}
-                      <span className="text-sm px-1 text-neutral-600 italic items-center">
-                        ETB
-                      </span>
-                    </td>
-                  </tr>
-                  <tr className="border-t border-neutral-200">
-                    <td colSpan={2} className="py-4">
-                      Total
-                    </td>
-                    <td align="right" className="py-4">
-                      {ccyFormat(invoiceTotal)}
-                      <span className="text-sm px-1 text-neutral-600 italic items-center">
-                        ETB
-                      </span>
-                    </td>
-                  </tr>
+                  )}
                 </tbody>
               </table>
               <div className="flex items-center justify-center gap-12 w-full text-base">

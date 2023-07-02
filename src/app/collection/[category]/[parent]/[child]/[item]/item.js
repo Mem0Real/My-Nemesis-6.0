@@ -17,19 +17,6 @@ export default function Item({ item }) {
   useEffect(() => {
     fetchCache(item.id, item.quantity);
     console.log("Refresh");
-    // const data = JSON.parse(window.localStorage.getItem("Product_Data"));
-    // if (data && data.length > 0) {
-    //   for (let i = 0; i < data.length; i++) {
-    //     if (data[i].id === item.id) {
-    //         setCurrentQuantity(() => data[i].remainingQty);
-    //       break;
-    //     } else {
-    //       setCurrentQuantity(() => item.quantity);
-    //     }
-    //   }
-    // } else {
-    //       setCurrentQuantity(() => item.quantity);
-    //     }
   }, [currentQuantity, item]);
 
   useEffect(() => {
