@@ -8,33 +8,19 @@ export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);
 
-  const {
-    refetch,
-    productData,
-    updateQuantity,
-    currentQuantity,
-    restoredData,
-  } = useItemContext();
+  // const { currentQuantity, fetchCache } = useItemContext();
+  const [currentQuantity, setCurrentQuantity] = useState();
+  const [productData, setProductData] = useState();
 
   useEffect(() => {
-    restoredData && console.log("Restoring Item!!!!! in page");
-  }, [restoredData]);
-
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("Restored_Item"));
-    if (data !== null) console.log("Updated item");
-  }, []);
-
-  useEffect(() => {
-    console.log("Current quantity changed");
-    refetch(item.id, item.quantity);
+    console.log("Qty change: ", currentQuantity);
   }, [currentQuantity]);
 
   useEffect(() => {
-    updateQuantity(item.id, item.quantity);
-  }, [productData, item]);
+    fetchCache(item.id, item.quantity);
+    console.log("Refresh");
+  }, [currentQuantity, item]);
 
-  // Show image if any
   useEffect(() => {
     let image = item.images;
 
@@ -42,6 +28,19 @@ export default function Item({ item }) {
       setActiveImage(image[0]);
     }
   }, [activeImage, item.images]);
+
+  // const fetchCache = () => {
+  //   const data = JSON.parse(window.localStorage.getItem("Product_Data"));
+  //   if (data.length > 0) {
+  //     data.map((product) => {
+  //       if (product.id === item.id) {
+  //         console.log("PI", product.id);
+  //         console.log("Item", item.id);
+  //         setCurrentQuantity(() => product.remainingQty);
+  //       }
+  //     });
+  //   } else setCurrentQuantity(() => item.quantity);
+  // };
 
   const openImage = (image) => {
     setActiveImage(image);
@@ -119,9 +118,7 @@ export default function Item({ item }) {
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Quantity:</h1>
-              <h2 className="ms-3 text-md">
-                {currentQuantity ? currentQuantity : item.quantity}
-              </h2>
+              <h2 className="ms-3 text-md">{currentQuantity}</h2>
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Price:</h1>
@@ -149,7 +146,7 @@ export default function Item({ item }) {
         item={item}
         modal={modal}
         closeModal={closeModal}
-        // refetch={refetch}
+        // fetchCache={fetchCache}
       />
     </div>
   );

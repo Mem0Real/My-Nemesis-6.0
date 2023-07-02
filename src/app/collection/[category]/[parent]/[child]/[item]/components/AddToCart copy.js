@@ -15,7 +15,7 @@ export default function AddToCart({ modal, closeModal, item }) {
   const [remainingQuantity, setRemainingQuantity] = useState();
 
   const { cartData, setCartData } = useCartContext();
-  const { refetch } = useItemContext();
+  const { fetchCache } = useItemContext();
 
   useEffect(() => {
     setQuantity(() => 1);
@@ -93,18 +93,19 @@ export default function AddToCart({ modal, closeModal, item }) {
                 }
               : prod
           );
+          console.log("UpdatedCache", updatedCache);
           window.localStorage.setItem(
             "Product_Data",
             JSON.stringify(updatedCache)
           );
-          refetch(order.data.id, order.quantity);
+          fetchCache(order.data.id);
         } else {
           cache.push({
             id: order.data.id,
             remainingQty: remainingQuantity,
           });
           window.localStorage.setItem("Product_Data", JSON.stringify(cache));
-          refetch(order.data.id, order.quantity);
+          fetchCache(order.data.id);
         }
       } else {
         let data = [];
@@ -112,8 +113,9 @@ export default function AddToCart({ modal, closeModal, item }) {
           id: order.data.id,
           remainingQty: remainingQuantity,
         });
+        console.log(data);
         window.localStorage.setItem("Product_Data", JSON.stringify(data));
-        refetch(order.data.id, order.quantity);
+        fetchCache(order.data.id);
       }
     }
 

@@ -16,7 +16,8 @@ export default function Cart({ closeCart, modal }) {
 
   const { cartData, setCartData } = useCartContext();
 
-  const { refetch } = useItemContext();
+  const { refetch, setRestore, restoreQuantity, setCurrentQuantity } =
+    useItemContext();
 
   useEffect(() => {
     if (cartData.length > 0) {
@@ -30,7 +31,6 @@ export default function Cart({ closeCart, modal }) {
 
   const clearCart = () => {
     window.localStorage.removeItem("Cart_Data");
-    window.localStorage.removeItem("Product_Data");
 
     order.map(async (item) => {
       await fetchCache(item.data.id, item.data.quantity);
@@ -42,7 +42,7 @@ export default function Cart({ closeCart, modal }) {
     closeCart();
   };
 
-  const handleRemove = (id) => {
+  const handleRemove = (id, quantity) => {
     const updatedCart = [];
     const updatedProduct = [];
 
@@ -50,17 +50,32 @@ export default function Cart({ closeCart, modal }) {
       if (cartData[i].data.id !== id) {
         // fetchCache(id);
         updatedCart.push(cartData[i]);
-        updatedProduct.push({
-          id: cartData[i].data.id,
-          remainingQty: cartData[i].data.quantity - cartData[i].quantity,
-        });
       }
     }
-    setCartData(updatedCart);
+
+    const cache = JSON.parse(window.localStorage.getItem("Product_Data"));
+
+    // If cache exists check id for current product
+    const productCache = cache.find((product) => product.id === id);
+    if (productCache) {
+      console.log("Product found to restore");
+      const updatedCache = cache.map((prod) =>
+        prod.id === id
+          ? {
+              ...prod,
+              remainingQty: quantity,
+            }
+          : prod
+      );
+      window.localStorage.setItem("Product_Data", JSON.stringify(updatedCache));
+      refetch(id, quantity);
+    } else {
+      console.log("error");
+    }
+
     window.localStorage.setItem("Cart_Data", JSON.stringify(updatedCart));
-    window.localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
-    refetch();
-    // updateQuantity()
+    // window.localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
+    setCartData(updatedCart);
   };
   const handleOrder = () => {
     closeCart();
@@ -159,7 +174,11 @@ export default function Cart({ closeCart, modal }) {
                             </span>
                           </td>
                           <td>
-                            <button onClick={() => handleRemove(item.data.id)}>
+                            <button
+                              onClick={() =>
+                                handleRemove(item.data.id, item.data.quantity)
+                              }
+                            >
                               <Clear color="error" />
                             </button>
                           </td>
