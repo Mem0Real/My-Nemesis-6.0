@@ -19,10 +19,12 @@ export default function ItemDataContext({ children }) {
     console.log("Setting currentQuantity...");
     const data = JSON.parse(window.localStorage.getItem("Product_Data"));
     if (data && data.length > 0) {
-      data.map((item) => {
-        if (item.id === id) setCurrentQuantity(() => item.remainingQty);
-        else setCurrentQuantity(() => quantity);
-      });
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].id === id) {
+          setCurrentQuantity(() => data[i].remainingQty);
+          break;
+        } else setCurrentQuantity(() => quantity);
+      }
     } else {
       console.log("Empty");
       setCurrentQuantity(() => quantity);
