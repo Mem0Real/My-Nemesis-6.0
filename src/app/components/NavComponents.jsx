@@ -70,7 +70,6 @@ export default function NavComponents({ data, getAll, getOne }) {
 
   const closeCart = () => {
     showCartModal(false);
-    // refetch();
     setUpdate(!update);
   };
   return (

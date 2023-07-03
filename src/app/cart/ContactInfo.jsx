@@ -7,7 +7,7 @@ import Modal from "@mui/material/Modal";
 export default function ContactInfo({
   modal,
   closeInfoModal,
-  cartItems,
+  cartList,
   orderTotalPrice,
   clearCart,
 }) {
@@ -26,7 +26,7 @@ export default function ContactInfo({
         "Content-Type": "application/json",
       },
       method: "POST",
-      body: JSON.stringify({ user, cartItems, orderTotalPrice }),
+      body: JSON.stringify({ user, cartList, orderTotalPrice }),
     });
 
     if (!res.ok) {

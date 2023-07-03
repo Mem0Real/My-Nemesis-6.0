@@ -62,6 +62,7 @@ export default function Cart({ closeCart, modal }) {
     setCartList(() => []);
     setData(() => false);
 
+    setUpdate(!update);
     closeCart();
   };
 
@@ -275,14 +276,13 @@ export default function Cart({ closeCart, modal }) {
           </div>
         </Box>
       </Modal>
-      {/* <ContactInfo
+      <ContactInfo
         modal={infoModal}
         closeInfoModal={closeInfoModal}
-        cartItems={cartItems}
-        orderData={order}
+        cartList={cartList}
         orderTotalPrice={invoiceTotal}
         clearCart={clearCart}
-      /> */}
+      />
     </>
   );
 }

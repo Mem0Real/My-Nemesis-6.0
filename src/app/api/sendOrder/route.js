@@ -9,14 +9,6 @@ export async function POST(request) {
   firstName = firstName.split(" ")[0];
   firstName = firstName.toLowerCase();
 
-  let data = await res.cartItems.map((item) => ({
-    productId: item.id,
-    productName: item.name,
-    productPrice: parseFloat(item.totalPrice),
-    orderedQuantity: item.selectedQuantity,
-    customerId: firstName,
-  }));
-
   let dateNow = new Date().toISOString();
 
   const res1 = await prisma.customers.upsert({
@@ -38,17 +30,25 @@ export async function POST(request) {
 
   if (!res1) throw new Error("Error creating order");
 
+  let data = await res.cartList.map((item) => ({
+    productId: item.id,
+    productName: item.name,
+    productPrice: parseFloat(item.totalPrice),
+    orderedQuantity: parseInt(item.amount),
+    customerId: firstName,
+  }));
+
   const res2 = await prisma.order.createMany({
     data,
   });
 
   if (!res2) throw new Error("Error creating order");
 
-  let tran = await res.cartItems.map((item) => ({
+  let tran = await res.cartList.map((item) => ({
     productId: item.id,
-    orderedQuantity: item.selectedQuantity,
-    productQuantity: item.originalQuantity,
-    remainingQuantity: item.originalQuantity - item.selectedQuantity,
+    orderedQuantity: item.amount,
+    productQuantity: item.quantity,
+    remainingQuantity: item.quantity - item.amount,
   }));
 
   const transaction = await prisma.$transaction(

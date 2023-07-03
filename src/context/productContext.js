@@ -65,7 +65,7 @@ export default function ProductDataContext({ children }) {
             return {
               ...item,
               amount: parseInt(amount),
-              totalPrice: parseFloat(itemPrice * amount).toFixed(2),
+              totalPrice: itemPrice * amount,
             };
           }
           return item;
@@ -79,8 +79,8 @@ export default function ProductDataContext({ children }) {
           name: name,
           quantity: quantity,
           amount: parseInt(amount),
-          itemPrice: parseFloat(itemPrice).toFixed(2),
-          totalPrice: parseFloat(amount * itemPrice).toFixed(2),
+          itemPrice: itemPrice,
+          totalPrice: amount * itemPrice,
         };
 
         setCartData((prev) => [...prev, newCartItem]);
@@ -169,9 +169,7 @@ export default function ProductDataContext({ children }) {
           return {
             ...item,
             amount: parseInt(item.amount) + 1,
-            totalPrice: parseFloat(
-              item.itemPrice * (parseInt(item.amount) + 1).toFixed(2)
-            ),
+            totalPrice: item.itemPrice * (parseInt(item.amount) + 1),
           };
         }
         return item;
@@ -192,9 +190,7 @@ export default function ProductDataContext({ children }) {
           return {
             ...item,
             amount: parseInt(item.amount) - 1,
-            totalPrice: parseFloat(
-              item.itemPrice * (parseInt(item.amount) - 1).toFixed(2)
-            ),
+            totalPrice: item.itemPrice * (parseInt(item.amount) - 1),
           };
         }
         return item;
@@ -215,20 +211,20 @@ export default function ProductDataContext({ children }) {
             return {
               ...item,
               amount: parseInt(item.quantity),
-              totalPrice: parseFloat(item.itemPrice * item.quantity).toFixed(2),
+              totalPrice: item.itemPrice * item.quantity,
             };
           }
           if (newQuantity <= 0) {
             return {
               ...item,
               amount: 1,
-              totalPrice: parseFloat(item.itemPrice * 1).toFixed(2),
+              totalPrice: item.itemPrice * 1,
             };
           }
           return {
             ...item,
             amount: parseInt(newQuantity),
-            totalPrice: parseFloat(item.itemPrice * newQuantity).toFixed(2),
+            totalPrice: item.itemPrice * newQuantity,
           };
         }
         return item;
