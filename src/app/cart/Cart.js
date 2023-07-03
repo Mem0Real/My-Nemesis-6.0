@@ -112,7 +112,7 @@ export default function Cart({ closeCart, modal }) {
   function subtotal() {
     if (cartList?.length > 0) {
       let allPrice = cartList.map((items) => {
-        return items.totalPrice;
+        return parseFloat(items.totalPrice);
       });
       allPrice = allPrice.reduce((sum, i) => sum + i, 0);
       return allPrice;

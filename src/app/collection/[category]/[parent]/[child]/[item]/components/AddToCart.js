@@ -29,7 +29,7 @@ export default function AddToCart({ modal, closeModal, item }) {
     } else {
       setAmount(() => 1);
     }
-  }, [update]);
+  }, [update, item]);
 
   // Store total price
   useEffect(() => {

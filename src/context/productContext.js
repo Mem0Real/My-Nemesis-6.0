@@ -143,7 +143,7 @@ export default function ProductDataContext({ children }) {
           if (newQuantity > item.quantity) {
             return { id: item.id, quantity: parseInt(item.quantity) };
           }
-          if (newQuantity < 0) {
+          if (newQuantity <= 0) {
             return { id: item.id, quantity: 1 };
           }
           return {
@@ -151,7 +151,7 @@ export default function ProductDataContext({ children }) {
             quantity: parseInt(item.quantity - newQuantity),
           };
         }
-        return item;
+        return { id: item.id, quantity: item.quantity - item.amount };
       });
       setData((prev) => [...prev, newArray]);
       localStorage.setItem("Product", JSON.stringify(newArray));
@@ -214,17 +214,21 @@ export default function ProductDataContext({ children }) {
           if (newQuantity > item.quantity) {
             return {
               ...item,
-              amount: item.quantity,
-              totalPrice: item.itemPrice * item.quantity,
+              amount: parseInt(item.quantity),
+              totalPrice: parseFloat(item.itemPrice * item.quantity).toFixed(2),
             };
           }
-          if (newQuantity < 0) {
-            return { ...item, amount: 1, totalPrice: item.itemPrice * 1 };
+          if (newQuantity <= 0) {
+            return {
+              ...item,
+              amount: 1,
+              totalPrice: parseFloat(item.itemPrice * 1).toFixed(2),
+            };
           }
           return {
             ...item,
-            amount: newQuantity,
-            totalPrice: item.itemPrice * newQuantity,
+            amount: parseInt(newQuantity),
+            totalPrice: parseFloat(item.itemPrice * newQuantity).toFixed(2),
           };
         }
         return item;
