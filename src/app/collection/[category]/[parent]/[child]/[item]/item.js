@@ -40,7 +40,7 @@ export default function Item({ item }) {
         setQuantity(() => item.quantity);
       }
     }
-  }, [data, update]);
+  }, [data, update, item.id, item.quantity, purchasedData, setPurchasedData]);
 
   // Show image if any
   useEffect(() => {

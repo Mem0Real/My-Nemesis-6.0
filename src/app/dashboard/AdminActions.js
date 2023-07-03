@@ -20,7 +20,7 @@ export default function AdminActions({
   useEffect(() => {
     const data = localStorage.getItem("LIST");
     if (data !== null && showOrder === false) setShowList(JSON.parse(data));
-  }, []);
+  }, [showOrder]);
 
   useEffect(() => {
     localStorage.setItem("LIST", JSON.stringify(showList));
@@ -29,7 +29,7 @@ export default function AdminActions({
   useEffect(() => {
     const data = localStorage.getItem("ORDER");
     if (data !== null && showList === false) setShowOrder(JSON.parse(data));
-  }, []);
+  }, [showList]);
 
   useEffect(() => {
     localStorage.setItem("ORDER", JSON.stringify(showOrder));

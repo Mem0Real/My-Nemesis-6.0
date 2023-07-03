@@ -50,7 +50,7 @@ export default function AddToCart({ modal, closeModal, item }) {
   useEffect(() => {
     window.localStorage.setItem("Cart_State", JSON.stringify(newCart));
     setUpdate(!update);
-  }, [newCart]);
+  }, [newCart, update, setUpdate]);
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("Cart"));
