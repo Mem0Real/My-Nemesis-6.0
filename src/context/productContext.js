@@ -7,6 +7,7 @@ const ProductContext = createContext({});
 export default function ProductDataContext({ children }) {
   const [data, setData] = useState([]);
   const [cartData, setCartData] = useState([]);
+  const [update, setUpdate] = useState(false);
 
   useEffect(() => {
     const product = JSON.parse(localStorage.getItem("Product"));
@@ -61,7 +62,11 @@ export default function ProductDataContext({ children }) {
       if (cartCache) {
         let cartItems = cartData.map((item) => {
           if (item.id === id) {
-            return { ...item, amount: amount, totalPrice: itemPrice * amount };
+            return {
+              ...item,
+              amount: parseInt(amount),
+              totalPrice: parseFloat(itemPrice * amount).toFixed(2),
+            };
           }
           return item;
         });
@@ -73,9 +78,9 @@ export default function ProductDataContext({ children }) {
           id: id,
           name: name,
           quantity: quantity,
-          amount: amount,
-          itemPrice: itemPrice,
-          totalPrice: amount * itemPrice,
+          amount: parseInt(amount),
+          itemPrice: parseFloat(itemPrice).toFixed(2),
+          totalPrice: parseFloat(amount * itemPrice).toFixed(2),
         };
 
         setCartData((prev) => [...prev, newCartItem]);
@@ -102,7 +107,7 @@ export default function ProductDataContext({ children }) {
     if (product?.length > 0) {
       let newArray = product.map((item) => {
         if (item.id === id) {
-          return { ...item, quantity: item.quantity + 1 };
+          return { ...item, quantity: parseInt(item.quantity) + 1 };
         }
         return item;
       });
@@ -119,7 +124,7 @@ export default function ProductDataContext({ children }) {
     if (product?.length > 0) {
       let newArray = product.map((item) => {
         if (item.id === id) {
-          return { ...item, quantity: item.quantity - 1 };
+          return { ...item, quantity: parseInt(item.quantity) - 1 };
         }
         return item;
       });
@@ -127,6 +132,31 @@ export default function ProductDataContext({ children }) {
       localStorage.setItem("Product", JSON.stringify(newArray));
     } else {
       console.log("Item not found");
+    }
+  };
+
+  const changeProductQuantity = (id, newQuantity) => {
+    const cart = JSON.parse(localStorage.getItem("Cart"));
+    if (cart?.length > 0) {
+      let newArray = cart.map((item) => {
+        if (item.id === id) {
+          if (newQuantity > item.quantity) {
+            return { id: item.id, quantity: parseInt(item.quantity) };
+          }
+          if (newQuantity < 0) {
+            return { id: item.id, quantity: 1 };
+          }
+          return {
+            id: item.id,
+            quantity: parseInt(item.quantity - newQuantity),
+          };
+        }
+        return item;
+      });
+      setData((prev) => [...prev, newArray]);
+      localStorage.setItem("Product", JSON.stringify(newArray));
+    } else {
+      console.log("Item not found!");
     }
   };
 
@@ -138,8 +168,10 @@ export default function ProductDataContext({ children }) {
         if (item.id === id) {
           return {
             ...item,
-            amount: item.amount + 1,
-            totalPrice: item.itemPrice * (item.amount + 1),
+            amount: parseInt(item.amount) + 1,
+            totalPrice: parseFloat(
+              item.itemPrice * (parseInt(item.amount) + 1).toFixed(2)
+            ),
           };
         }
         return item;
@@ -159,8 +191,10 @@ export default function ProductDataContext({ children }) {
         if (item.id === id) {
           return {
             ...item,
-            amount: item.amount - 1,
-            totalPrice: item.itemPrice * (item.amount - 1),
+            amount: parseInt(item.amount) - 1,
+            totalPrice: parseFloat(
+              item.itemPrice * (parseInt(item.amount) - 1).toFixed(2)
+            ),
           };
         }
         return item;
@@ -170,37 +204,6 @@ export default function ProductDataContext({ children }) {
     } else {
       console.log("Item not found");
     }
-  };
-
-  const changeProductQuantity = (id, newQuantity) => {
-    const product = JSON.parse(localStorage.getItem("Product"));
-    if (product?.length > 0) {
-      let newArray = product.map((item) => {
-        if (item.id === id) {
-          if (newQuantity > item.quantity) {
-            return { ...item, amount: item.quantity };
-          }
-          if (newQuantity < 0) {
-            return { ...item, amount: 1 };
-          }
-          return { ...item, amount: newQuantity };
-        }
-        return item;
-      });
-      setData((prev) => [...prev, newArray]);
-      localStorage.setItem("Product", JSON.stringify(newArray));
-    } else {
-      console.log("Item not found!");
-    }
-  };
-  const subtractQuantity = (id) => {
-    addProductQuantity(id);
-    subtractCartQuantity(id);
-  };
-
-  const addQuantity = (id) => {
-    subtractProductQuantity(id);
-    addCartQuantity(id);
   };
 
   const changeCartQuantity = (id, newQuantity) => {
@@ -232,6 +235,17 @@ export default function ProductDataContext({ children }) {
       console.log("Item not found!");
     }
   };
+
+  const subtractQuantity = (id) => {
+    addProductQuantity(id);
+    subtractCartQuantity(id);
+  };
+
+  const addQuantity = (id) => {
+    subtractProductQuantity(id);
+    addCartQuantity(id);
+  };
+
   const changeQuantity = (id, newQuantity) => {
     changeProductQuantity(id, newQuantity);
     changeCartQuantity(id, newQuantity);
@@ -247,6 +261,8 @@ export default function ProductDataContext({ children }) {
         subtractQuantity,
         addQuantity,
         changeQuantity,
+        update,
+        setUpdate,
       }}
     >
       {children}

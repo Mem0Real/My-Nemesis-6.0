@@ -9,8 +9,7 @@ import SearchModal from "../search/(searchModal)/SearchModal";
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import { SearchOutlined } from "@mui/icons-material";
 import Cart from "../cart/Cart";
-import { useCartContext } from "@/context/cartContext";
-import { useItemContext } from "@/context/itemContext";
+import { useProductContext } from "@/context/productContext";
 
 const FunctionsContext = createContext({});
 
@@ -32,6 +31,7 @@ export default function NavComponents({ data, getAll, getOne }) {
   const [newCart, setNewCart] = useState(false);
 
   const menuRef = useRef();
+  const { update } = useProductContext();
 
   useEffect(() => {
     let handler = (e) => {
@@ -48,7 +48,7 @@ export default function NavComponents({ data, getAll, getOne }) {
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("Cart_State"));
     cart === true ? setNewCart(() => true) : setNewCart(() => false);
-  }, []);
+  }, [update]);
 
   const handleSearch = () => {
     showSearchModal(true);

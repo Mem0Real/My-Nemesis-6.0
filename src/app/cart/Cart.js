@@ -12,13 +12,16 @@ export default function Cart({ closeCart, modal }) {
   const [data, setData] = useState(false);
   const [infoModal, showInfoModal] = useState(false);
   const [cartList, setCartList] = useState();
-  const [update, setUpdate] = useState(false);
+  // const [update, setUpdate] = useState(false);
 
-  const { subtractQuantity, addQuantity, changeQuantity } = useProductContext();
+  const { subtractQuantity, addQuantity, changeQuantity, update, setUpdate } =
+    useProductContext();
 
   useEffect(() => {
+    console.log("Carting");
     const cart = JSON.parse(localStorage.getItem("Cart"));
     if (cart?.length > 0) {
+      console.log("Cart");
       setData(() => true);
       setCartList(() => cart);
     } else {
@@ -51,8 +54,10 @@ export default function Cart({ closeCart, modal }) {
   };
 
   const handleChange = (id, e) => {
+    // if (e.target.value > 0) {
     changeQuantity(id, e.target.value);
     setUpdate(!update);
+    // }
   };
 
   const handleRemove = (id, quantity) => {

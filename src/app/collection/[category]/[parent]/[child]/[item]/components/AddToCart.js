@@ -7,20 +7,29 @@ import { Add, Remove } from "@mui/icons-material";
 import { useCartContext } from "@/context/cartContext";
 import { useProductContext } from "@/context/productContext";
 
-export default function AddToCart({ modal, closeModal, item, setAddQuantity }) {
-  const [order, setOrder] = useState();
+export default function AddToCart({ modal, closeModal, item }) {
   const [totalPrice, setTotalPrice] = useState(0);
   const [newCart, setNewCart] = useState(false);
   const [amount, setAmount] = useState();
   const [remainingQuantity, setRemainingQuantity] = useState();
+  const [data, setData] = useState();
 
-  const { cartData, setCartData } = useCartContext();
-  const { storeProduct, addCartData } = useProductContext();
+  // const { cartData, setCartData } = useCartContext();
+  const { storeProduct, addCartData, update, setUpdate } = useProductContext();
 
   // Set quantity to 1
   useEffect(() => {
-    setAmount(() => 1);
-  }, []);
+    const cart = JSON.parse(localStorage.getItem("Cart"));
+    if (cart?.length > 0) {
+      cart.map((product) => {
+        if (product.id === item.id) {
+          setAmount(parseInt(product.amount));
+        }
+      });
+    } else {
+      setAmount(() => 1);
+    }
+  }, [update]);
 
   // Store total price
   useEffect(() => {
@@ -29,14 +38,18 @@ export default function AddToCart({ modal, closeModal, item, setAddQuantity }) {
 
   // Store remaining quantity
   useEffect(() => {
-    if (amount >= 1) {
+    if (amount >= 0) {
       let remaining = item.quantity - amount;
+      setRemainingQuantity(remaining);
+    } else {
+      let remaining = item.quantity;
       setRemainingQuantity(remaining);
     }
   }, [amount, item.quantity]);
 
   useEffect(() => {
     window.localStorage.setItem("Cart_State", JSON.stringify(newCart));
+    setUpdate(!update);
   }, [newCart]);
 
   useEffect(() => {
@@ -46,17 +59,20 @@ export default function AddToCart({ modal, closeModal, item, setAddQuantity }) {
     } else {
       setNewCart(false);
     }
-  }, [cartData]);
+  }, []);
 
   const handleChange = (e) => {
-    setAmount(() => e.target.value);
+    if (e.target.value > 0) {
+      setAmount(() => e.target.value);
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     storeProduct(item.id, remainingQuantity);
     addCartData(item.id, item.name, item.quantity, amount, item.price);
-
+    setNewCart(true);
+    setUpdate(!update);
     closeModal();
   };
 
