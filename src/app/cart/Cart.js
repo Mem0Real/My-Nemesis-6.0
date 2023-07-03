@@ -14,29 +14,7 @@ export default function Cart({ closeCart, modal }) {
   const [cartList, setCartList] = useState();
   const [update, setUpdate] = useState(false);
 
-  const { subtractQuantity, addQuantity } = useProductContext();
-
-  // useEffect(() => {
-  //   if (cartData && cartData.length > 0) {
-  //     let arr = [];
-  //     cartData.forEach((item) =>
-  //       arr.push({
-  //         id: item?.data?.id,
-  //         name: item?.data?.name,
-  //         originalQuantity: item?.data?.quantity,
-  //         selectedQuantity: parseInt(item?.quantity),
-  //         productPrice: item?.data?.price,
-  //         totalPrice: item?.price,
-  //       })
-  //     );
-  //     // console.log(arr);
-  //     setCartItems(arr);
-  //     showButtons(true);
-  //   } else {
-  //     setOrder([]);
-  //     showButtons(false);
-  //   }
-  // }, [cartData]);
+  const { subtractQuantity, addQuantity, changeQuantity } = useProductContext();
 
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("Cart"));
@@ -63,66 +41,18 @@ export default function Cart({ closeCart, modal }) {
   };
 
   const handleMinus = (id) => {
-    const updatedQuantity = cartList.map((item) => {
-      if (item.id === id) {
-        return { ...item, selectedQuantity: item.selectedQuantity - 1 };
-      }
-      return item;
-    });
-
     subtractQuantity(id);
     setUpdate(!update);
-    // const updatedProduct = updatedQuantity.map((item) => ({
-    //   id: item.id,
-    //   remainingQty: item.originalQuantity - item.selectedQuantity,
-    // }));
-    // setCartItems(updatedQuantity);
-    // localStorage.setItem("Cart_Data", JSON.stringify(updatedQuantity));
-    // localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
   };
 
   const handlePlus = (id) => {
-    const updatedQuantity = cartList.map((item) => {
-      if (item.id === id) {
-        return { ...item, selectedQuantity: item.selectedQuantity + 1 };
-      }
-      return item;
-    });
-
     addQuantity(id);
     setUpdate(!update);
-    // const updatedProduct = updatedQuantity.map((item) => ({
-    //   id: item.id,
-    //   remainingQty: item.originalQuantity - item.selectedQuantity,
-    // }));
-    // setCartItems(updatedQuantity);
-    // localStorage.setItem("Cart_Data", JSON.stringify(updatedQuantity));
-    // localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
   };
 
   const handleChange = (id, e) => {
-    const updatedQuantity = cartList.map((item) => {
-      if (item.id === id) {
-        if (e.target.value > item.originalQuantity) {
-          return { ...item, selectedQuantity: parseInt(item.originalQuantity) };
-        }
-        if (e.target.value < 1) {
-          return { ...item, selectedQuantity: 1 };
-        }
-
-        return { ...item, selectedQuantity: parseInt(e.target.value) };
-      }
-      return item;
-    });
-
-    const updatedProduct = updatedQuantity.map((item) => ({
-      id: item.id,
-      remainingQty: item.originalQuantity - item.selectedQuantity,
-    }));
-
-    setCartItems(updatedQuantity);
-    localStorage.setItem("Cart_Data", JSON.stringify(updatedQuantity));
-    localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
+    changeQuantity(id, e.target.value);
+    setUpdate(!update);
   };
 
   const handleRemove = (id, quantity) => {
