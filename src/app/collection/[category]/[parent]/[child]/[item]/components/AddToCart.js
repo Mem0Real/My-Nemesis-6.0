@@ -24,6 +24,8 @@ export default function AddToCart({ modal, closeModal, item }) {
       cart.map((product) => {
         if (product.id === item.id) {
           setAmount(parseInt(product.amount));
+        } else {
+          setAmount(() => 1);
         }
       });
     } else {
