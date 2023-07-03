@@ -4,6 +4,7 @@ import { useState } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
+import { useProductContext } from "@/context/productContext";
 export default function ContactInfo({
   modal,
   closeInfoModal,
@@ -12,6 +13,7 @@ export default function ContactInfo({
   clearCart,
 }) {
   const [user, setUser] = useState({});
+  const { setPurchasedData } = useProductContext();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -21,6 +23,7 @@ export default function ContactInfo({
     else if (process.env.NODE_ENV === "production")
       url = process.env.NEXT_PUBLIC_PRODUCTION_URL;
 
+    setPurchasedData(cartList);
     const res = await fetch(`${url}/api/sendOrder`, {
       headers: {
         "Content-Type": "application/json",

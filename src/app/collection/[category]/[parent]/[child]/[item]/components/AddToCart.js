@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Add, Remove } from "@mui/icons-material";
-import { useCartContext } from "@/context/cartContext";
 import { useProductContext } from "@/context/productContext";
 
 export default function AddToCart({ modal, closeModal, item }) {
@@ -14,7 +13,6 @@ export default function AddToCart({ modal, closeModal, item }) {
   const [remainingQuantity, setRemainingQuantity] = useState();
   const [data, setData] = useState();
 
-  // const { cartData, setCartData } = useCartContext();
   const { storeProduct, addCartData, update, setUpdate } = useProductContext();
 
   // Set quantity to 1

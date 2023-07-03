@@ -8,6 +8,7 @@ export default function ProductDataContext({ children }) {
   const [data, setData] = useState([]);
   const [cartData, setCartData] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [purchasedData, setPurchasedData] = useState([]);
 
   useEffect(() => {
     const product = JSON.parse(localStorage.getItem("Product"));
@@ -305,6 +306,8 @@ export default function ProductDataContext({ children }) {
         update,
         setUpdate,
         removeItem,
+        purchasedData,
+        setPurchasedData,
       }}
     >
       {children}

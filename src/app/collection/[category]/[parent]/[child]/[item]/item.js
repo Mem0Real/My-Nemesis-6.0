@@ -9,7 +9,7 @@ export default function Item({ item }) {
   const [modal, showModal] = useState(false);
   const [quantity, setQuantity] = useState();
 
-  const { data, update } = useProductContext();
+  const { data, update, purchasedData, setPurchasedData } = useProductContext();
 
   useEffect(() => {
     const product = JSON.parse(localStorage.getItem("Product"));
@@ -23,7 +23,22 @@ export default function Item({ item }) {
         }
       }
     } else {
-      setQuantity(() => item.quantity);
+      if (purchasedData?.length > 0) {
+        for (let i = 0; i < purchasedData.length; i++) {
+          if (purchasedData[i].id === item.id) {
+            setQuantity(
+              () => purchasedData[i].quantity - purchasedData[i].amount
+            );
+            setPurchasedData([]);
+            break;
+          } else {
+            setQuantity(() => item.quantity);
+            setPurchasedData([]);
+          }
+        }
+      } else {
+        setQuantity(() => item.quantity);
+      }
     }
   }, [data, update]);
 
