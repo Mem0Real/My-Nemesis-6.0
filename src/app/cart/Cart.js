@@ -35,20 +35,6 @@ export default function Cart({ closeCart, modal }) {
     }
   }, [update]);
 
-  const clearCart = () => {
-    window.localStorage.removeItem("Cart_Data");
-    window.localStorage.removeItem("Product_Data");
-
-    cartItems.map((item) => {
-      // refetch(item.id, item.quantity);
-    });
-
-    setCartData(() => []);
-    setCartItems(() => []);
-
-    closeCart();
-  };
-
   const handleMinus = (id) => {
     subtractQuantity(id);
     setUpdate(!update);
@@ -60,49 +46,23 @@ export default function Cart({ closeCart, modal }) {
   };
 
   const handleChange = (id, e) => {
-    // if (e.target.value > 0) {
     changeQuantity(id, e.target.value);
     setUpdate(!update);
-    // }
   };
-
-  // const handleRemove = (id) => {
-  //   const updatedCart = [];
-  //   const updatedProduct = [];
-
-  //   cartItems.map((item) => item.id !== id && updatedCart.push(item));
-  //   // for (let i = 0; i < cartItems.length; i++) {
-  //   //   if (cartItems[i].id !== id) {
-  //   //     // fetchCache(id);
-  //   //     updatedCart.push(cartData[i]);
-  //   //   }
-  //   // }
-
-  //   const cache = JSON.parse(window.localStorage.getItem("Product_Data"));
-
-  //   // If cache exists check id for current product
-  //   const productCache = cache.find((product) => product.id === id);
-  //   if (productCache) {
-  //     const updatedCache = cache.map((prod) =>
-  //       prod.id === id
-  //         ? {
-  //             ...prod,
-  //             remainingQty: quantity,
-  //           }
-  //         : prod
-  //     );
-  //     window.localStorage.setItem("Product_Data", JSON.stringify(updatedCache));
-  //     // refetch(id, quantity);
-  //   }
-
-  //   window.localStorage.setItem("Cart_Data", JSON.stringify(updatedCart));
-  //   window.localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
-  //   setCartData(updatedCart);
-  // };
 
   const handleRemove = (id) => {
     removeItem(id);
     setUpdate(!update);
+  };
+
+  const clearCart = () => {
+    localStorage.setItem("Cart", JSON.stringify([]));
+    localStorage.setItem("Product", JSON.stringify([]));
+
+    setCartList(() => []);
+    setData(() => false);
+
+    closeCart();
   };
 
   const handleOrder = () => {
