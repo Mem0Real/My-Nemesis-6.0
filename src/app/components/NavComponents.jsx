@@ -31,7 +31,7 @@ export default function NavComponents({ data, getAll, getOne }) {
   const [newCart, setNewCart] = useState(false);
 
   const menuRef = useRef();
-  const { update } = useProductContext();
+  const { update, setUpdate } = useProductContext();
 
   useEffect(() => {
     let handler = (e) => {
@@ -46,8 +46,14 @@ export default function NavComponents({ data, getAll, getOne }) {
   }, []);
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("Cart_State"));
-    cart === true ? setNewCart(() => true) : setNewCart(() => false);
+    const cart = JSON.parse(localStorage.getItem("Cart"));
+    if (cart?.length > 0) {
+      localStorage.setItem("Cart_State", JSON.stringify(true));
+      setNewCart(() => true);
+    } else {
+      localStorage.setItem("Cart_State", JSON.stringify(false));
+      setNewCart(() => false);
+    }
   }, [update]);
 
   const handleSearch = () => {
@@ -65,6 +71,7 @@ export default function NavComponents({ data, getAll, getOne }) {
   const closeCart = () => {
     showCartModal(false);
     // refetch();
+    setUpdate(!update);
   };
   return (
     <div ref={menuRef} className="w-full">
