@@ -5,84 +5,126 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Add, Remove } from "@mui/icons-material";
 import { useCartContext } from "@/context/cartContext";
-import { useProductContext } from "@/context/productContext";
+import { useItemContext } from "@/context/itemContext";
 
 export default function AddToCart({ modal, closeModal, item }) {
+  const [order, setOrder] = useState();
+  const [quantity, setQuantity] = useState();
   const [totalPrice, setTotalPrice] = useState(0);
   const [newCart, setNewCart] = useState(false);
-  const [amount, setAmount] = useState();
   const [remainingQuantity, setRemainingQuantity] = useState();
-  const [data, setData] = useState();
 
-  // const { cartData, setCartData } = useCartContext();
-  const { storeProduct, addCartData, update, setUpdate } = useProductContext();
+  const { cartData, setCartData } = useCartContext();
+  const { refetch } = useItemContext();
 
-  // Set quantity to 1
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
-    if (cart?.length > 0) {
-      cart.map((product) => {
-        if (product.id === item.id) {
-          setAmount(parseInt(product.amount));
-        } else {
-          setAmount(() => 1);
-        }
-      });
-    } else {
-      setAmount(() => 1);
-    }
-  }, [update, item]);
+    setQuantity(() => 1);
+  }, []);
 
-  // Store total price
   useEffect(() => {
-    setTotalPrice(() => amount * item.price);
-  }, [item.price, amount]);
+    setTotalPrice(() => quantity * item.price);
+  }, [item.price, quantity]);
 
-  // Store remaining quantity
+  // Add new order
   useEffect(() => {
-    if (amount >= 0) {
-      let remaining = item.quantity - amount;
-      setRemainingQuantity(remaining);
-    } else {
-      let remaining = item.quantity;
+    if (quantity >= 1) {
+      setOrder((prev) => ({
+        ...prev,
+        data: item,
+        quantity: quantity,
+        price: totalPrice,
+      }));
+    } else setOrder([]);
+  }, [quantity, item, totalPrice]);
+
+  useEffect(() => {
+    if (quantity >= 1) {
+      let remaining = item.quantity - quantity;
       setRemainingQuantity(remaining);
     }
-  }, [amount, item.quantity]);
+  }, [quantity, item.quantity]);
 
   useEffect(() => {
     window.localStorage.setItem("Cart_State", JSON.stringify(newCart));
-    setUpdate(!update);
   }, [newCart]);
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
-    if (cart?.length > 0) {
-      setNewCart(true);
-    } else {
-      setNewCart(false);
-    }
-  }, []);
+    if (cartData[0] && cartData[0].data) setNewCart(true);
+    else setNewCart(false);
+  }, [cartData]);
 
   const handleChange = (e) => {
-    if (e.target.value > 0) {
-      setAmount(() => e.target.value);
-    }
+    setQuantity(() => e.target.value);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    storeProduct(item.id, remainingQuantity);
-    addCartData(item.id, item.name, item.quantity, amount, item.price);
-    setNewCart(true);
-    setUpdate(!update);
+
+    if (order) {
+      if (cartData.length > 0) {
+        const cartList = [...cartData];
+        const itemName = cartList.find(
+          (item) => item.data.name === order.data.name
+        );
+        if (itemName) {
+          itemName.quantity = quantity;
+          setCartData(cartList);
+        } else {
+          setCartData((prev) => [...prev, order]);
+        }
+      } else {
+        setCartData((prev) => [...prev, order]);
+      }
+
+      const cache = JSON.parse(window.localStorage.getItem("Product_Data"));
+
+      // If cache exists check id for current product
+      if (cache && cache.length > 0) {
+        // Update
+        const productCache = cache.find(
+          (product) => product.id === order.data.id
+        );
+        if (productCache) {
+          const updatedCache = cache.map((prod) =>
+            prod.id === order.data.id
+              ? {
+                  ...prod,
+                  remainingQty: remainingQuantity,
+                }
+              : prod
+          );
+          window.localStorage.setItem(
+            "Product_Data",
+            JSON.stringify(updatedCache)
+          );
+          refetch(order.data.id, order.quantity);
+        } else {
+          cache.push({
+            id: order.data.id,
+            remainingQty: remainingQuantity,
+          });
+          window.localStorage.setItem("Product_Data", JSON.stringify(cache));
+          refetch(order.data.id, order.quantity);
+        }
+      } else {
+        let data = [];
+        data.push({
+          id: order.data.id,
+          remainingQty: remainingQuantity,
+        });
+        window.localStorage.setItem("Product_Data", JSON.stringify(data));
+        refetch(order.data.id, order.quantity);
+      }
+    }
+
     closeModal();
   };
 
   const handleMinus = () => {
-    setAmount((prev) => --prev);
+    setQuantity((prev) => --prev);
   };
   const handlePlus = () => {
-    setAmount((prev) => ++prev);
+    setQuantity((prev) => ++prev);
   };
 
   return (
@@ -131,7 +173,7 @@ export default function AddToCart({ modal, closeModal, item }) {
               <button
                 onClick={handleMinus}
                 type="button"
-                disabled={amount === 1}
+                disabled={quantity === 1}
                 className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed "
               >
                 <Remove />
@@ -141,7 +183,7 @@ export default function AddToCart({ modal, closeModal, item }) {
                 name="amount"
                 id="amount"
                 className="text-center pl-2.5 py-2 rounded-xl bg-neutral-800 text-neutral-200 border border-neutral-200"
-                value={amount || ""}
+                value={quantity || ""}
                 onChange={handleChange}
                 required
                 min={1}
@@ -150,7 +192,7 @@ export default function AddToCart({ modal, closeModal, item }) {
               <button
                 onClick={handlePlus}
                 type="button"
-                disabled={amount === item.quantity}
+                disabled={quantity === item.quantity}
                 className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed"
               >
                 <Add />
@@ -165,7 +207,7 @@ export default function AddToCart({ modal, closeModal, item }) {
             <div className="flex gap-2 md:self-end md:mr-5">
               <h1 className="m-auto">Total Price: </h1>
               <p className="text-sm m-auto font-light italic">
-                {item.price * amount} ETB
+                {item.price * quantity} ETB
               </p>
             </div>
             <button

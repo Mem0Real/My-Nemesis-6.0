@@ -2,30 +2,20 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import AddToCart from "./components/AddToCart";
-import { useProductContext } from "@/context/productContext";
+import { useItemContext } from "@/context/itemContext";
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);
-  const [quantity, setQuantity] = useState();
+  const [temporaryQuantity, setTemporaryQuantity] = useState();
 
-  const { data, update } = useProductContext();
-
-  useEffect(() => {
-    const product = JSON.parse(localStorage.getItem("Product"));
-    if (product && product.length > 0) {
-      for (let i = 0; i < product.length; i++) {
-        if (product[i].id === item.id) {
-          setQuantity(() => product[i].quantity);
-          break;
-        } else {
-          setQuantity(() => item.quantity);
-        }
-      }
-    } else {
-      setQuantity(() => item.quantity);
-    }
-  }, [data, update]);
+  const {
+    refetch,
+    productData,
+    updateQuantity,
+    currentQuantity,
+    restoredData,
+  } = useItemContext();
 
   // Show image if any
   useEffect(() => {
@@ -35,6 +25,33 @@ export default function Item({ item }) {
       setActiveImage(image[0]);
     }
   }, [activeImage, item.images]);
+
+  useEffect(() => {
+    refetch(item.id, item.quantity);
+  }, []);
+
+  /*
+  This is the code i have to find a way to run everytime the cart data updates inorder to set the new quantity
+  to this items quantity
+  */
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("Cart_Data"));
+    if (cart && cart.length > 0) {
+      console.log("Cart not empty");
+      cart.map((cartItem) => {
+        if (cartItem.id === item.id) {
+          console.log("Current page has cached value");
+          let remainingQuantity =
+            cartItem.originalQuantity - cartItem.selectedQuantity;
+          setTemporaryQuantity(remainingQuantity);
+          console.log(
+            "Setted item quantity to remaining quantity of ",
+            remainingQuantity
+          );
+        }
+      });
+    }
+  }, [temporaryQuantity]);
 
   const openImage = (image) => {
     setActiveImage(image);
@@ -112,7 +129,11 @@ export default function Item({ item }) {
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Quantity:</h1>
-              <h2 className="ms-3 text-md">{quantity}</h2>
+              <h2 className="ms-3 text-md">
+                {temporaryQuantity
+                  ? temporaryQuantity
+                  : currentQuantity && currentQuantity}
+              </h2>
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Price:</h1>
@@ -136,7 +157,12 @@ export default function Item({ item }) {
           </div>
         </div>
       </div>
-      <AddToCart item={item} modal={modal} closeModal={closeModal} />
+      <AddToCart
+        item={item}
+        modal={modal}
+        closeModal={closeModal}
+        // refetch={refetch}
+      />
     </div>
   );
 }

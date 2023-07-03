@@ -6,9 +6,6 @@ export default function Children({ categoryId, parentId, childrenData }) {
   return (
     <SlickCarousel>
       {childrenData.map((child) => {
-        {
-          /* child.image && console.log(child.image); */
-        }
         return (
           child.ParentId === parentId && (
             <div key={child.id} className="flex gap-4">

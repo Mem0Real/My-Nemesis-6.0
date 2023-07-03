@@ -9,7 +9,7 @@ import SearchModal from "../search/(searchModal)/SearchModal";
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import { SearchOutlined } from "@mui/icons-material";
 import Cart from "../cart/Cart";
-import { useCartContext } from "@/context/cartContext";
+import { useProductContext } from "@/context/productContext";
 
 const FunctionsContext = createContext({});
 
@@ -30,11 +30,8 @@ export default function NavComponents({ data, getAll, getOne }) {
   const [cartModal, showCartModal] = useState(false);
   const [newCart, setNewCart] = useState(false);
 
-  const { cartData } = useCartContext();
-
   const menuRef = useRef();
-
-  // console.log(cartData, cartData.length);
+  const { update, setUpdate } = useProductContext();
 
   useEffect(() => {
     let handler = (e) => {
@@ -49,15 +46,15 @@ export default function NavComponents({ data, getAll, getOne }) {
   }, []);
 
   useEffect(() => {
-    if (cartData.length > 0) {
-      setNewCart(true);
-    } else setNewCart(false);
-  }, [cartData]);
-
-  // useEffect(() => {
-  //   const data = window.localStorage.getItem("Cart_State");
-  //   if (data) setNewCart(data);
-  // }, [cartData]);
+    const cart = JSON.parse(localStorage.getItem("Cart"));
+    if (cart?.length > 0) {
+      localStorage.setItem("Cart_State", JSON.stringify(true));
+      setNewCart(() => true);
+    } else {
+      localStorage.setItem("Cart_State", JSON.stringify(false));
+      setNewCart(() => false);
+    }
+  }, [update]);
 
   const handleSearch = () => {
     showSearchModal(true);
@@ -73,6 +70,7 @@ export default function NavComponents({ data, getAll, getOne }) {
 
   const closeCart = () => {
     showCartModal(false);
+    setUpdate(!update);
   };
   return (
     <div ref={menuRef} className="w-full">

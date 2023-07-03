@@ -1,31 +1,68 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useCartContext } from "@/context/cartContext";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import ContactInfo from "./ContactInfo";
+import { Add, Remove, Clear } from "@mui/icons-material";
+import { useProductContext } from "@/context/productContext";
 
 export default function Cart({ closeCart, modal }) {
-  const [order, setOrder] = useState([]);
-  const [buttons, showButtons] = useState(false);
+  const [data, setData] = useState(false);
   const [infoModal, showInfoModal] = useState(false);
+  const [cartList, setCartList] = useState();
+  // const [update, setUpdate] = useState(false);
 
-  const { cartData, setCartData } = useCartContext();
+  const {
+    subtractQuantity,
+    addQuantity,
+    changeQuantity,
+    removeItem,
+    update,
+    setUpdate,
+  } = useProductContext();
 
   useEffect(() => {
-    if (cartData.length > 0) {
-      setOrder(() => cartData);
-      showButtons(true);
+    console.log("Carting");
+    const cart = JSON.parse(localStorage.getItem("Cart"));
+    if (cart?.length > 0) {
+      console.log("Cart");
+      setData(() => true);
+      setCartList(() => cart);
+    } else {
+      setData(() => false);
     }
-  }, [cartData]);
+  }, [update]);
+
+  const handleMinus = (id) => {
+    subtractQuantity(id);
+    setUpdate(!update);
+  };
+
+  const handlePlus = (id) => {
+    addQuantity(id);
+    setUpdate(!update);
+  };
+
+  const handleChange = (id, e) => {
+    changeQuantity(id, e.target.value);
+    setUpdate(!update);
+  };
+
+  const handleRemove = (id) => {
+    removeItem(id);
+    setUpdate(!update);
+  };
 
   const clearCart = () => {
-    setCartData(() => []);
-    setOrder(() => []);
-    window.localStorage.removeItem("Cart_Data");
-    window.localStorage.removeItem("Product_Data");
+    localStorage.setItem("Cart", JSON.stringify([]));
+    localStorage.setItem("Product", JSON.stringify([]));
+
+    setCartList(() => []);
+    setData(() => false);
+
+    setUpdate(!update);
     closeCart();
   };
 
@@ -44,11 +81,17 @@ export default function Cart({ closeCart, modal }) {
     return `${num.toFixed(2)}`;
   }
 
-  function subtotal(items) {
-    return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+  function subtotal() {
+    if (cartList?.length > 0) {
+      let allPrice = cartList.map((items) => {
+        return parseFloat(items.totalPrice);
+      });
+      allPrice = allPrice.reduce((sum, i) => sum + i, 0);
+      return allPrice;
+    }
   }
 
-  const invoiceSubtotal = subtotal(order);
+  const invoiceSubtotal = subtotal();
   const invoiceTaxes = TAX_RATE * invoiceSubtotal;
   const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
@@ -104,64 +147,115 @@ export default function Cart({ closeCart, modal }) {
                     >
                       Price
                     </th>
+                    <th className="py-3"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {order.map((item) => (
-                    <tr
-                      key={item.data.id}
-                      className="border-b border-neutral-200"
-                    >
-                      <td className="py-3 ps-2">{item.data.name}</td>
-                      <td className="text-center py-3 ps-2">{item.quantity}</td>
-                      <td className="text-right py-3 pe-2" colSpan={2}>
-                        {item.price}
-                        <span className="text-sm px-1 text-neutral-600 italic items-center">
-                          ETB
-                        </span>
+                  {data == true ? (
+                    <>
+                      {cartList.map((item) => (
+                        <tr
+                          key={item.id}
+                          className="border-b border-neutral-200"
+                        >
+                          <td className="py-3 ps-2">{item.name}</td>
+                          <td className="text-center py-3 ps-2">
+                            <div className="flex items-center gap-2">
+                              <button
+                                onClick={() => handleMinus(item.id)}
+                                type="button"
+                                disabled={item.amount <= 1}
+                                className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed "
+                              >
+                                <Remove />
+                              </button>
+                              <input
+                                type="number"
+                                name="quantity"
+                                id="quantity"
+                                className="text-center pl-2.5 py-2 rounded-xl bg-neutral-800 text-neutral-200 border border-neutral-200"
+                                value={item.amount || ""}
+                                onChange={(e) => handleChange(item.id, e)}
+                                required
+                                min={1}
+                                max={item.quantity}
+                              />
+                              <button
+                                onClick={() => handlePlus(item.id)}
+                                type="button"
+                                disabled={item.amount === item.quantity}
+                                className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed"
+                              >
+                                <Add />
+                              </button>
+                            </div>
+                          </td>
+                          <td className="text-right py-3 pe-2" colSpan={2}>
+                            {item.totalPrice}
+                            <span className="text-sm px-1 text-neutral-600 italic items-center">
+                              ETB
+                            </span>
+                          </td>
+                          <td>
+                            <button
+                              onClick={() =>
+                                handleRemove(item.id, item.quantity)
+                              }
+                            >
+                              <Clear color="error" />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                      <tr>
+                        <td rowSpan={3} />
+                        <td colSpan={2} className="py-2">
+                          SubTotal
+                        </td>
+                        <td align="right">
+                          {ccyFormat(invoiceSubtotal)}
+                          <span className="text-sm px-1 text-neutral-600 italic items-center">
+                            ETB
+                          </span>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>Tax</td>
+                        <td align="right" className="py-2">{`${(
+                          TAX_RATE * 100
+                        ).toFixed(0)} %`}</td>
+                        <td align="right">
+                          {ccyFormat(invoiceTaxes)}
+                          <span className="text-sm px-1 text-neutral-600 italic items-center">
+                            ETB
+                          </span>
+                        </td>
+                      </tr>
+                      <tr className="border-t border-neutral-200">
+                        <td colSpan={2} className="py-4">
+                          Total
+                        </td>
+                        <td align="right" className="py-4">
+                          {ccyFormat(invoiceTotal)}
+                          <span className="text-sm px-1 text-neutral-600 italic items-center">
+                            ETB
+                          </span>
+                        </td>
+                      </tr>
+                    </>
+                  ) : (
+                    <tr rowSpan={4}>
+                      <td colSpan={5} rowSpan={4} className="py-20">
+                        <h1 className="text-center text-lg mx-auto font-semibold">
+                          Cart Empty
+                        </h1>
                       </td>
                     </tr>
-                  ))}
-
-                  <tr>
-                    <td rowSpan={3} />
-                    <td colSpan={2} className="py-2">
-                      SubTotal
-                    </td>
-                    <td align="right">
-                      {ccyFormat(invoiceSubtotal)}
-                      <span className="text-sm px-1 text-neutral-600 italic items-center">
-                        ETB
-                      </span>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Tax</td>
-                    <td align="right" className="py-2">{`${(
-                      TAX_RATE * 100
-                    ).toFixed(0)} %`}</td>
-                    <td align="right">
-                      {ccyFormat(invoiceTaxes)}
-                      <span className="text-sm px-1 text-neutral-600 italic items-center">
-                        ETB
-                      </span>
-                    </td>
-                  </tr>
-                  <tr className="border-t border-neutral-200">
-                    <td colSpan={2} className="py-4">
-                      Total
-                    </td>
-                    <td align="right" className="py-4">
-                      {ccyFormat(invoiceTotal)}
-                      <span className="text-sm px-1 text-neutral-600 italic items-center">
-                        ETB
-                      </span>
-                    </td>
-                  </tr>
+                  )}
                 </tbody>
               </table>
               <div className="flex items-center justify-center gap-12 w-full text-base">
-                {buttons && (
+                {data && (
                   <>
                     <button
                       className="w-24 py-2 rounded outline outline-1 outline-green-600 hover:outline-2 active:outline-4 font-thin"
@@ -183,10 +277,10 @@ export default function Cart({ closeCart, modal }) {
         </Box>
       </Modal>
       <ContactInfo
-        orderData={order}
-        orderTotalPrice={invoiceTotal}
-        closeInfoModal={closeInfoModal}
         modal={infoModal}
+        closeInfoModal={closeInfoModal}
+        cartList={cartList}
+        orderTotalPrice={invoiceTotal}
         clearCart={clearCart}
       />
     </>

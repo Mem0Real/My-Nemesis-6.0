@@ -2,32 +2,25 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import AddToCart from "./components/AddToCart";
-import { useProductContext } from "@/context/productContext";
+import { useItemContext } from "@/context/itemContext";
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);
-  const [quantity, setQuantity] = useState();
 
-  const { data, update } = useProductContext();
+  // const { currentQuantity, fetchCache } = useItemContext();
+  const [currentQuantity, setCurrentQuantity] = useState();
+  const [productData, setProductData] = useState();
 
   useEffect(() => {
-    const product = JSON.parse(localStorage.getItem("Product"));
-    if (product && product.length > 0) {
-      for (let i = 0; i < product.length; i++) {
-        if (product[i].id === item.id) {
-          setQuantity(() => product[i].quantity);
-          break;
-        } else {
-          setQuantity(() => item.quantity);
-        }
-      }
-    } else {
-      setQuantity(() => item.quantity);
-    }
-  }, [data, update]);
+    console.log("Qty change: ", currentQuantity);
+  }, [currentQuantity]);
 
-  // Show image if any
+  useEffect(() => {
+    fetchCache(item.id, item.quantity);
+    console.log("Refresh");
+  }, [currentQuantity, item]);
+
   useEffect(() => {
     let image = item.images;
 
@@ -35,6 +28,19 @@ export default function Item({ item }) {
       setActiveImage(image[0]);
     }
   }, [activeImage, item.images]);
+
+  // const fetchCache = () => {
+  //   const data = JSON.parse(window.localStorage.getItem("Product_Data"));
+  //   if (data.length > 0) {
+  //     data.map((product) => {
+  //       if (product.id === item.id) {
+  //         console.log("PI", product.id);
+  //         console.log("Item", item.id);
+  //         setCurrentQuantity(() => product.remainingQty);
+  //       }
+  //     });
+  //   } else setCurrentQuantity(() => item.quantity);
+  // };
 
   const openImage = (image) => {
     setActiveImage(image);
@@ -112,7 +118,7 @@ export default function Item({ item }) {
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Quantity:</h1>
-              <h2 className="ms-3 text-md">{quantity}</h2>
+              <h2 className="ms-3 text-md">{currentQuantity}</h2>
             </div>
             <div className="flex gap-4 w-full">
               <h1 className="text-md font-semibold">Price:</h1>
@@ -136,7 +142,12 @@ export default function Item({ item }) {
           </div>
         </div>
       </div>
-      <AddToCart item={item} modal={modal} closeModal={closeModal} />
+      <AddToCart
+        item={item}
+        modal={modal}
+        closeModal={closeModal}
+        // fetchCache={fetchCache}
+      />
     </div>
   );
 }
