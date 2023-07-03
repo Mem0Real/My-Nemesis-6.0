@@ -96,7 +96,24 @@ export default function ProductDataContext({ children }) {
     }
   };
 
-  const subtractQuantity = (id) => {
+  const addProductQuantity = (id) => {
+    const product = JSON.parse(localStorage.getItem("Product"));
+
+    if (product?.length > 0) {
+      let newArray = product.map((item) => {
+        if (item.id === id) {
+          return { ...item, quantity: item.quantity + 1 };
+        }
+        return item;
+      });
+      setData((prev) => [...prev, newArray]);
+      localStorage.setItem("Product", JSON.stringify(newArray));
+    } else {
+      console.log("Item not found");
+    }
+  };
+
+  const subtractProductQuantity = (id) => {
     const product = JSON.parse(localStorage.getItem("Product"));
 
     if (product?.length > 0) {
@@ -113,21 +130,48 @@ export default function ProductDataContext({ children }) {
     }
   };
 
-  const addQuantity = (id) => {
-    const product = JSON.parse(localStorage.getItem("Product"));
+  const addCartQuantity = (id) => {
+    const cart = JSON.parse(localStorage.getItem("Cart"));
 
-    if (product?.length > 0) {
-      let newArray = product.map((item) => {
+    if (cart?.length > 0) {
+      let newArray = cart.map((item) => {
         if (item.id === id) {
-          return { ...item, quantity: item.quantity + 1 };
+          return { ...item, amount: item.amount + 1 };
         }
         return item;
       });
       setData((prev) => [...prev, newArray]);
-      localStorage.setItem("Product", JSON.stringify(newArray));
+      localStorage.setItem("Cart", JSON.stringify(newArray));
     } else {
       console.log("Item not found");
     }
+  };
+
+  const subtractCartQuantity = (id) => {
+    const cart = JSON.parse(localStorage.getItem("Cart"));
+
+    if (cart?.length > 0) {
+      let newArray = cart.map((item) => {
+        if (item.id === id) {
+          return { ...item, amount: item.amount - 1 };
+        }
+        return item;
+      });
+      setData((prev) => [...prev, newArray]);
+      localStorage.setItem("Cart", JSON.stringify(newArray));
+    } else {
+      console.log("Item not found");
+    }
+  };
+
+  const subtractQuantity = (id) => {
+    addProductQuantity(id);
+    subtractCartQuantity(id);
+  };
+
+  const addQuantity = (id) => {
+    subtractProductQuantity(id);
+    addCartQuantity(id);
   };
 
   return (

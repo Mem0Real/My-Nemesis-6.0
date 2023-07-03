@@ -1,21 +1,18 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useCartContext } from "@/context/cartContext";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import ContactInfo from "./ContactInfo";
-import { useItemContext } from "@/context/itemContext";
 import { Add, Remove, Clear } from "@mui/icons-material";
 import { useProductContext } from "@/context/productContext";
 
 export default function Cart({ closeCart, modal }) {
-  const [order, setOrder] = useState([]);
   const [data, setData] = useState(false);
   const [infoModal, showInfoModal] = useState(false);
-
   const [cartList, setCartList] = useState();
+  const [update, setUpdate] = useState(false);
 
   const { subtractQuantity, addQuantity } = useProductContext();
 
@@ -49,7 +46,7 @@ export default function Cart({ closeCart, modal }) {
     } else {
       setData(() => false);
     }
-  }, []);
+  }, [update]);
 
   const clearCart = () => {
     window.localStorage.removeItem("Cart_Data");
@@ -66,44 +63,45 @@ export default function Cart({ closeCart, modal }) {
   };
 
   const handleMinus = (id) => {
-    const updatedQuantity = cartItems.map((item) => {
+    const updatedQuantity = cartList.map((item) => {
       if (item.id === id) {
         return { ...item, selectedQuantity: item.selectedQuantity - 1 };
       }
       return item;
     });
 
-    addQuantity(id);
-
+    subtractQuantity(id);
+    setUpdate(!update);
     // const updatedProduct = updatedQuantity.map((item) => ({
     //   id: item.id,
     //   remainingQty: item.originalQuantity - item.selectedQuantity,
     // }));
-    setCartItems(updatedQuantity);
-    localStorage.setItem("Cart_Data", JSON.stringify(updatedQuantity));
+    // setCartItems(updatedQuantity);
+    // localStorage.setItem("Cart_Data", JSON.stringify(updatedQuantity));
     // localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
   };
 
   const handlePlus = (id) => {
-    const updatedQuantity = cartItems.map((item) => {
+    const updatedQuantity = cartList.map((item) => {
       if (item.id === id) {
         return { ...item, selectedQuantity: item.selectedQuantity + 1 };
       }
       return item;
     });
 
-    subtractQuantity(id);
+    addQuantity(id);
+    setUpdate(!update);
     // const updatedProduct = updatedQuantity.map((item) => ({
     //   id: item.id,
     //   remainingQty: item.originalQuantity - item.selectedQuantity,
     // }));
-    setCartItems(updatedQuantity);
-    localStorage.setItem("Cart_Data", JSON.stringify(updatedQuantity));
+    // setCartItems(updatedQuantity);
+    // localStorage.setItem("Cart_Data", JSON.stringify(updatedQuantity));
     // localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
   };
 
   const handleChange = (id, e) => {
-    const updatedQuantity = cartItems.map((item) => {
+    const updatedQuantity = cartList.map((item) => {
       if (item.id === id) {
         if (e.target.value > item.originalQuantity) {
           return { ...item, selectedQuantity: parseInt(item.originalQuantity) };
@@ -187,7 +185,6 @@ export default function Cart({ closeCart, modal }) {
   }
 
   const invoiceSubtotal = subtotal();
-
   const invoiceTaxes = TAX_RATE * invoiceSubtotal;
   const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
