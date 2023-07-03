@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { Suspense, useState, useEffect } from "react";
 
-const List = dynamic(() => import("./components/List"));
+const List = dynamic(() => import("./components/(list)/List"));
 
 export default function AdminActions({
   data,
@@ -13,15 +13,25 @@ export default function AdminActions({
   url,
 }) {
   const [showList, setShowList] = useState(false);
+  const [showOrder, setShowOrder] = useState(false);
 
   useEffect(() => {
-    const data = window.localStorage.getItem("LIST");
-    if (data !== null) setShowList(JSON.parse(data));
+    const data = localStorage.getItem("LIST");
+    if (data !== null && showOrder === false) setShowList(JSON.parse(data));
   }, []);
 
   useEffect(() => {
-    window.localStorage.setItem("LIST", JSON.stringify(showList));
+    localStorage.setItem("LIST", JSON.stringify(showList));
   }, [showList]);
+
+  useEffect(() => {
+    const data = localStorage.getItem("ORDER");
+    if (data !== null && showList === false) setShowOrder(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("ORDER", JSON.stringify(showOrder));
+  }, [showOrder]);
 
   return (
     <div className="w-full flex flex-col items-center gap-8">
@@ -40,6 +50,20 @@ export default function AdminActions({
       </div>
       <div className="flex flex-col w-full min-h-screen">
         {showList && (
+          <Suspense
+            fallback={<h1 className="text-2xl text-neutral-200">Loading...</h1>}
+          >
+            <List
+              data={data}
+              create={create}
+              update={update}
+              deleteItem={deleteItem}
+              url={url}
+            />
+          </Suspense>
+        )}
+
+        {showOrder && (
           <Suspense
             fallback={<h1 className="text-2xl text-neutral-200">Loading...</h1>}
           >

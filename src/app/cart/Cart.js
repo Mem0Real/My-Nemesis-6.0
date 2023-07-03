@@ -24,7 +24,6 @@ export default function Cart({ closeCart, modal }) {
   } = useProductContext();
 
   useEffect(() => {
-    console.log("Carting");
     const cart = JSON.parse(localStorage.getItem("Cart"));
     if (cart?.length > 0) {
       console.log("Cart");
