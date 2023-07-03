@@ -240,6 +240,40 @@ export default function ProductDataContext({ children }) {
     }
   };
 
+  const removeCartItem = (id) => {
+    const cart = JSON.parse(localStorage.getItem("Cart"));
+    if (cart?.length > 0) {
+      let newArray = cart
+        .map((item) => {
+          if (item.id === id) {
+            return null;
+          }
+          return item;
+        })
+        .filter((item) => item !== null);
+      localStorage.setItem("Cart", JSON.stringify(newArray));
+    } else {
+      console.log("Item not found.");
+    }
+  };
+
+  const removeProductItem = (id) => {
+    const product = JSON.parse(localStorage.getItem("Product"));
+    if (product?.length > 0) {
+      let newArray = product
+        .map((item) => {
+          if (item.id === id) {
+            return null;
+          }
+          return item;
+        })
+        .filter((item) => item !== null);
+      localStorage.setItem("Product", JSON.stringify(newArray));
+    } else {
+      console.log("Item not found.");
+    }
+  };
+
   const subtractQuantity = (id) => {
     addProductQuantity(id);
     subtractCartQuantity(id);
@@ -255,6 +289,13 @@ export default function ProductDataContext({ children }) {
     changeCartQuantity(id, newQuantity);
   };
 
+  const removeItem = (id) => {
+    // restoreCartQuantity(id);
+    removeCartItem(id);
+    // restoreProductQuantity(id);
+    removeProductItem(id);
+  };
+
   return (
     <ProductContext.Provider
       value={{
@@ -267,6 +308,7 @@ export default function ProductDataContext({ children }) {
         changeQuantity,
         update,
         setUpdate,
+        removeItem,
       }}
     >
       {children}

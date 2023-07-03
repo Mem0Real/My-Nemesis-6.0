@@ -14,8 +14,14 @@ export default function Cart({ closeCart, modal }) {
   const [cartList, setCartList] = useState();
   // const [update, setUpdate] = useState(false);
 
-  const { subtractQuantity, addQuantity, changeQuantity, update, setUpdate } =
-    useProductContext();
+  const {
+    subtractQuantity,
+    addQuantity,
+    changeQuantity,
+    removeItem,
+    update,
+    setUpdate,
+  } = useProductContext();
 
   useEffect(() => {
     console.log("Carting");
@@ -60,38 +66,43 @@ export default function Cart({ closeCart, modal }) {
     // }
   };
 
-  const handleRemove = (id, quantity) => {
-    const updatedCart = [];
-    const updatedProduct = [];
+  // const handleRemove = (id) => {
+  //   const updatedCart = [];
+  //   const updatedProduct = [];
 
-    cartItems.map((item) => item.id !== id && updatedCart.push(item));
-    // for (let i = 0; i < cartItems.length; i++) {
-    //   if (cartItems[i].id !== id) {
-    //     // fetchCache(id);
-    //     updatedCart.push(cartData[i]);
-    //   }
-    // }
+  //   cartItems.map((item) => item.id !== id && updatedCart.push(item));
+  //   // for (let i = 0; i < cartItems.length; i++) {
+  //   //   if (cartItems[i].id !== id) {
+  //   //     // fetchCache(id);
+  //   //     updatedCart.push(cartData[i]);
+  //   //   }
+  //   // }
 
-    const cache = JSON.parse(window.localStorage.getItem("Product_Data"));
+  //   const cache = JSON.parse(window.localStorage.getItem("Product_Data"));
 
-    // If cache exists check id for current product
-    const productCache = cache.find((product) => product.id === id);
-    if (productCache) {
-      const updatedCache = cache.map((prod) =>
-        prod.id === id
-          ? {
-              ...prod,
-              remainingQty: quantity,
-            }
-          : prod
-      );
-      window.localStorage.setItem("Product_Data", JSON.stringify(updatedCache));
-      // refetch(id, quantity);
-    }
+  //   // If cache exists check id for current product
+  //   const productCache = cache.find((product) => product.id === id);
+  //   if (productCache) {
+  //     const updatedCache = cache.map((prod) =>
+  //       prod.id === id
+  //         ? {
+  //             ...prod,
+  //             remainingQty: quantity,
+  //           }
+  //         : prod
+  //     );
+  //     window.localStorage.setItem("Product_Data", JSON.stringify(updatedCache));
+  //     // refetch(id, quantity);
+  //   }
 
-    window.localStorage.setItem("Cart_Data", JSON.stringify(updatedCart));
-    window.localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
-    setCartData(updatedCart);
+  //   window.localStorage.setItem("Cart_Data", JSON.stringify(updatedCart));
+  //   window.localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
+  //   setCartData(updatedCart);
+  // };
+
+  const handleRemove = (id) => {
+    removeItem(id);
+    setUpdate(!update);
   };
 
   const handleOrder = () => {

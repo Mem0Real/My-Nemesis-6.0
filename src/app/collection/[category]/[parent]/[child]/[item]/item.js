@@ -9,7 +9,7 @@ export default function Item({ item }) {
   const [modal, showModal] = useState(false);
   const [quantity, setQuantity] = useState();
 
-  const { data } = useProductContext();
+  const { data, update } = useProductContext();
 
   useEffect(() => {
     const product = JSON.parse(localStorage.getItem("Product"));
@@ -25,7 +25,7 @@ export default function Item({ item }) {
     } else {
       setQuantity(() => item.quantity);
     }
-  }, [data]);
+  }, [data, update]);
 
   // Show image if any
   useEffect(() => {
