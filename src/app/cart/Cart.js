@@ -12,36 +12,44 @@ import { useProductContext } from "@/context/productContext";
 
 export default function Cart({ closeCart, modal }) {
   const [order, setOrder] = useState([]);
-  const [buttons, showButtons] = useState(false);
+  const [data, setData] = useState(false);
   const [infoModal, showInfoModal] = useState(false);
 
-  const [cartItems, setCartItems] = useState([]);
-
-  const { cartData, setCartData } = useCartContext();
+  const [cartList, setCartList] = useState();
 
   const { subtractQuantity, addQuantity } = useProductContext();
 
+  // useEffect(() => {
+  //   if (cartData && cartData.length > 0) {
+  //     let arr = [];
+  //     cartData.forEach((item) =>
+  //       arr.push({
+  //         id: item?.data?.id,
+  //         name: item?.data?.name,
+  //         originalQuantity: item?.data?.quantity,
+  //         selectedQuantity: parseInt(item?.quantity),
+  //         productPrice: item?.data?.price,
+  //         totalPrice: item?.price,
+  //       })
+  //     );
+  //     // console.log(arr);
+  //     setCartItems(arr);
+  //     showButtons(true);
+  //   } else {
+  //     setOrder([]);
+  //     showButtons(false);
+  //   }
+  // }, [cartData]);
+
   useEffect(() => {
-    if (cartData && cartData.length > 0) {
-      let arr = [];
-      cartData.forEach((item) =>
-        arr.push({
-          id: item?.data?.id,
-          name: item?.data?.name,
-          originalQuantity: item?.data?.quantity,
-          selectedQuantity: parseInt(item?.quantity),
-          productPrice: item?.data?.price,
-          totalPrice: item?.price,
-        })
-      );
-      // console.log(arr);
-      setCartItems(arr);
-      showButtons(true);
+    const cart = JSON.parse(localStorage.getItem("Cart"));
+    if (cart?.length > 0) {
+      setData(() => true);
+      setCartList(() => cart);
     } else {
-      setOrder([]);
-      showButtons(false);
+      setData(() => false);
     }
-  }, [cartData]);
+  }, []);
 
   const clearCart = () => {
     window.localStorage.removeItem("Cart_Data");
@@ -168,11 +176,18 @@ export default function Cart({ closeCart, modal }) {
     return `${num.toFixed(2)}`;
   }
 
-  function subtotal(items) {
-    return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+  function subtotal() {
+    if (cartList?.length > 0) {
+      let allPrice = cartList.map((items) => {
+        return items.totalPrice;
+      });
+      allPrice = allPrice.reduce((sum, i) => sum + i, 0);
+      return allPrice;
+    }
   }
 
-  const invoiceSubtotal = subtotal(order);
+  const invoiceSubtotal = subtotal();
+
   const invoiceTaxes = TAX_RATE * invoiceSubtotal;
   const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 
@@ -232,9 +247,9 @@ export default function Cart({ closeCart, modal }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {cartItems.length > 0 ? (
+                  {data == true ? (
                     <>
-                      {cartItems.map((item) => (
+                      {cartList.map((item) => (
                         <tr
                           key={item.id}
                           className="border-b border-neutral-200"
@@ -245,7 +260,7 @@ export default function Cart({ closeCart, modal }) {
                               <button
                                 onClick={() => handleMinus(item.id)}
                                 type="button"
-                                disabled={item.selectedQuantity <= 1}
+                                disabled={item.amount <= 1}
                                 className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed "
                               >
                                 <Remove />
@@ -255,19 +270,16 @@ export default function Cart({ closeCart, modal }) {
                                 name="quantity"
                                 id="quantity"
                                 className="text-center pl-2.5 py-2 rounded-xl bg-neutral-800 text-neutral-200 border border-neutral-200"
-                                value={item.selectedQuantity || ""}
+                                value={item.amount || ""}
                                 onChange={(e) => handleChange(item.id, e)}
                                 required
                                 min={1}
-                                max={item.originalQuantity}
+                                max={item.quantity}
                               />
                               <button
                                 onClick={() => handlePlus(item.id)}
                                 type="button"
-                                disabled={
-                                  item.selectedQuantity ===
-                                  item.originalQuantity
-                                }
+                                disabled={item.amount === item.quantity}
                                 className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed"
                               >
                                 <Add />
@@ -339,7 +351,7 @@ export default function Cart({ closeCart, modal }) {
                 </tbody>
               </table>
               <div className="flex items-center justify-center gap-12 w-full text-base">
-                {buttons && (
+                {data && (
                   <>
                     <button
                       className="w-24 py-2 rounded outline outline-1 outline-green-600 hover:outline-2 active:outline-4 font-thin"
@@ -360,14 +372,14 @@ export default function Cart({ closeCart, modal }) {
           </div>
         </Box>
       </Modal>
-      <ContactInfo
+      {/* <ContactInfo
         modal={infoModal}
         closeInfoModal={closeInfoModal}
         cartItems={cartItems}
         orderData={order}
         orderTotalPrice={invoiceTotal}
         clearCart={clearCart}
-      />
+      /> */}
     </>
   );
 }

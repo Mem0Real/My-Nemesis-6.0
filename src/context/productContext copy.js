@@ -6,18 +6,12 @@ const ProductContext = createContext({});
 
 export default function ProductDataContext({ children }) {
   const [data, setData] = useState([]);
-  const [cartData, setCartData] = useState([]);
 
   useEffect(() => {
     const product = JSON.parse(localStorage.getItem("Product"));
     if (product?.length > 0) {
       console.log(product);
       setData(product);
-    }
-    const cart = JSON.parse(localStorage.getItem("Cart"));
-    if (cart?.length > 0) {
-      setCartData(cart);
-      localStorage.setItem("Cart_State", JSON.stringify(true));
     }
   }, []);
 
@@ -26,6 +20,8 @@ export default function ProductDataContext({ children }) {
 
     // If there is cache
     if (product?.length > 0) {
+      console.log("Cache exist");
+
       const productCache = product.find((item) => item.id === id);
 
       // If product exists in cache
@@ -49,50 +45,6 @@ export default function ProductDataContext({ children }) {
       let newEntry = { id: id, quantity: quantity };
       setData(() => [newEntry]);
       localStorage.setItem("Product", JSON.stringify([newEntry]));
-    }
-  };
-
-  const addCartData = (id, name, quantity, amount, itemPrice) => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
-
-    if (cart?.length > 0) {
-      const cartCache = cart.find((item) => item.id === id);
-
-      if (cartCache) {
-        let cartItems = cartData.map((item) => {
-          if (item.id === id) {
-            return { ...item, amount: amount, totalPrice: itemPrice * amount };
-          }
-          return item;
-        });
-
-        setCartData(cartItems);
-        localStorage.setItem("Cart", JSON.stringify(cartItems));
-      } else {
-        const newCartItem = {
-          id: id,
-          name: name,
-          quantity: quantity,
-          amount: amount,
-          itemPrice: itemPrice,
-          totalPrice: amount * itemPrice,
-        };
-
-        setCartData((prev) => [...prev, newCartItem]);
-        cart.push(newCartItem);
-        localStorage.setItem("Cart", JSON.stringify(cart));
-      }
-    } else {
-      let newCartItem = {
-        id: id,
-        name: name,
-        quantity: quantity,
-        amount: amount,
-        itemPrice: itemPrice,
-        totalPrice: amount * itemPrice,
-      };
-      setCartData(() => [newCartItem]);
-      localStorage.setItem("Cart", JSON.stringify([newCartItem]));
     }
   };
 
@@ -132,14 +84,7 @@ export default function ProductDataContext({ children }) {
 
   return (
     <ProductContext.Provider
-      value={{
-        data,
-        setData,
-        storeProduct,
-        addCartData,
-        subtractQuantity,
-        addQuantity,
-      }}
+      value={{ data, setData, storeProduct, subtractQuantity, addQuantity }}
     >
       {children}
     </ProductContext.Provider>
