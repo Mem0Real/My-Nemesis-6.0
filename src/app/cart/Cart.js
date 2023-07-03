@@ -8,6 +8,7 @@ import Modal from "@mui/material/Modal";
 import ContactInfo from "./ContactInfo";
 import { useItemContext } from "@/context/itemContext";
 import { Add, Remove, Clear } from "@mui/icons-material";
+import { useProductContext } from "@/context/productContext";
 
 export default function Cart({ closeCart, modal }) {
   const [order, setOrder] = useState([]);
@@ -18,34 +19,27 @@ export default function Cart({ closeCart, modal }) {
 
   const { cartData, setCartData } = useCartContext();
 
-  const { refetch, setRestore, restoreQuantity, setCurrentQuantity } =
-    useItemContext();
+  const { subtractQuantity, addQuantity } = useProductContext();
 
   useEffect(() => {
-    if (cartData?.length > 0) {
-      setOrder(() => cartData);
+    if (cartData && cartData.length > 0) {
+      let arr = [];
+      cartData.forEach((item) =>
+        arr.push({
+          id: item?.data?.id,
+          name: item?.data?.name,
+          originalQuantity: item?.data?.quantity,
+          selectedQuantity: parseInt(item?.quantity),
+          productPrice: item?.data?.price,
+          totalPrice: item?.price,
+        })
+      );
+      // console.log(arr);
+      setCartItems(arr);
       showButtons(true);
     } else {
       setOrder([]);
       showButtons(false);
-    }
-  }, [cartData]);
-
-  useEffect(() => {
-    if (cartData?.length > 0) {
-      let arr = [];
-      cartData.forEach((item) =>
-        arr.push({
-          id: item.data.id,
-          name: item.data.name,
-          originalQuantity: item.data.quantity,
-          selectedQuantity: parseInt(item.quantity),
-          productPrice: item.data.price,
-          totalPrice: item.price,
-        })
-      );
-      console.log(arr);
-      setCartItems(arr);
     }
   }, [cartData]);
 
@@ -54,7 +48,7 @@ export default function Cart({ closeCart, modal }) {
     window.localStorage.removeItem("Product_Data");
 
     cartItems.map((item) => {
-      refetch(item.id, item.quantity);
+      // refetch(item.id, item.quantity);
     });
 
     setCartData(() => []);
@@ -70,7 +64,16 @@ export default function Cart({ closeCart, modal }) {
       }
       return item;
     });
+
+    addQuantity(id);
+
+    // const updatedProduct = updatedQuantity.map((item) => ({
+    //   id: item.id,
+    //   remainingQty: item.originalQuantity - item.selectedQuantity,
+    // }));
     setCartItems(updatedQuantity);
+    localStorage.setItem("Cart_Data", JSON.stringify(updatedQuantity));
+    // localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
   };
 
   const handlePlus = (id) => {
@@ -80,36 +83,53 @@ export default function Cart({ closeCart, modal }) {
       }
       return item;
     });
+
+    subtractQuantity(id);
+    // const updatedProduct = updatedQuantity.map((item) => ({
+    //   id: item.id,
+    //   remainingQty: item.originalQuantity - item.selectedQuantity,
+    // }));
     setCartItems(updatedQuantity);
+    localStorage.setItem("Cart_Data", JSON.stringify(updatedQuantity));
+    // localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
   };
 
   const handleChange = (id, e) => {
     const updatedQuantity = cartItems.map((item) => {
       if (item.id === id) {
         if (e.target.value > item.originalQuantity) {
-          return { ...item, selectedQuantity: item.originalQuantity };
+          return { ...item, selectedQuantity: parseInt(item.originalQuantity) };
         }
         if (e.target.value < 1) {
           return { ...item, selectedQuantity: 1 };
         }
 
-        return { ...item, selectedQuantity: e.target.value };
+        return { ...item, selectedQuantity: parseInt(e.target.value) };
       }
       return item;
     });
+
+    const updatedProduct = updatedQuantity.map((item) => ({
+      id: item.id,
+      remainingQty: item.originalQuantity - item.selectedQuantity,
+    }));
+
     setCartItems(updatedQuantity);
+    localStorage.setItem("Cart_Data", JSON.stringify(updatedQuantity));
+    localStorage.setItem("Product_Data", JSON.stringify(updatedProduct));
   };
 
   const handleRemove = (id, quantity) => {
     const updatedCart = [];
     const updatedProduct = [];
 
-    for (let i = 0; i < cartData.length; i++) {
-      if (cartData[i].data.id !== id) {
-        // fetchCache(id);
-        updatedCart.push(cartData[i]);
-      }
-    }
+    cartItems.map((item) => item.id !== id && updatedCart.push(item));
+    // for (let i = 0; i < cartItems.length; i++) {
+    //   if (cartItems[i].id !== id) {
+    //     // fetchCache(id);
+    //     updatedCart.push(cartData[i]);
+    //   }
+    // }
 
     const cache = JSON.parse(window.localStorage.getItem("Product_Data"));
 
@@ -125,7 +145,7 @@ export default function Cart({ closeCart, modal }) {
           : prod
       );
       window.localStorage.setItem("Product_Data", JSON.stringify(updatedCache));
-      refetch(id, quantity);
+      // refetch(id, quantity);
     }
 
     window.localStorage.setItem("Cart_Data", JSON.stringify(updatedCart));
@@ -263,7 +283,7 @@ export default function Cart({ closeCart, modal }) {
                           <td>
                             <button
                               onClick={() =>
-                                handleRemove(item.data.id, item.data.quantity)
+                                handleRemove(item.id, item.quantity)
                               }
                             >
                               <Clear color="error" />

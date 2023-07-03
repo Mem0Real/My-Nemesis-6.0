@@ -5,9 +5,9 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Add, Remove } from "@mui/icons-material";
 import { useCartContext } from "@/context/cartContext";
-import { useProductContext } from "@/context/productContext";
+import { useItemContext } from "@/context/itemContext";
 
-export default function AddToCart({ modal, closeModal, item, setAddQuantity }) {
+export default function AddToCart({ modal, closeModal, item }) {
   const [order, setOrder] = useState();
   const [quantity, setQuantity] = useState();
   const [totalPrice, setTotalPrice] = useState(0);
@@ -15,14 +15,12 @@ export default function AddToCart({ modal, closeModal, item, setAddQuantity }) {
   const [remainingQuantity, setRemainingQuantity] = useState();
 
   const { cartData, setCartData } = useCartContext();
-  const { data, setData, storeProduct } = useProductContext();
+  const { refetch } = useItemContext();
 
-  // Set quantity to 1
   useEffect(() => {
     setQuantity(() => 1);
   }, []);
 
-  // Store total price
   useEffect(() => {
     setTotalPrice(() => quantity * item.price);
   }, [item.price, quantity]);
@@ -39,7 +37,6 @@ export default function AddToCart({ modal, closeModal, item, setAddQuantity }) {
     } else setOrder([]);
   }, [quantity, item, totalPrice]);
 
-  // Store remaining quantity
   useEffect(() => {
     if (quantity >= 1) {
       let remaining = item.quantity - quantity;
@@ -62,7 +59,6 @@ export default function AddToCart({ modal, closeModal, item, setAddQuantity }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    storeProduct(item.id, remainingQuantity);
 
     if (order) {
       if (cartData.length > 0) {
@@ -80,45 +76,45 @@ export default function AddToCart({ modal, closeModal, item, setAddQuantity }) {
         setCartData((prev) => [...prev, order]);
       }
 
-      // const cache = JSON.parse(window.localStorage.getItem("Product_Data"));
+      const cache = JSON.parse(window.localStorage.getItem("Product_Data"));
 
-      // // If cache exists check id for current product
-      // if (cache && cache.length > 0) {
-      //   // Update
-      //   const productCache = cache.find(
-      //     (product) => product.id === order.data.id
-      //   );
-      //   if (productCache) {
-      //     const updatedCache = cache.map((prod) =>
-      //       prod.id === order.data.id
-      //         ? {
-      //             ...prod,
-      //             remainingQty: remainingQuantity,
-      //           }
-      //         : prod
-      //     );
-      //     window.localStorage.setItem(
-      //       "Product_Data",
-      //       JSON.stringify(updatedCache)
-      //     );
-      //     refetch(order.data.id, order.quantity);
-      //   } else {
-      //     cache.push({
-      //       id: order.data.id,
-      //       remainingQty: remainingQuantity,
-      //     });
-      //     window.localStorage.setItem("Product_Data", JSON.stringify(cache));
-      //     refetch(order.data.id, order.quantity);
-      //   }
-      // } else {
-      //   let data = [];
-      //   data.push({
-      //     id: order.data.id,
-      //     remainingQty: remainingQuantity,
-      //   });
-      //   window.localStorage.setItem("Product_Data", JSON.stringify(data));
-      //   refetch(order.data.id, order.quantity);
-      // }
+      // If cache exists check id for current product
+      if (cache && cache.length > 0) {
+        // Update
+        const productCache = cache.find(
+          (product) => product.id === order.data.id
+        );
+        if (productCache) {
+          const updatedCache = cache.map((prod) =>
+            prod.id === order.data.id
+              ? {
+                  ...prod,
+                  remainingQty: remainingQuantity,
+                }
+              : prod
+          );
+          window.localStorage.setItem(
+            "Product_Data",
+            JSON.stringify(updatedCache)
+          );
+          refetch(order.data.id, order.quantity);
+        } else {
+          cache.push({
+            id: order.data.id,
+            remainingQty: remainingQuantity,
+          });
+          window.localStorage.setItem("Product_Data", JSON.stringify(cache));
+          refetch(order.data.id, order.quantity);
+        }
+      } else {
+        let data = [];
+        data.push({
+          id: order.data.id,
+          remainingQty: remainingQuantity,
+        });
+        window.localStorage.setItem("Product_Data", JSON.stringify(data));
+        refetch(order.data.id, order.quantity);
+      }
     }
 
     closeModal();
