@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { Suspense, useState, useEffect } from "react";
 
 const List = dynamic(() => import("./components/(list)/List"));
+const Order = dynamic(() => import("./components/(order)/Order"));
 
 export default function AdminActions({
   data,
@@ -11,6 +12,7 @@ export default function AdminActions({
   update,
   deleteItem,
   url,
+  order,
 }) {
   const [showList, setShowList] = useState(false);
   const [showOrder, setShowOrder] = useState(false);
@@ -40,11 +42,22 @@ export default function AdminActions({
           className={`w-36 px-3 py-2 rounded-lg bg-transparent outline outline-1 hover:outline-2 outline-offset-2 hover:outline-offset-0 outline-neutral-800 ${
             showList && "outline-2 outline-offset-0 font-medium"
           }`}
-          onClick={() => setShowList(!showList)}
+          onClick={() => {
+            setShowList(!showList);
+            setShowOrder(false);
+          }}
         >
           Categories
         </button>
-        <button className="w-36 px-3 py-2 rounded-lg bg-transparent outline outline-1 hover:outline-2 outline-offset-2 hover:outline-offset-0 outline-neutral-800">
+        <button
+          className={`w-36 px-3 py-2 rounded-lg bg-transparent outline outline-1 hover:outline-2 outline-offset-2 hover:outline-offset-0 outline-neutral-800 ${
+            showOrder && "outline-2 outline-offset-0 font-medium"
+          }`}
+          onClick={() => {
+            setShowOrder(!showOrder);
+            setShowList(false);
+          }}
+        >
           Orders
         </button>
       </div>
@@ -67,13 +80,7 @@ export default function AdminActions({
           <Suspense
             fallback={<h1 className="text-2xl text-neutral-200">Loading...</h1>}
           >
-            <List
-              data={data}
-              create={create}
-              update={update}
-              deleteItem={deleteItem}
-              url={url}
-            />
+            <Order order={order} url={url} />
           </Suspense>
         )}
       </div>
