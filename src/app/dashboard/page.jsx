@@ -1,5 +1,8 @@
 import prisma from "@/lib/prisma";
+
 import { create, update, deleteItem } from "./listActions";
+import { removeOne, removeAll, markDelivered } from "./orderActions";
+
 import AdminActions from "./AdminActions";
 
 async function categoryList() {
@@ -21,7 +24,7 @@ async function orderList() {
     orderBy: { createdAt: "asc" },
   });
 
-  const orders = prisma.order.findMany({
+  const orders = prisma.orders.findMany({
     orderBy: { productName: "asc" },
   });
 
@@ -56,6 +59,9 @@ export default async function DashboardPage() {
         create={create}
         update={update}
         deleteItem={deleteItem}
+        removeOne={removeOne}
+        removeAll={removeAll}
+        markDelivered={markDelivered}
         url={url}
         order={order}
       />

@@ -21,7 +21,7 @@ const Customers = dynamic(() => import("./orderData/Customers"));
 
 const OrderContext = createContext({});
 
-export default function OrderTable({ order }) {
+export default function OrderTable() {
   const [cus, setCus] = useState({});
 
   useEffect(() => {

@@ -11,6 +11,9 @@ export default function AdminActions({
   create,
   update,
   deleteItem,
+  removeOne,
+  removeAll,
+  markDelivered,
   url,
   order,
 }) {
@@ -61,6 +64,7 @@ export default function AdminActions({
           Orders
         </button>
       </div>
+
       <div className="flex flex-col w-full min-h-screen">
         {showList && (
           <Suspense
@@ -75,12 +79,17 @@ export default function AdminActions({
             />
           </Suspense>
         )}
-
         {showOrder && (
           <Suspense
             fallback={<h1 className="text-2xl text-neutral-200">Loading...</h1>}
           >
-            <Order order={order} url={url} />
+            <Order
+              order={order}
+              url={url}
+              removeOne={removeOne}
+              removeAll={removeAll}
+              markDelivered={markDelivered}
+            />
           </Suspense>
         )}
       </div>

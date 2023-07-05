@@ -1,4 +1,5 @@
 "use client";
+
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -6,17 +7,16 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
-export default function Delete({
-  deleteAlert,
-  closeDeleteModal,
-  deleteData,
-  setDeleteData,
-  deleteItem,
+export default function RemoveAll({
+  removeAlert,
+  removeData,
+  closeRemoveModal,
+  removeAll,
 }) {
-  const confirmDelete = async (deleteData) => {
+  const confirmDelete = async (removeData) => {
     try {
-      deleteItem(deleteData.entry, deleteData.data);
-      closeDeleteModal();
+      await removeAll(removeData);
+      closeRemoveModal();
     } catch (err) {
       console.log(err);
     }
@@ -24,8 +24,8 @@ export default function Delete({
   return (
     <div className="bg-neutral-900 text-neutral-200">
       <Dialog
-        open={deleteAlert}
-        onClose={closeDeleteModal}
+        open={removeAlert}
+        onClose={closeRemoveModal}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
       >
@@ -33,7 +33,7 @@ export default function Delete({
           id="alert-dialog-title"
           className="text-center text-red-600 underline underline-offset-4 bg-neutral-900"
         >
-          {`Delete ${deleteData?.data?.id}?`}
+          Remove all orders?
         </DialogTitle>
         <span className="text-md w-full border-y text-center py-3 bg-neutral-900 text-neutral-200 ">
           This Action is Irreversible !
@@ -44,19 +44,18 @@ export default function Delete({
             className="flex flex-col items-center justify-between gap-5 bg-neutral-900 text-neutral-200"
           >
             <span className="text-neutral-200">
-              If you proceed, the <b>selected item</b> as well as
-              <b> all of it&apos;s children</b> will be removed from the
-              database permanently.
+              If you proceed, all <b>customers</b> as well as all <b>orders</b>{" "}
+              will be removed from the database permanently.
             </span>
             <span className="font-semibold text-neutral-200">
-              Proceed with Caution
+              Proceed with Caution.
             </span>
           </DialogContentText>
         </DialogContent>
-        <DialogActions className=" text-neutral-200 bg-neutral-900">
-          <Button onClick={closeDeleteModal}>Cancel</Button>
+        <DialogActions className="bg-neutral-900 text-neutral-200 flex items-center justify-center gap-4">
+          <Button onClick={closeRemoveModal}>Cancel</Button>
           <Button
-            onClick={() => confirmDelete(deleteData)}
+            onClick={() => confirmDelete(removeData)}
             autoFocus
             color="error"
           >
