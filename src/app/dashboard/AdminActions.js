@@ -14,26 +14,32 @@ export default function AdminActions({
   url,
   order,
 }) {
-  const [showList, setShowList] = useState(false);
-  const [showOrder, setShowOrder] = useState(false);
+  const [showList, setShowList] = useState();
+  const [showOrder, setShowOrder] = useState();
+
+  const toggleList = () => {
+    setShowList(!showList);
+    setShowOrder(false);
+    localStorage.setItem("LIST", JSON.stringify(!showList));
+    localStorage.setItem("ORDER", JSON.stringify(false));
+  };
+
+  const toggleOrder = () => {
+    setShowOrder(!showOrder);
+    setShowList(false);
+    localStorage.setItem("ORDER", JSON.stringify(!showOrder));
+    localStorage.setItem("LIST", JSON.stringify(false));
+  };
 
   useEffect(() => {
     const data = localStorage.getItem("LIST");
-    if (data !== null && showOrder === false) setShowList(JSON.parse(data));
-  }, [showOrder]);
-
-  useEffect(() => {
-    localStorage.setItem("LIST", JSON.stringify(showList));
-  }, [showList]);
+    if (data !== null) setShowList(JSON.parse(data));
+  }, []);
 
   useEffect(() => {
     const data = localStorage.getItem("ORDER");
-    if (data !== null && showList === false) setShowOrder(JSON.parse(data));
-  }, [showList]);
-
-  useEffect(() => {
-    localStorage.setItem("ORDER", JSON.stringify(showOrder));
-  }, [showOrder]);
+    if (data !== null) setShowOrder(JSON.parse(data));
+  }, []);
 
   return (
     <div className="w-full flex flex-col items-center gap-8">
@@ -42,10 +48,7 @@ export default function AdminActions({
           className={`w-36 px-3 py-2 rounded-lg bg-transparent outline outline-1 hover:outline-2 outline-offset-2 hover:outline-offset-0 outline-neutral-800 ${
             showList && "outline-2 outline-offset-0 font-medium"
           }`}
-          onClick={() => {
-            setShowList(!showList);
-            setShowOrder(false);
-          }}
+          onClick={toggleList}
         >
           Categories
         </button>
@@ -53,10 +56,7 @@ export default function AdminActions({
           className={`w-36 px-3 py-2 rounded-lg bg-transparent outline outline-1 hover:outline-2 outline-offset-2 hover:outline-offset-0 outline-neutral-800 ${
             showOrder && "outline-2 outline-offset-0 font-medium"
           }`}
-          onClick={() => {
-            setShowOrder(!showOrder);
-            setShowList(false);
-          }}
+          onClick={toggleOrder}
         >
           Orders
         </button>
