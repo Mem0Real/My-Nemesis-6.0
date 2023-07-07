@@ -3,12 +3,9 @@ import { compare } from "bcryptjs";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 export const authOptions = {
-  session: {
-    strategy: "jwt",
-  },
   providers: [
     CredentialsProvider({
-      name: "Sign in",
+      name: "Credentials",
       credentials: {
         email: {
           label: "Email",
@@ -21,7 +18,7 @@ export const authOptions = {
       },
       async authorize(credentials) {
         if (!credentials?.email || !credentials.password) {
-          return null;
+          throw new Error("Empty email or password.");
         }
 
         const user = await prisma.user.findUnique({
@@ -29,7 +26,7 @@ export const authOptions = {
         });
 
         if (!user || !(await compare(credentials.password, user.password))) {
-          return null;
+          throw new Error("User does not exist.");
         }
 
         return {
@@ -41,29 +38,9 @@ export const authOptions = {
       },
     }),
   ],
-  callbacks: {
-    session: ({ session, token }) => {
-      console.log("Session Callback", { session, token });
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          id: token.id,
-          randomKey: token.randomKey,
-        },
-      };
-    },
-    jwt: ({ token, user }) => {
-      console.log("JWT Callback", { token, user });
-      if (user) {
-        const u = user;
-        return {
-          ...token,
-          id: u.id,
-          randomKey: u.randomKey,
-        };
-      }
-      return token;
-    },
+  pages: {
+    signIn: "/login",
+    signOut: "/",
+    error: "/login",
   },
 };

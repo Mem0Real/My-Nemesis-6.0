@@ -1,5 +1,8 @@
 import prisma from "@/lib/prisma";
 
+import { authOptions } from "@/lib/auth";
+import { getServerSession } from "next-auth";
+
 import { create, update, deleteItem } from "./listActions";
 import { removeOne, removeAll, markDelivered } from "./orderActions";
 
@@ -34,6 +37,17 @@ async function orderList() {
 }
 
 export default async function DashboardPage() {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/dashboard/login",
+        permanent: false,
+      },
+    };
+  }
+
   let url;
   if (process.env.NODE_ENV === "development") url = process.env.LOCAL_URL;
   else url = process.env.PRODUCTION_URL;

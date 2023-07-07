@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, createContext, useContext } from "react";
-import { useSession } from "next-auth/react";
+import { useSession, signIn, signOut } from "next-auth/react";
 
 import Link from "next/link";
 import { Poppins, Raleway } from "next/font/google";
@@ -9,16 +9,9 @@ import { Poppins, Raleway } from "next/font/google";
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 import { SearchOutlined } from "@mui/icons-material";
 
-import {
-  LoginButton,
-  LogoutButton,
-  DashboardButton,
-} from "./buttons.component";
 import SearchModal from "../search/(searchModal)/SearchModal";
 import Cart from "../cart/Cart";
 import { useProductContext } from "@/context/productContext";
-
-import { signOut, useSession } from "next-auth/react";
 
 const FunctionsContext = createContext({});
 
@@ -38,6 +31,8 @@ export default function NavComponents({ data, getAll, getOne }) {
   const [searchModal, showSearchModal] = useState(false);
   const [cartModal, showCartModal] = useState(false);
   const [newCart, setNewCart] = useState(false);
+
+  const { data: session } = useSession();
 
   const menuRef = useRef();
   const { update, setUpdate } = useProductContext();
@@ -82,8 +77,6 @@ export default function NavComponents({ data, getAll, getOne }) {
     setUpdate(!update);
   };
 
-  const session = useSession();
-  console.log(JSON.stringify(session));
   return (
     <div ref={menuRef} className="w-full">
       {/* Buttons */}
@@ -121,6 +114,11 @@ export default function NavComponents({ data, getAll, getOne }) {
               About
             </div>
           </Link>
+          <Link href="/dashboard">
+            <div className="underline underline-offset-8 hover:underline-offset-4">
+              Dashboard
+            </div>
+          </Link>
           {/* <Link href="/dashboard">
             <div className="underline underline-offset-8 hover:underline-offset-4">
               Dashboard
@@ -129,14 +127,12 @@ export default function NavComponents({ data, getAll, getOne }) {
           {/* <div className="underline underline-offset-8 hover:underline-offset-4">
             <LoginButton />
           </div> */}
-          {session.status === "authenticated" ? (
-            <div className="underline underline-offset-8 hover:underline-offset-4">
-              <DashboardButton />
-            </div>
-          ) : (
-            <div className="underline underline-offset-8 hover:underline-offset-4">
-              <LogoutButton />
-            </div>
+          {session && (
+            <button onClick={() => signOut()}>
+              <div className="underline underline-offset-8 hover:underline-offset-4 text-red-500">
+                Logout
+              </div>
+            </button>
           )}
 
           <button
@@ -218,23 +214,24 @@ export default function NavComponents({ data, getAll, getOne }) {
               About
             </Link>
           </li>
-          {/* <li>
+          <li>
             <Link
               href="/dashboard"
               className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
             >
               Dashboard
             </Link>
-          </li> */}
-          <li>
-            <LoginButton />
           </li>
-          <li>
-            <DashboardButton />
-          </li>
-          <li>
-            <LogoutButton />
-          </li>
+          {session && (
+            <li className="relative py-6">
+              <button
+                onClick={() => signOut()}
+                className="block absolute right-4 top-2 z-10 mt-4 border rounded-xl lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-red-700 border-spacing-y-2 py-3 px-4 font-medium"
+              >
+                Logout
+              </button>
+            </li>
+          )}
         </ul>
       </div>
 
