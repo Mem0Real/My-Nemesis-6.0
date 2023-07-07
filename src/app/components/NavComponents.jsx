@@ -5,11 +5,14 @@ import { useEffect, useState, useRef, createContext, useContext } from "react";
 import Link from "next/link";
 import { Poppins, Raleway } from "next/font/google";
 
-import SearchModal from "../search/(searchModal)/SearchModal";
 import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
-import { SearchOutlined } from "@mui/icons-material";
+import { SearchOutlined, ShoppingCart } from "@mui/icons-material";
+import { Badge } from "@mui/icons-material";
+
+import SearchModal from "../search/(searchModal)/SearchModal";
 import Cart from "../cart/Cart";
 import { useProductContext } from "@/context/productContext";
+import { Box } from "@mui/material";
 
 const FunctionsContext = createContext({});
 
@@ -114,6 +117,7 @@ export default function NavComponents({ data, getAll, getOne }) {
               Dashboard
             </div>
           </Link>
+
           <button
             name="cart"
             type="button"
@@ -121,6 +125,7 @@ export default function NavComponents({ data, getAll, getOne }) {
             className="relative"
           >
             <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
+
             {newCart && (
               <div className="absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5" />
             )}

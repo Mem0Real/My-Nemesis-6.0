@@ -20,7 +20,7 @@ export default function Order({
   removeAll,
   markDelivered,
 }) {
-  const [showDelivered, setShowDelivered] = useState(true);
+  const [delivered, showDelivered] = useState(false);
 
   const [deliverModal, showDeliverModal] = useState(false);
   const [deliverData, setDeliverData] = useState({});
@@ -31,9 +31,17 @@ export default function Order({
   const [removeAlert, showRemoveAlert] = useState(false);
   const [removeData, setRemoveData] = useState({});
 
-  const hideDelivered = (entry, id) => {
-    setShowDelivered(false);
-    setDeliverData(() => ({ entry: entry, id: id }));
+  useEffect(() => {
+    const data = JSON.parse(localStorage.getItem("Delivered_State"));
+    if (data !== null) showDelivered(data);
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem("Delivered_State", JSON.stringify(delivered));
+  }, [delivered]);
+
+  const toggleDelivered = () => {
+    showDelivered(!delivered);
   };
 
   const handleRemove = (entry, id) => {
@@ -51,35 +59,43 @@ export default function Order({
   };
 
   return (
-    <OrderDataContext.Provider value={{ hideDelivered, order, url }}>
+    <OrderDataContext.Provider
+      value={{ order, url, delivered, markDelivered, removeOne }}
+    >
       <div className="flex-flex-col w-full items-center justify-center relative min-h-screen h-fit bg-neutral-200 text-neutral-900 md:mt-6">
         <h1 className="text-2xl font-mono font-thin mt-2 underline underline-offset-4 text-center">
           Order list
         </h1>
         <div className="md:mt-6 md:pb-5 shadow-md shadow-black">
           <Suspense fallback={<h1>Loading...</h1>}>
-            <OrderTable
-              order={order}
-              url={url}
-              showDelivered={showDelivered}
-              removeOne={removeOne}
-              removeAll={removeAll}
-              markDelivered={markDelivered}
-            />
+            <OrderTable />
           </Suspense>
 
           <div className="flex w-full justify-center items-center md:mt-3 gap-6">
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => hideDelivered()}
-            >
-              Cache Completed
-            </Button>
+            {delivered ? (
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => toggleDelivered()}
+                className="capitalize"
+              >
+                Hide delivered
+              </Button>
+            ) : (
+              <Button
+                variant="outlined"
+                color="primary"
+                onClick={() => toggleDelivered()}
+                className="capitalize"
+              >
+                Show delivered
+              </Button>
+            )}
             <Button
               variant="outlined"
               color="error"
               onClick={() => handleRemoveAll("customers")}
+              className="capitalize"
             >
               Remove all
             </Button>
