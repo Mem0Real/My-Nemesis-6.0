@@ -18,24 +18,28 @@ export default function Orders({ customerId }) {
   const orders = order[1];
 
   const subTotal = () => {
-    let allPrice = orders.map((items) => {
-      return parseFloat(items.productPrice);
+    let userDebt = [];
+    orders.map((items) => {
+      if (items.customerId === customerId) {
+        userDebt.push(parseFloat(items.productPrice));
+      }
     });
-    allPrice = allPrice.reduce((sum, i) => sum + i, 0);
+    let allPrice = userDebt.reduce((sum, i) => sum + i, 0);
     return allPrice.toFixed(2);
   };
 
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
-
-    // These options are needed to round to whole numbers if that's what you want.
-    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
   });
 
   let totalPrice = subTotal();
   totalPrice = formatter.format(totalPrice);
+
+  const currentOrder = orders.filter(
+    (order) => order.customerId === customerId
+  );
+
   return (
     <Paper
       sx={{
@@ -73,43 +77,52 @@ export default function Orders({ customerId }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {orders.map(
-              (order) =>
-                order.customerId == customerId && (
-                  <React.Fragment key={order.id}>
-                    <TableRow>
-                      <TableCell component="th" scope="row" align="center">
-                        {order.productName}
-                      </TableCell>
-                      <TableCell align="center">
-                        {order.orderedQuantity}
-                      </TableCell>
-                      <TableCell
-                        align="center"
-                        className="flex gap-2 items-center justify-center"
-                      >
-                        {formatter.format(
-                          parseFloat(order.productPrice).toFixed(2)
-                        )}
-                        <span className="text-xs italic text-neutral-500">
-                          ETB
-                        </span>
-                      </TableCell>
-                    </TableRow>
-                  </React.Fragment>
-                )
+            {currentOrder.length > 0 ? (
+              currentOrder.map((order) => (
+                <React.Fragment key={order.id}>
+                  <TableRow>
+                    <TableCell component="th" scope="row" align="center">
+                      {order.productName}
+                    </TableCell>
+                    <TableCell align="center">
+                      {order.orderedQuantity}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                      className="flex gap-2 items-center justify-center"
+                    >
+                      {formatter.format(
+                        parseFloat(order.productPrice).toFixed(2)
+                      )}
+                      <span className="text-xs italic text-neutral-500">
+                        ETB
+                      </span>
+                    </TableCell>
+                  </TableRow>
+                </React.Fragment>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell />
+                <TableCell>
+                  <h1 className="text-center text-neutral-900">Empty order</h1>
+                </TableCell>
+                <TableCell />
+              </TableRow>
             )}
-            <TableRow>
-              <TableCell />
-              <TableCell />
-              <TableCell
-                align="left"
-                className="pt-6 align-baseline border-t-1 border-b-0 border-neutral-800 flex gap-2 items-center justify-center"
-              >
-                Total Price: {totalPrice}
-                <span className="text-xs italic text-neutral-500">ETB</span>
-              </TableCell>
-            </TableRow>
+            {currentOrder.length > 0 && (
+              <TableRow>
+                <TableCell />
+                <TableCell />
+                <TableCell
+                  align="left"
+                  className="pt-6 align-baseline border-t-1 border-b-0 border-neutral-800 flex gap-2 items-center justify-center"
+                >
+                  Total Price: {totalPrice}
+                  <span className="text-xs italic text-neutral-500">ETB</span>
+                </TableCell>
+              </TableRow>
+            )}
           </TableBody>
         </Table>
       </TableContainer>
