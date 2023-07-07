@@ -71,6 +71,13 @@ model Orders {
   customerId              String
 }
 
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+}
+
 generator client {
   provider = "prisma-client-js"
   previewFeatures = ["fullTextSearch"]

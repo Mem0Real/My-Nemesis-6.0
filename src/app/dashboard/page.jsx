@@ -53,7 +53,6 @@ export default async function DashboardPage() {
           Admin
         </h1>
       </div>
-
       <AdminActions
         data={list}
         create={create}

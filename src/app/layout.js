@@ -3,6 +3,7 @@ import Footer from "./components/Footer";
 
 import "./globals.css";
 import ProductDataContext from "@/context/productContext";
+import { NextAuthProvider } from "./providers";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -14,15 +15,17 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <ProductDataContext>
-          <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative">
-            <Navbar />
-            <div className={`min-h-screen`}>{children}</div>
-            <div className="w-full">
-              <Footer />
+        <NextAuthProvider>
+          <ProductDataContext>
+            <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative">
+              <Navbar />
+              <div className={`min-h-screen`}>{children}</div>
+              <div className="w-full">
+                <Footer />
+              </div>
             </div>
-          </div>
-        </ProductDataContext>
+          </ProductDataContext>
+        </NextAuthProvider>
       </body>
     </html>
   );
