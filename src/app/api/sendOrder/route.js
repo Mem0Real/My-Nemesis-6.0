@@ -38,7 +38,7 @@ export async function POST(request) {
     customerId: firstName,
   }));
 
-  const res2 = await prisma.order.createMany({
+  const res2 = await prisma.orders.createMany({
     data,
   });
 

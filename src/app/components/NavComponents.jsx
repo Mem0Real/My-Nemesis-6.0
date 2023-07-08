@@ -49,18 +49,6 @@ export default function NavComponents({ data, getAll, getOne }) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // useEffect(() => {
-  //   const cart = JSON.parse(localStorage.getItem("Cart"));
-  //   if (cart?.length > 0) {
-  //     localStorage.setItem("Cart_State", JSON.stringify(true));
-  //     setNewCart(() => true);
-  //   } else {
-  //     localStorage.setItem("Cart_State", JSON.stringify(false));
-  //     setNewCart(() => false);
-  //   }
-  // }, []);
-
-  console.log(update);
   useEffect(() => {
     const cartState = JSON.parse(localStorage.getItem("Cart_State"));
     if (cartState && cartState === true) {
