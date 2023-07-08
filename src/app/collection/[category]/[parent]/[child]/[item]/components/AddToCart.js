@@ -17,19 +17,21 @@ export default function AddToCart({ modal, closeModal, item }) {
 
   // Set quantity to 1
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
-    if (cart?.length > 0) {
-      cart.map((product) => {
-        if (product.id === item.id) {
-          setAmount(parseInt(product.amount));
-        } else {
-          setAmount(() => 1);
-        }
-      });
-    } else {
-      setAmount(() => 1);
+    if (modal === true) {
+      const cart = JSON.parse(localStorage.getItem("Cart"));
+      if (cart?.length > 0) {
+        cart.map((product) => {
+          if (product.id === item.id) {
+            setAmount(parseInt(product.amount));
+          } else {
+            setAmount(() => 1);
+          }
+        });
+      } else {
+        setAmount(() => 1);
+      }
     }
-  }, [update, item]);
+  }, [update, item.id, modal]);
 
   // Store total price
   useEffect(() => {
@@ -48,18 +50,17 @@ export default function AddToCart({ modal, closeModal, item }) {
   }, [amount, item.quantity]);
 
   useEffect(() => {
-    window.localStorage.setItem("Cart_State", JSON.stringify(newCart));
-    setUpdate(!update);
-  }, [newCart, update, setUpdate]);
-
-  useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("Cart"));
     if (cart?.length > 0) {
-      setNewCart(true);
+      setNewCart(() => true);
     } else {
-      setNewCart(false);
+      setNewCart(() => false);
     }
-  }, []);
+  }, [update]);
+
+  useEffect(() => {
+    window.localStorage.setItem("Cart_State", JSON.stringify(newCart));
+  }, [newCart]);
 
   const handleChange = (e) => {
     if (e.target.value > 0) {
@@ -71,8 +72,9 @@ export default function AddToCart({ modal, closeModal, item }) {
     e.preventDefault();
     storeProduct(item.id, remainingQuantity);
     addCartData(item.id, item.name, item.quantity, amount, item.price);
-    setNewCart(true);
-    setUpdate(!update);
+    setNewCart(() => true);
+    setUpdate((prev) => !prev);
+    window.localStorage.setItem("Cart_State", JSON.stringify(true));
     closeModal();
   };
 

@@ -26,7 +26,6 @@ export default function Cart({ closeCart, modal }) {
   useEffect(() => {
     const cart = JSON.parse(localStorage.getItem("Cart"));
     if (cart?.length > 0) {
-      console.log("Cart");
       setData(() => true);
       setCartList(() => cart);
     } else {
@@ -36,33 +35,34 @@ export default function Cart({ closeCart, modal }) {
 
   const handleMinus = (id) => {
     subtractQuantity(id);
-    setUpdate(!update);
+    setUpdate((prev) => !prev);
   };
 
   const handlePlus = (id) => {
     addQuantity(id);
-    setUpdate(!update);
+    setUpdate((prev) => !prev);
   };
 
   const handleChange = (id, e) => {
     changeQuantity(id, e.target.value);
-    setUpdate(!update);
+    setUpdate((prev) => !prev);
   };
 
   const handleRemove = (id) => {
     removeItem(id);
-    setUpdate(!update);
+    setUpdate((prev) => !prev);
   };
 
   const clearCart = () => {
     localStorage.setItem("Cart", JSON.stringify([]));
     localStorage.setItem("Product", JSON.stringify([]));
+    localStorage.setItem("Cart_State", JSON.stringify(false));
 
+    setUpdate((prev) => !prev);
     setCartList(() => []);
     setData(() => false);
 
-    setUpdate(!update);
-    closeCart();
+    // closeCart();
   };
 
   const handleOrder = () => {

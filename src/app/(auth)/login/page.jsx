@@ -82,7 +82,7 @@ export default function LoginPage() {
               className="capitalize"
               type="submit"
             >
-              SignIn
+              Sign In
             </Button>
           </div>
         </div>

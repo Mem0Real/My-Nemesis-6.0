@@ -49,15 +49,23 @@ export default function NavComponents({ data, getAll, getOne }) {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
+  // useEffect(() => {
+  //   const cart = JSON.parse(localStorage.getItem("Cart"));
+  //   if (cart?.length > 0) {
+  //     localStorage.setItem("Cart_State", JSON.stringify(true));
+  //     setNewCart(() => true);
+  //   } else {
+  //     localStorage.setItem("Cart_State", JSON.stringify(false));
+  //     setNewCart(() => false);
+  //   }
+  // }, []);
+
+  console.log(update);
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
-    if (cart?.length > 0) {
-      localStorage.setItem("Cart_State", JSON.stringify(true));
+    const cartState = JSON.parse(localStorage.getItem("Cart_State"));
+    if (cartState && cartState === true) {
       setNewCart(() => true);
-    } else {
-      localStorage.setItem("Cart_State", JSON.stringify(false));
-      setNewCart(() => false);
-    }
+    } else setNewCart(() => false);
   }, [update]);
 
   const handleSearch = () => {
@@ -74,7 +82,7 @@ export default function NavComponents({ data, getAll, getOne }) {
 
   const closeCart = () => {
     showCartModal(false);
-    setUpdate(!update);
+    setUpdate((prev) => !prev);
   };
 
   return (
@@ -93,7 +101,6 @@ export default function NavComponents({ data, getAll, getOne }) {
               Search products...
             </p>
             <span className="pr-4 -ml-7">
-              {/* <FontAwesomeIcon icon={faMagnifyingGlass} /> */}
               <SearchOutlined fontSize="small" />
             </span>
           </button>
@@ -119,14 +126,6 @@ export default function NavComponents({ data, getAll, getOne }) {
               Dashboard
             </div>
           </Link>
-          {/* <Link href="/dashboard">
-            <div className="underline underline-offset-8 hover:underline-offset-4">
-              Dashboard
-            </div>
-          </Link> */}
-          {/* <div className="underline underline-offset-8 hover:underline-offset-4">
-            <LoginButton />
-          </div> */}
           {session && (
             <button onClick={() => signOut()}>
               <div className="underline underline-offset-8 hover:underline-offset-4 text-red-500">
