@@ -39,18 +39,13 @@ async function orderList() {
 export default async function DashboardPage() {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
-    return {
-      redirect: {
-        destination: "/dashboard/login",
-        permanent: false,
-      },
-    };
-  }
-
-  let url;
-  if (process.env.NODE_ENV === "development") url = process.env.LOCAL_URL;
-  else url = process.env.PRODUCTION_URL;
+  // if (!session) {
+  //   return {
+  //     redirect: {
+  //       destination: "/dashboard/login",
+  //       permanent: false,
+  //     },}
+  // }
 
   const listData = categoryList();
   const orderData = orderList();
@@ -75,7 +70,6 @@ export default async function DashboardPage() {
         removeOne={removeOne}
         removeAll={removeAll}
         markDelivered={markDelivered}
-        url={url}
         order={order}
       />
     </div>
