@@ -37,16 +37,6 @@ async function orderList() {
 }
 
 export default async function DashboardPage() {
-  const session = await getServerSession(authOptions);
-
-  // if (!session) {
-  //   return {
-  //     redirect: {
-  //       destination: "/dashboard/login",
-  //       permanent: false,
-  //     },}
-  // }
-
   const listData = categoryList();
   const orderData = orderList();
 

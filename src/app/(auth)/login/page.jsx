@@ -1,19 +1,27 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@mui/material";
-import { signIn } from "next-auth/react";
 import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
+
+import { Button } from "@mui/material";
+import { toast } from "react-hot-toast";
 
 export default function LoginPage() {
   const [error, setError] = useState("");
 
   const router = useRouter();
-  const { status } = useSession();
+  const session = useSession();
 
   const callbackUrl = router.query?.callbackUrl ?? "/";
+
+  useEffect(() => {
+    if (session?.status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [router, session.status]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,8 +37,10 @@ export default function LoginPage() {
 
     if (result?.error) {
       setError(result.error);
+      toast.error(result.error);
     } else {
-      router.push(callbackUrl);
+      toast.success("Logged in successfully!");
+      router?.push(callbackUrl);
     }
   };
 
@@ -50,6 +60,7 @@ export default function LoginPage() {
               name="email"
               className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              autoComplete="email"
             />
 
             <label
@@ -65,6 +76,7 @@ export default function LoginPage() {
               name="password"
               className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
               placeholder=" "
+              autoComplete="current-password"
             />
 
             <label

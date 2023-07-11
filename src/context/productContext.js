@@ -61,7 +61,7 @@ export default function ProductDataContext({ children }) {
       const cartCache = cart.find((item) => item.id === id);
 
       if (cartCache) {
-        let cartItems = cartData.map((item) => {
+        let cartItems = cart.map((item) => {
           if (item.id === id) {
             return {
               ...item,
@@ -74,6 +74,7 @@ export default function ProductDataContext({ children }) {
 
         setCartData(cartItems);
         localStorage.setItem("Cart", JSON.stringify(cartItems));
+        console.log("Item exist in cache: ", cartItems);
       } else {
         const newCartItem = {
           id: id,
@@ -86,6 +87,7 @@ export default function ProductDataContext({ children }) {
 
         setCartData((prev) => [...prev, newCartItem]);
         cart.push(newCartItem);
+        console.log("Item doesnt exist in cache: ", cart);
         localStorage.setItem("Cart", JSON.stringify(cart));
       }
     } else {

@@ -32,7 +32,15 @@ export default function NavComponents({ data, getAll, getOne }) {
   const [cartModal, showCartModal] = useState(false);
   const [newCart, setNewCart] = useState(false);
 
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+
+  // useEffect(() => {
+  //   const visibilityHandler = () =>
+  //     document.visibilityState === "visible" && updater();
+  //   window.addEventListener("visibilitychange", visibilityHandler, false);
+  //   return () =>
+  //     window.removeEventListener("visibilitychange", visibilityHandler, false);
+  // }, [updater]);
 
   const menuRef = useRef();
   const { update, setUpdate } = useProductContext();
@@ -93,7 +101,7 @@ export default function NavComponents({ data, getAll, getOne }) {
             </span>
           </button>
         </div>
-        <div className="flex justify-end gap-2 md:gap-7 lg:gap-10">
+        <div className="flex justify-end items-center gap-2 md:gap-7 lg:gap-10">
           <Link href="/collection">
             <div className="underline underline-offset-8 hover:underline-offset-4">
               Collection
@@ -114,13 +122,14 @@ export default function NavComponents({ data, getAll, getOne }) {
               Dashboard
             </div>
           </Link>
-          {session && (
-            <button onClick={() => signOut()}>
-              <div className="underline underline-offset-8 hover:underline-offset-4 text-red-500">
-                Logout
-              </div>
-            </button>
-          )}
+          <div
+            className={`border-red-800 px-2 py-1 rounded-md cursor-pointer transition-all ease-in-out border-b shadow-sm shadow-red-800/70 hover:shadow-red-500/70 ${
+              !session && "hidden"
+            }`}
+            onClick={() => signOut()}
+          >
+            Logout
+          </div>
 
           <button
             name="cart"
@@ -130,9 +139,11 @@ export default function NavComponents({ data, getAll, getOne }) {
           >
             <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
 
-            {newCart && (
-              <div className="absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5" />
-            )}
+            <div
+              className={`absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5 ${
+                !newCart && "hidden"
+              }`}
+            />
           </button>
         </div>
       </div>

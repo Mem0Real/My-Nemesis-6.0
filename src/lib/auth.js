@@ -1,5 +1,4 @@
 import prisma from "./prisma";
-import { PrismaAdapter } from "@auth/prisma-adapter";
 
 import { compare } from "bcryptjs";
 import CredentialsProvider from "next-auth/providers/credentials";
@@ -11,7 +10,6 @@ if (!process.env.NEXTAUTH_SECRET) {
 }
 
 export const authOptions = {
-  // adapter: PrismaAdapter(prisma),
   session: {
     strategy: "jwt",
   },
@@ -52,13 +50,37 @@ export const authOptions = {
           id: user.id + "",
           email: user.email,
           name: user.name,
+          randomKey: "My Nemesis",
         };
       },
     }),
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/login",
     signOut: "/",
     error: "/login",
+  },
+  callbacks: {
+    session: ({ session, token }) => {
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          randomKey: token.randomKey,
+        },
+      };
+    },
+    jwt: ({ token, user }) => {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          randomKey: user.randomKey,
+        };
+      }
+      return token;
+    },
   },
 };
