@@ -7,7 +7,7 @@ const ProductContext = createContext({});
 export default function ProductDataContext({ children }) {
   const [data, setData] = useState([]);
   const [cartData, setCartData] = useState([]);
-  const [update, setUpdate] = useState(false);
+  const [updater, setUpdater] = useState(false);
   const [purchasedData, setPurchasedData] = useState([]);
 
   useEffect(() => {
@@ -74,7 +74,6 @@ export default function ProductDataContext({ children }) {
 
         setCartData(cartItems);
         localStorage.setItem("Cart", JSON.stringify(cartItems));
-        console.log("Item exist in cache: ", cartItems);
       } else {
         const newCartItem = {
           id: id,
@@ -87,7 +86,6 @@ export default function ProductDataContext({ children }) {
 
         setCartData((prev) => [...prev, newCartItem]);
         cart.push(newCartItem);
-        console.log("Item doesnt exist in cache: ", cart);
         localStorage.setItem("Cart", JSON.stringify(cart));
       }
     } else {
@@ -305,8 +303,8 @@ export default function ProductDataContext({ children }) {
         subtractQuantity,
         addQuantity,
         changeQuantity,
-        update,
-        setUpdate,
+        updater,
+        setUpdater,
         removeItem,
         purchasedData,
         setPurchasedData,

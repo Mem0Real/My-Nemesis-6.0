@@ -13,7 +13,8 @@ export default function AddToCart({ modal, closeModal, item }) {
   const [remainingQuantity, setRemainingQuantity] = useState();
   const [data, setData] = useState();
 
-  const { storeProduct, addCartData, update, setUpdate } = useProductContext();
+  const { storeProduct, addCartData, updater, setUpdater } =
+    useProductContext();
 
   // Set quantity to 1
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function AddToCart({ modal, closeModal, item }) {
         setAmount(() => 1);
       }
     }
-  }, [update, item.id, modal]);
+  }, [updater, item.id, modal]);
 
   // Store total price
   useEffect(() => {
@@ -56,7 +57,7 @@ export default function AddToCart({ modal, closeModal, item }) {
     } else {
       setNewCart(() => false);
     }
-  }, [update]);
+  }, [updater]);
 
   useEffect(() => {
     window.localStorage.setItem("Cart_State", JSON.stringify(newCart));
@@ -73,7 +74,7 @@ export default function AddToCart({ modal, closeModal, item }) {
     storeProduct(item.id, remainingQuantity);
     addCartData(item.id, item.name, item.quantity, amount, item.price);
     setNewCart(() => true);
-    setUpdate((prev) => !prev);
+    setUpdater((prev) => !prev);
     window.localStorage.setItem("Cart_State", JSON.stringify(true));
     closeModal();
   };

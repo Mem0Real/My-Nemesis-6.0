@@ -9,7 +9,8 @@ export default function Item({ item }) {
   const [modal, showModal] = useState(false);
   const [quantity, setQuantity] = useState();
 
-  const { data, update, purchasedData, setPurchasedData } = useProductContext();
+  const { data, updater, purchasedData, setPurchasedData } =
+    useProductContext();
 
   useEffect(() => {
     const product = JSON.parse(localStorage.getItem("Product"));
@@ -40,7 +41,7 @@ export default function Item({ item }) {
         setQuantity(() => item.quantity);
       }
     }
-  }, [data, update, item.id, item.quantity, purchasedData, setPurchasedData]);
+  }, [data, updater, item.id, item.quantity, purchasedData, setPurchasedData]);
 
   // Show image if any
   useEffect(() => {

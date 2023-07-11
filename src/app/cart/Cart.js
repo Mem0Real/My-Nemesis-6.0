@@ -19,8 +19,8 @@ export default function Cart({ closeCart, modal }) {
     addQuantity,
     changeQuantity,
     removeItem,
-    update,
-    setUpdate,
+    updater,
+    setUpdater,
   } = useProductContext();
 
   useEffect(() => {
@@ -31,26 +31,26 @@ export default function Cart({ closeCart, modal }) {
     } else {
       setData(() => false);
     }
-  }, [update]);
+  }, [updater]);
 
   const handleMinus = (id) => {
     subtractQuantity(id);
-    setUpdate((prev) => !prev);
+    setUpdater((prev) => !prev);
   };
 
   const handlePlus = (id) => {
     addQuantity(id);
-    setUpdate((prev) => !prev);
+    setUpdater((prev) => !prev);
   };
 
   const handleChange = (id, e) => {
     changeQuantity(id, e.target.value);
-    setUpdate((prev) => !prev);
+    setUpdater((prev) => !prev);
   };
 
   const handleRemove = (id) => {
     removeItem(id);
-    setUpdate((prev) => !prev);
+    setUpdater((prev) => !prev);
   };
 
   const clearCart = () => {
@@ -58,7 +58,7 @@ export default function Cart({ closeCart, modal }) {
     localStorage.setItem("Product", JSON.stringify([]));
     localStorage.setItem("Cart_State", JSON.stringify(false));
 
-    setUpdate((prev) => !prev);
+    setUpdater((prev) => !prev);
     setCartList(() => []);
     setData(() => false);
 

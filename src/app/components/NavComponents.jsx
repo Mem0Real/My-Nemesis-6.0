@@ -43,7 +43,7 @@ export default function NavComponents({ data, getAll, getOne }) {
   // }, [updater]);
 
   const menuRef = useRef();
-  const { update, setUpdate } = useProductContext();
+  const { updater, setUpdater } = useProductContext();
 
   useEffect(() => {
     let handler = (e) => {
@@ -62,7 +62,7 @@ export default function NavComponents({ data, getAll, getOne }) {
     if (cartState && cartState === true) {
       setNewCart(() => true);
     } else setNewCart(() => false);
-  }, [update]);
+  }, [updater]);
 
   const handleSearch = () => {
     showSearchModal(true);
@@ -78,7 +78,7 @@ export default function NavComponents({ data, getAll, getOne }) {
 
   const closeCart = () => {
     showCartModal(false);
-    setUpdate((prev) => !prev);
+    setUpdater((prev) => !prev);
   };
 
   return (
