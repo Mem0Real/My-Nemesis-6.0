@@ -10,9 +10,6 @@ if (!process.env.NEXTAUTH_SECRET) {
 }
 
 export const authOptions = {
-  session: {
-    strategy: "jwt",
-  },
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -31,7 +28,7 @@ export const authOptions = {
           throw new Error("Empty email or password.");
         }
 
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
           where: { email: credentials.email },
         });
 
@@ -55,10 +52,11 @@ export const authOptions = {
       },
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
   pages: {
     signIn: "/login",
-    signOut: "/",
     error: "/login",
   },
   callbacks: {
@@ -68,7 +66,6 @@ export const authOptions = {
         user: {
           ...session.user,
           id: token.id,
-          randomKey: token.randomKey,
         },
       };
     },
@@ -77,7 +74,6 @@ export const authOptions = {
         return {
           ...token,
           id: user.id,
-          randomKey: user.randomKey,
         };
       }
       return token;

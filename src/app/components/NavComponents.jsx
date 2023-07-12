@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, createContext, useContext } from "react";
-import { useSession, signIn, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 import Link from "next/link";
 import { Poppins, Raleway } from "next/font/google";
@@ -12,6 +12,7 @@ import { SearchOutlined } from "@mui/icons-material";
 import SearchModal from "../search/(searchModal)/SearchModal";
 import Cart from "../cart/Cart";
 import { useProductContext } from "@/context/productContext";
+import { useRouter } from "next/navigation";
 
 const FunctionsContext = createContext({});
 
@@ -32,19 +33,20 @@ export default function NavComponents({ data, getAll, getOne }) {
   const [cartModal, showCartModal] = useState(false);
   const [newCart, setNewCart] = useState(false);
 
-  const { data: session, status } = useSession();
+  const { data: session, status, update } = useSession();
 
-  // useEffect(() => {
-  //   const visibilityHandler = () =>
-  //     document.visibilityState === "visible" && updater();
-  //   window.addEventListener("visibilitychange", visibilityHandler, false);
-  //   return () =>
-  //     window.removeEventListener("visibilitychange", visibilityHandler, false);
-  // }, [updater]);
+  useEffect(() => {
+    const visibilityHandler = () =>
+      document.visibilityState === "visible" && update();
+    window.addEventListener("visibilitychange", visibilityHandler, false);
+    return () =>
+      window.removeEventListener("visibilitychange", visibilityHandler, false);
+  }, [update]);
 
   const menuRef = useRef();
   const { updater, setUpdater } = useProductContext();
 
+  const router = useRouter();
   useEffect(() => {
     let handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
@@ -79,6 +81,11 @@ export default function NavComponents({ data, getAll, getOne }) {
   const closeCart = () => {
     showCartModal(false);
     setUpdater((prev) => !prev);
+  };
+
+  const handleSignOut = async () => {
+    await signOut({ redirect: false });
+    router.push("/");
   };
 
   return (
@@ -126,7 +133,7 @@ export default function NavComponents({ data, getAll, getOne }) {
             className={`border-red-800 px-2 py-1 rounded-md cursor-pointer transition-all ease-in-out border-b shadow-sm shadow-red-800/70 hover:shadow-red-500/70 ${
               !session && "hidden"
             }`}
-            onClick={() => signOut()}
+            onClick={handleSignOut}
           >
             Logout
           </div>
@@ -223,7 +230,7 @@ export default function NavComponents({ data, getAll, getOne }) {
           {session && (
             <li className="relative py-6">
               <button
-                onClick={() => signOut()}
+                onClick={handleSignOut}
                 className="block absolute right-4 top-2 z-10 mt-4 border rounded-xl lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-red-700 border-spacing-y-2 py-3 px-4 font-medium"
               >
                 Logout

@@ -1,8 +1,5 @@
 import prisma from "@/lib/prisma";
 
-import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
-
 import { create, update, deleteItem } from "./listActions";
 import { removeOne, removeAll, markDelivered } from "./orderActions";
 
