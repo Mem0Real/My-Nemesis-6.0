@@ -76,7 +76,6 @@ export default function Edit({
     toast
       .promise(
         res,
-        "Item updated successfully!",
         {
           loading: "Loading",
           success: (data) => `Successfully updated ${editData.name}`,

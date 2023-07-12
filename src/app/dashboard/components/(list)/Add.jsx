@@ -44,16 +44,17 @@ export default function Add({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    console.log(addData);
     const formData = formatData(addData);
 
     const res = create(formData);
     toast
       .promise(
         res,
-        "Item created successfully!",
         {
-          loading: "Loading",
-          success: (data) => `Successfully created ${addData.id}`,
+          loading: "Loading...",
+          success: () =>
+            `Successfully created ${addData.name} inside ${addData.entry}`,
           error: (err) => `Error creating item: ${err.toString()}`,
         },
         {

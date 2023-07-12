@@ -31,6 +31,14 @@ const ToasterContext = () => {
               secondary: "black",
             },
           },
+          promise: {
+            style: {
+              minWidth: "250px",
+            },
+            success: {
+              duration: 5000,
+            },
+          },
         }}
       />
     </div>

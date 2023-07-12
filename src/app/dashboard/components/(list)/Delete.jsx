@@ -20,7 +20,6 @@ export default function Delete({
     toast
       .promise(
         res,
-        "Item removed successfully!",
         {
           loading: "Loading",
           success: (data) =>

@@ -63,10 +63,10 @@ export async function create(formData) {
             [category.name]: category.val,
           },
         });
-        return res;
+        console.log("Success");
       } catch (error) {
         console.log("Error: ", error);
-        throw new Error("Error creating item. ", error);
+        throw new Error(`Error creating item: ${error}`);
       }
     } else {
       try {
@@ -84,10 +84,9 @@ export async function create(formData) {
           },
         });
         console.log("Success");
-        return res;
       } catch (error) {
         console.log("Error: ", error);
-        throw new Error("Error creating item. ", error);
+        throw new Error(`Error creating item: ${error}`);
       }
     }
     revalidatePath("/collection");
@@ -227,7 +226,7 @@ export async function update(formData) {
         console.log("Success");
       } catch (error) {
         console.log("Error: ", error);
-        throw new Error("Error creating item. ", error);
+        throw new Error(`Error updating item. ${error}`);
       }
     } else {
       try {
@@ -249,6 +248,7 @@ export async function update(formData) {
         console.log("Success");
       } catch (error) {
         console.log("Error: ", error);
+        throw new Error(`Error updating item. ${error}`);
       }
     }
 
