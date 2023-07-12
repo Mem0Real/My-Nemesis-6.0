@@ -13,6 +13,7 @@ import SearchModal from "../search/(searchModal)/SearchModal";
 import Cart from "../cart/Cart";
 import { useProductContext } from "@/context/productContext";
 import { useRouter } from "next/navigation";
+import { setCookie } from "nookies";
 
 const FunctionsContext = createContext({});
 
@@ -85,6 +86,10 @@ export default function NavComponents({ data, getAll, getOne }) {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
+    setCookie(null);
+
+    // Refresh the page to update the session
+    router.refresh();
     router.push("/");
   };
 
