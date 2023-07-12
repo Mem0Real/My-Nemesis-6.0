@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
 import { useProductContext } from "@/context/productContext";
+import { toast } from "react-hot-toast";
 export default function ContactInfo({
   modal,
   closeInfoModal,
@@ -13,6 +14,8 @@ export default function ContactInfo({
   clearCart,
 }) {
   const [user, setUser] = useState({});
+  const [loading, setLoading] = useState(false);
+
   const { setPurchasedData } = useProductContext();
 
   const handleSubmit = async (e) => {
@@ -23,8 +26,8 @@ export default function ContactInfo({
     else if (process.env.NODE_ENV === "production")
       url = process.env.NEXT_PUBLIC_PRODUCTION_URL;
 
-    setPurchasedData(cartList);
-    const res = await fetch(`${url}/api/sendOrder`, {
+    setLoading(() => true);
+    const res = fetch(`${url}/api/sendOrder`, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -32,15 +35,38 @@ export default function ContactInfo({
       body: JSON.stringify({ user, cartList, orderTotalPrice }),
     });
 
-    if (!res.ok) {
-      throw new Error(
-        "Error sending order. Please check your network and try again."
-      );
-    }
-    console.log("Order sent! One of our employees will reach out to you soon.");
-    clearCart();
-    setUser(() => {});
-    closeInfoModal();
+    toast
+      .promise(
+        res,
+        {
+          loading: "Loading",
+          success: "Order sent successfully!",
+          error:
+            "Could not send order. Check your connectivity and try again later.",
+        },
+        {
+          style: {
+            minWidth: "250px",
+          },
+          success: {
+            duration: 5000,
+          },
+        }
+      )
+      .then(() => setLoading(() => false))
+      .then(() => setPurchasedData(cartList))
+      .then(() => clearCart())
+      .then(() => setUser(() => {}))
+      .then(() => closeInfoModal());
+    // if (!res.ok) {
+    //   throw new Error(
+    //     "Error sending order. Please check your network and try again."
+    //   );
+    // }
+    // console.log("Order sent! One of our employees will reach out to you soon.");
+    // clearCart();
+    // setUser(() => {});
+    // closeInfoModal();
   };
 
   const handleChange = (e) => {
@@ -135,6 +161,7 @@ export default function ContactInfo({
                     name="submit"
                     type="submit"
                     className="w-24 py-2 rounded outline outline-1 outline-green-600 hover:outline-2 active:outline-4 font-thin"
+                    disabled={loading}
                   >
                     Confirm
                   </button>
@@ -142,6 +169,7 @@ export default function ContactInfo({
                     name="cancel"
                     onClick={closeInfoModal}
                     className="w-24 py-2 rounded outline outline-1 outline-red-600 hover:outline-2 active:outline-4 font-thin"
+                    disabled={loading}
                   >
                     Cancel
                   </button>

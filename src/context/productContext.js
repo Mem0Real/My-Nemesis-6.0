@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
+import { toast } from "react-hot-toast";
 
 const ProductContext = createContext({});
 
@@ -74,6 +75,7 @@ export default function ProductDataContext({ children }) {
 
         setCartData(cartItems);
         localStorage.setItem("Cart", JSON.stringify(cartItems));
+        toast("Cart item updated!");
       } else {
         const newCartItem = {
           id: id,
@@ -87,6 +89,7 @@ export default function ProductDataContext({ children }) {
         setCartData((prev) => [...prev, newCartItem]);
         cart.push(newCartItem);
         localStorage.setItem("Cart", JSON.stringify(cart));
+        toast("Item added to cart!");
       }
     } else {
       let newCartItem = {
@@ -99,6 +102,8 @@ export default function ProductDataContext({ children }) {
       };
       setCartData(() => [newCartItem]);
       localStorage.setItem("Cart", JSON.stringify([newCartItem]));
+
+      toast("Item added to cart!");
     }
   };
 
@@ -115,7 +120,7 @@ export default function ProductDataContext({ children }) {
       setData((prev) => [...prev, newArray]);
       localStorage.setItem("Product", JSON.stringify(newArray));
     } else {
-      console.log("Item not found");
+      toast.error("Item not found!");
     }
   };
 

@@ -7,6 +7,7 @@ import Modal from "@mui/material/Modal";
 import ContactInfo from "./ContactInfo";
 import { Add, Remove, Clear } from "@mui/icons-material";
 import { useProductContext } from "@/context/productContext";
+import { toast } from "react-hot-toast";
 
 export default function Cart({ closeCart, modal }) {
   const [data, setData] = useState(false);
@@ -62,7 +63,10 @@ export default function Cart({ closeCart, modal }) {
     setCartList(() => []);
     setData(() => false);
 
-    // closeCart();
+    toast("Cart cleared!");
+    setTimeout(() => {
+      closeCart();
+    }, 100);
   };
 
   const handleOrder = () => {
