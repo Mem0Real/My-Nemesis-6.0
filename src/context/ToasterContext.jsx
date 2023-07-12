@@ -24,6 +24,13 @@ const ToasterContext = () => {
               secondary: "black",
             },
           },
+          error: {
+            duration: 3000,
+            theme: {
+              primary: "red",
+              secondary: "black",
+            },
+          },
         }}
       />
     </div>

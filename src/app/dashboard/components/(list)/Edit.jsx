@@ -6,6 +6,8 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import ImagePreview from "./ImagePreview";
 
+import { toast } from "react-hot-toast";
+
 export default function Edit({
   modal,
   closeEditModal,
@@ -70,11 +72,34 @@ export default function Edit({
     e.preventDefault();
     const formData = formatData(editData);
 
-    update(formData);
-
-    closeEditModal();
-    setImageSrc(null);
-    setImages([]);
+    const res = update(formData);
+    toast
+      .promise(
+        res,
+        "Item updated successfully!",
+        {
+          loading: "Loading",
+          success: (data) => `Successfully updated ${editData.name}`,
+          error: (err) => `Error updating item: ${err.toString()}`,
+        },
+        {
+          style: {
+            minWidth: "250px",
+          },
+          success: {
+            duration: 4000,
+          },
+        }
+      )
+      .then(() => {
+        closeEditModal();
+      })
+      .then(() => {
+        setImageSrc(() => null);
+      })
+      .then(() => {
+        setImages([]);
+      });
   };
 
   const handleClose = () => {

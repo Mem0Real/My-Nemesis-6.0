@@ -6,6 +6,8 @@ import formatData from "@/app/utils/format";
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 
+import { toast } from "react-hot-toast";
+
 export default function Add({
   modal,
   closeAddModal,
@@ -44,10 +46,34 @@ export default function Add({
 
     const formData = formatData(addData);
 
-    create(formData);
-    closeAddModal();
-    setImageSrc(null);
-    setImages([]);
+    const res = create(formData);
+    toast
+      .promise(
+        res,
+        "Item created successfully!",
+        {
+          loading: "Loading",
+          success: (data) => `Successfully created ${addData.id}`,
+          error: (err) => `Error creating item: ${err.toString()}`,
+        },
+        {
+          style: {
+            minWidth: "250px",
+          },
+          success: {
+            duration: 5000,
+          },
+        }
+      )
+      .then(() => {
+        closeAddModal();
+      })
+      .then(() => {
+        setImageSrc(null);
+      })
+      .then(() => {
+        setImages([]);
+      });
   };
   return (
     <Modal

@@ -6,6 +6,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 
+import { toast } from "react-hot-toast";
+
 export default function Delete({
   deleteAlert,
   closeDeleteModal,
@@ -14,12 +16,29 @@ export default function Delete({
   deleteItem,
 }) {
   const confirmDelete = async (deleteData) => {
-    try {
-      deleteItem(deleteData.entry, deleteData.data);
-      closeDeleteModal();
-    } catch (err) {
-      console.log(err);
-    }
+    const res = deleteItem(deleteData.entry, deleteData.data);
+    toast
+      .promise(
+        res,
+        "Item removed successfully!",
+        {
+          loading: "Loading",
+          success: (data) =>
+            `Successfully removed ${deleteData.data.name} from ${deleteData.entry}`,
+          error: (err) => `Error removing item: ${err.toString()}`,
+        },
+        {
+          style: {
+            minWidth: "250px",
+          },
+          success: {
+            duration: 4000,
+          },
+        }
+      )
+      .then(() => {
+        closeDeleteModal();
+      });
   };
   return (
     <div className="bg-neutral-900 text-neutral-200">
