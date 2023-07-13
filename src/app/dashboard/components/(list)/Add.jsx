@@ -54,7 +54,15 @@ export default function Add({
         {
           loading: "Loading...",
           success: () =>
-            `Successfully created ${addData.name} inside ${addData.entry}`,
+            `Successfully created ${addData.name} inside ${
+              addData.entry === "categories"
+                ? addData.entry
+                : addData.entry === "parents"
+                ? addData.categories
+                : addData.entry === "children"
+                ? addData.parents
+                : addData.entry === "items" && addData.children
+            }`,
           error: (err) => `Error creating item: ${err.toString()}`,
         },
         {
