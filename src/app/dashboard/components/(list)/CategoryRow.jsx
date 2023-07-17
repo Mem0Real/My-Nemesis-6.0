@@ -15,17 +15,8 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 
-function capitalize(str) {
-  return str
-    .split(" ")
-    .map((s) => {
-      return s.charAt(0).toUpperCase() + s.substr(1);
-    })
-    .join(" ");
-}
-
 export default function CategoryRow({ category }) {
-  const { data } = useDataContext();
+  const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
   const { catDropDown, cat } = useTableContext();
 
   const parents = data[1];
@@ -58,7 +49,7 @@ export default function CategoryRow({ category }) {
             href={`collection/${category.id}`}
             onClick={(e) => e.stopPropagation()}
           >
-            {capitalize(category.name)}
+            {category.name}
           </Link>
         </div>
       </td>
@@ -67,9 +58,18 @@ export default function CategoryRow({ category }) {
       </td>
       <td>
         <div className="flex items-center gap-3 px-6">
-          <PlusOutlined className="text-green-700" />
-          <EditOutlined className="text-blue-700" />
-          <DeleteOutlined className="text-red-700" />
+          <PlusOutlined
+            className="text-green-700"
+            onClick={() => handleAdd("parents", category.id)}
+          />
+          <EditOutlined
+            className="text-blue-700"
+            onClick={() => handleEdit("categories", category)}
+          />
+          <DeleteOutlined
+            className="text-red-700"
+            onClick={() => handleDelete("categories", category)}
+          />
         </div>
       </td>
     </tr>,

@@ -13,16 +13,8 @@ import {
 import { useDataContext } from "./List";
 import { useTableContext } from "./MyTable";
 
-const capitalize = (str) => {
-  return str
-    .split(" ")
-    .map((s) => {
-      return s.charAt(0).toUpperCase() + s.substr(1);
-    })
-    .join(" ");
-};
-export default function ChildRow({ parentId, child }) {
-  const { data } = useDataContext();
+export default function ChildRow({ categoryId, parentId, child }) {
+  const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
   const { par, childDropDown, chi } = useTableContext();
 
   const items = data[3];
@@ -63,7 +55,7 @@ export default function ChildRow({ parentId, child }) {
                     : ""
                 }`}
               />
-              {capitalize(child.name)}
+              {child.name}
             </div>
           </td>
           <td className="pl-6 py-2" onClick={toggleExpander}>
@@ -71,9 +63,20 @@ export default function ChildRow({ parentId, child }) {
           </td>
           <td>
             <div className="flex items-center gap-3 px-6">
-              <PlusOutlined className="text-green-700" />
-              <EditOutlined className="text-blue-700" />
-              <DeleteOutlined className="text-red-700" />
+              <PlusOutlined
+                className="text-green-700"
+                onClick={() =>
+                  handleAdd("items", categoryId, parentId, child.id)
+                }
+              />
+              <EditOutlined
+                className="text-blue-700"
+                onClick={() => handleEdit("children", child)}
+              />
+              <DeleteOutlined
+                className="text-red-700"
+                onClick={() => handleDelete("children", child)}
+              />
             </div>
           </td>
         </motion.tr>
@@ -99,12 +102,25 @@ export default function ChildRow({ parentId, child }) {
                 (item) =>
                   item.ChildId === child.id && (
                     <React.Fragment key={item.id}>
-                      <ItemRow childId={child.id} item={item} />
+                      <ItemRow
+                        categoryId={categoryId}
+                        parentId={parentId}
+                        childId={child.id}
+                        item={item}
+                      />
                     </React.Fragment>
                   )
               )}
             </tbody>
           </table>
+          <span className="w-full flex items-center justify-center py-3">
+            <button
+              className="px-3 py-2 rounded-md bg-green-700 text-neutral-200"
+              onClick={() => handleAdd("items", categoryId, parentId, child.id)}
+            >
+              Add Product
+            </button>
+          </span>
         </td>
       </tr>
     ),

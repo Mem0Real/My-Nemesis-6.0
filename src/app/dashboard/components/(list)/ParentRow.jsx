@@ -12,17 +12,8 @@ import {
 } from "@ant-design/icons";
 import { useTableContext } from "./MyTable";
 
-const capitalize = (str) => {
-  return str
-    .split(" ")
-    .map((s) => {
-      return s.charAt(0).toUpperCase() + s.substr(1);
-    })
-    .join(" ");
-};
-
 export default function ParentRow({ categoryId, parent }) {
-  const { data } = useDataContext();
+  const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
 
   const { cat, parDropDown, par } = useTableContext();
 
@@ -65,17 +56,26 @@ export default function ParentRow({ categoryId, parent }) {
                     : ""
                 }`}
               />
-              {capitalize(parent.name)}
+              {parent.name}
             </div>
           </td>
           <td className="pl-3 py-4" onClick={toggleExpander}>
-            {capitalize(parent.description)}
+            {parent.description}
           </td>
           <td>
             <div className="flex items-center gap-3 px-6">
-              <PlusOutlined className="text-green-700" />
-              <EditOutlined className="text-blue-700" />
-              <DeleteOutlined className="text-red-700" />
+              <PlusOutlined
+                className="text-green-700"
+                onClick={() => handleAdd("children", categoryId, parent.id)}
+              />
+              <EditOutlined
+                className="text-blue-700"
+                onClick={() => handleEdit("parents", parent)}
+              />
+              <DeleteOutlined
+                className="text-red-700"
+                onClick={() => handleDelete("parents", parent)}
+              />
             </div>
           </td>
         </motion.tr>
@@ -86,7 +86,11 @@ export default function ParentRow({ categoryId, parent }) {
       (child) =>
         child.ParentId === parent.id && (
           <React.Fragment key={child.id}>
-            <ChildRow parentId={parent.id} child={child} />
+            <ChildRow
+              categoryId={categoryId}
+              parentId={parent.id}
+              child={child}
+            />
           </React.Fragment>
         )
     ),
