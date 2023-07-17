@@ -1,30 +1,35 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
 import { useDataContext } from "./List";
 import ChildRow from "./ChildRow";
-import { RightOutlined } from "@ant-design/icons";
 import { AnimatePresence, motion } from "framer-motion";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  RightOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import { useTableContext } from "./MyTable";
 
-function capitalize(str) {
+const capitalize = (str) => {
   return str
     .split(" ")
     .map((s) => {
       return s.charAt(0).toUpperCase() + s.substr(1);
     })
     .join(" ");
-}
+};
 
-export default function ParentRow({ parent, expandedParent }) {
-  const [expanded, setExpanded] = useState(false);
-
+export default function ParentRow({ categoryId, parent }) {
   const { data } = useDataContext();
+
+  const { cat, parDropDown, par } = useTableContext();
 
   const children = data[2];
 
   const toggleExpander = (e) => {
-    setExpanded((prev) => !prev);
+    parDropDown(parent.id);
   };
 
   const variants = {
@@ -39,21 +44,25 @@ export default function ParentRow({ parent, expandedParent }) {
   };
   return [
     <AnimatePresence key={parent.id}>
-      {expandedParent && (
+      {cat.id === categoryId && cat.open === true && (
         <motion.tr
           key={parent.id}
-          animate={expandedParent ? "open" : "closed"}
+          animate={
+            cat.id === categoryId && cat.open === true ? "open" : "closed"
+          }
           variants={variants}
           exit={"closed"}
           className={`hover:border-b border-neutral-500 cursor-pointer ${
-            expanded && "border-b-2 hover:border-b-2 border-neutral-600"
+            par.id === parent.id && par.open === true && "font-semibold"
           }`}
         >
           <td className="pl-3 py-4" onClick={toggleExpander}>
             <div className="list-outside flex items-center gap-3">
               <RightOutlined
                 className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
-                  expanded ? "rotate-90 translate-x-0.5 translate-y-0.5" : ""
+                  par.id === parent.id && par.open === true
+                    ? "rotate-90 translate-x-0.5 translate-y-0.5"
+                    : ""
                 }`}
               />
               {capitalize(parent.name)}
@@ -73,14 +82,13 @@ export default function ParentRow({ parent, expandedParent }) {
       )}
     </AnimatePresence>,
 
-    expanded &&
-      children.map(
-        (child) =>
-          child.ParentId === parent.id && (
-            <React.Fragment key={child.id}>
-              <ChildRow child={child} expandedChild={expanded} />
-            </React.Fragment>
-          )
-      ),
+    children.map(
+      (child) =>
+        child.ParentId === parent.id && (
+          <React.Fragment key={child.id}>
+            <ChildRow parentId={parent.id} child={child} />
+          </React.Fragment>
+        )
+    ),
   ];
 }

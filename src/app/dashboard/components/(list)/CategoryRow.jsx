@@ -1,11 +1,19 @@
 "use client";
 
-import React, { useState } from "react";
-import { useDataContext } from "./List";
-import ParentRow from "./ParentRow";
-import { RightOutlined } from "@ant-design/icons";
+import React from "react";
+import Link from "next/link";
 
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import ParentRow from "./ParentRow";
+
+import { useDataContext } from "./List";
+import { useTableContext } from "./MyTable";
+
+import {
+  RightOutlined,
+  DeleteOutlined,
+  EditOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
 
 function capitalize(str) {
   return str
@@ -16,32 +24,42 @@ function capitalize(str) {
     .join(" ");
 }
 
-export default function CategoryRow({ category, index }) {
-  const [expanded, setExpanded] = useState(false);
-
+export default function CategoryRow({ category }) {
   const { data } = useDataContext();
+  const { catDropDown, cat } = useTableContext();
 
   const parents = data[1];
 
   const toggleExpander = () => {
-    setExpanded((prev) => !prev);
+    catDropDown(category.id);
   };
 
   return [
     <tr
       key={category.id}
       className={`hover:border-b border-neutral-500 cursor-pointer ${
-        expanded && "border-b-2 hover:border-b-2 border-neutral-700"
+        cat.id === category.id && cat.open === true && "font-semibold"
       }`}
     >
-      <td className="py-4" onClick={toggleExpander}>
-        <div className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300">
+      <td className="py-4">
+        <div
+          className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
+          onClick={toggleExpander}
+        >
           <RightOutlined
             className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
-              expanded ? "rotate-90 translate-x-0.5 translate-y-0.5" : ""
+              cat.id === category.id && cat.open === true
+                ? "rotate-90 translate-x-0.5 translate-y-0.5"
+                : ""
             }`}
           />
-          {capitalize(category.name)}
+          <Link
+            className="hover:underline underline-offset-4 z-10"
+            href={`collection/${category.id}`}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {capitalize(category.name)}
+          </Link>
         </div>
       </td>
       <td className="py-4 max-w-36" onClick={toggleExpander}>
@@ -59,7 +77,7 @@ export default function CategoryRow({ category, index }) {
       (parent) =>
         parent.CategoryId === category.id && (
           <React.Fragment key={parent.id}>
-            <ParentRow parent={parent} expandedParent={expanded} />
+            <ParentRow categoryId={category.id} parent={parent} />
           </React.Fragment>
         )
     ),

@@ -1,14 +1,123 @@
-import React, { Suspense } from "react";
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  Suspense,
+} from "react";
+
 import { useDataContext } from "./List";
 import CategoryRow from "./CategoryRow";
+
+const TableContext = createContext({});
 
 export default function MyTable() {
   const { data } = useDataContext();
 
   const categories = data[0];
 
+  const [cat, setCat] = useState({});
+  const [par, setPar] = useState({});
+  const [chi, setChi] = useState({});
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("CATEGORY");
+    if (data !== null) setCat(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("PARENT");
+    if (data !== null) setPar(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    const data = window.localStorage.getItem("CHILD");
+    if (data !== null) setChi(JSON.parse(data));
+  }, []);
+
+  useEffect(() => {
+    window.localStorage.setItem("CATEGORY", JSON.stringify(cat));
+  }, [cat]);
+
+  useEffect(() => {
+    window.localStorage.setItem("PARENT", JSON.stringify(par));
+  }, [par]);
+
+  useEffect(() => {
+    window.localStorage.setItem("CHILD", JSON.stringify(chi));
+  }, [chi]);
+
+  const catDropDown = (categoryId) => {
+    if (!cat.id) {
+      setCat({ id: categoryId, open: true });
+    } else {
+      if (cat.id === categoryId) {
+        setCat({ ...cat, open: !cat.open });
+        if (cat.open === true) {
+          setPar({ ...par, open: false });
+          setChi({ ...chi, open: false });
+        }
+      } else {
+        setCat({ id: cat.id, open: false });
+        setPar({ ...par, open: false });
+        setChi({ ...chi, open: false });
+        setCat({ id: categoryId, open: true });
+      }
+    }
+  };
+
+  const parDropDown = (parentId) => {
+    !par.id
+      ? setPar({ id: parentId, open: true })
+      : par.id === parentId && setPar({ ...par, open: !par.open });
+
+    if (!par.id) {
+      setPar({ id: parentId, open: true });
+    } else {
+      if (par.id === parentId) {
+        setPar({ ...par, open: !par.open });
+        if (par.open === true) {
+          setChi({ ...chi, open: false });
+        }
+      } else {
+        setPar({ id: par.id, open: false });
+        setChi({ ...chi, open: false });
+        setPar({ id: parentId, open: true });
+      }
+    }
+  };
+
+  const childDropDown = (childId) => {
+    !chi.id
+      ? setChi({ id: childId, open: true })
+      : chi.id === childId && setChi({ ...chi, open: !chi.open });
+
+    if (!chi.id) {
+      setChi({ id: childId, open: true });
+    } else {
+      if (chi.id === childId) {
+        setChi({ ...chi, open: !chi.open });
+      } else {
+        setChi({ id: chi.id, open: false });
+        setChi({ id: childId, open: true });
+      }
+    }
+  };
+
   return (
-    <main>
+    <TableContext.Provider
+      value={{
+        catDropDown,
+        parDropDown,
+        childDropDown,
+        cat,
+        par,
+        chi,
+        setCat,
+        setPar,
+        setChi,
+      }}
+    >
       <div className="table-container">
         <div className="uk-overflow-auto w-[96%] mx-auto">
           <table className="uk-table uk-table-hover uk-table-start uk-table-divider w-full">
@@ -35,6 +144,8 @@ export default function MyTable() {
           </table>
         </div>
       </div>
-    </main>
+    </TableContext.Provider>
   );
 }
+
+export const useTableContext = () => useContext(TableContext);

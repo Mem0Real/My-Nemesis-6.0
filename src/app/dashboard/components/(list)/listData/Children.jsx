@@ -120,7 +120,7 @@ export default function Children({ category, parent }) {
                             category={category}
                             parent={parent}
                             child={child}
-                          />{" "}
+                          />
                         </Suspense>
                       </Box>
                     </Collapse>

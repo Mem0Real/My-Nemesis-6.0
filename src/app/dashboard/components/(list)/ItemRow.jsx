@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { useTableContext } from "./MyTable";
 
 import {
   DeleteOutlined,
@@ -10,7 +11,18 @@ import {
   SwapRightOutlined,
 } from "@ant-design/icons";
 
-export default function ItemRow({ item, expandedItem }) {
+const capitalize = (str) => {
+  return str
+    .split(" ")
+    .map((s) => {
+      return s.charAt(0).toUpperCase() + s.substr(1);
+    })
+    .join(" ");
+};
+
+export default function ItemRow({ childId, item }) {
+  const { chi } = useTableContext();
+
   const variants = {
     open: {
       y: "10px",
@@ -23,10 +35,10 @@ export default function ItemRow({ item, expandedItem }) {
   };
   return [
     <AnimatePresence key={item.id}>
-      {expandedItem && (
+      {chi.id === childId && chi.open === true && (
         <motion.tr
           key={item.id}
-          animate={expandedItem ? "open" : "closed"}
+          animate={chi.id === childId && chi.open === true ? "open" : "closed"}
           variants={variants}
           exit={"closed"}
           className="border border-neutral-500"
