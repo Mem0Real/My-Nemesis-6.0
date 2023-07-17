@@ -1,8 +1,13 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+
 import { useDataContext } from "./List";
+import { useTableContext } from "./MyTable";
+
 import ChildRow from "./ChildRow";
+
 import { AnimatePresence, motion } from "framer-motion";
 import {
   RightOutlined,
@@ -10,7 +15,6 @@ import {
   EditOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-import { useTableContext } from "./MyTable";
 
 export default function ParentRow({ categoryId, parent }) {
   const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
@@ -47,8 +51,11 @@ export default function ParentRow({ categoryId, parent }) {
             par.id === parent.id && par.open === true && "font-semibold"
           }`}
         >
-          <td className="px-3 py-4" onClick={toggleExpander}>
-            <div className="list-outside flex items-center gap-3">
+          <td className="py-2">
+            <div
+              className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
+              onClick={toggleExpander}
+            >
               <RightOutlined
                 className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
                   par.id === parent.id && par.open === true
@@ -56,7 +63,13 @@ export default function ParentRow({ categoryId, parent }) {
                     : ""
                 }`}
               />
-              {parent.name}
+              <Link
+                className="hover:underline underline-offset-4 z-10"
+                href={`collection/${categoryId}/${parent.id}`}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {parent.name}
+              </Link>
             </div>
           </td>
           <td

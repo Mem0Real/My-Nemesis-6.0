@@ -1,7 +1,13 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+
+import { useDataContext } from "./List";
+import { useTableContext } from "./MyTable";
+
 import ItemRow from "./ItemRow";
+
 import { AnimatePresence, motion } from "framer-motion";
 import {
   RightOutlined,
@@ -9,9 +15,6 @@ import {
   EditOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
-
-import { useDataContext } from "./List";
-import { useTableContext } from "./MyTable";
 
 export default function ChildRow({ categoryId, parentId, child }) {
   const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
@@ -46,8 +49,11 @@ export default function ChildRow({ categoryId, parentId, child }) {
             chi.id === child.id && chi.open === true && "font-semibold"
           }`}
         >
-          <td className="pl-6 py-2" onClick={toggleExpander}>
-            <div className="list-outside flex items-center gap-3">
+          <td className="py-2">
+            <div
+              className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
+              onClick={toggleExpander}
+            >
               <RightOutlined
                 className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
                   chi.id === child.id && chi.open === true
@@ -55,7 +61,13 @@ export default function ChildRow({ categoryId, parentId, child }) {
                     : ""
                 }`}
               />
-              {child.name}
+              <Link
+                className="hover:underline underline-offset-4 z-10"
+                href={`collection/${categoryId}/${parentId}/${child.id}`}
+                onClick={(e) => e.stopPropagation()}
+              >
+                {child.name}
+              </Link>
             </div>
           </td>
           <td className="pl-6 py-2" onClick={toggleExpander}>
@@ -86,16 +98,28 @@ export default function ChildRow({ categoryId, parentId, child }) {
       <tr key={`${child.id}-table`}>
         <td colSpan={3}>
           <div className="mx-auto w-[95%]">
-            <table className="w-[95%] mx-auto py-5">
-              <thead className="border-b border-black">
+            <table className="table-fixed w-full py-5 mt-5">
+              <thead className="border border-black">
                 <tr className="">
-                  <th className="text-start ps-3 py-4">Name</th>
-                  <th className="text-center py-4">Description</th>
-                  <th className="text-center py-4">Brand</th>
-                  <th className="text-center py-4">Model</th>
-                  <th className="text-center py-4">Qunatity</th>
-                  <th className="text-center py-4">Price</th>
-                  <th />
+                  <th className="text-center md:text-start pt-4 w-36 md:w-40 lg:w-36">
+                    Name
+                  </th>
+                  <th className="text-center md:text-start pt-4 w-64 md:w-80 lg:w-96">
+                    Description
+                  </th>
+                  <th className="text-center md:text-start pt-4 w-36 md:w-40 lg:w-36">
+                    Brand
+                  </th>
+                  <th className="text-center md:text-start pt-4 w-36 md:w-40 lg:w-36">
+                    Model
+                  </th>
+                  <th className="text-center md:text-start pt-4 w-36 md:w-40 lg:w-36">
+                    Qunatity
+                  </th>
+                  <th className="text-center md:text-start pt-4 w-36 md:w-40 lg:w-36">
+                    Price
+                  </th>
+                  <th className="w-16 md:w-14 lg:w-12" />
                 </tr>
               </thead>
               <tbody>

@@ -123,13 +123,13 @@ export default function MyTable() {
           <table className="table-fixed w-full">
             <thead className="border-b border-black">
               <tr className="">
-                <th className="text-center md:text-start py-5 w-36 md:w-40 lg:w-36">
+                <th className="text-center md:text-start py-5 w-56 md:w-72 lg:w-96">
                   Name
                 </th>
-                <th className="text-center md:text-start py-5 w-64 md:w-80 lg:w-96">
+                <th className="text-center md:text-start py-5 w-80 md:w-80 lg:w-96">
                   Description
                 </th>
-                <th className="w-16 md:w-14 lg:w-12" />
+                <th className="w-20 md:w-24 lg:w-36" />
               </tr>
             </thead>
             <tbody>

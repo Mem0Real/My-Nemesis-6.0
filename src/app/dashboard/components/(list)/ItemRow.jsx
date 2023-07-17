@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState } from "react";
+import React from "react";
+import Link from "next/link";
+
 import { AnimatePresence, motion } from "framer-motion";
 import { useTableContext } from "./MyTable";
 import { useDataContext } from "./List";
@@ -36,10 +38,13 @@ export default function ItemRow({ categoryId, parentId, childId, item }) {
           className="border border-neutral-500"
         >
           <td className="py-5 max-w-md">
-            <div className="flex items-center gap-2">
+            <Link
+              className="flex items-center gap-2"
+              href={`/collection/${categoryId}/${parentId}/${childId}/${item.id}`}
+            >
               <SwapRightOutlined />
               {item.name}
-            </div>
+            </Link>
           </td>
           <td className="px-2 py-5 max-w-md text-center">{item.description}</td>
           <td className="px-2 py-5 max-w-md text-center">{item.brand}</td>
