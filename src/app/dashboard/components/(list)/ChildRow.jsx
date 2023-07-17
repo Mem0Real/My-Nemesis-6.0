@@ -62,7 +62,7 @@ export default function ChildRow({ categoryId, parentId, child }) {
             {child.description}
           </td>
           <td>
-            <div className="flex items-center gap-3 px-6">
+            <div className="flex items-center gap-3">
               <PlusOutlined
                 className="text-green-700"
                 onClick={() =>
@@ -83,36 +83,38 @@ export default function ChildRow({ categoryId, parentId, child }) {
       )}
     </AnimatePresence>,
     chi.id === child.id && chi.open === true && (
-      <tr>
+      <tr key={`${child.id}-table`}>
         <td colSpan={3}>
-          <table className="w-[95%] mx-auto py-5">
-            <thead className="border-b border-black">
-              <tr className="">
-                <th className="text-start ps-3 py-4">Name</th>
-                <th className="text-center py-4">Description</th>
-                <th className="text-center py-4">Brand</th>
-                <th className="text-center py-4">Model</th>
-                <th className="text-center py-4">Qunatity</th>
-                <th className="text-center py-4">Price</th>
-                <th />
-              </tr>
-            </thead>
-            <tbody>
-              {items.map(
-                (item) =>
-                  item.ChildId === child.id && (
-                    <React.Fragment key={item.id}>
-                      <ItemRow
-                        categoryId={categoryId}
-                        parentId={parentId}
-                        childId={child.id}
-                        item={item}
-                      />
-                    </React.Fragment>
-                  )
-              )}
-            </tbody>
-          </table>
+          <div className="mx-auto w-[95%]">
+            <table className="w-[95%] mx-auto py-5">
+              <thead className="border-b border-black">
+                <tr className="">
+                  <th className="text-start ps-3 py-4">Name</th>
+                  <th className="text-center py-4">Description</th>
+                  <th className="text-center py-4">Brand</th>
+                  <th className="text-center py-4">Model</th>
+                  <th className="text-center py-4">Qunatity</th>
+                  <th className="text-center py-4">Price</th>
+                  <th />
+                </tr>
+              </thead>
+              <tbody>
+                {items.map(
+                  (item) =>
+                    item.ChildId === child.id && (
+                      <React.Fragment key={item.id}>
+                        <ItemRow
+                          categoryId={categoryId}
+                          parentId={parentId}
+                          childId={child.id}
+                          item={item}
+                        />
+                      </React.Fragment>
+                    )
+                )}
+              </tbody>
+            </table>
+          </div>
           <span className="w-full flex items-center justify-center py-3">
             <button
               className="px-3 py-2 rounded-md bg-green-700 text-neutral-200"

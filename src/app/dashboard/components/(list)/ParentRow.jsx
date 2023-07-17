@@ -47,7 +47,7 @@ export default function ParentRow({ categoryId, parent }) {
             par.id === parent.id && par.open === true && "font-semibold"
           }`}
         >
-          <td className="pl-3 py-4" onClick={toggleExpander}>
+          <td className="px-3 py-4" onClick={toggleExpander}>
             <div className="list-outside flex items-center gap-3">
               <RightOutlined
                 className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
@@ -59,24 +59,27 @@ export default function ParentRow({ categoryId, parent }) {
               {parent.name}
             </div>
           </td>
-          <td className="pl-3 py-4" onClick={toggleExpander}>
+          <td
+            className="px-3 py-4 text-center md:text-start"
+            onClick={toggleExpander}
+          >
             {parent.description}
           </td>
-          <td>
-            <div className="flex items-center gap-3 px-6">
-              <PlusOutlined
-                className="text-green-700"
-                onClick={() => handleAdd("children", categoryId, parent.id)}
-              />
-              <EditOutlined
-                className="text-blue-700"
-                onClick={() => handleEdit("parents", parent)}
-              />
-              <DeleteOutlined
-                className="text-red-700"
-                onClick={() => handleDelete("parents", parent)}
-              />
-            </div>
+          <td className="flex items-center gap-3">
+            {/* <div className="flex items-center gap-3 px-6"> */}
+            <PlusOutlined
+              className="text-green-700"
+              onClick={() => handleAdd("children", categoryId, parent.id)}
+            />
+            <EditOutlined
+              className="text-blue-700"
+              onClick={() => handleEdit("parents", parent)}
+            />
+            <DeleteOutlined
+              className="text-red-700"
+              onClick={() => handleDelete("parents", parent)}
+            />
+            {/* </div> */}
           </td>
         </motion.tr>
       )}

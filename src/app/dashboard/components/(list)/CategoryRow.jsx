@@ -32,7 +32,7 @@ export default function CategoryRow({ category }) {
         cat.id === category.id && cat.open === true && "font-semibold"
       }`}
     >
-      <td className="py-4">
+      <td className="py-2">
         <div
           className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
           onClick={toggleExpander}
@@ -53,11 +53,14 @@ export default function CategoryRow({ category }) {
           </Link>
         </div>
       </td>
-      <td className="py-4 max-w-36" onClick={toggleExpander}>
+      <td
+        className="py-4 max-w-36 text-center md:text-start"
+        onClick={toggleExpander}
+      >
         {category.description}
       </td>
       <td>
-        <div className="flex items-center gap-3 px-6">
+        <div className="flex items-center gap-3">
           <PlusOutlined
             className="text-green-700"
             onClick={() => handleAdd("parents", category.id)}

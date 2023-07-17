@@ -119,13 +119,17 @@ export default function MyTable() {
       }}
     >
       <div className="table-container">
-        <div className="uk-overflow-auto w-[96%] mx-auto">
-          <table className="uk-table uk-table-hover uk-table-start uk-table-divider w-full">
+        <div className="mx-auto w-[95%] overflow-auto">
+          <table className="table-fixed w-full">
             <thead className="border-b border-black">
               <tr className="">
-                <th className="text-center md:text-start py-5">Name</th>
-                <th className="text-center md:text-start py-5">Description</th>
-                <th className="px-5" />
+                <th className="text-center md:text-start py-5 w-36 md:w-40 lg:w-36">
+                  Name
+                </th>
+                <th className="text-center md:text-start py-5 w-64 md:w-80 lg:w-96">
+                  Description
+                </th>
+                <th className="w-16 md:w-14 lg:w-12" />
               </tr>
             </thead>
             <tbody>
