@@ -47,7 +47,7 @@ export default function ParentRow({ categoryId, parent }) {
           }
           variants={variants}
           exit={"closed"}
-          className={`hover:border-b border-neutral-500 cursor-pointer ${
+          className={`hover:border-b border-neutral-500 cursor-pointer border ${
             par.id === parent.id && par.open === true && "font-semibold"
           }`}
         >

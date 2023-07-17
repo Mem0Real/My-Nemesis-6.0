@@ -162,17 +162,17 @@ export default function NavComponents({ data, getAll, getOne, session }) {
 
       {/* Hamburger */}
       <div className="flex gap-7 justify-end items-center md:hidden text-white relative">
-        <button name="search" type="submit" onClick={handleSearch}>
+        <button name="search-small" type="submit" onClick={handleSearch}>
           <SearchOutlined fontSize="small" />
         </button>
-        <button className="relative" onClick={showCart} name="cart modal">
+        <button className="relative" onClick={showCart} name="cart-small">
           <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
           {newCart && (
             <div className="absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5" />
           )}
         </button>
         <button
-          name="dropdown button"
+          name="menu"
           onClick={() => setIsOpen(!isOpen)}
           className="flex items-center py-2 rounded text-black-500 hover:text-black-400"
         >
