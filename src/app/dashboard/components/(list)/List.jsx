@@ -8,7 +8,8 @@ import Button from "@mui/material/Button";
 const Add = dynamic(() => import("./Add"));
 const Edit = dynamic(() => import("./Edit"));
 const Delete = dynamic(() => import("./Delete"));
-import ListTable from "./ListTable";
+// import ListTable from "./ListTable";
+import MyTable from "./MyTable";
 
 const DataContext = createContext({});
 
@@ -99,7 +100,8 @@ export default function List({ data, create, update, deleteItem, url }) {
         </h1>
         <div className="md:mt-6 md:pb-5 shadow-md shadow-black">
           <Suspense fallback={<h1>Loading...</h1>}>
-            <ListTable />
+            {/* <ListTable /> */}
+            <MyTable />
           </Suspense>
 
           <div className="flex flex-col w-full justify-center items-center md:mt-3">
