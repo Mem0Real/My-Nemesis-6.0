@@ -28,21 +28,21 @@ const raleway = Raleway({
   display: "swap",
 });
 
-export default function NavComponents({ data, getAll, getOne }) {
+export default function NavComponents({ data, getAll, getOne, session }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchModal, showSearchModal] = useState(false);
   const [cartModal, showCartModal] = useState(false);
   const [newCart, setNewCart] = useState(false);
 
-  const { data: session, status, update } = useSession();
+  // const { data: session, status, update } = useSession();
 
-  useEffect(() => {
-    const visibilityHandler = () =>
-      document.visibilityState === "visible" && update();
-    window.addEventListener("visibilitychange", visibilityHandler, false);
-    return () =>
-      window.removeEventListener("visibilitychange", visibilityHandler, false);
-  }, [update]);
+  // useEffect(() => {
+  //   const visibilityHandler = () =>
+  //     document.visibilityState === "visible" && update();
+  //   window.addEventListener("visibilitychange", visibilityHandler, false);
+  //   return () =>
+  //     window.removeEventListener("visibilitychange", visibilityHandler, false);
+  // }, [update]);
 
   const menuRef = useRef();
   const { updater, setUpdater } = useProductContext();
