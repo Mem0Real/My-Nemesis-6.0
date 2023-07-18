@@ -97,7 +97,7 @@ export default function ChildRow({ categoryId, parentId, child }) {
     chi.id === child.id && chi.open === true && (
       <tr key={`${child.id}-table`}>
         <td colSpan={3}>
-          <div className="mx-auto mt-5 rounded-3xl border-2 border-neutral-500 overflow-auto">
+          <div className="mx-auto mt-5 rounded-3xl border-2 border-neutral-700 overflow-auto">
             <table
               className="table-fixed w-full"
               border={2}
