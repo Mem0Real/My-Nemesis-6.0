@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import AddToCart from "./components/AddToCart";
 import { useProductContext } from "@/context/productContext";
+import { parseCookies } from "nookies";
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
@@ -12,8 +13,13 @@ export default function Item({ item }) {
   const { data, updater, purchasedData, setPurchasedData } =
     useProductContext();
 
+  const cookieStore = parseCookies();
+
   useEffect(() => {
-    const product = JSON.parse(localStorage.getItem("Product"));
+    // const product = JSON.parse(localStorage.getItem("Product"));
+    let product;
+    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
+
     if (product && product.length > 0) {
       for (let i = 0; i < product.length; i++) {
         if (product[i].id === item.id) {
@@ -41,7 +47,7 @@ export default function Item({ item }) {
         setQuantity(() => item.quantity);
       }
     }
-  }, [data, updater, item.id, item.quantity, purchasedData, setPurchasedData]);
+  }, [data, updater]);
 
   // Show image if any
   useEffect(() => {

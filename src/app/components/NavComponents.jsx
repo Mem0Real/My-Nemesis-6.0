@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState, useRef, createContext, useContext } from "react";
-import { useSession, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
 
 import Link from "next/link";
 import { Poppins, Raleway } from "next/font/google";
@@ -13,7 +13,7 @@ import SearchModal from "../search/(searchModal)/SearchModal";
 import Cart from "../cart/Cart";
 import { useProductContext } from "@/context/productContext";
 import { useRouter } from "next/navigation";
-import { setCookie } from "nookies";
+import { setCookie, parseCookies } from "nookies";
 
 const FunctionsContext = createContext({});
 
@@ -33,6 +33,8 @@ export default function NavComponents({ data, getAll, getOne, session }) {
   const [searchModal, showSearchModal] = useState(false);
   const [cartModal, showCartModal] = useState(false);
   const [newCart, setNewCart] = useState(false);
+
+  const cookieStore = parseCookies();
 
   // const { data: session, status, update } = useSession();
 
@@ -61,7 +63,10 @@ export default function NavComponents({ data, getAll, getOne, session }) {
   }, []);
 
   useEffect(() => {
-    const cartState = JSON.parse(localStorage.getItem("Cart_State"));
+    // const cartState = JSON.parse(localStorage.getItem("Cart_State"));
+    let cartState;
+    if (cookieStore.Cart_State) cartState = JSON.parse(cookieStore.Cart_State);
+
     if (cartState && cartState === true) {
       setNewCart(() => true);
     } else setNewCart(() => false);
@@ -86,7 +91,10 @@ export default function NavComponents({ data, getAll, getOne, session }) {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    setCookie(null);
+    setCookie(null, "next-auth.session-token");
+    setCookie(null, "next-auth.callback-url");
+    setCookie(null, "accessToken");
+    setCookie(null, "next-auth.csrf-token");
 
     // Refresh the page to update the session
     router.refresh();

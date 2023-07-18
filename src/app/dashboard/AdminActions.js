@@ -40,16 +40,13 @@ export default function AdminActions({
   };
 
   useEffect(() => {
-    const data = cookies.List;
-    const state = data === "true" ? true : false;
-
-    setShowList(() => state);
+    const data = JSON.parse(cookies.List);
+    setShowList(data);
   }, []);
 
   useEffect(() => {
-    const data = cookies.Order;
-    const state = data === "true" ? true : false;
-    setShowOrder(() => state);
+    const data = JSON.parse(cookies.Order);
+    setShowOrder(data);
   }, []);
 
   return (

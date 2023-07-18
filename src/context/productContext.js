@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { setCookie, parseCookies } from "nookies";
 
 const ProductContext = createContext({});
 
@@ -11,23 +12,31 @@ export default function ProductDataContext({ children }) {
   const [updater, setUpdater] = useState(false);
   const [purchasedData, setPurchasedData] = useState([]);
 
+  const cookieStore = parseCookies();
+
   useEffect(() => {
-    const product = JSON.parse(localStorage.getItem("Product"));
+    // const product = JSON.parse(localStorage.getItem("Product"));
+    let cart, product;
+    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
+
     if (product?.length > 0) {
       console.log(product);
       setData(product);
     }
-    const cart = JSON.parse(localStorage.getItem("Cart"));
+    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+    // const cart = JSON.parse(localStorage.getItem("Cart"));
     if (cart?.length > 0) {
       setCartData(cart);
-      localStorage.setItem("Cart_State", JSON.stringify(true));
+      setCookie(null, "Cart_State", true);
+      // localStorage.setItem("Cart_State", JSON.stringify(true));
     }
   }, []);
 
   const storeProduct = (id, quantity) => {
-    const product = JSON.parse(localStorage.getItem("Product"));
-
     // If there is cache
+    let product;
+    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
+
     if (product?.length > 0) {
       const productCache = product.find((item) => item.id === id);
 
@@ -40,23 +49,28 @@ export default function ProductDataContext({ children }) {
           return item;
         });
         setData(productData);
-        localStorage.setItem("Product", JSON.stringify(productData));
+        // localStorage.setItem("Product", JSON.stringify(productData));
+        setCookie(null, "Product", JSON.stringify(productData));
       } else {
         const newData = { id: id, quantity: quantity };
 
         setData((prev) => [...prev, newData]);
         product.push(newData);
-        localStorage.setItem("Product", JSON.stringify(product));
+        // localStorage.setItem("Product", JSON.stringify(product));
+        setCookie(null, "Product", JSON.stringify(product));
       }
     } else {
       let newEntry = { id: id, quantity: quantity };
       setData(() => [newEntry]);
-      localStorage.setItem("Product", JSON.stringify([newEntry]));
+      // localStorage.setItem("Product", JSON.stringify([newEntry]));
+      setCookie(null, "Product", JSON.stringify([newEntry]));
     }
   };
 
   const addCartData = (id, name, quantity, amount, itemPrice) => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
+    // const cart = JSON.parse(localStorage.getItem("Cart"));
+    let cart;
+    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       const cartCache = cart.find((item) => item.id === id);
@@ -74,7 +88,8 @@ export default function ProductDataContext({ children }) {
         });
 
         setCartData(cartItems);
-        localStorage.setItem("Cart", JSON.stringify(cartItems));
+        // localStorage.setItem("Cart", JSON.stringify(cartItems));
+        setCookie(null, "Cart", JSON.stringify(cartItems));
         toast("Cart item updated!");
       } else {
         const newCartItem = {
@@ -88,7 +103,8 @@ export default function ProductDataContext({ children }) {
 
         setCartData((prev) => [...prev, newCartItem]);
         cart.push(newCartItem);
-        localStorage.setItem("Cart", JSON.stringify(cart));
+        // localStorage.setItem("Cart", JSON.stringify(cart));
+        setCookie(null, "Cart", JSON.stringify(cart));
         toast("Item added to cart!");
       }
     } else {
@@ -101,14 +117,18 @@ export default function ProductDataContext({ children }) {
         totalPrice: amount * itemPrice,
       };
       setCartData(() => [newCartItem]);
-      localStorage.setItem("Cart", JSON.stringify([newCartItem]));
+      // localStorage.setItem("Cart", JSON.stringify([newCartItem]));
+      setCookie(null, "Cart", JSON.stringify([newCartItem]));
 
       toast("Item added to cart!");
     }
   };
 
   const addProductQuantity = (id) => {
-    const product = JSON.parse(localStorage.getItem("Product"));
+    // const product = JSON.parse(localStorage.getItem("Product"));
+
+    let product;
+    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
 
     if (product?.length > 0) {
       let newArray = product.map((item) => {
@@ -118,14 +138,18 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setData((prev) => [...prev, newArray]);
-      localStorage.setItem("Product", JSON.stringify(newArray));
+      // localStorage.setItem("Product", JSON.stringify(newArray));
+      setCookie(null, "Product", JSON.stringify(newArray));
     } else {
       toast.error("Item not found!");
     }
   };
 
   const subtractProductQuantity = (id) => {
-    const product = JSON.parse(localStorage.getItem("Product"));
+    // const product = JSON.parse(localStorage.getItem("Product"));
+
+    let product;
+    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
 
     if (product?.length > 0) {
       let newArray = product.map((item) => {
@@ -135,14 +159,18 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setData((prev) => [...prev, newArray]);
-      localStorage.setItem("Product", JSON.stringify(newArray));
+      // localStorage.setItem("Product", JSON.stringify(newArray));
+      setCookie(null, "Product", JSON.stringify(newArray));
     } else {
       console.log("Item not found");
     }
   };
 
   const changeProductQuantity = (id, newQuantity) => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
+    // const cart = JSON.parse(localStorage.getItem("Cart"));
+    let cart;
+    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+
     if (cart?.length > 0) {
       let newArray = cart.map((item) => {
         if (item.id === id) {
@@ -160,14 +188,17 @@ export default function ProductDataContext({ children }) {
         return { id: item.id, quantity: item.quantity - item.amount };
       });
       setData((prev) => [...prev, newArray]);
-      localStorage.setItem("Product", JSON.stringify(newArray));
+      // localStorage.setItem("Product", JSON.stringify(newArray));
+      setCookie(null, "Product", JSON.stringify(newArray));
     } else {
       console.log("Item not found!");
     }
   };
 
   const addCartQuantity = (id) => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
+    // const cart = JSON.parse(localStorage.getItem("Cart"));
+    let cart;
+    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       let newArray = cart.map((item) => {
@@ -181,14 +212,17 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setCartData((prev) => [...prev, newArray]);
-      localStorage.setItem("Cart", JSON.stringify(newArray));
+      // localStorage.setItem("Cart", JSON.stringify(newArray));
+      setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
       console.log("Item not found");
     }
   };
 
   const subtractCartQuantity = (id) => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
+    // const cart = JSON.parse(localStorage.getItem("Cart"));
+    let cart;
+    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       let newArray = cart.map((item) => {
@@ -202,14 +236,18 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setCartData((prev) => [...prev, newArray]);
-      localStorage.setItem("Cart", JSON.stringify(newArray));
+      // localStorage.setItem("Cart", JSON.stringify(newArray));
+      setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
       console.log("Item not found");
     }
   };
 
   const changeCartQuantity = (id, newQuantity) => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
+    // const cart = JSON.parse(localStorage.getItem("Cart"));
+    let cart;
+    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+
     if (cart?.length > 0) {
       let newArray = cart.map((item) => {
         if (item.id === id) {
@@ -236,14 +274,18 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setData((prev) => [...prev, newArray]);
-      localStorage.setItem("Cart", JSON.stringify(newArray));
+      // localStorage.setItem("Cart", JSON.stringify(newArray));
+      setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
       console.log("Item not found!");
     }
   };
 
   const removeCartItem = (id) => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
+    // const cart = JSON.parse(localStorage.getItem("Cart"));
+    let cart;
+    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+
     if (cart?.length > 0) {
       let newArray = cart
         .map((item) => {
@@ -253,14 +295,19 @@ export default function ProductDataContext({ children }) {
           return item;
         })
         .filter((item) => item !== null);
-      localStorage.setItem("Cart", JSON.stringify(newArray));
+      // localStorage.setItem("Cart", JSON.stringify(newArray));
+      setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
       console.log("Item not found.");
     }
   };
 
   const removeProductItem = (id) => {
-    const product = JSON.parse(localStorage.getItem("Product"));
+    // const product = JSON.parse(localStorage.getItem("Product"));
+
+    let product;
+    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
+
     if (product?.length > 0) {
       let newArray = product
         .map((item) => {
@@ -270,7 +317,8 @@ export default function ProductDataContext({ children }) {
           return item;
         })
         .filter((item) => item !== null);
-      localStorage.setItem("Product", JSON.stringify(newArray));
+      // localStorage.setItem("Product", JSON.stringify(newArray));
+      setCookie(null, "Product", JSON.stringify(newArray));
     } else {
       console.log("Item not found.");
     }

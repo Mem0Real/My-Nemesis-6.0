@@ -9,11 +9,15 @@ import { Add, Remove, Clear } from "@mui/icons-material";
 import { useProductContext } from "@/context/productContext";
 import { toast } from "react-hot-toast";
 
+import { setCookie, parseCookies } from "nookies";
+
 export default function Cart({ closeCart, modal }) {
   const [data, setData] = useState(false);
   const [infoModal, showInfoModal] = useState(false);
   const [cartList, setCartList] = useState();
   // const [update, setUpdate] = useState(false);
+
+  const cookieStore = parseCookies();
 
   const {
     subtractQuantity,
@@ -25,7 +29,10 @@ export default function Cart({ closeCart, modal }) {
   } = useProductContext();
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
+    // const cart = JSON.parse(localStorage.getItem("Cart"));
+    let cart;
+    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+
     if (cart?.length > 0) {
       setData(() => true);
       setCartList(() => cart);
@@ -55,11 +62,14 @@ export default function Cart({ closeCart, modal }) {
   };
 
   const clearCart = () => {
-    localStorage.setItem("Cart", JSON.stringify([]));
-    localStorage.setItem("Product", JSON.stringify([]));
-    localStorage.setItem("Cart_State", JSON.stringify(false));
+    // localStorage.setItem("Cart", JSON.stringify([]));
+    // localStorage.setItem("Product", JSON.stringify([]));
+    // localStorage.setItem("Cart_State", JSON.stringify(false));
+    setCookie(null, "Cart", JSON.stringify([]));
+    setCookie(null, "Product", JSON.stringify([]));
+    setCookie(null, "Cart_State", false);
 
-    setUpdater((prev) => !prev);
+    // setUpdater((prev) => !prev);
     setCartList(() => []);
     setData(() => false);
 

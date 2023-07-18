@@ -6,6 +6,7 @@ import Modal from "@mui/material/Modal";
 
 import { useProductContext } from "@/context/productContext";
 import { toast } from "react-hot-toast";
+
 export default function ContactInfo({
   modal,
   closeInfoModal,
@@ -54,19 +55,10 @@ export default function ContactInfo({
         }
       )
       .then(() => setLoading(() => false))
-      .then(() => setPurchasedData(cartList))
+      .then(() => setPurchasedData(() => cartList))
       .then(() => clearCart())
       .then(() => setUser(() => {}))
       .then(() => closeInfoModal());
-    // if (!res.ok) {
-    //   throw new Error(
-    //     "Error sending order. Please check your network and try again."
-    //   );
-    // }
-    // console.log("Order sent! One of our employees will reach out to you soon.");
-    // clearCart();
-    // setUser(() => {});
-    // closeInfoModal();
   };
 
   const handleChange = (e) => {

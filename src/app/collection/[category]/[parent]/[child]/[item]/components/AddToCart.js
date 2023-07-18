@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
 import { Add, Remove } from "@mui/icons-material";
 import { useProductContext } from "@/context/productContext";
+import { setCookie, parseCookies } from "nookies";
 
 export default function AddToCart({ modal, closeModal, item }) {
   const [totalPrice, setTotalPrice] = useState(0);
@@ -13,13 +14,18 @@ export default function AddToCart({ modal, closeModal, item }) {
   const [remainingQuantity, setRemainingQuantity] = useState();
   const [data, setData] = useState();
 
+  const cookieStore = parseCookies();
+
   const { storeProduct, addCartData, updater, setUpdater } =
     useProductContext();
 
   // Set quantity to 1
   useEffect(() => {
     if (modal === true) {
-      const cart = JSON.parse(localStorage.getItem("Cart"));
+      // const cart = JSON.parse(localStorage.getItem("Cart"));
+      let cart;
+      if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+
       if (cart?.length > 0) {
         cart.map((product) => {
           if (product.id === item.id) {
@@ -51,7 +57,10 @@ export default function AddToCart({ modal, closeModal, item }) {
   }, [amount, item.quantity]);
 
   useEffect(() => {
-    const cart = JSON.parse(localStorage.getItem("Cart"));
+    // const cart = JSON.parse(localStorage.getItem("Cart"));
+    let cart;
+    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+
     if (cart?.length > 0) {
       setNewCart(() => true);
     } else {
@@ -60,7 +69,8 @@ export default function AddToCart({ modal, closeModal, item }) {
   }, [updater]);
 
   useEffect(() => {
-    window.localStorage.setItem("Cart_State", JSON.stringify(newCart));
+    // window.localStorage.setItem("Cart_State", JSON.stringify(newCart));
+    setCookie(null, "Cart_State", newCart);
   }, [newCart]);
 
   const handleChange = (e) => {
@@ -75,7 +85,8 @@ export default function AddToCart({ modal, closeModal, item }) {
     addCartData(item.id, item.name, item.quantity, amount, item.price);
     setNewCart(() => true);
     setUpdater((prev) => !prev);
-    window.localStorage.setItem("Cart_State", JSON.stringify(true));
+    // window.localStorage.setItem("Cart_State", JSON.stringify(true));
+    setCookie(null, "Cart_State", true);
     closeModal();
   };
 
