@@ -3,8 +3,8 @@
 import React from "react";
 import Link from "next/link";
 
-import { useDataContext } from "./List";
-import { useTableContext } from "./MyTable";
+import { useDataContext } from "../List";
+import { useTableContext } from "../MyTable";
 
 import ChildRow from "./ChildRow";
 
@@ -47,7 +47,7 @@ export default function ParentRow({ categoryId, parent }) {
           }
           variants={variants}
           exit={"closed"}
-          className={`hover:border-b border-neutral-500 cursor-pointer border ${
+          className={`hover:border-b border-neutral-500 cursor-pointer ${
             par.id === parent.id && par.open === true && "font-semibold"
           }`}
         >
@@ -78,21 +78,21 @@ export default function ParentRow({ categoryId, parent }) {
           >
             {parent.description}
           </td>
-          <td className="flex items-center gap-3">
-            {/* <div className="flex items-center gap-3 px-6"> */}
-            <PlusOutlined
-              className="text-green-700"
-              onClick={() => handleAdd("children", categoryId, parent.id)}
-            />
-            <EditOutlined
-              className="text-blue-700"
-              onClick={() => handleEdit("parents", parent)}
-            />
-            <DeleteOutlined
-              className="text-red-700"
-              onClick={() => handleDelete("parents", parent)}
-            />
-            {/* </div> */}
+          <td>
+            <div className="flex items-center justify-center gap-3">
+              <PlusOutlined
+                className="text-green-700"
+                onClick={() => handleAdd("children", categoryId, parent.id)}
+              />
+              <EditOutlined
+                className="text-blue-700"
+                onClick={() => handleEdit("parents", parent)}
+              />
+              <DeleteOutlined
+                className="text-red-700"
+                onClick={() => handleDelete("parents", parent)}
+              />
+            </div>
           </td>
         </motion.tr>
       )}

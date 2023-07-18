@@ -218,7 +218,7 @@ export async function update(formData) {
             quantity: quantity ? parseInt(quantity, 10) : undefined,
             price: price ? parseFloat(price) : undefined,
             description: description ? description : undefined,
-            image: image ? image : undefined,
+            image: image !== null ? image : undefined,
             [category.name]: category.val,
           },
         });
@@ -240,7 +240,7 @@ export async function update(formData) {
             quantity: quantity ? parseInt(quantity, 10) : undefined,
             price: price ? parseFloat(price) : undefined,
             description: description ? description : undefined,
-            images: dir ? dir : undefined,
+            images: dir !== null ? dir : undefined,
             [category.name]: category.val,
           },
         });
@@ -260,7 +260,7 @@ export async function update(formData) {
     await writeToDb();
     console.log("No image");
   } else if (typeof file === "string" && entry !== "items") {
-    writeToDb(file);
+    writeToDb();
     console.log("No change");
   } else {
     let relativeUploadDir;

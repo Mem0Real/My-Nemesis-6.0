@@ -48,7 +48,7 @@ export default function AdminActions({
     <div className="w-full flex flex-col items-center gap-8">
       <div className="flex items-center gap-4 md:gap-12">
         <button
-          className={`w-36 px-3 py-2 rounded-lg bg-transparent outline outline-1 hover:outline-2 outline-offset-2 hover:outline-offset-0 outline-neutral-800 ${
+          className={`w-24 px-2 py-1 shadow-lg shadow-neutral-400 rounded-lg bg-transparent outline outline-1 hover:outline-2 outline-offset-2 hover:outline-offset-0 outline-neutral-800 ${
             showList && "outline-2 outline-offset-0 font-medium"
           }`}
           onClick={toggleList}
@@ -56,7 +56,7 @@ export default function AdminActions({
           Categories
         </button>
         <button
-          className={`w-36 px-3 py-2 rounded-lg bg-transparent outline outline-1 hover:outline-2 outline-offset-2 hover:outline-offset-0 outline-neutral-800 ${
+          className={`w-24 px-2 py-1 shadow-lg shadow-neutral-400 rounded-lg bg-transparent outline outline-1 hover:outline-2 outline-offset-2 hover:outline-offset-0 outline-neutral-800 ${
             showOrder && "outline-2 outline-offset-0 font-medium"
           }`}
           onClick={toggleOrder}
@@ -68,7 +68,7 @@ export default function AdminActions({
       <div className="flex flex-col w-full min-h-screen">
         {showList && (
           <Suspense
-            fallback={<h1 className="text-2xl text-neutral-200">Loading...</h1>}
+            fallback={<h1 className="text-2xl text-neutral-800">Loading...</h1>}
           >
             <List
               data={data}
@@ -81,7 +81,7 @@ export default function AdminActions({
         )}
         {showOrder && (
           <Suspense
-            fallback={<h1 className="text-2xl text-neutral-200">Loading...</h1>}
+            fallback={<h1 className="text-2xl text-neutral-800">Loading...</h1>}
           >
             <Order
               order={order}

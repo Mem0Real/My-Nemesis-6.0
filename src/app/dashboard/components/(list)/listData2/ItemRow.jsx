@@ -4,8 +4,9 @@ import React from "react";
 import Link from "next/link";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useTableContext } from "./MyTable";
-import { useDataContext } from "./List";
+
+import { useDataContext } from "../List";
+import { useTableContext } from "../MyTable";
 
 import {
   DeleteOutlined,
@@ -37,22 +38,32 @@ export default function ItemRow({ categoryId, parentId, childId, item }) {
           exit={"closed"}
           className="border border-neutral-500"
         >
-          <td className="py-5 max-w-md">
+          <td className="border border-black py-5 max-w-md">
             <Link
-              className="flex items-center gap-2"
+              className="flex items-center gap-2 text-center hover:underline underline-offset-4"
               href={`/collection/${categoryId}/${parentId}/${childId}/${item.id}`}
             >
               <SwapRightOutlined />
               {item.name}
             </Link>
           </td>
-          <td className="px-2 py-5 max-w-md text-center">{item.description}</td>
-          <td className="px-2 py-5 max-w-md text-center">{item.brand}</td>
-          <td className="px-2 py-5 max-w-md text-center">{item.model}</td>
-          <td className="px-2 py-5 max-w-md text-center">{item.quantity}</td>
-          <td className="px-2 py-5 max-w-md text-center">{item.price}</td>
-          <td>
-            <div className="flex items-center gap-3 px-2">
+          <td className="border border-black px-2 py-5 max-w-md text-center">
+            {item.description}
+          </td>
+          <td className="border border-black px-2 py-5 max-w-md text-center">
+            {item.brand}
+          </td>
+          <td className="border border-black px-2 py-5 max-w-md text-center">
+            {item.model}
+          </td>
+          <td className="border border-black px-2 py-5 max-w-md text-center">
+            {item.quantity}
+          </td>
+          <td className="border border-black px-2 py-5 max-w-md text-center">
+            {item.price}
+          </td>
+          <td className="border border-black">
+            <div className="flex items-center justify-center gap-3">
               <EditOutlined
                 className="text-blue-700"
                 onClick={() => handleEdit("items", item)}

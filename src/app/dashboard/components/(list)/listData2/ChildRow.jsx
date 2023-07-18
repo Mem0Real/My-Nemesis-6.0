@@ -3,8 +3,8 @@
 import React from "react";
 import Link from "next/link";
 
-import { useDataContext } from "./List";
-import { useTableContext } from "./MyTable";
+import { useDataContext } from "../List";
+import { useTableContext } from "../MyTable";
 
 import ItemRow from "./ItemRow";
 
@@ -74,7 +74,7 @@ export default function ChildRow({ categoryId, parentId, child }) {
             {child.description}
           </td>
           <td>
-            <div className="flex items-center gap-3">
+            <div className="flex items-center justify-center gap-3">
               <PlusOutlined
                 className="text-green-700"
                 onClick={() =>
@@ -97,29 +97,33 @@ export default function ChildRow({ categoryId, parentId, child }) {
     chi.id === child.id && chi.open === true && (
       <tr key={`${child.id}-table`}>
         <td colSpan={3}>
-          <div className="mx-auto w-[95%]">
-            <table className="table-fixed w-full py-5 mt-5">
-              <thead className="border border-black">
-                <tr className="">
-                  <th className="text-center md:text-start pt-4 w-36 md:w-40 lg:w-36">
+          <div className="mx-auto overflow-y-hidden inner-div mt-5 rounded-3xl border-2 border-neutral-500">
+            <table
+              className="table-fixed w-full"
+              border={2}
+              bordercolor="black"
+            >
+              <thead>
+                <tr>
+                  <th className="text-center border border-black py-2 w-36 md:w-40 lg:w-36">
                     Name
                   </th>
-                  <th className="text-center md:text-start pt-4 w-64 md:w-80 lg:w-96">
+                  <th className="text-center border border-black py-2 w-64 md:w-80 lg:w-96">
                     Description
                   </th>
-                  <th className="text-center md:text-start pt-4 w-36 md:w-40 lg:w-36">
+                  <th className="text-center border border-black py-2 w-24">
                     Brand
                   </th>
-                  <th className="text-center md:text-start pt-4 w-36 md:w-40 lg:w-36">
+                  <th className="text-center border border-black py-2 w-24">
                     Model
                   </th>
-                  <th className="text-center md:text-start pt-4 w-36 md:w-40 lg:w-36">
+                  <th className="text-center border border-black py-2 w-24 md:w-24 lg:w-24">
                     Qunatity
                   </th>
-                  <th className="text-center md:text-start pt-4 w-36 md:w-40 lg:w-36">
+                  <th className="text-center border border-black py-2 w-24 md:w-24 lg:w-24">
                     Price
                   </th>
-                  <th className="w-16 md:w-14 lg:w-12" />
+                  <th className="w-20 md:w-14 lg:w-20 border border-black" />
                 </tr>
               </thead>
               <tbody>

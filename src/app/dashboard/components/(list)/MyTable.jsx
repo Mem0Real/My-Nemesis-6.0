@@ -7,7 +7,7 @@ import React, {
 } from "react";
 
 import { useDataContext } from "./List";
-import CategoryRow from "./CategoryRow";
+import CategoryRow from "./listData2/CategoryRow";
 
 const TableContext = createContext({});
 
@@ -119,8 +119,8 @@ export default function MyTable() {
       }}
     >
       <div className="table-container">
-        <div className="mx-auto w-[95%] overflow-auto">
-          <table className="table-fixed w-full">
+        <div className="mx-auto w-[95%]">
+          <table className="table-fixed w-full overflow-auto text-sm">
             <thead className="border-b border-black">
               <tr className="">
                 <th className="text-center md:text-start py-5 w-56 md:w-72 lg:w-96">

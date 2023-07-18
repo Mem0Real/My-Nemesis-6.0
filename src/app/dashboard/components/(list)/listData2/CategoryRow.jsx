@@ -5,8 +5,8 @@ import Link from "next/link";
 
 import ParentRow from "./ParentRow";
 
-import { useDataContext } from "./List";
-import { useTableContext } from "./MyTable";
+import { useDataContext } from "../List";
+import { useTableContext } from "../MyTable";
 
 import {
   RightOutlined,
@@ -60,7 +60,7 @@ export default function CategoryRow({ category }) {
         {category.description}
       </td>
       <td>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center justify-center gap-3">
           <PlusOutlined
             className="text-green-700"
             onClick={() => handleAdd("parents", category.id)}
