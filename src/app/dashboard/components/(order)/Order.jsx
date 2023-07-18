@@ -62,7 +62,7 @@ export default function Order({
     <OrderDataContext.Provider
       value={{ order, url, delivered, markDelivered, removeOne }}
     >
-      <div className="flex-flex-col w-full items-center justify-center relative min-h-screen bg-neutral-200 text-neutral-900 md:mt-6">
+      <div className="flex-flex-col w-full items-center justify-center relative min-h-screen bg-neutral-300 text-neutral-900 md:mt-6">
         <h1 className="text-2xl font-mono font-thin mt-2 underline underline-offset-4 text-center">
           Order list
         </h1>

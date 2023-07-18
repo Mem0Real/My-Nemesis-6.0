@@ -94,7 +94,7 @@ export default function List({ data, create, update, deleteItem, url }) {
     <DataContext.Provider
       value={{ handleAdd, handleEdit, handleDelete, data, url }}
     >
-      <div className="flex-flex-col w-full items-center justify-center relative bg-neutral-200 text-neutral-800 md:mt-6">
+      <div className="flex-flex-col w-full items-center justify-center relative bg-neutral-300 text-neutral-800 md:mt-6">
         <h1 className="text-xl font-mono font-thin mt-2 underline underline-offset-4 text-center">
           Category list
         </h1>

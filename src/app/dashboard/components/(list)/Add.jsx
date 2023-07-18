@@ -90,7 +90,7 @@ export default function Add({
       onClose={closeAddModal}
       aria-labelledby="Add Modal"
       aria-describedby="Create a new category"
-      className="absolute top-20 bottom-20 min-h-full w-[85%] md:w-2/5 my-6 md:mt-0 md:py-3 mx-auto overflow-y-scroll no-scrollbar rounded-lg"
+      className="absolute top-12 md:top-24 w-[85%] h-[90%] md:w-2/5 my-6 md:mt-0 md:py-3 mx-auto overflow-y-scroll no-scrollbar rounded-lg"
     >
       <Box className="">
         <div className="shadow bg-neutral-800 text-white rounded-2xl">
