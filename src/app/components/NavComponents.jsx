@@ -65,7 +65,8 @@ export default function NavComponents({ data, getAll, getOne, session }) {
   useEffect(() => {
     // const cartState = JSON.parse(localStorage.getItem("Cart_State"));
     let cartState;
-    if (cookieStore?.Cart_State) cartState = JSON.parse(cookieStore.Cart_State);
+    if (cookieStore?.Cart_State !== undefined)
+      cartState = JSON.parse(cookieStore.Cart_State);
 
     if (cartState && cartState === true) {
       setNewCart(() => true);

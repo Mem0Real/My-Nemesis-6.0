@@ -40,12 +40,14 @@ export default function AdminActions({
   };
 
   useEffect(() => {
-    const data = JSON.parse(cookies.List);
+    let data;
+    if (cookies?.List !== undefined) data = JSON.parse(cookies.List);
     setShowList(data);
   }, []);
 
   useEffect(() => {
-    const data = JSON.parse(cookies.Order);
+    let data;
+    if (cookies?.Order !== undefined) data = JSON.parse(cookies.Order);
     setShowOrder(data);
   }, []);
 
