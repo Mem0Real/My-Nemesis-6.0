@@ -66,8 +66,14 @@ export default function Order({
         <h1 className="text-2xl font-mono font-thin mt-2 underline underline-offset-4 text-center">
           Order list
         </h1>
-        <div className="md:mt-6 md:pb-5 min-h-screen">
-          <Suspense fallback={<h1>Loading...</h1>}>
+        <div className="md:mt-6 md:pb-5 min-h-screen bg-neutral-300">
+          <Suspense
+            fallback={
+              <h1 className="text-3xl w-full flex flex-col items-center text-neutral-800 bg-neutral-300">
+                Loading...
+              </h1>
+            }
+          >
             <OrderTable />
           </Suspense>
 

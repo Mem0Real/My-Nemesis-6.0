@@ -11,7 +11,7 @@ export default async function DashboardPage() {
       </div>
       <Suspense
         fallback={
-          <h1 className="text-3xl w-full min-h-screen flex flex-col items-center text-neutral-800">
+          <h1 className="text-3xl w-full flex flex-col items-center text-neutral-800 bg-neutral-300">
             Loading...
           </h1>
         }

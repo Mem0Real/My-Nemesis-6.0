@@ -62,7 +62,7 @@ export default function OrderTable() {
           <Table
             aria-label="Orders Table"
             size="small"
-            className="bg-neutral-200"
+            className="bg-neutral-300"
           >
             <TableHead elevation={1}>
               <TableRow>

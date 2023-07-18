@@ -40,7 +40,7 @@ export default function Delete({
       });
   };
   return (
-    <div className="bg-neutral-900 text-neutral-200">
+    <div className="bg-neutral-800 text-neutral-200">
       <Dialog
         open={deleteAlert}
         onClose={closeDeleteModal}
