@@ -118,7 +118,7 @@ export default function Edit({
       onClose={handleClose}
       aria-labelledby="Edit Modal"
       aria-describedby="Update"
-      className="absolute top-20 w-[85%] md:w-2/5 h-fit my-6 md:mt-0 md:py-3 mx-auto overflow-y-auto no-scrollbar rounded-lg"
+      className="absolute top-20 bottom-20 min-h-full w-[85%] md:w-2/5 my-6 md:mt-0 md:py-3 mx-auto overflow-y-auto no-scrollbar rounded-lg"
     >
       <Box className="">
         <div className="shadow bg-neutral-800 text-white rounded-2xl">
