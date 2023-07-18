@@ -24,7 +24,7 @@ export default function AddToCart({ modal, closeModal, item }) {
     if (modal === true) {
       // const cart = JSON.parse(localStorage.getItem("Cart"));
       let cart;
-      if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+      if (cookieStore?.Cart) cart = JSON.parse(cookieStore.Cart);
 
       if (cart?.length > 0) {
         cart.map((product) => {
@@ -59,7 +59,7 @@ export default function AddToCart({ modal, closeModal, item }) {
   useEffect(() => {
     // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
-    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+    if (cookieStore?.Cart) cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       setNewCart(() => true);

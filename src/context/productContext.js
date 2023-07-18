@@ -17,13 +17,13 @@ export default function ProductDataContext({ children }) {
   useEffect(() => {
     // const product = JSON.parse(localStorage.getItem("Product"));
     let cart, product;
-    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
+    if (cookieStore?.Product) product = JSON.parse(cookieStore.Product);
 
     if (product?.length > 0) {
       console.log(product);
       setData(product);
     }
-    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+    if (cookieStore?.Cart) cart = JSON.parse(cookieStore.Cart);
     // const cart = JSON.parse(localStorage.getItem("Cart"));
     if (cart?.length > 0) {
       setCartData(cart);
@@ -35,7 +35,7 @@ export default function ProductDataContext({ children }) {
   const storeProduct = (id, quantity) => {
     // If there is cache
     let product;
-    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
+    if (cookieStore?.Product) product = JSON.parse(cookieStore.Product);
 
     if (product?.length > 0) {
       const productCache = product.find((item) => item.id === id);
@@ -70,7 +70,7 @@ export default function ProductDataContext({ children }) {
   const addCartData = (id, name, quantity, amount, itemPrice) => {
     // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
-    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+    if (cookieStore?.Cart) cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       const cartCache = cart.find((item) => item.id === id);
@@ -128,7 +128,7 @@ export default function ProductDataContext({ children }) {
     // const product = JSON.parse(localStorage.getItem("Product"));
 
     let product;
-    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
+    if (cookieStore?.Product) product = JSON.parse(cookieStore.Product);
 
     if (product?.length > 0) {
       let newArray = product.map((item) => {
@@ -149,7 +149,7 @@ export default function ProductDataContext({ children }) {
     // const product = JSON.parse(localStorage.getItem("Product"));
 
     let product;
-    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
+    if (cookieStore?.Product) product = JSON.parse(cookieStore.Product);
 
     if (product?.length > 0) {
       let newArray = product.map((item) => {
@@ -169,7 +169,7 @@ export default function ProductDataContext({ children }) {
   const changeProductQuantity = (id, newQuantity) => {
     // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
-    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+    if (cookieStore?.Cart) cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       let newArray = cart.map((item) => {
@@ -198,7 +198,7 @@ export default function ProductDataContext({ children }) {
   const addCartQuantity = (id) => {
     // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
-    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+    if (cookieStore?.Cart) cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       let newArray = cart.map((item) => {
@@ -222,7 +222,7 @@ export default function ProductDataContext({ children }) {
   const subtractCartQuantity = (id) => {
     // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
-    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+    if (cookieStore?.Cart) cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       let newArray = cart.map((item) => {
@@ -246,7 +246,7 @@ export default function ProductDataContext({ children }) {
   const changeCartQuantity = (id, newQuantity) => {
     // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
-    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+    if (cookieStore?.Cart) cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       let newArray = cart.map((item) => {
@@ -284,7 +284,7 @@ export default function ProductDataContext({ children }) {
   const removeCartItem = (id) => {
     // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
-    if (cookieStore.Cart) cart = JSON.parse(cookieStore.Cart);
+    if (cookieStore?.Cart) cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       let newArray = cart
@@ -306,7 +306,7 @@ export default function ProductDataContext({ children }) {
     // const product = JSON.parse(localStorage.getItem("Product"));
 
     let product;
-    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
+    if (cookieStore?.Product) product = JSON.parse(cookieStore.Product);
 
     if (product?.length > 0) {
       let newArray = product

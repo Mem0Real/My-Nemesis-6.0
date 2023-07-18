@@ -18,7 +18,7 @@ export default function Item({ item }) {
   useEffect(() => {
     // const product = JSON.parse(localStorage.getItem("Product"));
     let product;
-    if (cookieStore.Product) product = JSON.parse(cookieStore.Product);
+    if (cookieStore?.Product) product = JSON.parse(cookieStore.Product);
 
     if (product && product.length > 0) {
       for (let i = 0; i < product.length; i++) {
