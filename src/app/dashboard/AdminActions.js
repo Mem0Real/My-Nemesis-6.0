@@ -72,7 +72,7 @@ export default function AdminActions({
         </button>
       </div>
 
-      <div className="flex flex-col w-full min-h-screen">
+      <div className="flex flex-col w-full">
         {showList && (
           <Suspense
             fallback={<h1 className="text-2xl text-neutral-800">Loading...</h1>}

@@ -48,7 +48,7 @@ export default function LoginPage() {
       >
         <h1 className="text-4xl text-neutral-300 font-black">Login Form</h1>
         <div className="border-2 border-neutral-300 rounded-xl w-96 h-72 flex flex-col items-center justify-center gap-4">
-          <div className="relative z-0 w-2/3 mb-6 group bg-neutral-800">
+          <div className="relative z-0 w-2/3 mb-9 group bg-neutral-800">
             <input
               type="email"
               name="email"
@@ -76,7 +76,7 @@ export default function LoginPage() {
 
             <label
               htmlFor="password"
-              className="peer-focus:text-base absolute text-sm text-neutral-300 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+              className="peer-focus:text-base absolute text-sm text-neutral-300 duration-300 transform -translate-y-9 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9"
             >
               Password
             </label>

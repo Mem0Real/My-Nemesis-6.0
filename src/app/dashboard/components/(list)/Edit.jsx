@@ -118,7 +118,7 @@ export default function Edit({
       onClose={handleClose}
       aria-labelledby="Edit Modal"
       aria-describedby="Update"
-      className="absolute top-20 w-[85%] md:w-2/5 h-screen my-6 md:mt-0 md:py-3 mx-auto overflow-y-auto no-scrollbar rounded-lg"
+      className="absolute top-20 w-[85%] md:w-2/5 min-h-screen my-6 md:mt-0 md:py-3 mx-auto overflow-y-auto no-scrollbar rounded-lg"
     >
       <Box className="">
         <div className="shadow bg-neutral-800 text-white rounded-2xl">
@@ -154,7 +154,7 @@ export default function Edit({
               onSubmit={handleSubmit}
               className="flex-1 flex flex-col justify-center items-center gap-12"
             >
-              <div className="relative z-0 w-2/3 mb-6 group">
+              <div className="relative z-0 w-2/3 mb-9 group">
                 <input
                   type="text"
                   name="name"
@@ -169,12 +169,12 @@ export default function Edit({
                 <span className="text-red-500 absolute top-3 -left-5 ">*</span>
                 <label
                   htmlFor="name"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-9 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9"
                 >
                   Name
                 </label>
               </div>
-              <div className="relative z-0 w-2/3 mb-6 group">
+              <div className="relative z-0 w-2/3 mb-9 group">
                 <input
                   id="newId"
                   name="newId"
@@ -190,7 +190,7 @@ export default function Edit({
                 />
                 <label
                   htmlFor="id"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-9 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9"
                 >
                   ShortName/URL
                 </label>
@@ -198,7 +198,7 @@ export default function Edit({
               {editData.entry === "items" && (
                 <>
                   {/* Brand */}
-                  <div className="relative z-0 w-2/3 mb-6 group">
+                  <div className="relative z-0 w-2/3 mb-9 group">
                     <input
                       id="brand"
                       name="brand"
@@ -210,14 +210,14 @@ export default function Edit({
                     />
                     <label
                       htmlFor="brand"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-9 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9"
                     >
                       Brand
                     </label>
                   </div>
 
                   {/* Model */}
-                  <div className="relative z-0 w-2/3 mb-6 group">
+                  <div className="relative z-0 w-2/3 mb-9 group">
                     <input
                       id="model"
                       name="model"
@@ -229,14 +229,14 @@ export default function Edit({
                     />
                     <label
                       htmlFor="model"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-9 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9"
                     >
                       Model
                     </label>
                   </div>
 
                   {/* Quantity */}
-                  <div className="relative z-0 w-2/3 mb-6 group">
+                  <div className="relative z-0 w-2/3 mb-9 group">
                     <input
                       id="quantity"
                       name="quantity"
@@ -248,14 +248,14 @@ export default function Edit({
                     />
                     <label
                       htmlFor="id"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-9 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9"
                     >
                       Quantity
                     </label>
                   </div>
 
                   {/* Price */}
-                  <div className="relative z-0 w-2/3 mb-6 group">
+                  <div className="relative z-0 w-2/3 mb-9 group">
                     <input
                       id="price"
                       name="price"
@@ -267,14 +267,14 @@ export default function Edit({
                     />
                     <label
                       htmlFor="price"
-                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                      className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-9 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9"
                     >
                       Price
                     </label>
                   </div>
                 </>
               )}
-              <div className="relative z-0 w-2/3 mb-6 group">
+              <div className="relative z-0 w-2/3 mb-9 group">
                 <textarea
                   cols={5}
                   rows={5}
@@ -288,14 +288,14 @@ export default function Edit({
                 />
                 <label
                   htmlFor="description"
-                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                  className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-9 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9"
                 >
                   Description
                 </label>
               </div>
               {editData.entry !== "items" ? (
                 <>
-                  <div className="relative z-0 w-2/3 mb-6 group">
+                  <div className="relative z-0 w-2/3 mb-9 group">
                     <label
                       htmlFor="image"
                       className="text-md text-gray-500 dark:text-gray-400 top-6 -z-10"
@@ -312,7 +312,7 @@ export default function Edit({
                   </div>
 
                   {imageSrc && (
-                    <div className="relative h-56 w-56 mb-6">
+                    <div className="relative h-56 w-56 mb-9">
                       <Image
                         src={imageSrc}
                         fill={true}
@@ -325,7 +325,7 @@ export default function Edit({
                 </>
               ) : (
                 <>
-                  <div className="relative z-0 w-2/3 mb-6 group">
+                  <div className="relative z-0 w-2/3 mb-9 group">
                     <label
                       htmlFor="images"
                       className="text-md text-gray-500 dark:text-gray-400 top-6 -z-10"
