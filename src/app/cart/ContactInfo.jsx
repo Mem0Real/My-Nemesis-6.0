@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { sendOrder } from "./CartActions";
 
 import Box from "@mui/material/Box";
 import Modal from "@mui/material/Modal";
@@ -28,14 +29,7 @@ export default function ContactInfo({
       url = process.env.NEXT_PUBLIC_PRODUCTION_URL;
 
     setLoading(() => true);
-    const res = fetch(`${url}/api/sendOrder`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-      method: "POST",
-      body: JSON.stringify({ user, cartList, orderTotalPrice }),
-    });
-
+    const res = sendOrder(user, cartList, orderTotalPrice);
     toast
       .promise(
         res,
@@ -55,6 +49,7 @@ export default function ContactInfo({
         }
       )
       .then(() => setLoading(() => false))
+      .catch((error) => toast.error("Could not send order. Error: ", error))
       .then(() => setPurchasedData(() => cartList))
       .then(() => clearCart())
       .then(() => setUser(() => {}))
@@ -107,20 +102,25 @@ export default function ContactInfo({
               onSubmit={handleSubmit}
               className="flex-1 flex flex-col justify-center items-center gap-4 w-[90%]"
             >
-              <div className=" border p-5 rounded-md shadow-inner shadow-neutral-500 w-[75%]">
-                <div className="relative z-0 mb-6 group">
+              <div className=" border p-5 py-12 rounded-md shadow-inner shadow-neutral-500 w-[75%]">
+                <div className="relative z-0 mb-9 group">
                   <input
                     id="fullname"
                     name="fullname"
                     type="text"
-                    className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     placeholder=" "
+                    className="block py-2.5 ps-2 w-full text-sm text-neutral-300 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                     value={user?.fullname || ""}
                     onChange={handleChange}
                   />
                   <label
                     htmlFor="fullname"
-                    className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    className="text-base absolute peer-placeholder-shown:text-sm
+                    text-neutral-300 duration-300 transform -translate-y-9
+                    scale-75 top-3 -z-10 origin-[0] peer-focus:left-0
+                    peer-focus:text-blue-600 peer-placeholder-shown:scale-100
+                    peer-placeholder-shown:translate-y-0 peer-focus:scale-75
+                    peer-focus:-translate-y-9"
                   >
                     Full Name
                   </label>
@@ -141,7 +141,7 @@ export default function ContactInfo({
                   </p>
                   <label
                     htmlFor="phone"
-                    className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] left-0 peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500  peer-placeholder-shown:scale-100  peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+                    className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-9 scale-75 top-3 -z-10 origin-[0] left-0 peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500  peer-placeholder-shown:scale-100  peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9"
                   >
                     Phone Number
                   </label>
@@ -152,7 +152,7 @@ export default function ContactInfo({
                   <button
                     name="submit"
                     type="submit"
-                    className="w-24 py-2 rounded outline outline-1 outline-green-600 hover:outline-2 active:outline-4 font-thin"
+                    className="w-24 py-2 rounded outline outline-1 outline-green-600 hover:outline-2 active:outline-4 font-thin disabled:bg-neutral-600 disabled:outline-4 hover:disabled:outline-4 hover:disabled:cursor-progress"
                     disabled={loading}
                   >
                     Confirm

@@ -1,11 +1,10 @@
+"use server";
+
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
-import { NextResponse } from "next/server";
 
-export async function POST(request) {
-  const res = await request.json();
-
-  let firstName = res.user.fullname;
+export async function sendOrder(user, cartList, orderTotalPrice) {
+  let firstName = user.fullname;
   firstName = firstName.split(" ")[0];
   firstName = firstName.toLowerCase();
 
@@ -16,21 +15,21 @@ export async function POST(request) {
       id: firstName,
     },
     update: {
-      totalPurchase: res.orderTotalPrice,
+      totalPurchase: orderTotalPrice,
       updatedAt: dateNow,
     },
     create: {
       id: firstName,
-      name: res.user.fullname,
-      phone: parseInt(res.user.phone),
-      totalPurchase: res.orderTotalPrice,
+      name: user.fullname,
+      phone: parseInt(user.phone),
+      totalPurchase: orderTotalPrice,
       updatedAt: dateNow,
     },
   });
 
   if (!res1) throw new Error("Error creating order");
 
-  let data = await res.cartList.map((item) => ({
+  let data = await cartList.map((item) => ({
     productId: item.id,
     productName: item.name,
     productPrice: parseFloat(item.totalPrice),
@@ -44,7 +43,7 @@ export async function POST(request) {
 
   if (!res2) throw new Error("Error creating order");
 
-  let tran = await res.cartList.map((item) => ({
+  let tran = await cartList.map((item) => ({
     productId: item.id,
     orderedQuantity: item.amount,
     productQuantity: item.quantity,
@@ -61,5 +60,5 @@ export async function POST(request) {
   );
 
   revalidatePath("/collection");
-  return new NextResponse(JSON.stringify(transaction, res1, res2));
+  return JSON.stringify(transaction, res1, res2);
 }

@@ -50,5 +50,4 @@ input:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0 30px rgb(38 38 38) inset !important;
   box-shadow: 0 0 0 30px rgb(38 38 38) inset !important;
   -webkit-text-fill-color: white !important;
-  /* background-color: rgba(0, 0, 0, 0) !important; */
 }
