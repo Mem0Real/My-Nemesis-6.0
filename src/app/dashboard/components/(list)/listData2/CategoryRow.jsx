@@ -46,13 +46,15 @@ export default function CategoryRow({ category }) {
                 : ""
             }`}
           />
-          <Link
-            className="hover:underline underline-offset-4 z-10"
-            href={`collection/${category.id}`}
-            onClick={(e) => e.stopPropagation()}
-          >
-            {category.name}
-          </Link>
+          <motion.div whileHover={{ fontWeight: "semi-bold", scale: 1.02 }}>
+            <Link
+              className="hover:underline underline-offset-4 z-10"
+              href={`collection/${category.id}`}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {category.name}
+            </Link>
+          </motion.div>
         </div>
       </td>
       <td
@@ -63,18 +65,45 @@ export default function CategoryRow({ category }) {
       </td>
       <td>
         <div className="flex items-center justify-center gap-3">
-          <PlusOutlined
-            className="text-green-700"
-            onClick={() => handleAdd("parents", category.id)}
-          />
-          <EditOutlined
-            className="text-blue-700"
-            onClick={() => handleEdit("categories", category)}
-          />
-          <DeleteOutlined
-            className="text-red-700"
-            onClick={() => handleDelete("categories", category)}
-          />
+          <motion.div
+            whileHover={{
+              scale: 1.75,
+            }}
+            whileTap={{
+              scale: 1.5,
+            }}
+          >
+            <PlusOutlined
+              className="text-green-700"
+              onClick={() => handleAdd("parents", category.id)}
+            />
+          </motion.div>
+          <motion.div
+            whileHover={{
+              scale: 1.75,
+            }}
+            whileTap={{
+              scale: 1.5,
+            }}
+          >
+            <EditOutlined
+              className="text-blue-700"
+              onClick={() => handleEdit("categories", category)}
+            />
+          </motion.div>
+          <motion.div
+            whileHover={{
+              scale: 1.75,
+            }}
+            whileTap={{
+              scale: 1.5,
+            }}
+          >
+            <DeleteOutlined
+              className="text-red-700"
+              onClick={() => handleDelete("categories", category)}
+            />
+          </motion.div>
         </div>
       </td>
     </motion.tr>,

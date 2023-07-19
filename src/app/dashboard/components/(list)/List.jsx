@@ -10,6 +10,7 @@ const Edit = dynamic(() => import("./Edit"));
 const Delete = dynamic(() => import("./Delete"));
 // import ListTable from "./ListTable";
 import MyTable from "./MyTable";
+import AddAnt from "./AddAnt";
 
 const DataContext = createContext({});
 
@@ -118,7 +119,15 @@ export default function List({ data, create, update, deleteItem, url }) {
       </div>
 
       {/* Add Modal */}
-      <Add
+      {/* <Add
+        modal={addModal}
+        closeAddModal={closeAddModal}
+        addData={addData}
+        setAddData={setAddData}
+        create={create}
+      /> */}
+
+      <AddAnt
         modal={addModal}
         closeAddModal={closeAddModal}
         addData={addData}
