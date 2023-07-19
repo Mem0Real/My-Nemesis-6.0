@@ -33,9 +33,10 @@ export default function ParentRow({ customerId, currentOrder }) {
           }
           variants={variants}
           exit={"closed"}
-          className={`hover:border-b border-neutral-500 cursor-pointer ${
+          className={`${
             cus.id === currentOrder.id && cus.open === true && "font-semibold"
           }`}
+          whileHover={{ backgroundColor: "#999" }}
         >
           <td className="py-2 max-w-md text-center">
             {currentOrder.productName}
