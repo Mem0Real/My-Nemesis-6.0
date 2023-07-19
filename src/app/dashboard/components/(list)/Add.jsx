@@ -17,6 +17,7 @@ export default function Add({
 }) {
   const [imageSrc, setImageSrc] = useState();
   const [images, setImages] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
@@ -47,42 +48,21 @@ export default function Add({
     console.log(addData);
     const formData = formatData(addData);
 
-    const res = create(formData);
-    toast
-      .promise(
-        res,
-        {
-          loading: "Loading...",
-          success: () =>
-            `Successfully created ${addData.name} inside ${
-              addData.entry === "categories"
-                ? addData.entry
-                : addData.entry === "parents"
-                ? addData.categories
-                : addData.entry === "children"
-                ? addData.parents
-                : addData.entry === "items" && addData.children
-            }`,
-          error: (err) => `Error creating item: ${err.toString()}`,
-        },
-        {
-          style: {
-            minWidth: "250px",
-          },
-          success: {
-            duration: 5000,
-          },
-        }
-      )
-      .then(() => {
-        closeAddModal();
-      })
-      .then(() => {
-        setImageSrc(null);
-      })
-      .then(() => {
-        setImages([]);
-      });
+    setLoading(() => true);
+    const toastId = toast.loading("Creating Item...");
+
+    const res = await create(formData);
+
+    setLoading(() => false);
+    toast.remove(toastId);
+    if (res?.error) toast.error(res.error, { duration: 10000 });
+    else {
+      toast.remove(toastId);
+      toast.success(res.success);
+      closeAddModal();
+      setImageSrc(() => null);
+      setImages(() => []);
+    }
   };
   return (
     <Modal
@@ -328,9 +308,10 @@ export default function Add({
                 </>
               )}
               <button
+                disabled={loading}
                 name="submit"
                 type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="text-white bg-blue-700 hover:bg-blue-800 disabled:bg-blue-500 disabled:hover:bg-blue-500 disabled:cursor-progress focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Submit
               </button>

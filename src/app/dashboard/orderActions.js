@@ -1,12 +1,17 @@
 import prisma from "@/lib/prisma";
 import { revalidatePath } from "next/cache";
+import { toast } from "react-hot-toast";
 
 export async function removeAll(entry) {
   "use server";
 
   const query = await prisma[entry].deleteMany({});
-  console.log(`Deleted all ${query.count} ${entry}.`);
-  revalidatePath("/dashboard");
+  if (query?.error) {
+    return { error: `Error removing orders: ${query.error}` };
+  } else {
+    revalidatePath("/dashboard");
+    return { success: `Deleted all ${query.count} ${entry}.` };
+  }
 }
 
 export async function removeOne(entry, id) {
@@ -16,8 +21,12 @@ export async function removeOne(entry, id) {
       id: id,
     },
   });
-  console.log(`${entry} '${id}' removed successfully.`);
-  revalidatePath("/dashboard");
+  if (query?.error) {
+    return { error: `Error removing orders: ${query.error}` };
+  } else {
+    revalidatePath("/dashboard");
+    return { success: `${entry} '${id}' removed successfully.` };
+  }
 }
 
 export async function markDelivered(entry, id) {
@@ -30,8 +39,10 @@ export async function markDelivered(entry, id) {
       delivered: true,
     },
   });
-
-  console.log(`${entry} '${id}' set to delivered.`);
-  revalidatePath("/dashboard");
-  return data;
+  if (data?.error) {
+    return { error: ("Error removing orders: ", data.error) };
+  } else {
+    revalidatePath("/dashboard");
+    return { success: `${entry} '${id}' set to delivered.` };
+  }
 }

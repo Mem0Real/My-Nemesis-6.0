@@ -29,31 +29,50 @@ export default function ContactInfo({
       url = process.env.NEXT_PUBLIC_PRODUCTION_URL;
 
     setLoading(() => true);
-    const res = sendOrder(user, cartList, orderTotalPrice);
-    toast
-      .promise(
-        res,
-        {
-          loading: "Loading",
-          success: "Order sent successfully!",
-          error:
-            "Could not send order. Check your connectivity and try again later.",
-        },
-        {
-          style: {
-            minWidth: "250px",
-          },
-          success: {
-            duration: 5000,
-          },
-        }
-      )
-      .then(() => setLoading(() => false))
-      .catch((error) => toast.error("Could not send order. Error: ", error))
-      .then(() => setPurchasedData(() => cartList))
-      .then(() => clearCart())
-      .then(() => setUser(() => {}))
-      .then(() => closeInfoModal());
+    const toastId = toast.loading("Sending your cart data. Please wait...");
+    const res = await sendOrder(user, cartList, orderTotalPrice);
+    // toast
+    //   .promise(
+    //     res,
+    //     {
+    //       loading: "Loading",
+    //       success: "Order sent successfully!",
+    //       error:
+    //         "Could not send order. Check your connectivity and try again later.",
+    //     },
+    //     {
+    //       style: {
+    //         minWidth: "250px",
+    //       },
+    //       success: {
+    //         duration: 5000,
+    //       },
+    //     }
+    //   )
+    //   .then(() => setLoading(() => false))
+    //   .catch((error) => toast.error("Could not send order. Error: ", error))
+    //   .then(() => setPurchasedData(() => cartList))
+    //   .then(() => clearCart())
+    //   .then(() => setUser(() => {}))
+    //   .then(() => closeInfoModal());
+
+    setLoading(() => false);
+    if (res.error)
+      toast.error(res.error, {
+        duration: 10000,
+      });
+    else {
+      toast.success(res.success, {
+        duration: 2000,
+        id: toastId,
+      });
+      toast.success(res.message, {
+        duration: 5000,
+      });
+      setPurchasedData(() => cartList);
+      setUser(() => {});
+      closeInfoModal();
+    }
   };
 
   const handleChange = (e) => {

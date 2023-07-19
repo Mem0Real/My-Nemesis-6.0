@@ -72,10 +72,14 @@ export default function AdminActions({
         </button>
       </div>
 
-      <div className="flex flex-col w-full">
+      <div className="flex flex-col w-full bg-neutral-300 min-h-screen">
         {showList && (
           <Suspense
-            fallback={<h1 className="text-2xl text-neutral-800">Loading...</h1>}
+            fallback={
+              <h1 className="text-2xl text-neutral-800 bg-neutral-300">
+                Loading...
+              </h1>
+            }
           >
             <List
               data={data}
@@ -88,7 +92,11 @@ export default function AdminActions({
         )}
         {showOrder && (
           <Suspense
-            fallback={<h1 className="text-2xl text-neutral-800">Loading...</h1>}
+            fallback={
+              <h1 className="text-2xl text-neutral-800 bg-neutral-300">
+                Loading...
+              </h1>
+            }
           >
             <Order
               order={order}

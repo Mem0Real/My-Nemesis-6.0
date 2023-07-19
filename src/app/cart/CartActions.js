@@ -10,24 +10,29 @@ export async function sendOrder(user, cartList, orderTotalPrice) {
 
   let dateNow = new Date().toISOString();
 
-  const res1 = await prisma.customers.upsert({
-    where: {
-      id: firstName,
-    },
-    update: {
-      totalPurchase: orderTotalPrice,
-      updatedAt: dateNow,
-    },
-    create: {
-      id: firstName,
-      name: user.fullname,
-      phone: parseInt(user.phone),
-      totalPurchase: orderTotalPrice,
-      updatedAt: dateNow,
-    },
-  });
+  let res1;
 
-  if (!res1) throw new Error("Error creating order");
+  try {
+    res1 = await prisma.customers.upsert({
+      where: {
+        id: firstName,
+      },
+      update: {
+        totalPurchase: orderTotalPrice,
+        updatedAt: dateNow,
+      },
+      create: {
+        id: firstName,
+        name: user.fullname,
+        phone: parseInt(user.phone),
+        totalPurchase: orderTotalPrice,
+        updatedAt: dateNow,
+      },
+    });
+  } catch (error) {
+    return { error: `Error creating order: ${error}` };
+  }
+  if (!res1) return { error: "Error creating order" };
 
   let data = await cartList.map((item) => ({
     productId: item.id,
@@ -41,7 +46,7 @@ export async function sendOrder(user, cartList, orderTotalPrice) {
     data,
   });
 
-  if (!res2) throw new Error("Error creating order");
+  if (!res2) return { error: "Error creating order" };
 
   let tran = await cartList.map((item) => ({
     productId: item.id,
@@ -60,5 +65,8 @@ export async function sendOrder(user, cartList, orderTotalPrice) {
   );
 
   revalidatePath("/collection");
-  return JSON.stringify(transaction, res1, res2);
+  return {
+    success: "Cart Items Sent.",
+    message: "One of our employees will reach out soon. Thank you!",
+  };
 }

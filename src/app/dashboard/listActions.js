@@ -3,6 +3,7 @@ import mime from "mime";
 import { join } from "path";
 import { stat, mkdir, writeFile, unlink } from "fs/promises";
 import fs from "fs";
+import { toast } from "react-hot-toast";
 
 import { revalidatePath, revalidateTag } from "next/cache";
 
@@ -63,10 +64,9 @@ export async function create(formData) {
             [category.name]: category.val,
           },
         });
-        console.log("Success");
+        return { success: "Item created successfully!" };
       } catch (error) {
-        console.log("Error: ", error);
-        throw new Error(`Error creating item: ${error}`);
+        return { error: ("Error creating item. Error code: ", error) };
       }
     } else {
       try {
@@ -83,18 +83,21 @@ export async function create(formData) {
             [category.name]: category.val,
           },
         });
-        console.log("Success");
+        return { success: "Item created successfully!" };
       } catch (error) {
-        console.log("Error: ", error);
-        throw new Error(`Error creating item: ${error}`);
+        return { error: ("Error creating item. Error code: ", error) };
       }
     }
-    revalidatePath("/collection");
-    revalidatePath("/dashboard");
-    revalidateTag("search");
   };
   if (!file) {
-    await writeToDb();
+    const query = await writeToDb();
+    if (query?.error) return { error: `Error creating item: ${query.error}` };
+    else {
+      revalidatePath("/collection");
+      revalidatePath("/dashboard");
+      revalidateTag("search");
+      return { success: `Created Successfully!` };
+    }
   } else {
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
@@ -110,7 +113,7 @@ export async function create(formData) {
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
     try {
-      await stat(uploadDir);
+      const upload = await stat(uploadDir);
     } catch (e) {
       if (e.code === "ENOENT") {
         await mkdir(uploadDir, { recursive: true });
@@ -121,38 +124,59 @@ export async function create(formData) {
         );
       }
     }
+    if (upload?.error) {
+      return {
+        error: `Error while trying to create directory for file upload \n
+          ${error}`,
+      };
+    }
 
-    try {
-      if (entry !== "items") {
-        const buffer = Buffer.from(await file.arrayBuffer());
-        const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
-        const filename = `${file.name.replace(
-          /\.[^/.]+$/,
-          ""
-        )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
-        await writeFile(`${uploadDir}/${filename}`, buffer);
+    if (entry !== "items") {
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const uniqueSuffix = `${Date.now()}-${Math.round(Math.random() * 1e9)}`;
+      const filename = `${file.name.replace(
+        /\.[^/.]+$/,
+        ""
+      )}-${uniqueSuffix}.${mime.getExtension(file.type)}`;
+      const wtf = await writeFile(`${uploadDir}/${filename}`, buffer);
 
-        let imageUrl = `${relativeUploadDir}/${filename}`;
-
-        await writeToDb(imageUrl);
-      } else {
-        const formDataEntryValues = Array.from(formData.values());
-        let imageUrl = [];
-        for (const formDataEntryValue of formDataEntryValues) {
-          if (
-            typeof formDataEntryValue === "object" &&
-            "arrayBuffer" in formDataEntryValue
-          ) {
-            const file = formDataEntryValue;
-            const buffer = Buffer.from(await file.arrayBuffer());
-            fs.writeFileSync(`${uploadDir}/${file.name}`, buffer);
-            imageUrl.push(`${relativeUploadDir}/${file.name}`);
-          }
-        }
-        await writeToDb(imageUrl);
+      if (wtf?.error) {
+        return {
+          error: `Error creating directory for file upload: ${wtf.error}`,
+        };
       }
-    } catch (e) {
-      console.error("Error while trying to upload a file\n", e);
+      let imageUrl = `${relativeUploadDir}/${filename}`;
+
+      const query = await writeToDb(imageUrl);
+      if (query?.error) return { error: `Error creating item \n ${error}` };
+      else {
+        revalidatePath("/collection");
+        revalidatePath("/dashboard");
+        revalidateTag("search");
+        return { success: `Created Successfully!` };
+      }
+    } else {
+      const formDataEntryValues = Array.from(formData.values());
+      let imageUrl = [];
+      for (const formDataEntryValue of formDataEntryValues) {
+        if (
+          typeof formDataEntryValue === "object" &&
+          "arrayBuffer" in formDataEntryValue
+        ) {
+          const file = formDataEntryValue;
+          const buffer = Buffer.from(await file.arrayBuffer());
+          fs.writeFileSync(`${uploadDir}/${file.name}`, buffer);
+          imageUrl.push(`${relativeUploadDir}/${file.name}`);
+        }
+      }
+      const query = await writeToDb(imageUrl);
+      if (query?.error) return { error: `Error creating item \n ${error}` };
+      else {
+        revalidatePath("/collection");
+        revalidatePath("/dashboard");
+        revalidateTag("search");
+        return { success: `Created Successfully!` };
+      }
     }
   }
 }
@@ -222,11 +246,9 @@ export async function update(formData) {
             [category.name]: category.val,
           },
         });
-
-        console.log("Success");
+        return { success: "Updated successfully!" };
       } catch (error) {
-        console.log("Error: ", error);
-        throw new Error(`Error updating item. ${error}`);
+        return { error: `Error Updating Item. \n ${error}` };
       }
     } else {
       try {
@@ -244,24 +266,30 @@ export async function update(formData) {
             [category.name]: category.val,
           },
         });
-
-        console.log("Success");
+        return { success: "Updated successfully!" };
       } catch (error) {
-        console.log("Error: ", error);
-        throw new Error(`Error updating item. ${error}`);
+        return { error: `Error Updating Item. \n ${error}` };
       }
     }
-
-    revalidateTag("search");
-    revalidatePath("/collection");
-    revalidatePath("/dashboard");
   };
   if (!file) {
-    await writeToDb();
-    console.log("No image");
+    const query = await writeToDb();
+    if (query?.error) return { error: `Error updating item \n ${error}` };
+    else {
+      revalidatePath("/collection");
+      revalidatePath("/dashboard");
+      revalidateTag("search");
+      return { success: `Updated Successfully!` };
+    }
   } else if (typeof file === "string" && entry !== "items") {
-    writeToDb();
-    console.log("No change");
+    const query = await writeToDb();
+    if (query?.error) return { error: `Error updating item \n ${error}` };
+    else {
+      revalidatePath("/collection");
+      revalidatePath("/dashboard");
+      revalidateTag("search");
+      return { success: `Updated Successfully!` };
+    }
   } else {
     let relativeUploadDir;
     if (process.env.NODE_ENV === "development") {
@@ -284,10 +312,7 @@ export async function update(formData) {
       if (e.code === "ENOENT") {
         await mkdir(uploadDir, { recursive: true });
       } else {
-        console.error(
-          "Error while trying to create directory when uploading a file\n",
-          e
-        );
+        return { error: `Error Updating Item. \n ${e}` };
       }
     }
 
@@ -304,13 +329,29 @@ export async function update(formData) {
 
         // Delete existing file if any
         if (oldFile) {
-          await unlink(`${delDir}/${oldFile}`);
+          try {
+            await unlink(`${delDir}/${oldFile}`);
+          } catch (error) {
+            return { error: `Error while removing old image/s \n ${error}` };
+          }
         }
-        await writeFile(`${uploadDir}/${filename}`, buffer);
+
+        try {
+          await writeFile(`${uploadDir}/${filename}`, buffer);
+        } catch (error) {
+          return { error: `Error creating image/s files \n ${error}` };
+        }
 
         let imageUrl = `${relativeUploadDir}/${filename}`;
 
-        await writeToDb(imageUrl);
+        const query = await writeToDb(imageUrl);
+        if (query?.error) return { error: `Error updating item \n ${error}` };
+        else {
+          revalidatePath("/collection");
+          revalidatePath("/dashboard");
+          revalidateTag("search");
+          return { success: `Updated Successfully!` };
+        }
       } else {
         let oldFile = formData.get("images");
         if (oldFile && oldFile !== "null") {
@@ -331,10 +372,17 @@ export async function update(formData) {
             imageUrl.push(`${relativeUploadDir}/${file.name}`);
           }
         }
-        await writeToDb(imageUrl);
+        const query = await writeToDb(imageUrl);
+        if (query?.error) return { error: `Error updating item \n ${error}` };
+        else {
+          revalidatePath("/collection");
+          revalidatePath("/dashboard");
+          revalidateTag("search");
+          return { success: `Updated Successfully!` };
+        }
       }
     } catch (e) {
-      console.error("Error while trying to upload a file\n", e);
+      return { error: `Error uploading file: ` };
     }
   }
 }
@@ -342,41 +390,79 @@ export async function update(formData) {
 export async function deleteItem(entry, data) {
   "use server";
 
-  const res = prisma[entry].delete({
-    where: {
-      id: data.id,
-    },
-  });
+  const removeFromDb = async () => {
+    try {
+      await prisma[entry].delete({
+        where: {
+          id: data.id,
+        },
+      });
+    } catch (error) {
+      return { error: `Error Removing Item \n ${error}` };
+    }
+  };
+
   const delDir = join(process.cwd(), "public");
 
   if (entry !== "items") {
     if (data.image) {
-      unlink(`${delDir}/${data.image}`);
+      try {
+        unlink(`${delDir}/${data.image}`);
+      } catch (e) {
+        return { error: `Error removing image file: ${error}` };
+      }
     }
   } else {
     let images = data.images;
     let dir = `${delDir}/uploads/${entry}/${data.ChildId}/${data.id}/`;
 
     if (images) {
-      fs.rm(
-        dir,
-        {
-          recursive: true,
-          force: true,
-        },
-        (err) => {
-          if (err) {
-            throw err;
+      try {
+        fs.rm(
+          dir,
+          {
+            recursive: true,
+            force: true,
+          },
+          (err) => {
+            if (err) {
+              return { error: `Error removing image file: ${err}` };
+            }
           }
-
-          console.log(`${dir} is deleted!`);
+        );
+        const query = await removeFromDb();
+        if (query?.error)
+          return { error: `Error removing item. \n Please try again later.` };
+        else {
+          revalidateTag("search");
+          revalidatePath("/collection");
+          revalidatePath("/dashboard");
+          return { success: "Item removed successfully!" };
         }
-      );
+      } catch (e) {
+        const query = await removeFromDb();
+        if (query?.error)
+          return {
+            error: `Error removing item. \n Please try again later.`,
+            e: `Problem with file removal \n ${e}`,
+          };
+        else {
+          revalidateTag("search");
+          revalidatePath("/collection");
+          revalidatePath("/dashboard");
+          return { success: "Item removed successfully!" };
+        }
+      }
+    } else {
+      const query = await removeFromDb();
+      if (query?.error)
+        return { error: `Error removing item. \n Please try again later.` };
+      else {
+        revalidateTag("search");
+        revalidatePath("/collection");
+        revalidatePath("/dashboard");
+        return { success: "Item removed successfully!" };
+      }
     }
   }
-
-  revalidateTag("search");
-  revalidatePath("/collection");
-  revalidatePath("/dashboard");
-  return res;
 }

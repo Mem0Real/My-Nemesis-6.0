@@ -7,7 +7,8 @@ import {
   createContext,
   useContext,
 } from "react";
-import OrderTable from "./OrderTable";
+// import OrderTable from "./OrderTable";
+import MyOrderTable from "./MyOrderTable";
 import Button from "@mui/material/Button";
 import RemoveAll from "./RemoveAll";
 
@@ -74,7 +75,8 @@ export default function Order({
               </h1>
             }
           >
-            <OrderTable />
+            {/* <OrderTable /> */}
+            <MyOrderTable />
           </Suspense>
 
           <div className="flex w-full justify-center items-center md:mt-3 gap-6">

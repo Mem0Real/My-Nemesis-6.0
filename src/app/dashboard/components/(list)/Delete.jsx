@@ -1,4 +1,7 @@
 "use client";
+
+import { useState } from "react";
+
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
@@ -15,29 +18,23 @@ export default function Delete({
   setDeleteData,
   deleteItem,
 }) {
+  const [loading, setLoading] = useState(false);
+
   const confirmDelete = async (deleteData) => {
-    const res = deleteItem(deleteData.entry, deleteData.data);
-    toast
-      .promise(
-        res,
-        {
-          loading: "Loading",
-          success: (data) =>
-            `Successfully removed ${deleteData.data.name} from ${deleteData.entry}`,
-          error: (err) => `Error removing item: ${err.toString()}`,
-        },
-        {
-          style: {
-            minWidth: "250px",
-          },
-          success: {
-            duration: 4000,
-          },
-        }
-      )
-      .then(() => {
-        closeDeleteModal();
-      });
+    setLoading(() => true);
+    const loaderToast = toast.loading(`Removing ${deleteData.data.id}`);
+
+    const res = await deleteItem(deleteData.entry, deleteData.data);
+    setLoading(() => false);
+    toast.remove(loaderToast);
+    if (res?.error) toast.error(res.error, { duration: 10000 });
+    else {
+      toast.remove(loaderToast);
+      toast.success(res.success);
+      closeDeleteModal();
+      setImageSrc(() => null);
+      setImages(() => []);
+    }
   };
   return (
     <div className="bg-neutral-800 text-neutral-200">
@@ -74,6 +71,7 @@ export default function Delete({
         <DialogActions className=" text-neutral-200 bg-neutral-900">
           <Button onClick={closeDeleteModal}>Cancel</Button>
           <Button
+            disabled={loading}
             onClick={() => confirmDelete(deleteData)}
             autoFocus
             color="error"
