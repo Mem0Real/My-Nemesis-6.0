@@ -8,6 +8,7 @@ import ParentRow from "./ParentRow";
 import { useDataContext } from "../List";
 import { useTableContext } from "../MyTable";
 
+import { motion } from "framer-motion";
 import {
   RightOutlined,
   DeleteOutlined,
@@ -26,11 +27,12 @@ export default function CategoryRow({ category }) {
   };
 
   return [
-    <tr
+    <motion.tr
       key={category.id}
-      className={`hover:border-b border-neutral-500 cursor-pointer ${
+      className={`cursor-pointer ${
         cat.id === category.id && cat.open === true && "font-semibold"
       }`}
+      whileHover={{ backgroundColor: "#aaa", transition: { duration: 2 } }}
     >
       <td className="py-2">
         <div
@@ -75,7 +77,7 @@ export default function CategoryRow({ category }) {
           />
         </div>
       </td>
-    </tr>,
+    </motion.tr>,
     parents.map(
       (parent) =>
         parent.CategoryId === category.id && (

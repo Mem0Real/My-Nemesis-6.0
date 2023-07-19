@@ -45,11 +45,12 @@ export default function ChildRow({ categoryId, parentId, child }) {
           animate={par.id === parentId && par.open === true ? "open" : "closed"}
           variants={variants}
           exit={"closed"}
-          className={`hover:border-b border-neutral-500 cursor-pointer ${
+          className={`cursor-pointer bg-neutral-400/90 ${
             chi.id === child.id && chi.open === true && "font-semibold"
           }`}
+          whileHover={{ backgroundColor: "#777" }}
         >
-          <td className="py-2">
+          <td className="py-3">
             <div
               className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
               onClick={toggleExpander}
@@ -70,7 +71,7 @@ export default function ChildRow({ categoryId, parentId, child }) {
               </Link>
             </div>
           </td>
-          <td className="pl-6 py-2" onClick={toggleExpander}>
+          <td className="pl-6 py-3" onClick={toggleExpander}>
             {child.description}
           </td>
           <td>
@@ -94,65 +95,74 @@ export default function ChildRow({ categoryId, parentId, child }) {
         </motion.tr>
       )}
     </AnimatePresence>,
-    chi.id === child.id && chi.open === true && (
-      <tr key={`${child.id}-table`}>
-        <td colSpan={3}>
-          <div className="mx-auto mt-5 rounded-3xl border-2 border-neutral-700 overflow-auto">
-            <table
-              className="table-fixed w-full"
-              border={2}
-              bordercolor="black"
-            >
-              <thead>
-                <tr>
-                  <th className="text-center border border-black py-2 w-36 md:w-40 lg:w-36">
-                    Name
-                  </th>
-                  <th className="text-center border border-black py-2 w-64 md:w-80 lg:w-96">
-                    Description
-                  </th>
-                  <th className="text-center border border-black py-2 w-24">
-                    Brand
-                  </th>
-                  <th className="text-center border border-black py-2 w-24">
-                    Model
-                  </th>
-                  <th className="text-center border border-black py-2 w-24 md:w-24 lg:w-24">
-                    Qunatity
-                  </th>
-                  <th className="text-center border border-black py-2 w-24 md:w-24 lg:w-24">
-                    Price
-                  </th>
-                  <th className="w-20 md:w-14 lg:w-20 border border-black" />
-                </tr>
-              </thead>
-              <tbody>
-                {items.map(
-                  (item) =>
-                    item.ChildId === child.id && (
-                      <React.Fragment key={item.id}>
-                        <ItemRow
-                          categoryId={categoryId}
-                          parentId={parentId}
-                          childId={child.id}
-                          item={item}
-                        />
-                      </React.Fragment>
-                    )
-                )}
-              </tbody>
-            </table>
-          </div>
-          <span className="w-full flex items-center justify-center py-3">
-            <button
-              className="px-3 py-2 rounded-md bg-green-700 text-neutral-200"
-              onClick={() => handleAdd("items", categoryId, parentId, child.id)}
-            >
-              Add Product
-            </button>
-          </span>
-        </td>
-      </tr>
-    ),
+    <AnimatePresence key={child.id + "items"}>
+      {chi.id === child.id && chi.open === true && (
+        <motion.tr
+          key={`${child.id}-table`}
+          animate={chi.id === child.id && chi.open === true ? "open" : "closed"}
+          variants={variants}
+          exit={"closed"}
+        >
+          <td colSpan={3}>
+            <div className="mx-auto mt-5 rounded-3xl border-2 border-neutral-700 overflow-auto">
+              <table
+                className="table-fixed w-full"
+                border={2}
+                bordercolor="black"
+              >
+                <thead>
+                  <tr>
+                    <th className="text-center border border-black py-2 w-36 md:w-40 lg:w-36">
+                      Name
+                    </th>
+                    <th className="text-center border border-black py-2 w-64 md:w-80 lg:w-96">
+                      Description
+                    </th>
+                    <th className="text-center border border-black py-2 w-24">
+                      Brand
+                    </th>
+                    <th className="text-center border border-black py-2 w-24">
+                      Model
+                    </th>
+                    <th className="text-center border border-black py-2 w-24 md:w-24 lg:w-24">
+                      Qunatity
+                    </th>
+                    <th className="text-center border border-black py-2 w-24 md:w-24 lg:w-24">
+                      Price
+                    </th>
+                    <th className="w-20 md:w-14 lg:w-20 border border-black" />
+                  </tr>
+                </thead>
+                <tbody>
+                  {items.map(
+                    (item) =>
+                      item.ChildId === child.id && (
+                        <React.Fragment key={item.id}>
+                          <ItemRow
+                            categoryId={categoryId}
+                            parentId={parentId}
+                            childId={child.id}
+                            item={item}
+                          />
+                        </React.Fragment>
+                      )
+                  )}
+                </tbody>
+              </table>
+            </div>
+            <span className="w-full flex items-center justify-center py-3">
+              <button
+                className="px-3 py-2 rounded-md bg-green-700 text-neutral-200"
+                onClick={() =>
+                  handleAdd("items", categoryId, parentId, child.id)
+                }
+              >
+                Add Product
+              </button>
+            </span>
+          </td>
+        </motion.tr>
+      )}
+    </AnimatePresence>,
   ];
 }

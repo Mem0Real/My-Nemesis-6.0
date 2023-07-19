@@ -47,11 +47,12 @@ export default function ParentRow({ categoryId, parent }) {
           }
           variants={variants}
           exit={"closed"}
-          className={`hover:border-b border-neutral-500 cursor-pointer ${
+          className={`cursor-pointer bg-neutral-400/40 ${
             par.id === parent.id && par.open === true && "font-semibold"
           }`}
+          whileHover={{ backgroundColor: "#888" }}
         >
-          <td className="py-2">
+          <td className="py-4">
             <div
               className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
               onClick={toggleExpander}
