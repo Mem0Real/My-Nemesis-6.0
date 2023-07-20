@@ -47,9 +47,9 @@ export default function CustomerRow({ customer }) {
     return allPrice.toFixed(2);
   };
 
-  const handleDeliver = async (entry, id) => {
+  const handleDeliver = async (entry, id, current) => {
     setDeliverLoading(() => true);
-    const res = await markDelivered(entry, id);
+    const res = await markDelivered(entry, id, current);
 
     setDeliverLoading(() => false);
     if (res?.error) toast.error(res.error);
@@ -160,13 +160,15 @@ export default function CustomerRow({ customer }) {
           >
             {deliverLoading ? (
               <LoadingOutlined
-                className={`text-lg md:text-xl lg:text-2xl pb-2 text-green-600`}
+                className={`text-xl pb-2 text-green-600`}
                 disabled
               />
             ) : (
               <CheckCircleOutlined
                 className={`text-lg md:text-xl lg:text-2xl pb-2`}
-                onClick={() => handleDeliver("customers", customer.id)}
+                onClick={() =>
+                  handleDeliver("customers", customer.id, customer.delivered)
+                }
               />
             )}
           </motion.div>
@@ -181,7 +183,7 @@ export default function CustomerRow({ customer }) {
             removeLoading.id === customer.id &&
             removeLoading.loading ? (
               <LoadingOutlined
-                className={`text-lg md:text-xl lg:text-2xl pb-2 text-red-600/90`}
+                className={`text-xl pb-2 text-red-600/90`}
                 disabled
               />
             ) : (

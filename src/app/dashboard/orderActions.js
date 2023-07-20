@@ -29,20 +29,23 @@ export async function removeOne(entry, id) {
   }
 }
 
-export async function markDelivered(entry, id) {
+export async function markDelivered(entry, id, current) {
   "use server";
+  let stat;
+  if (!current === true) stat = "Delivered";
+  else stat = "Not-delivered";
   const data = await prisma[entry].update({
     where: {
       id: id,
     },
     data: {
-      delivered: true,
+      delivered: !current,
     },
   });
   if (data?.error) {
     return { error: ("Error Marking as Delivered: ", data.error) };
   } else {
     revalidatePath("/dashboard");
-    return { success: `'${id}'\'s Order Set to Delivered` };
+    return { success: `'${id}'\'s Order set to ${stat}` };
   }
 }
