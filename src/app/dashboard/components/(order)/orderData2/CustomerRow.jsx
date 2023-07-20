@@ -70,7 +70,7 @@ export default function CustomerRow({ customer }) {
       backgroundColor: "#ddd",
     },
     deliveredCheck: {
-      color: "rgb(21 128 61)",
+      color: "rgb(10 190 40)",
       opacity: 0.6,
       cursor: "not-allowed",
     },
@@ -80,7 +80,7 @@ export default function CustomerRow({ customer }) {
       cursor: "pointer",
     },
     deliveredRemove: {
-      color: "red",
+      color: "rgb(240 48 48)",
       opacity: 0.6,
       cursor: "not-allowed",
     },
@@ -149,22 +149,14 @@ export default function CustomerRow({ customer }) {
             />
           </motion.div>
           <motion.div
-            animate={
-              customer.delivered ? "deliveredRemove" : "notDeliveredRemove"
-            }
-            variants={variants}
-            whileHover={
-              !customer.delivered && {
-                scale: 1.2,
-                textShadow: "4px 0px 12px red",
-              }
-            }
-            whileTap={
-              !customer.delivered && { scale: 0.9, cursor: "not-allowed" }
-            }
+            whileHover={{
+              scale: 1.2,
+              textShadow: "4px 0px 12px red",
+            }}
+            whileTap={{ scale: 0.9 }}
           >
             <CloseCircleOutlined
-              className="text-lg md:text-xl lg:text-2xl pb-2"
+              className="text-lg md:text-xl lg:text-2xl pb-2 text-red-600/90"
               onClick={() => alertDialogOpen(customer.id)}
             />
           </motion.div>

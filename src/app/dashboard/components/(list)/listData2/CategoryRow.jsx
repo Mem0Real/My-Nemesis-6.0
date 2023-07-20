@@ -67,40 +67,40 @@ export default function CategoryRow({ category }) {
         <div className="flex items-center justify-center gap-3">
           <motion.div
             whileHover={{
-              scale: 1.75,
+              scale: 1.5,
             }}
             whileTap={{
-              scale: 1.5,
+              scale: 1,
             }}
           >
             <PlusOutlined
-              className="text-green-700"
+              className="text-green-700 text-base"
               onClick={() => handleAdd("parents", category.id)}
             />
           </motion.div>
           <motion.div
             whileHover={{
-              scale: 1.75,
+              scale: 1.5,
             }}
             whileTap={{
-              scale: 1.5,
+              scale: 1,
             }}
           >
             <EditOutlined
-              className="text-blue-700"
+              className="text-blue-700 text-base"
               onClick={() => handleEdit("categories", category)}
             />
           </motion.div>
           <motion.div
             whileHover={{
-              scale: 1.75,
+              scale: 1.5,
             }}
             whileTap={{
-              scale: 1.5,
+              scale: 1,
             }}
           >
             <DeleteOutlined
-              className="text-red-700"
+              className="text-red-700 text-base"
               onClick={() => handleDelete("categories", category)}
             />
           </motion.div>

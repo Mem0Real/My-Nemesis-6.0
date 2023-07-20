@@ -59,11 +59,9 @@ export default function AdminActions({
     },
     close: {},
     openTable: {
-      y: "10px",
       opacity: 1,
     },
     closeTable: {
-      y: "-10px",
       opacity: 0,
     },
     hover: {
@@ -121,6 +119,7 @@ export default function AdminActions({
                 key="inner-list"
                 animate={showList ? "openTable" : "closeTable"}
                 variants={variants}
+                initial={{ opacity: 0 }}
                 exit={"closeTable"}
               >
                 <List

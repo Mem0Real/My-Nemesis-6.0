@@ -9,7 +9,8 @@ import {
 } from "react";
 // import OrderTable from "./OrderTable";
 import MyOrderTable from "./MyOrderTable";
-import Button from "@mui/material/Button";
+// import Button from "@mui/material/Button";
+import { Button, ConfigProvider } from "antd";
 import RemoveAll from "./RemoveAll";
 
 const OrderDataContext = createContext({});
@@ -81,29 +82,18 @@ export default function Order({
 
           <div className="flex w-full justify-center items-center md:mt-3 gap-6">
             {delivered ? (
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => toggleDelivered()}
-                className="capitalize"
-              >
+              <Button type="primary" onClick={() => toggleDelivered()} ghost>
                 Hide delivered
               </Button>
             ) : (
-              <Button
-                variant="outlined"
-                color="primary"
-                onClick={() => toggleDelivered()}
-                className="capitalize"
-              >
+              <Button type="primary" onClick={() => toggleDelivered()} ghost>
                 Show delivered
               </Button>
             )}
             <Button
-              variant="outlined"
-              color="error"
+              type="primary"
+              danger
               onClick={() => handleRemoveAll("customers")}
-              className="capitalize"
             >
               Remove all
             </Button>
