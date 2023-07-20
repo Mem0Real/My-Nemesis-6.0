@@ -64,14 +64,32 @@ export default function ItemRow({ categoryId, parentId, childId, item }) {
           </td>
           <td className="border border-black">
             <div className="flex items-center justify-center gap-3">
-              <EditOutlined
-                className="text-blue-700"
-                onClick={() => handleEdit("items", item)}
-              />
-              <DeleteOutlined
-                className="text-red-700"
-                onClick={() => handleDelete("items", item)}
-              />
+              <motion.div
+                whileHover={{
+                  scale: 1.5,
+                }}
+                whileTap={{
+                  scale: 1,
+                }}
+              >
+                <EditOutlined
+                  className="text-blue-700 text-base"
+                  onClick={() => handleEdit("items", item)}
+                />
+              </motion.div>
+              <motion.div
+                whileHover={{
+                  scale: 1.5,
+                }}
+                whileTap={{
+                  scale: 1,
+                }}
+              >
+                <DeleteOutlined
+                  className="text-red-700 text-base"
+                  onClick={() => handleDelete("items", item)}
+                />
+              </motion.div>
             </div>
           </td>
         </motion.tr>

@@ -31,7 +31,8 @@ export default function Cart({ closeCart, modal }) {
   useEffect(() => {
     // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
-    if (cookieStore?.Cart !== undefined) cart = JSON.parse(cookieStore.Cart);
+    if (cookieStore.Cart && cookieStore?.Cart !== undefined)
+      cart = JSON.parse(cookieStore.Cart);
 
     if (cart?.length > 0) {
       setData(() => true);

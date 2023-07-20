@@ -7,16 +7,23 @@ import React, {
 } from "react";
 
 import CustomerRow from "./orderData2/CustomerRow";
-import AlertDialog from "./AlertDialog";
+// import AlertDialog from "./AlertDialog";
 
 import { useOrderDataContext } from "./Order";
 import { setCookie, parseCookies } from "nookies";
+import { motion, AnimatePresence } from "framer-motion";
+import RemoveModal from "./Remove";
 
 const OrderContext = createContext({});
 
 export default function MyOrderTable() {
   const [cus, setCus] = useState({ id: null, open: false });
-  const [dialogOpen, setDialogOpen] = useState(false);
+  // const [dialogOpen, setDialogOpen] = useState(false);
+  const [removeLoading, setRemoveLoading] = useState({
+    id: null,
+    loading: false,
+  });
+  const [removeModal, showRemoveModal] = useState(false);
   const [removeData, setRemoveData] = useState();
 
   const { order, delivered } = useOrderDataContext();
@@ -25,15 +32,13 @@ export default function MyOrderTable() {
   const cookieStore = parseCookies();
 
   useEffect(() => {
-    // const data = window.localStorage.getItem("Customer");
     let data;
-    if (cookieStore?.Customer !== "undefined")
+    if (cookieStore.Customer && cookieStore.Customer !== "undefined")
       data = JSON.parse(cookieStore.Customer);
     setCus(() => data);
   }, []);
 
   useEffect(() => {
-    // window.localStorage.setItem("Customer", JSON.stringify(cus));
     setCookie(null, "Customer", JSON.stringify(cus));
   }, [cus]);
 
@@ -50,13 +55,26 @@ export default function MyOrderTable() {
     }
   };
 
-  const alertDialogOpen = (id) => {
-    setDialogOpen(true);
+  const handleRemove = (id) => {
+    showRemoveModal(() => true);
     setRemoveData(() => ({ entry: "customers", id: id }));
   };
 
-  const alertDialogClose = () => {
-    setDialogOpen(false);
+  const closeRemoveModal = () => {
+    showRemoveModal(() => false);
+  };
+
+  const variants = {
+    open: {
+      opacity: 1,
+      display: "flex",
+    },
+    close: {
+      opacity: 0,
+      transitionEnd: {
+        display: "none",
+      },
+    },
   };
 
   return (
@@ -65,7 +83,9 @@ export default function MyOrderTable() {
         cus,
         setCus,
         customerDropDown,
-        alertDialogOpen,
+        handleRemove,
+        removeLoading,
+        setRemoveLoading,
       }}
     >
       <div className="table-container text-neutral-800">
@@ -88,30 +108,45 @@ export default function MyOrderTable() {
                   </h1>
                 }
               >
-                {customers.map((customer) =>
-                  delivered ? (
-                    <React.Fragment key={customer.id}>
-                      <CustomerRow customer={customer} />
-                    </React.Fragment>
-                  ) : (
-                    customer.delivered === false && (
+                <AnimatePresence key="customerRow">
+                  {customers.map((customer) =>
+                    delivered ? (
                       <React.Fragment key={customer.id}>
                         <CustomerRow customer={customer} />
                       </React.Fragment>
+                    ) : (
+                      customer.delivered === false && (
+                        <React.Fragment key={customer.id}>
+                          <CustomerRow customer={customer} />
+                        </React.Fragment>
+                      )
                     )
-                  )
-                )}
+                  )}
+                </AnimatePresence>
               </Suspense>
             </tbody>
           </table>
         </div>
       </div>
-
-      <AlertDialog
-        data={removeData}
-        open={dialogOpen}
-        handleClose={alertDialogClose}
-      />
+      <AnimatePresence id="removeM" className="my-3">
+        {removeModal && (
+          <motion.div
+            key="innerRemoveM"
+            initial={"close"}
+            animate={removeModal ? "open" : "close"}
+            variants={variants}
+            exit={"close"}
+            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+              removeModal ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+          >
+            <RemoveModal
+              removeData={removeData}
+              closeRemoveModal={closeRemoveModal}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </OrderContext.Provider>
   );
 }

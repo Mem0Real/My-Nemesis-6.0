@@ -4,16 +4,13 @@ import dynamic from "next/dynamic";
 import { useState, createContext, useContext, useEffect } from "react";
 import { Suspense } from "react";
 
-import Button from "@mui/material/Button";
 import { motion, AnimatePresence } from "framer-motion";
 
-const Add = dynamic(() => import("./Add"));
-const Edit = dynamic(() => import("./Edit"));
-const Delete = dynamic(() => import("./Delete"));
+const AddModal = dynamic(() => import("./Add"));
+const EditModal = dynamic(() => import("./Edit"));
+const DeleteModal = dynamic(() => import("./Delete"));
 
-// import ListTable from "./ListTable";
 import MyTable from "./MyTable";
-import AddCustom from "./AddCustom";
 
 const DataContext = createContext({});
 
@@ -24,16 +21,16 @@ export default function List({ data, create, update, deleteItem, url }) {
   const [editModal, showEditModal] = useState(false);
   const [editData, setEditData] = useState({});
 
-  const [deleteAlert, showDeleteAlert] = useState(false);
+  const [deleteModal, showDeleteModal] = useState(false);
   const [deleteData, setDeleteData] = useState({});
 
   useEffect(() => {
-    if (addModal) {
+    if (addModal || editModal || deleteModal) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "auto";
     }
-  }, [addModal]);
+  }, [addModal, editModal, deleteModal]);
 
   const handleAdd = (
     entry,
@@ -95,11 +92,12 @@ export default function List({ data, create, update, deleteItem, url }) {
 
   const handleDelete = (entry, data) => {
     setDeleteData({ entry, data });
-    showDeleteAlert(true);
+    showDeleteModal(true);
   };
 
   const closeDeleteModal = () => {
-    showDeleteAlert(false);
+    setDeleteData({});
+    showDeleteModal(false);
   };
 
   const variants = {
@@ -124,25 +122,30 @@ export default function List({ data, create, update, deleteItem, url }) {
         </h1>
         <div className="md:mt-6 md:pb-5">
           <Suspense fallback={<h1>Loading...</h1>}>
-            {/* <ListTable /> */}
             <MyTable />
           </Suspense>
 
           <div className="flex flex-col w-full justify-center items-center md:mt-3">
-            <Button
-              variant="contained"
-              color="success"
+            <motion.button
+              id="addCategory"
+              className="px-3 py-2 rounded-md bg-green-900 text-neutral-200"
+              whileTap={{
+                scale: 0.9,
+              }}
+              whileHover={{
+                backgroundColor: "rgba(18 58 18 0.9)",
+                borderRadius: "10px",
+              }}
               onClick={() => handleAdd("categories")}
-              className="bg-green-700"
             >
               Add Category
-            </Button>
+            </motion.button>
           </div>
         </div>
       </div>
 
       {/* Add Modal */}
-      <AnimatePresence id="addM">
+      <AnimatePresence id="addM" className="my-3">
         {addModal && (
           <motion.div
             id="innerAddM"
@@ -150,12 +153,11 @@ export default function List({ data, create, update, deleteItem, url }) {
             animate={addModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-neutral-800/80 flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
               addModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
-            <AddCustom
-              modal={addModal}
+            <AddModal
               closeAddModal={closeAddModal}
               addData={addData}
               setAddData={setAddData}
@@ -166,22 +168,49 @@ export default function List({ data, create, update, deleteItem, url }) {
       </AnimatePresence>
 
       {/* Edit Modal */}
-      <Edit
-        modal={editModal}
-        closeEditModal={closeEditModal}
-        editData={editData}
-        setEditData={setEditData}
-        update={update}
-      />
+      <AnimatePresence id="editM" className="my-3">
+        {editModal && (
+          <motion.div
+            id="innerEditM"
+            initial={"close"}
+            animate={editModal ? "open" : "close"}
+            variants={variants}
+            exit={"close"}
+            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm flex ${
+              editModal ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+          >
+            <EditModal
+              closeEditModal={closeEditModal}
+              editData={editData}
+              setEditData={setEditData}
+              update={update}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Delete Alert */}
-      <Delete
-        deleteAlert={deleteAlert}
-        closeDeleteModal={closeDeleteModal}
-        deleteData={deleteData}
-        setDeleteData={setDeleteData}
-        deleteItem={deleteItem}
-      />
+      <AnimatePresence id="deleteM" className="my-3">
+        {deleteModal && (
+          <motion.div
+            id="innerDeleteM"
+            initial={"close"}
+            animate={deleteModal ? "open" : "close"}
+            variants={variants}
+            exit={"close"}
+            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm flex ${
+              deleteModal ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+          >
+            <DeleteModal
+              closeDeleteModal={closeDeleteModal}
+              deleteData={deleteData}
+              deleteItem={deleteItem}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </DataContext.Provider>
   );
 }

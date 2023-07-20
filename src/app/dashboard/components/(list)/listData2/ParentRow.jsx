@@ -81,18 +81,45 @@ export default function ParentRow({ categoryId, parent }) {
           </td>
           <td>
             <div className="flex items-center justify-center gap-3">
-              <PlusOutlined
-                className="text-green-700"
-                onClick={() => handleAdd("children", categoryId, parent.id)}
-              />
-              <EditOutlined
-                className="text-blue-700"
-                onClick={() => handleEdit("parents", parent)}
-              />
-              <DeleteOutlined
-                className="text-red-700"
-                onClick={() => handleDelete("parents", parent)}
-              />
+              <motion.div
+                whileHover={{
+                  scale: 1.5,
+                }}
+                whileTap={{
+                  scale: 1,
+                }}
+              >
+                <PlusOutlined
+                  className="text-green-700 text-base"
+                  onClick={() => handleAdd("children", categoryId, parent.id)}
+                />
+              </motion.div>
+              <motion.div
+                whileHover={{
+                  scale: 1.5,
+                }}
+                whileTap={{
+                  scale: 1,
+                }}
+              >
+                <EditOutlined
+                  className="text-blue-700 text-base"
+                  onClick={() => handleEdit("parents", parent)}
+                />
+              </motion.div>
+              <motion.div
+                whileHover={{
+                  scale: 1.5,
+                }}
+                whileTap={{
+                  scale: 1,
+                }}
+              >
+                <DeleteOutlined
+                  className="text-red-700 text-base"
+                  onClick={() => handleDelete("parents", parent)}
+                />
+              </motion.div>
             </div>
           </td>
         </motion.tr>

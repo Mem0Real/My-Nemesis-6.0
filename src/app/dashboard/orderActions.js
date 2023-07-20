@@ -7,7 +7,7 @@ export async function removeAll(entry) {
 
   const query = await prisma[entry].deleteMany({});
   if (query?.error) {
-    return { error: `Error removing orders: ${query.error}` };
+    return { error: `Error Removing Orders: ${query.error}` };
   } else {
     revalidatePath("/dashboard");
     return { success: `Deleted all ${query.count} ${entry}.` };
@@ -22,10 +22,10 @@ export async function removeOne(entry, id) {
     },
   });
   if (query?.error) {
-    return { error: `Error removing orders: ${query.error}` };
+    return { error: `Error Removing Order: ${query.error}` };
   } else {
     revalidatePath("/dashboard");
-    return { success: `${entry} '${id}' removed successfully.` };
+    return { success: `'${id}'\' Order Removed` };
   }
 }
 
@@ -40,9 +40,9 @@ export async function markDelivered(entry, id) {
     },
   });
   if (data?.error) {
-    return { error: ("Error removing orders: ", data.error) };
+    return { error: ("Error Marking as Delivered: ", data.error) };
   } else {
     revalidatePath("/dashboard");
-    return { success: `${entry} '${id}' set to delivered.` };
+    return { success: `'${id}'\'s Order Set to Delivered` };
   }
 }

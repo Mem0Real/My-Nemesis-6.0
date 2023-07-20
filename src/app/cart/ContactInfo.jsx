@@ -72,6 +72,7 @@ export default function ContactInfo({
       setPurchasedData(() => cartList);
       setUser(() => {});
       closeInfoModal();
+      clearCart();
     }
   };
 

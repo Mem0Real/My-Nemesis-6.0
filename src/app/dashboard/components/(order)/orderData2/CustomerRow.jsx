@@ -7,21 +7,23 @@ import OrderRow from "./OrderRow";
 import { useOrderContext } from "../MyOrderTable";
 import { useOrderDataContext } from "../Order";
 
-// import { useDataContext } from "../List";
-// import { useTableContext } from "../MyTable";
 import { AnimatePresence, motion } from "framer-motion";
 
 import {
   RightOutlined,
   CheckCircleOutlined,
   CloseCircleOutlined,
+  LoadingOutlined,
 } from "@ant-design/icons";
+import { toast } from "react-hot-toast";
 
 export default function CustomerRow({ customer }) {
-  const [hovering, setHovering] = useState();
+  const [hovering, setHovering] = useState(false);
+  const [deliverLoading, setDeliverLoading] = useState(false);
 
   const { order, markDelivered } = useOrderDataContext();
-  const { customerDropDown, cus, alertDialogOpen } = useOrderContext();
+  const { customerDropDown, cus, handleRemove, removeLoading } =
+    useOrderContext();
 
   const orders = order[1];
 
@@ -43,6 +45,17 @@ export default function CustomerRow({ customer }) {
     });
     let allPrice = userDebt.reduce((sum, i) => sum + i, 0);
     return allPrice.toFixed(2);
+  };
+
+  const handleDeliver = async (entry, id) => {
+    setDeliverLoading(() => true);
+    const res = await markDelivered(entry, id);
+
+    setDeliverLoading(() => false);
+    if (res?.error) toast.error(res.error);
+    else {
+      toast.success(res.success);
+    }
   };
 
   const formatter = new Intl.NumberFormat("en-US", {
@@ -94,10 +107,12 @@ export default function CustomerRow({ customer }) {
     <motion.tr
       key={customer.id}
       className={`${
-        cus.id === customer.id && cus.open === true && "font-semibold"
+        cus?.id === customer.id && cus?.open === true && "font-semibold"
       }`}
       animate={hovering ? "hover" : "none"}
       variants={variants}
+      initial={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: "-20px" }}
     >
       <motion.td
         className="py-2"
@@ -110,7 +125,7 @@ export default function CustomerRow({ customer }) {
         >
           <RightOutlined
             className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
-              cus.id === customer.id && cus.open === true
+              cus?.id === customer.id && cus?.open === true
                 ? "rotate-90 translate-x-0.5 translate-y-0.5"
                 : ""
             }`}
@@ -143,10 +158,17 @@ export default function CustomerRow({ customer }) {
               !customer.delivered && { scale: 0.9, cursor: "not-allowed" }
             }
           >
-            <CheckCircleOutlined
-              className={`text-lg md:text-xl lg:text-2xl pb-2`}
-              onClick={() => markDelivered("customers", customer.id)}
-            />
+            {deliverLoading ? (
+              <LoadingOutlined
+                className={`text-lg md:text-xl lg:text-2xl pb-2 text-green-600`}
+                disabled
+              />
+            ) : (
+              <CheckCircleOutlined
+                className={`text-lg md:text-xl lg:text-2xl pb-2`}
+                onClick={() => handleDeliver("customers", customer.id)}
+              />
+            )}
           </motion.div>
           <motion.div
             whileHover={{
@@ -155,22 +177,31 @@ export default function CustomerRow({ customer }) {
             }}
             whileTap={{ scale: 0.9 }}
           >
-            <CloseCircleOutlined
-              className="text-lg md:text-xl lg:text-2xl pb-2 text-red-600/90"
-              onClick={() => alertDialogOpen(customer.id)}
-            />
+            {removeLoading &&
+            removeLoading.id === customer.id &&
+            removeLoading.loading ? (
+              <LoadingOutlined
+                className={`text-lg md:text-xl lg:text-2xl pb-2 text-red-600/90`}
+                disabled
+              />
+            ) : (
+              <CloseCircleOutlined
+                className="text-lg md:text-xl lg:text-2xl pb-2 text-red-600/90"
+                onClick={() => handleRemove(customer.id)}
+              />
+            )}
           </motion.div>
         </div>
       </td>
     </motion.tr>,
     <AnimatePresence key={customer.id + "orders"}>
-      {cus.id === customer.id &&
-        cus.open === true &&
+      {cus?.id === customer.id &&
+        cus?.open === true &&
         (currentOrder.length > 0 ? (
           <motion.tr
             key={`${customer.id}-table`}
             animate={
-              cus.id === customer.id && cus.open === true ? "open" : "closed"
+              cus?.id === customer.id && cus?.open === true ? "open" : "closed"
             }
             variants={variants}
             exit={"closed"}
@@ -205,10 +236,10 @@ export default function CustomerRow({ customer }) {
                         )
                     )}
                     <AnimatePresence key={currentOrder.id + 1}>
-                      {cus.id === customer.id && cus.open === true && (
+                      {cus?.id === customer.id && cus?.open === true && (
                         <motion.tr
                           animate={
-                            cus.id === customer.id && cus.open === true
+                            cus?.id === customer.id && cus?.open === true
                               ? "open"
                               : "closed"
                           }
@@ -243,7 +274,7 @@ export default function CustomerRow({ customer }) {
           <motion.tr
             key={`${customer.id}-table`}
             animate={
-              cus.id === customer.id && cus.open === true ? "open" : "closed"
+              cus?.id === customer.id && cus?.open === true ? "open" : "closed"
             }
             variants={variants}
             exit={"closed"}

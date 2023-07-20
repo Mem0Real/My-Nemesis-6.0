@@ -76,20 +76,47 @@ export default function ChildRow({ categoryId, parentId, child }) {
           </td>
           <td>
             <div className="flex items-center justify-center gap-3">
-              <PlusOutlined
-                className="text-green-700"
-                onClick={() =>
-                  handleAdd("items", categoryId, parentId, child.id)
-                }
-              />
-              <EditOutlined
-                className="text-blue-700"
-                onClick={() => handleEdit("children", child)}
-              />
-              <DeleteOutlined
-                className="text-red-700"
-                onClick={() => handleDelete("children", child)}
-              />
+              <motion.div
+                whileHover={{
+                  scale: 1.5,
+                }}
+                whileTap={{
+                  scale: 1,
+                }}
+              >
+                <PlusOutlined
+                  className="text-green-700 text-base"
+                  onClick={() =>
+                    handleAdd("items", categoryId, parentId, child.id)
+                  }
+                />
+              </motion.div>
+              <motion.div
+                whileHover={{
+                  scale: 1.5,
+                }}
+                whileTap={{
+                  scale: 1,
+                }}
+              >
+                <EditOutlined
+                  className="text-blue-700 text-base"
+                  onClick={() => handleEdit("children", child)}
+                />
+              </motion.div>
+              <motion.div
+                whileHover={{
+                  scale: 1.5,
+                }}
+                whileTap={{
+                  scale: 1,
+                }}
+              >
+                <DeleteOutlined
+                  className="text-red-700 text-base"
+                  onClick={() => handleDelete("children", child)}
+                />
+              </motion.div>
             </div>
           </td>
         </motion.tr>
@@ -151,14 +178,22 @@ export default function ChildRow({ categoryId, parentId, child }) {
               </table>
             </div>
             <span className="w-full flex items-center justify-center py-3">
-              <button
-                className="px-3 py-2 rounded-md bg-green-700 text-neutral-200"
+              <motion.button
+                id="addItemButton"
+                className="px-3 py-2 rounded-md bg-green-900 text-neutral-200"
                 onClick={() =>
                   handleAdd("items", categoryId, parentId, child.id)
                 }
+                whileTap={{
+                  scale: 0.9,
+                }}
+                whileHover={{
+                  backgroundColor: "rgba(18 58 18 0.9)",
+                  borderRadius: "10px",
+                }}
               >
                 Add Product
-              </button>
+              </motion.button>
             </span>
           </td>
         </motion.tr>

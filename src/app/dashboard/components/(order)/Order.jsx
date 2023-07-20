@@ -7,12 +7,14 @@ import {
   createContext,
   useContext,
 } from "react";
-// import OrderTable from "./OrderTable";
+import dynamic from "next/dynamic";
+
 import MyOrderTable from "./MyOrderTable";
-// import Button from "@mui/material/Button";
-import RemoveAll from "./RemoveAll";
+const RemoveAllModal = dynamic(() => import("./RemoveAll"));
 
 const OrderDataContext = createContext({});
+import { motion, AnimatePresence } from "framer-motion";
+import { setCookie, parseCookies } from "nookies";
 
 export default function Order({
   order,
@@ -23,42 +25,55 @@ export default function Order({
 }) {
   const [delivered, showDelivered] = useState(false);
 
-  const [deliverModal, showDeliverModal] = useState(false);
-  const [deliverData, setDeliverData] = useState({});
+  const [removeAllModal, showRemoveAllModal] = useState(false);
+  const [removeAllData, setRemoveAllData] = useState({});
 
-  const [deleteAlert, showDeleteAlert] = useState(false);
-  const [deleteData, setDeleteData] = useState({});
-
-  const [removeAlert, showRemoveAlert] = useState(false);
-  const [removeData, setRemoveData] = useState({});
+  const cookieStore = parseCookies();
 
   useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("Delivered_State"));
-    if (data !== null) showDelivered(data);
+    if (removeAllModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [removeAllModal]);
+
+  useEffect(() => {
+    let data;
+    if (cookieStore.Delivered && cookieStore.Delivered !== undefined)
+      data = JSON.parse(cookieStore.Delivered);
+    showDelivered(() => data);
   }, []);
 
   useEffect(() => {
-    localStorage.setItem("Delivered_State", JSON.stringify(delivered));
+    setCookie(null, "Delivered", delivered);
   }, [delivered]);
 
   const toggleDelivered = () => {
     showDelivered(!delivered);
   };
 
-  const handleRemove = (entry, id) => {
-    showDeleteAlert(true);
-    setDeleteData(() => ({ entry: entry, id: id }));
-  };
-
   const handleRemoveAll = (entry) => {
-    showRemoveAlert(true);
-    setRemoveData(() => entry);
+    showRemoveAllModal(() => true);
+    setRemoveAllData(() => entry);
   };
 
-  const closeRemoveModal = () => {
-    showRemoveAlert(false);
+  const closeRemoveAllModal = () => {
+    showRemoveAllModal(() => false);
   };
 
+  const variants = {
+    open: {
+      opacity: 1,
+      display: "flex",
+    },
+    close: {
+      opacity: 0,
+      transitionEnd: {
+        display: "none",
+      },
+    },
+  };
   return (
     <OrderDataContext.Provider
       value={{ order, url, delivered, markDelivered, removeOne }}
@@ -75,41 +90,84 @@ export default function Order({
               </h1>
             }
           >
-            {/* <OrderTable /> */}
             <MyOrderTable />
           </Suspense>
 
-          <div className="flex w-full justify-center items-center md:mt-3 gap-6">
-            {delivered ? (
-              <button
-                className="px-2 py-1 text-sm bg-transparent border border-blue-500 rounded-lg"
-                onClick={() => toggleDelivered()}
-              >
-                Hide delivered
-              </button>
-            ) : (
-              <button
-                className="px-2 py-1 text-sm bg-transparent border border-blue-500 rounded-lg"
-                onClick={() => toggleDelivered()}
-              >
-                Show delivered
-              </button>
-            )}
-            <button
-              className="px-2 py-1 text-sm bg-transparent border border-red-500 rounded-lg"
+          <div className="flex w-full justify-center items-center mt-3 gap-6">
+            <AnimatePresence id="deliverToggle">
+              {delivered ? (
+                <motion.button
+                  id="hideDeliveredBtn"
+                  className="px-3 py-2 text-sm bg-transparent border border-blue-500 rounded-lg"
+                  onClick={() => toggleDelivered()}
+                  whileHover={{
+                    backgroundColor: "#2563eb",
+                    borderRadius: "10px",
+                  }}
+                  whileTap={{
+                    scale: 0.95,
+                  }}
+                >
+                  Hide Delivered
+                </motion.button>
+              ) : (
+                <motion.button
+                  id="showDeliveredBtn"
+                  className="px-3 py-2 text-sm bg-transparent border border-blue-700 rounded-lg"
+                  onClick={() => toggleDelivered()}
+                  whileHover={{
+                    backgroundColor: "#2563eb",
+                    borderRadius: "10px",
+                  }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  Show Delivered
+                </motion.button>
+              )}
+            </AnimatePresence>
+            <motion.button
+              id="removeAllBtn"
+              className="px-3 py-2 text-sm bg-transparent border border-red-700 rounded-lg"
               onClick={() => handleRemoveAll("customers")}
+              whileHover={{
+                backgroundColor: "#dc2626",
+                borderRadius: "10px",
+              }}
+              whileTap={{
+                scale: 0.95,
+              }}
             >
               Remove all
-            </button>
+            </motion.button>
           </div>
         </div>
       </div>
-      <RemoveAll
+      {/* <RemoveAll
         removeAlert={removeAlert}
         removeData={removeData}
-        removeAll={removeAll}
+        remove={remove}
         closeRemoveModal={closeRemoveModal}
-      />
+      /> */}
+      <AnimatePresence id="removeAllM" className="my-3">
+        {removeAllModal && (
+          <motion.div
+            id="innerRemoveAllM"
+            initial={"close"}
+            animate={removeAllModal ? "open" : "close"}
+            variants={variants}
+            exit={"close"}
+            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+              removeAllModal ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+          >
+            <RemoveAllModal
+              removeAllData={removeAllData}
+              removeAll={removeAll}
+              closeRemoveAllModal={closeRemoveAllModal}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </OrderDataContext.Provider>
   );
 }

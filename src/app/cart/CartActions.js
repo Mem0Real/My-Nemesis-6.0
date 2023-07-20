@@ -65,8 +65,9 @@ export async function sendOrder(user, cartList, orderTotalPrice) {
   );
 
   revalidatePath("/collection");
+  revalidatePath("/dashboard");
   return {
     success: "Cart Items Sent.",
-    message: "One of our employees will reach out soon. Thank you!",
+    message: "One of our employees will reach out soon. \n Thank you!",
   };
 }
