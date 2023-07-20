@@ -10,7 +10,6 @@ import {
 // import OrderTable from "./OrderTable";
 import MyOrderTable from "./MyOrderTable";
 // import Button from "@mui/material/Button";
-import { Button, ConfigProvider } from "antd";
 import RemoveAll from "./RemoveAll";
 
 const OrderDataContext = createContext({});
@@ -82,21 +81,26 @@ export default function Order({
 
           <div className="flex w-full justify-center items-center md:mt-3 gap-6">
             {delivered ? (
-              <Button type="primary" onClick={() => toggleDelivered()} ghost>
+              <button
+                className="px-2 py-1 text-sm bg-transparent border border-blue-500 rounded-lg"
+                onClick={() => toggleDelivered()}
+              >
                 Hide delivered
-              </Button>
+              </button>
             ) : (
-              <Button type="primary" onClick={() => toggleDelivered()} ghost>
+              <button
+                className="px-2 py-1 text-sm bg-transparent border border-blue-500 rounded-lg"
+                onClick={() => toggleDelivered()}
+              >
                 Show delivered
-              </Button>
+              </button>
             )}
-            <Button
-              type="primary"
-              danger
+            <button
+              className="px-2 py-1 text-sm bg-transparent border border-red-500 rounded-lg"
               onClick={() => handleRemoveAll("customers")}
             >
               Remove all
-            </Button>
+            </button>
           </div>
         </div>
       </div>

@@ -6,8 +6,6 @@ import ProductDataContext from "@/context/productContext";
 import { NextAuthProvider } from "./providers";
 import ToasterContext from "@/context/ToasterContext";
 
-import StyledComponentsRegistry from "./lib/registry";
-
 export const metadata = {
   title: "My Nemesis 6.0",
   description:
@@ -21,15 +19,13 @@ export default function RootLayout({ children }) {
         <NextAuthProvider>
           <ProductDataContext>
             <ToasterContext />
-            <StyledComponentsRegistry>
-              <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative">
-                <Navbar />
-                <div className={`min-h-screen`}>{children}</div>
-                <div className="w-full">
-                  <Footer />
-                </div>
+            <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative">
+              <Navbar />
+              <div className={`min-h-screen`}>{children}</div>
+              <div className="w-full">
+                <Footer />
               </div>
-            </StyledComponentsRegistry>
+            </div>
           </ProductDataContext>
         </NextAuthProvider>
       </body>
