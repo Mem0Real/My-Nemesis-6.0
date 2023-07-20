@@ -79,14 +79,14 @@ export default function AddCustom({
 
   return (
     <section
-      className="h-[95%] w-[85%] md:w-2/5 mb-6 md:mt-6 mt-0 md:py-3 mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-800"
+      className="h-[95%] w-[85%] md:w-[30%] mb-6 md:mt-6 mt-0 md:py-3 mx-auto overflow-y-scroll rounded-lg bg-neutral-800"
       ref={modalRef}
     >
       <header className="p-4 relative">
         <button
           name="close-modal"
           type="button"
-          className="absolute top-10 right-5 md:top-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+          className="absolute top-5 right-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
           data-modal-hide="authentication-modal"
           onClick={() => closeAddModal()}
         >
@@ -111,17 +111,20 @@ export default function AddCustom({
           )}
           {addData.entry === "parents" && (
             <p className="mt-5">
-              Create New Parent Inside <br /> {addData.categories}
+              Create New Parent Inside <br />
+              <span className="capitalize">{addData.categories}</span>
             </p>
           )}
           {addData.entry === "children" && (
             <p className="mt-5">
-              Create New Child Inside <br /> {addData.parents}
+              Create New Child Inside <br />
+              <span className="capitalize">{addData.parents}</span>
             </p>
           )}
           {addData.entry === "items" && (
             <p className="mt-5">
-              Create New Item Inside <br /> {addData.children}
+              Create New Item Inside <br />
+              <span className="capitalize">{addData.children}</span>
             </p>
           )}
         </h3>
@@ -320,7 +323,7 @@ export default function AddCustom({
           disabled={loading}
           name="submit"
           type="submit"
-          className="text-white bg-blue-700 hover:bg-blue-800 disabled:bg-blue-500 disabled:hover:bg-blue-500 disabled:cursor-progress focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white bg-blue-700 hover:bg-blue-800 disabled:bg-blue-500 disabled:hover:bg-blue-500 disabled:cursor-progress focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-fit px-5 py-2.5 mb-12 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Submit
         </button>
