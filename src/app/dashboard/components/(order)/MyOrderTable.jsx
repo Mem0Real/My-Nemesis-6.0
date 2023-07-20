@@ -33,9 +33,10 @@ export default function MyOrderTable() {
 
   useEffect(() => {
     let data;
-    if (cookieStore.Customer && cookieStore.Customer !== "undefined")
+    if (cookieStore.Customer && cookieStore.Customer !== "undefined") {
       data = JSON.parse(cookieStore.Customer);
-    setCus(() => data);
+      setCus(() => data);
+    }
   }, []);
 
   useEffect(() => {

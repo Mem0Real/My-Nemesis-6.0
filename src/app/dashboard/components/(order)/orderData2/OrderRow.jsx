@@ -9,7 +9,7 @@ export default function ParentRow({ customerId, currentOrder }) {
 
   const variants = {
     open: {
-      y: "10px",
+      y: 0,
       opacity: 1,
     },
     closed: {
@@ -25,16 +25,16 @@ export default function ParentRow({ customerId, currentOrder }) {
 
   return [
     <AnimatePresence key={currentOrder.id}>
-      {cus.id === customerId && cus.open === true && (
+      {cus?.id === customerId && cus?.open === true && (
         <motion.tr
           key={currentOrder.id}
           animate={
-            cus.id === customerId && cus.open === true ? "open" : "closed"
+            cus?.id === customerId && cus?.open === true ? "open" : "closed"
           }
           variants={variants}
           exit={"closed"}
           className={`${
-            cus.id === currentOrder.id && cus.open === true && "font-semibold"
+            cus?.id === currentOrder.id && cus?.open === true && "font-semibold"
           }`}
           whileHover={{ backgroundColor: "#999" }}
         >

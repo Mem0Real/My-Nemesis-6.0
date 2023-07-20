@@ -68,11 +68,11 @@ export default function CustomerRow({ customer }) {
 
   const variants = {
     open: {
-      y: "10px",
+      y: 0,
       opacity: 1,
     },
     closed: {
-      y: "-10px",
+      y: "-5px",
       opacity: 0,
     },
     hover: {
@@ -103,6 +103,7 @@ export default function CustomerRow({ customer }) {
       cursor: "pointer",
     },
   };
+  // TODO Add multiple deliver & delete functionality
   return [
     <motion.tr
       key={customer.id}
@@ -210,7 +211,7 @@ export default function CustomerRow({ customer }) {
             whileHover={{ backgroundColor: "#777" }}
           >
             <td colSpan={3}>
-              <div className="mx-auto mt-2 bg-[#ccc]">
+              <div className="mx-auto bg-[#ccc]">
                 <table className="table-fixed w-full overflow-hidden border-0">
                   <thead>
                     <tr>
