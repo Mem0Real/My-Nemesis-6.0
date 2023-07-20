@@ -1,16 +1,20 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, createContext, useContext } from "react";
+import { useState, createContext, useContext, useEffect } from "react";
 import { Suspense } from "react";
 
 import Button from "@mui/material/Button";
+import { motion, AnimatePresence } from "framer-motion";
+
 const Add = dynamic(() => import("./Add"));
 const Edit = dynamic(() => import("./Edit"));
 const Delete = dynamic(() => import("./Delete"));
+
 // import ListTable from "./ListTable";
 import MyTable from "./MyTable";
 import AddAnt from "./AddAnt";
+import AddCustom from "./AddCustom";
 
 const DataContext = createContext({});
 
@@ -23,6 +27,14 @@ export default function List({ data, create, update, deleteItem, url }) {
 
   const [deleteAlert, showDeleteAlert] = useState(false);
   const [deleteData, setDeleteData] = useState({});
+
+  useEffect(() => {
+    if (addModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [addModal]);
 
   const handleAdd = (
     entry,
@@ -91,6 +103,18 @@ export default function List({ data, create, update, deleteItem, url }) {
     showDeleteAlert(false);
   };
 
+  const variants = {
+    open: {
+      opacity: 1,
+      display: "flex",
+    },
+    close: {
+      opacity: 0,
+      transitionEnd: {
+        display: "none",
+      },
+    },
+  };
   return (
     <DataContext.Provider
       value={{ handleAdd, handleEdit, handleDelete, data, url }}
@@ -127,13 +151,36 @@ export default function List({ data, create, update, deleteItem, url }) {
         create={create}
       /> */}
 
-      <AddAnt
+      {/* <AddAnt
         modal={addModal}
         closeAddModal={closeAddModal}
         addData={addData}
         setAddData={setAddData}
         create={create}
-      />
+      /> */}
+
+      <AnimatePresence id="addM">
+        {addModal && (
+          <motion.div
+            id="innerAddM"
+            initial={"close"}
+            animate={addModal ? "open" : "close"}
+            variants={variants}
+            exit={"close"}
+            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-neutral-800/80 flex ${
+              addModal ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+          >
+            <AddCustom
+              modal={addModal}
+              closeAddModal={closeAddModal}
+              addData={addData}
+              setAddData={setAddData}
+              create={create}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Edit Modal */}
       <Edit
