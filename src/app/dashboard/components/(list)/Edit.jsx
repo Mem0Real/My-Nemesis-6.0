@@ -110,8 +110,10 @@ export default function Edit({
       toast.remove(loaderToast);
       toast.success(res.success);
       closeEditModal();
-      setImageSrc(() => null);
-      setImages(() => []);
+      if (editData.newImage) {
+        setImageSrc(() => null);
+        setImages(() => []);
+      }
     }
   };
 

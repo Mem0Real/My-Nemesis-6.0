@@ -32,8 +32,6 @@ export default function Delete({
       toast.remove(loaderToast);
       toast.success(res.success);
       closeDeleteModal();
-      setImageSrc(() => null);
-      setImages(() => []);
     }
   };
   return (

@@ -46,7 +46,7 @@ export default function CategoryRow({ category }) {
                 : ""
             }`}
           />
-          <motion.div whileHover={{ fontWeight: "semi-bold", scale: 1.02 }}>
+          <motion.div whileHover={{ scale: 1.02 }}>
             <Link
               className="hover:underline underline-offset-4 z-10"
               href={`collection/${category.id}`}

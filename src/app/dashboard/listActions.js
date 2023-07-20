@@ -3,7 +3,6 @@ import mime from "mime";
 import { join } from "path";
 import { stat, mkdir, writeFile, unlink } from "fs/promises";
 import fs from "fs";
-import { toast } from "react-hot-toast";
 
 import { revalidatePath, revalidateTag } from "next/cache";
 
@@ -27,7 +26,6 @@ export async function create(formData) {
 
   let id = formData.get("id");
   let description = formData.get("description");
-  let image = formData.get("image");
 
   let category = { name: undefined, val: undefined };
 
@@ -60,13 +58,13 @@ export async function create(formData) {
             quantity: quantity ? parseInt(quantity, 10) : undefined,
             price: price ? parseFloat(price) : undefined,
             description: description ? description : undefined,
-            image: image ? image : undefined,
+            image: dir ? dir : undefined,
             [category.name]: category.val,
           },
         });
-        return { success: "Item created successfully!" };
+        return { success: "Item created!" };
       } catch (error) {
-        return { error: ("Error creating item. Error code: ", error) };
+        return { error: ("Error Creating Item: \n", error) };
       }
     } else {
       try {
@@ -85,13 +83,14 @@ export async function create(formData) {
         });
         return { success: "Item created successfully!" };
       } catch (error) {
-        return { error: ("Error creating item. Error code: ", error) };
+        return { error: ("Error Creating Item: \n", error) };
       }
     }
   };
   if (!file) {
     const query = await writeToDb();
-    if (query?.error) return { error: `Error creating item: ${query.error}` };
+    if (query?.error)
+      return { error: `Error creating item: \n ${query.error}` };
     else {
       revalidatePath("/collection");
       revalidatePath("/dashboard");
@@ -100,15 +99,9 @@ export async function create(formData) {
     }
   } else {
     let relativeUploadDir;
-    if (process.env.NODE_ENV === "development") {
-      if (entry !== "items") {
-        relativeUploadDir = `/uploads/${entry}/${category.val}`;
-      } else relativeUploadDir = `/uploads/${entry}/${category.val}/${id}`;
-    } else {
-      if (entry !== "items") {
-        relativeUploadDir = `/uploads/${entry}/${category.val}`;
-      } else relativeUploadDir = `/uploads/${entry}/${category.val}/${id}`;
-    }
+    if (entry !== "items") {
+      relativeUploadDir = `/uploads/${entry}/${id}`;
+    } else relativeUploadDir = `/uploads/${entry}/${category.val}/${id}`;
 
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
@@ -123,12 +116,6 @@ export async function create(formData) {
           e
         );
       }
-    }
-    if (upload?.error) {
-      return {
-        error: `Error while trying to create directory for file upload \n
-          ${error}`,
-      };
     }
 
     if (entry !== "items") {
@@ -148,7 +135,8 @@ export async function create(formData) {
       let imageUrl = `${relativeUploadDir}/${filename}`;
 
       const query = await writeToDb(imageUrl);
-      if (query?.error) return { error: `Error creating item \n ${error}` };
+      if (query?.error)
+        return { error: `Error creating item \n ${query.error}` };
       else {
         revalidatePath("/collection");
         revalidatePath("/dashboard");
@@ -228,9 +216,6 @@ export async function update(formData) {
 
   const writeToDb = async (dir = null) => {
     if (entry !== "items") {
-      formData.set("image", dir);
-      image = formData.get("image");
-
       try {
         const res = await prisma[entry].update({
           where: { id: id },
@@ -242,7 +227,7 @@ export async function update(formData) {
             quantity: quantity ? parseInt(quantity, 10) : undefined,
             price: price ? parseFloat(price) : undefined,
             description: description ? description : undefined,
-            image: image !== null ? image : undefined,
+            image: dir ? dir : undefined,
             [category.name]: category.val,
           },
         });
@@ -262,19 +247,21 @@ export async function update(formData) {
             quantity: quantity ? parseInt(quantity, 10) : undefined,
             price: price ? parseFloat(price) : undefined,
             description: description ? description : undefined,
-            images: dir !== null ? dir : undefined,
+            images: dir ? dir : undefined,
             [category.name]: category.val,
           },
         });
         return { success: "Updated successfully!" };
       } catch (error) {
-        return { error: `Error Updating Item. \n ${error}` };
+        return { error: `Error Updating Item: \n ${error}` };
       }
     }
   };
+
   if (!file) {
     const query = await writeToDb();
-    if (query?.error) return { error: `Error updating item \n ${error}` };
+    console.log("no file");
+    if (query?.error) return { error: `Error Updating Item: \n ${error}` };
     else {
       revalidatePath("/collection");
       revalidatePath("/dashboard");
@@ -282,8 +269,10 @@ export async function update(formData) {
       return { success: `Updated Successfully!` };
     }
   } else if (typeof file === "string" && entry !== "items") {
-    const query = await writeToDb();
-    if (query?.error) return { error: `Error updating item \n ${error}` };
+    const query = await writeToDb(file);
+    console.log("file not changed");
+    if (query?.error)
+      return { error: `Error Updating Item: \n ${query.error}` };
     else {
       revalidatePath("/collection");
       revalidatePath("/dashboard");
@@ -291,16 +280,11 @@ export async function update(formData) {
       return { success: `Updated Successfully!` };
     }
   } else {
+    console.log("new file");
     let relativeUploadDir;
-    if (process.env.NODE_ENV === "development") {
-      if (entry !== "items") {
-        relativeUploadDir = `/uploads/${entry}/${category.val}`;
-      } else relativeUploadDir = `/uploads/${entry}/${category.val}/${id}`;
-    } else {
-      if (entry !== "items") {
-        relativeUploadDir = `/uploads/${entry}/${category.val}`;
-      } else relativeUploadDir = `/uploads/${entry}/${category.val}/${id}`;
-    }
+    if (entry !== "category") {
+      relativeUploadDir = `/uploads/${entry}/${id}`;
+    } else relativeUploadDir = `/uploads/${entry}/${category.val}/${id}`;
 
     const uploadDir = join(process.cwd(), "public", relativeUploadDir);
 
@@ -332,7 +316,7 @@ export async function update(formData) {
           try {
             await unlink(`${delDir}/${oldFile}`);
           } catch (error) {
-            return { error: `Error while removing old image/s \n ${error}` };
+            return { error: `Error removing old image/s \n ${error}` };
           }
         }
 
@@ -345,7 +329,7 @@ export async function update(formData) {
         let imageUrl = `${relativeUploadDir}/${filename}`;
 
         const query = await writeToDb(imageUrl);
-        if (query?.error) return { error: `Error updating item \n ${error}` };
+        if (query?.error) return { error: `Error Updating Item \n ${error}` };
         else {
           revalidatePath("/collection");
           revalidatePath("/dashboard");
@@ -373,7 +357,7 @@ export async function update(formData) {
           }
         }
         const query = await writeToDb(imageUrl);
-        if (query?.error) return { error: `Error updating item \n ${error}` };
+        if (query?.error) return { error: `Error Updating Item \n ${error}` };
         else {
           revalidatePath("/collection");
           revalidatePath("/dashboard");
@@ -382,7 +366,7 @@ export async function update(formData) {
         }
       }
     } catch (e) {
-      return { error: `Error uploading file: ` };
+      return { error: `Error Uploading File: \n ${e}` };
     }
   }
 }
@@ -397,6 +381,7 @@ export async function deleteItem(entry, data) {
           id: data.id,
         },
       });
+      return { success: "Item Removed!" };
     } catch (error) {
       return { error: `Error Removing Item \n ${error}` };
     }
@@ -409,7 +394,26 @@ export async function deleteItem(entry, data) {
       try {
         unlink(`${delDir}/${data.image}`);
       } catch (e) {
-        return { error: `Error removing image file: ${error}` };
+        return { error: `Error Removing Image file: \n ${error}` };
+      }
+      const query = await removeFromDb();
+      if (query?.error) {
+        return { error: query.error };
+      } else {
+        revalidateTag("search");
+        revalidatePath("/collection");
+        revalidatePath("/dashboard");
+        return { success: query.success };
+      }
+    } else {
+      const query = await removeFromDb();
+      if (query?.error) {
+        return { error: query.error };
+      } else {
+        revalidateTag("search");
+        revalidatePath("/collection");
+        revalidatePath("/dashboard");
+        return { success: query.success };
       }
     }
   } else {
@@ -426,42 +430,45 @@ export async function deleteItem(entry, data) {
           },
           (err) => {
             if (err) {
-              return { error: `Error removing image file: ${err}` };
+              return { error: `Error Removing Image File: \n ${err}` };
             }
           }
         );
         const query = await removeFromDb();
         if (query?.error)
-          return { error: `Error removing item. \n Please try again later.` };
+          return { error: `Error Removing Item. \n Please try again later.` };
         else {
           revalidateTag("search");
           revalidatePath("/collection");
           revalidatePath("/dashboard");
-          return { success: "Item removed successfully!" };
+          return { success: "Item Removed!" };
         }
       } catch (e) {
         const query = await removeFromDb();
-        if (query?.error)
+        if (query?.error) {
           return {
-            error: `Error removing item. \n Please try again later.`,
+            error: `Error Removing Item. \n Please try again later.`,
             e: `Problem with file removal \n ${e}`,
           };
-        else {
+        } else {
           revalidateTag("search");
           revalidatePath("/collection");
           revalidatePath("/dashboard");
-          return { success: "Item removed successfully!" };
+          return {
+            success: "Item Removed!",
+            e: `Error Removing File: \n ${e}`,
+          };
         }
       }
     } else {
       const query = await removeFromDb();
       if (query?.error)
-        return { error: `Error removing item. \n Please try again later.` };
+        return { error: `Error Removing Item. \n Please try again later.` };
       else {
         revalidateTag("search");
         revalidatePath("/collection");
         revalidatePath("/dashboard");
-        return { success: "Item removed successfully!" };
+        return { success: "Item Removed!" };
       }
     }
   }
