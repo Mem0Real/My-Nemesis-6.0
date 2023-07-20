@@ -81,7 +81,7 @@ const AddAnt = ({ modal, closeAddModal, create, addData, setAddData }) => {
         onOk={handleSubmit}
         confirmLoading={loading}
         onCancel={closeAddModal}
-        // style={{ top: 20 }}
+        style={{ top: 0 }}
         title={
           <h3 className="mb-4 py-4 text-xl text-center font-medium">
             {addData.entry === "categories" && <p>Create New Category</p>}
@@ -103,15 +103,17 @@ const AddAnt = ({ modal, closeAddModal, create, addData, setAddData }) => {
           </h3>
         }
         footer={
-          <Button
-            key="submit"
-            type="primary"
-            loading={loading}
-            onClick={handleSubmit}
-            className="w-full place-self-center"
-          >
-            Submit
-          </Button>
+          <div className="w-full flex flex-col items-center">
+            <Button
+              key="submit"
+              type="primary"
+              loading={loading}
+              onClick={handleSubmit}
+              className="mx-auto place-self-center"
+            >
+              Submit
+            </Button>
+          </div>
         }
       >
         <div className="shadow text-white rounded-2xl">
