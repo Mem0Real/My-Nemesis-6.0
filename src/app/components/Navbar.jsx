@@ -4,22 +4,10 @@ import Link from "next/link";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 
-// import { Raleway } from "next/font/google";
-
 import NavComponents from "./NavComponents";
-import { getAll } from "../search/searchActions";
-
-// const raleway = Raleway({
-//   subsets: ["cyrillic"],
-//   display: "swap",
-// });
-// import { getEntry } from "../search/searchActions";
 
 export const Navbar = async () => {
   const session = await getServerSession(authOptions);
-  // const fetchData = getAll();
-
-  // const [session, data] = await Promise.all([fetchSession, fetchData]);
 
   return (
     <nav className="w-full md:h-16 h-fit shadow-xl bg-neutral-900 text-white navbar drop-shadow-xl">

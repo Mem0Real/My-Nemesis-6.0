@@ -5,7 +5,7 @@ import "./globals.css";
 import ProductDataContext from "@/context/productContext";
 import { NextAuthProvider } from "./providers";
 import ToasterContext from "@/context/ToasterContext";
-import CartBase from "./components/CartBase";
+import CartBase from "./cart/CartBase";
 import SearchBase from "./search/SearchBase";
 
 export const metadata = {

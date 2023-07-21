@@ -17,6 +17,7 @@ export default function SearchBase({ children }) {
       document.body.style.overflow = "auto";
     }
   }, [searchModal]);
+
   const handleSearch = () => {
     showSearchModal(true);
   };

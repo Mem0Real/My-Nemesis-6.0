@@ -5,7 +5,7 @@ import { signOut } from "next-auth/react";
 
 import Link from "next/link";
 
-import { useCartContext } from "./CartBase";
+import { useCartContext } from "../cart/CartBase";
 
 import { useRouter } from "next/navigation";
 import { setCookie, parseCookies } from "nookies";
@@ -67,10 +67,10 @@ export default function NavComponents({ session }) {
       <div className="hidden md:flex justify-between items-center">
         {/* <SearchInput /> */}
         <div
-          className="relative flex-initial mr-4 flex items-center cursor-pointer justify-end py-2 rounded-lg w-40 text-zinc-200 bg-zinc-800"
+          className="relative flex-initial mr-4 flex items-center cursor-pointer justify-end py-2 rounded-md outline outline-1 hover:outline-2 outline-neutral-200 w-40 text-zinc-200 bg-zinc-800"
           onClick={handleSearch}
         >
-          <p className="md:pr-2 lg:pr-4">Search Products</p>
+          <p className="md:pr-2 lg:pr-4">Search Products...</p>
           <div className="text-lg absolute left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-200">
             <svg
               xmlns="http://www.w3.org/2000/svg"

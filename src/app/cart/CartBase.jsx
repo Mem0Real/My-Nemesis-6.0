@@ -3,8 +3,8 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import dynamic from "next/dynamic";
 
-const CartModal = dynamic(() => import("../cart/CartCustom"));
-const ContactInfoCustom = dynamic(() => import("../cart/ContactInfoCustom"));
+const CartModal = dynamic(() => import("./Cart"));
+const ContactInfo = dynamic(() => import("./ContactInfo"));
 
 import { useProductContext } from "@/context/productContext";
 import { setCookie, parseCookies } from "nookies";
@@ -158,7 +158,7 @@ export default function CartBase({ children }) {
               infoModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
-            <ContactInfoCustom
+            <ContactInfo
               cartList={cartList}
               orderTotalPrice={invoiceTotal}
               clearCart={clearCart}

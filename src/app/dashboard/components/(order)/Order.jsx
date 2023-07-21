@@ -90,7 +90,7 @@ export default function Order({
               </h1>
             }
           >
-            <MyOrderTable />
+            <OrderTable />
           </Suspense>
 
           <div className="flex w-full justify-center items-center mt-3 gap-6">

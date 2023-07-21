@@ -1,18 +1,16 @@
 "use client";
 
-import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { signIn } from "next-auth/react";
 
-import { Button } from "@mui/material";
+import { motion } from "framer-motion";
+
 import { toast } from "react-hot-toast";
 
 import { setCookie } from "nookies";
 
 export default function LoginPage() {
-  const [error, setError] = useState("");
-
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -28,7 +26,6 @@ export default function LoginPage() {
     });
 
     if (result?.error) {
-      setError(result.error);
       toast.error(result.error);
     } else {
       toast.success("Logged in successfully!");
@@ -83,14 +80,20 @@ export default function LoginPage() {
           </div>
 
           <div className="mx-auto">
-            <Button
-              color="success"
-              variant="outlined"
-              className="capitalize"
+            <motion.button
+              key="signIn"
+              whileTap={{
+                scale: 0.9,
+              }}
+              whileHover={{
+                borderRadius: "12px",
+                // outline: "2px solid white",
+              }}
+              className="px-4 py-2 rounded-lg outline outline-1 outline-blue-600 mb-4"
               type="submit"
             >
-              Sign In
-            </Button>
+              Login
+            </motion.button>
           </div>
         </div>
       </form>

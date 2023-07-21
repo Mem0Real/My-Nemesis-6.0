@@ -2,7 +2,8 @@
 
 import { useRouter } from "next/navigation";
 
-import { Button } from "@mui/material";
+import { motion } from "framer-motion";
+
 import { toast } from "react-hot-toast";
 
 export default function RegisterForm({ createUser }) {
@@ -85,14 +86,20 @@ export default function RegisterForm({ createUser }) {
           </div>
 
           <div className="mx-auto">
-            <Button
-              color="success"
-              variant="outlined"
-              className="capitalize"
+            <motion.button
+              key="signUp"
+              whileTap={{
+                scale: 0.9,
+              }}
+              whileHover={{
+                borderRadius: "12px",
+                // outline: "2px solid white",
+              }}
+              className="px-4 py-2 rounded-lg outline outline-1 outline-blue-600 mb-4"
               type="submit"
             >
-              Sign Up
-            </Button>
+              SignUp
+            </motion.button>
           </div>
         </div>
       </form>

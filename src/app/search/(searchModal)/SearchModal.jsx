@@ -114,6 +114,15 @@ export default function SearchModal({ searchModal, closeSearch }) {
     router.push(`/search?q=${searchQuery}`);
   };
 
+  const variants = {
+    searchData: {
+      opacity: 1,
+    },
+    noSearchData: {
+      opacity: 0,
+    },
+  };
+
   return (
     <section
       className="h-fit mt-12 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[60%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-900"
@@ -125,7 +134,7 @@ export default function SearchModal({ searchModal, closeSearch }) {
           type="button"
           className="absolute top-3 md:top-0 right-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center z-10"
           data-modal-hide="authentication-modal"
-          onClick={() => closeAddModal()}
+          onClick={() => closeSearch()}
         >
           <svg
             aria-hidden="true"
@@ -149,7 +158,7 @@ export default function SearchModal({ searchModal, closeSearch }) {
           />
           <div className="w-full border-b border-neutral-600/60">
             <input
-              autoFocus
+              autoFocus={searchModal}
               type="text"
               value={searchQuery || ""}
               className="ps-6 py-3 w-full flex-1 text-lg bg-transparent focus:border-none focus:outline-none"
@@ -160,13 +169,21 @@ export default function SearchModal({ searchModal, closeSearch }) {
         </div>
       </header>
       <main>
-        {searchQuery && (
-          <SearchDataContext.Provider value={{ data }}>
-            <div className="mt-6 h-56 overflow-y-scroll overflow-x-hidden no-scrollbar text-start">
-              {content}
-            </div>
-          </SearchDataContext.Provider>
-        )}
+        <AnimatePresence>
+          {searchQuery && (
+            <SearchDataContext.Provider value={{ data }}>
+              <motion.div
+                className="mt-6 h-56 overflow-y-scroll overflow-x-hidden no-scrollbar text-start"
+                animate={searchQuery ? "searchData" : "noSearchData"}
+                initial={"noSearchData"}
+                exit={"noSearchData"}
+                variants={variants}
+              >
+                {content}
+              </motion.div>
+            </SearchDataContext.Provider>
+          )}
+        </AnimatePresence>
       </main>
     </section>
   );
