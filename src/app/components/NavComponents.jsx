@@ -16,7 +16,6 @@ import { setCookie, parseCookies } from "nookies";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Poppins, Raleway } from "next/font/google";
-import { SearchOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 
 const FunctionsContext = createContext({});
 
@@ -125,7 +124,18 @@ export default function NavComponents({ data, getAll, getOne, session }) {
           onClick={handleSearch}
         >
           <p className="md:pr-2 lg:pr-4">Search Products</p>
-          <SearchOutlined className="text-lg absolute left-3 top-[2px] z-10 self-center text-neutral-200" />
+          <div className="text-lg absolute left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-200">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-search"
+              viewBox="0 0 16 16"
+            >
+              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            </svg>
+          </div>
         </div>
         <div className="flex justify-end items-center gap-2 md:gap-7 lg:gap-10">
           <Link href="/collection">
@@ -158,10 +168,18 @@ export default function NavComponents({ data, getAll, getOne, session }) {
           </div>
 
           <div className="relative">
-            <ShoppingCartOutlined
-              onClick={showCart}
-              className="cursor-pointer text-lg"
-            />
+            <span onClick={showCart} className="cursor-pointer text-lg">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                className="bi bi-cart"
+                viewBox="0 0 16 16"
+              >
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+              </svg>
+            </span>
 
             <div
               className={`absolute w-1.2 h-1.2 top-1 -right-1 bg-red-500 rounded-full p-0.7 ${
@@ -175,13 +193,30 @@ export default function NavComponents({ data, getAll, getOne, session }) {
       {/* Hamburger */}
       <div className="flex gap-7 justify-end items-center md:hidden text-white relative">
         <button name="search-small" onClick={handleSearch} className="text-lg">
-          <SearchOutlined />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            className="bi bi-search"
+            viewBox="0 0 16 16"
+          >
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+          </svg>
         </button>
         <div className="relative">
-          <ShoppingCartOutlined
-            onClick={showCart}
-            className="cursor-pointer text-lg"
-          />
+          <span onClick={showCart} className="cursor-pointer text-lg">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              fill="currentColor"
+              className="bi bi-cart"
+              viewBox="0 0 16 16"
+            >
+              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+            </svg>
+          </span>
           <div
             className={`absolute w-1.2 h-1.2 top-1 -right-1 bg-red-500 rounded-full p-0.7 z-10 ${
               !newCart && "hidden"
