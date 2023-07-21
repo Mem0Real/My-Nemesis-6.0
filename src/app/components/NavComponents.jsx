@@ -30,8 +30,6 @@ const raleway = Raleway({
 export default function NavComponents({ session }) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // TODO new cart notification still not working
-
   const { openCartModal, newCart } = useCartContext();
   const { handleSearch } = useSearchContext();
 
