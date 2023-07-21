@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { useFunctionsContext } from "@/app/components/NavComponents";
+import { useSearchDataContext } from "../SearchModalCustom";
+import { useSearchContext } from "../../SearchBase";
 
 export default function Items({ children }) {
-  const { data, closeSearch } = useFunctionsContext();
+  const { closeSearch } = useSearchContext();
+  const { data } = useSearchDataContext();
 
   return (
-    <div className="flex flex-col itmes-start gap-4 border-b border-neutral-200">
-      <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
+    <div className="flex flex-col itmes-start gap-4">
+      <h1 className="text-start ms-3 text-lg font-semibold underline w-full">
         Products
       </h1>
       <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">

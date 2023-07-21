@@ -1,9 +1,9 @@
+"use server";
+
 import prisma from "@/lib/prisma";
 import { revalidatePath, revalidateTag } from "next/cache";
 
 export async function getOne(entry, id) {
-  "use server";
-
   const data = await prisma[entry].findUnique({
     where: { id: id },
     select: { id: true },
@@ -12,7 +12,6 @@ export async function getOne(entry, id) {
 }
 
 export async function getAll() {
-  "use server";
   const categories = prisma.categories.findMany({});
 
   const parents = prisma.parents.findMany({});
@@ -27,8 +26,6 @@ export async function getAll() {
 }
 
 export async function search(query) {
-  "use server";
-
   const categories = prisma.categories.findMany({
     where: {
       OR: [
@@ -122,7 +119,6 @@ export async function search(query) {
 }
 
 export async function getEntry(entry, id) {
-  "use server";
   let res1, res2, res3, data1, data2, data3;
 
   res1 = await prisma[entry].findUnique({
