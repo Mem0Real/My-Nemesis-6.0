@@ -37,7 +37,7 @@ export default function NestedCarousel({ children }) {
         onClick={onClick}
       >
         <span
-          className={className?.includes("slick-disabled") && "invisible"}
+          className={`${className?.includes("slick-disabled") && "invisible"}`}
           style={{ display: "block" }}
         >
           {RightArrow}
@@ -54,7 +54,7 @@ export default function NestedCarousel({ children }) {
         onClick={onClick}
       >
         <span
-          className={className?.includes("slick-disabled") && "invisible"}
+          className={`${className?.includes("slick-disabled") && "invisible"}`}
           style={{ display: "block" }}
         >
           {LeftArrow}
