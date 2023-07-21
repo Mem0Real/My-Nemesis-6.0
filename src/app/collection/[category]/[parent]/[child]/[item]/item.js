@@ -1,14 +1,22 @@
 "use client";
+
 import { useState, useEffect } from "react";
+
+import dynamic from "next/dynamic";
 import Image from "next/image";
-import AddToCart from "./components/AddToCart";
+
 import { useProductContext } from "@/context/productContext";
 import { parseCookies } from "nookies";
+
+import { motion, AnimatePresence } from "framer-motion";
+const AddToCartModal = dynamic(() => import("./components/AddToCartCustom"));
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);
   const [quantity, setQuantity] = useState();
+
+  const [addToCartModal, showAddToCartModal] = useState(false);
 
   const { data, updater, purchasedData, setPurchasedData } =
     useProductContext();
@@ -16,7 +24,14 @@ export default function Item({ item }) {
   const cookieStore = parseCookies();
 
   useEffect(() => {
-    // const product = JSON.parse(localStorage.getItem("Product"));
+    if (addToCartModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [addToCartModal]);
+
+  useEffect(() => {
     let product;
     if (cookieStore.Product && cookieStore?.Product !== undefined)
       product = JSON.parse(cookieStore.Product);
@@ -64,13 +79,25 @@ export default function Item({ item }) {
   };
 
   const handleOrder = () => {
-    showModal(true);
+    showAddToCartModal(() => true);
   };
 
-  const closeModal = () => {
-    showModal(false);
+  const closeAddToCartModal = () => {
+    showAddToCartModal(() => false);
   };
 
+  const variants = {
+    open: {
+      opacity: 1,
+      display: "flex",
+    },
+    close: {
+      opacity: 0,
+      transitionEnd: {
+        display: "none",
+      },
+    },
+  };
   return (
     <div className="flex gap-7 flex-wrap lg:flex-nowrap w-full justify-center sm:justify-normal mx-auto mb-12">
       <div className="flex sm:items-center flex-col flex-wrap sm:flex-row w-full gap-12">
@@ -149,17 +176,45 @@ export default function Item({ item }) {
               )}
             </div>
             <div className="self-center">
-              <button
-                className="py-2 px-2 rounded-lg outline outline-1 outline-neutral-200 hover:outline-2 ring-offset-2 active:ring-2"
+              <motion.button
+                key="addCategory"
+                whileTap={{
+                  scale: 0.95,
+                  y: 0,
+                }}
+                whileHover={{
+                  borderRadius: "12px",
+                  y: "-1px",
+                }}
+                className="px-3 py-2 rounded-lg outline outline-1"
                 onClick={handleOrder}
               >
                 Add to Cart
-              </button>
+              </motion.button>
             </div>
           </div>
         </div>
       </div>
-      <AddToCart item={item} modal={modal} closeModal={closeModal} />
+      <AnimatePresence>
+        {addToCartModal && (
+          <motion.div
+            key="innerAddM"
+            initial={"close"}
+            animate={addToCartModal ? "open" : "close"}
+            variants={variants}
+            exit={"close"}
+            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+              addToCartModal ? "pointer-events-auto" : "pointer-events-none"
+            }`}
+          >
+            <AddToCartModal
+              item={item}
+              addToCartModal={addToCartModal}
+              closeAddToCartModal={closeAddToCartModal}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

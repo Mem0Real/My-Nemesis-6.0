@@ -127,7 +127,7 @@ export default function List({ data, create, update, deleteItem, url }) {
 
           <div className="flex flex-col w-full justify-center items-center md:mt-3">
             <motion.button
-              id="addCategory"
+              key="addCategory"
               className="px-3 py-2 rounded-md bg-green-900 text-neutral-200"
               whileTap={{
                 scale: 0.9,
@@ -145,10 +145,10 @@ export default function List({ data, create, update, deleteItem, url }) {
       </div>
 
       {/* Add Modal */}
-      <AnimatePresence id="addM" className="my-3">
+      <AnimatePresence className="my-3">
         {addModal && (
           <motion.div
-            id="innerAddM"
+            key="innerAddM"
             initial={"close"}
             animate={addModal ? "open" : "close"}
             variants={variants}
@@ -168,10 +168,10 @@ export default function List({ data, create, update, deleteItem, url }) {
       </AnimatePresence>
 
       {/* Edit Modal */}
-      <AnimatePresence id="editM" className="my-3">
+      <AnimatePresence className="my-3">
         {editModal && (
           <motion.div
-            id="innerEditM"
+            key="innerEditM"
             initial={"close"}
             animate={editModal ? "open" : "close"}
             variants={variants}
@@ -191,10 +191,10 @@ export default function List({ data, create, update, deleteItem, url }) {
       </AnimatePresence>
 
       {/* Delete Alert */}
-      <AnimatePresence id="deleteM" className="my-3">
+      <AnimatePresence className="my-3">
         {deleteModal && (
           <motion.div
-            id="innerDeleteM"
+            key="innerDeleteM"
             initial={"close"}
             animate={deleteModal ? "open" : "close"}
             variants={variants}
