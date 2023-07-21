@@ -4,16 +4,19 @@ import { useEffect, useState, useRef, createContext, useContext } from "react";
 import { signOut } from "next-auth/react";
 
 import Link from "next/link";
-import { Poppins, Raleway } from "next/font/google";
+import dynamic from "next/dynamic";
 
-import ShoppingCartCheckoutOutlinedIcon from "@mui/icons-material/ShoppingCartCheckoutOutlined";
-import { SearchOutlined } from "@mui/icons-material";
+const CartModal = dynamic(() => import("../cart/CartCustom"));
 
 import SearchModal from "../search/(searchModal)/SearchModal";
-import Cart from "../cart/Cart";
+// import Cart from "../cart/Cart";
 import { useProductContext } from "@/context/productContext";
 import { useRouter } from "next/navigation";
 import { setCookie, parseCookies } from "nookies";
+
+import { motion, AnimatePresence } from "framer-motion";
+import { Poppins, Raleway } from "next/font/google";
+import { SearchOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 
 const FunctionsContext = createContext({});
 
@@ -34,22 +37,20 @@ export default function NavComponents({ data, getAll, getOne, session }) {
   const [cartModal, showCartModal] = useState(false);
   const [newCart, setNewCart] = useState(false);
 
-  const cookieStore = parseCookies();
-
-  // const { data: session, status, update } = useSession();
-
-  // useEffect(() => {
-  //   const visibilityHandler = () =>
-  //     document.visibilityState === "visible" && update();
-  //   window.addEventListener("visibilitychange", visibilityHandler, false);
-  //   return () =>
-  //     window.removeEventListener("visibilitychange", visibilityHandler, false);
-  // }, [update]);
-
-  const menuRef = useRef();
   const { updater, setUpdater } = useProductContext();
 
+  const menuRef = useRef();
   const router = useRouter();
+  const cookieStore = parseCookies();
+
+  useEffect(() => {
+    if (cartModal) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+  }, [cartModal]);
+
   useEffect(() => {
     let handler = (e) => {
       if (!menuRef.current.contains(e.target)) {
@@ -63,7 +64,6 @@ export default function NavComponents({ data, getAll, getOne, session }) {
   }, []);
 
   useEffect(() => {
-    // const cartState = JSON.parse(localStorage.getItem("Cart_State"));
     let cartState;
     if (cookieStore.Cart_State && cookieStore.Cart_State !== undefined)
       cartState = JSON.parse(cookieStore.Cart_State);
@@ -85,7 +85,7 @@ export default function NavComponents({ data, getAll, getOne, session }) {
     showCartModal(true);
   };
 
-  const closeCart = () => {
+  const closeCartModal = () => {
     showCartModal(false);
     setUpdater((prev) => !prev);
   };
@@ -102,25 +102,30 @@ export default function NavComponents({ data, getAll, getOne, session }) {
     router.push("/");
   };
 
+  const variants = {
+    open: {
+      opacity: 1,
+      display: "flex",
+    },
+    close: {
+      opacity: 0,
+      transitionEnd: {
+        display: "none",
+      },
+    },
+  };
+
   return (
     <div ref={menuRef} className="w-full">
       {/* Buttons */}
       <div className="hidden md:flex justify-between items-center">
-        <div className="">
-          {/* <SearchInput /> */}
-          <button
-            name="search"
-            type="submit"
-            onClick={handleSearch}
-            className="flex items-center cursor-pointer justify-between md:w-56"
-          >
-            <p className="px-6 md:pl-4 py-3 w-full rounded-md sm:py-2 flex-1 text-zinc-200 bg-zinc-800">
-              Search products...
-            </p>
-            <span className="pr-4 -ml-7">
-              <SearchOutlined fontSize="small" />
-            </span>
-          </button>
+        {/* <SearchInput /> */}
+        <div
+          className="relative flex items-center cursor-pointer justify-end py-2 rounded-lg w-40 text-zinc-200 bg-zinc-800"
+          onClick={handleSearch}
+        >
+          <p className="md:pr-2 lg:pr-4">Search Products</p>
+          <SearchOutlined className="text-lg absolute left-3 top-[2px] z-10 self-center text-neutral-200" />
         </div>
         <div className="flex justify-end items-center gap-2 md:gap-7 lg:gap-10">
           <Link href="/collection">
@@ -152,34 +157,37 @@ export default function NavComponents({ data, getAll, getOne, session }) {
             Logout
           </div>
 
-          <button
-            name="cart"
-            type="button"
-            onClick={showCart}
-            className="relative"
-          >
-            <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
+          <div className="relative">
+            <ShoppingCartOutlined
+              onClick={showCart}
+              className="cursor-pointer text-lg"
+            />
 
             <div
-              className={`absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5 ${
+              className={`absolute w-1.2 h-1.2 top-1 -right-1 bg-red-500 rounded-full p-0.7 ${
                 !newCart && "hidden"
               }`}
             />
-          </button>
+          </div>
         </div>
       </div>
 
       {/* Hamburger */}
       <div className="flex gap-7 justify-end items-center md:hidden text-white relative">
-        <button name="search-small" type="submit" onClick={handleSearch}>
-          <SearchOutlined fontSize="small" />
+        <button name="search-small" onClick={handleSearch} className="text-lg">
+          <SearchOutlined />
         </button>
-        <button className="relative" onClick={showCart} name="cart-small">
-          <ShoppingCartCheckoutOutlinedIcon fontSize="small" />
-          {newCart && (
-            <div className="absolute w-1.5 h-1.5 -top-[2px] -right-1 bg-red-500 rounded-full p-0.5" />
-          )}
-        </button>
+        <div className="relative">
+          <ShoppingCartOutlined
+            onClick={showCart}
+            className="cursor-pointer text-lg"
+          />
+          <div
+            className={`absolute w-1.2 h-1.2 top-1 -right-1 bg-red-500 rounded-full p-0.7 z-10 ${
+              !newCart && "hidden"
+            }`}
+          />
+        </div>
         <button
           name="menu"
           onClick={() => setIsOpen(!isOpen)}
@@ -256,7 +264,23 @@ export default function NavComponents({ data, getAll, getOne, session }) {
 
       <FunctionsContext.Provider value={{ getOne, getAll, data, closeSearch }}>
         <SearchModal modal={searchModal} />
-        <Cart modal={cartModal} closeCart={closeCart} />
+        {/* <Cart modal={cartModal} closeCart={closeCart} /> */}
+        <AnimatePresence className="my-3">
+          {cartModal && (
+            <motion.div
+              key="innerCartM"
+              initial={"close"}
+              animate={cartModal ? "open" : "close"}
+              variants={variants}
+              exit={"close"}
+              className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+                cartModal ? "pointer-events-auto" : "pointer-events-none"
+              }`}
+            >
+              <CartModal closeAddModal={closeCartModal} />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </FunctionsContext.Provider>
     </div>
   );
