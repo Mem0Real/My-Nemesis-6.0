@@ -5,6 +5,7 @@ import "./globals.css";
 import ProductDataContext from "@/context/productContext";
 import { NextAuthProvider } from "./providers";
 import ToasterContext from "@/context/ToasterContext";
+import CartBase from "./components/CartBase";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -20,7 +21,9 @@ export default function RootLayout({ children }) {
           <ProductDataContext>
             <ToasterContext />
             <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative">
-              <Navbar />
+              <CartBase>
+                <Navbar />
+              </CartBase>
               <div className={`min-h-screen`}>{children}</div>
               <div className="w-full">
                 <Footer />

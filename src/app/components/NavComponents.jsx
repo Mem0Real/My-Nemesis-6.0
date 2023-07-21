@@ -11,6 +11,8 @@ const CartModal = dynamic(() => import("../cart/CartCustom"));
 import SearchModal from "../search/(searchModal)/SearchModal";
 // import Cart from "../cart/Cart";
 import { useProductContext } from "@/context/productContext";
+import { useCartContext } from "./CartBase";
+
 import { useRouter } from "next/navigation";
 import { setCookie, parseCookies } from "nookies";
 
@@ -34,22 +36,23 @@ const raleway = Raleway({
 export default function NavComponents({ data, getAll, getOne, session }) {
   const [isOpen, setIsOpen] = useState(false);
   const [searchModal, showSearchModal] = useState(false);
-  const [cartModal, showCartModal] = useState(false);
+  // const [cartModal, showCartModal] = useState(false);
   const [newCart, setNewCart] = useState(false);
 
   const { updater, setUpdater } = useProductContext();
+  const { openCartModal } = useCartContext();
 
   const menuRef = useRef();
   const router = useRouter();
   const cookieStore = parseCookies();
 
-  useEffect(() => {
-    if (cartModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [cartModal]);
+  // useEffect(() => {
+  //   if (cartModal) {
+  //     document.body.style.overflow = "hidden";
+  //   } else {
+  //     document.body.style.overflow = "auto";
+  //   }
+  // }, [cartModal]);
 
   useEffect(() => {
     let handler = (e) => {
@@ -81,14 +84,14 @@ export default function NavComponents({ data, getAll, getOne, session }) {
     showSearchModal(false);
   };
 
-  const showCart = () => {
-    showCartModal(true);
-  };
+  // const showCart = () => {
+  //   showCartModal(true);
+  // };
 
-  const closeCartModal = () => {
-    showCartModal(false);
-    setUpdater((prev) => !prev);
-  };
+  // const closeCartModal = () => {
+  //   showCartModal(false);
+  //   setUpdater((prev) => !prev);
+  // };
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
@@ -100,19 +103,6 @@ export default function NavComponents({ data, getAll, getOne, session }) {
     // Refresh the page to update the session
     router.refresh();
     router.push("/");
-  };
-
-  const variants = {
-    open: {
-      opacity: 1,
-      display: "flex",
-    },
-    close: {
-      opacity: 0,
-      transitionEnd: {
-        display: "none",
-      },
-    },
   };
 
   return (
@@ -159,7 +149,7 @@ export default function NavComponents({ data, getAll, getOne, session }) {
 
           <div className="relative">
             <ShoppingCartOutlined
-              onClick={showCart}
+              onClick={openCartModal}
               className="cursor-pointer text-lg"
             />
 
@@ -179,7 +169,7 @@ export default function NavComponents({ data, getAll, getOne, session }) {
         </button>
         <div className="relative">
           <ShoppingCartOutlined
-            onClick={showCart}
+            onClick={openCartModal}
             className="cursor-pointer text-lg"
           />
           <div
@@ -265,22 +255,6 @@ export default function NavComponents({ data, getAll, getOne, session }) {
       <FunctionsContext.Provider value={{ getOne, getAll, data, closeSearch }}>
         <SearchModal modal={searchModal} />
         {/* <Cart modal={cartModal} closeCart={closeCart} /> */}
-        <AnimatePresence className="my-3">
-          {cartModal && (
-            <motion.div
-              key="innerCartM"
-              initial={"close"}
-              animate={cartModal ? "open" : "close"}
-              variants={variants}
-              exit={"close"}
-              className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
-                cartModal ? "pointer-events-auto" : "pointer-events-none"
-              }`}
-            >
-              <CartModal closeAddModal={closeCartModal} />
-            </motion.div>
-          )}
-        </AnimatePresence>
       </FunctionsContext.Provider>
     </div>
   );
