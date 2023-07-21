@@ -12,7 +12,7 @@ export default function CustomIcons({ children }) {
       height="28"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#000000"
+      stroke="#222"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -27,7 +27,7 @@ export default function CustomIcons({ children }) {
       height="28"
       viewBox="0 0 24 24"
       fill="none"
-      stroke="#000000"
+      stroke="#222"
       strokeWidth="2"
       strokeLinecap="round"
       strokeLinejoin="round"
@@ -35,6 +35,7 @@ export default function CustomIcons({ children }) {
       <path d="M9 18l6-6-6-6" />
     </svg>
   );
+
   return (
     <IconsContext.Provider value={{ LeftArrow, RightArrow }}>
       {children}

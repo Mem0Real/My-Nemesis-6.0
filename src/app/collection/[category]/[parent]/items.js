@@ -10,7 +10,7 @@ export default function Items({ categoryId, parentId, childId, items }) {
         return (
           item.ChildId === childId && (
             <div key={item.id} className="flex gap-4">
-              <Link
+              <div
                 href={`/collection/${categoryId}/${parentId}/${childId}/${item.id}`}
                 className="flex w-56 mx-auto flex-col items-center group md:my-5 bg-transparent "
               >
@@ -37,10 +37,14 @@ export default function Items({ categoryId, parentId, childId, items }) {
                     </NestedCarousel>
                   )}
                 </div>
-                <div className="w-full h-12 flex flex-col items-start ps-4 pt-3 rounded-b-2xl bg-neutral-800 text-neutral-200 shadow-xl shadow-neutral-950 transition-all ease-in-out duration-1000 group-hover:shadow-neutral-700 ">
+
+                <Link
+                  href={`/collection/${categoryId}/${parentId}/${childId}/${item.id}`}
+                  className="w-full h-12 flex flex-col items-start ps-4 pt-3 rounded-b-2xl bg-neutral-800 text-neutral-200 shadow-xl shadow-neutral-950 transition-all ease-in-out duration-1000 group-hover:shadow-neutral-700 "
+                >
                   <h1>{item.name}</h1>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </div>
           )
         );

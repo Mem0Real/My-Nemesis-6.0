@@ -1,18 +1,20 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, createContext, useContext } from "react";
 import Slider from "react-slick";
-import Link from "next/link";
 import { Suspense } from "react";
-import Image from "next/image";
-
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
+import { useIcons } from "@/app/utils/CustomIcons";
+
+const SwiperContext = createContext({});
+
 export default function SlickCarousel({ children }) {
   const [activeSlide, setActiveSlide] = useState();
+  const { RightArrow, LeftArrow } = useIcons();
+  const [parentSwipe, setParentSwipe] = useState(true);
 
   const settings = {
     init: true,
@@ -69,7 +71,7 @@ export default function SlickCarousel({ children }) {
         style={{ display: "block" }}
         onClick={onClick}
       >
-        <ArrowForwardIos />
+        {RightArrow}
       </span>
     );
   }
@@ -84,10 +86,11 @@ export default function SlickCarousel({ children }) {
         style={{ display: "block" }}
         onClick={onClick}
       >
-        <ArrowBackIos />
+        {LeftArrow}
       </span>
     );
   }
+
   return (
     <div className={`w-[90%] mx-auto`}>
       <Suspense fallback={<h1>Loading...</h1>}>

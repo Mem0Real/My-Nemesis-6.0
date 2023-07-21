@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import Image from "next/image";
 
-import { ArrowBackIos, ArrowForwardIos } from "@mui/icons-material";
+import { useIcons } from "@/app/utils/CustomIcons";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -14,9 +14,12 @@ import "slick-carousel/slick/slick-theme.css";
 export default function NestedCarousel({ children }) {
   const [activeSlide, setActiveSlide] = useState();
 
+  const { RightArrow, LeftArrow } = useIcons();
+
   const settings = {
     init: true,
-    draggable: true,
+    draggable: false,
+    swipe: false,
     lazyLoad: "progressive",
     infinite: false,
     nextArrow: <NextArrow />,
@@ -29,30 +32,34 @@ export default function NestedCarousel({ children }) {
   function NextArrow(props) {
     const { onClick, className } = props;
     return (
-      <span
-        className={`absolute top-[85px] -right-0 md:-right-10 hover:text-neutral-700 z-10 cursor-pointer ${
-          className?.includes("slick-disabled") && "invisible"
-        }`}
-        style={{ display: "block" }}
+      <div
+        className="absolute top-0 bottom-0 grid place-content-center mt-0.5 -right-3 h-full bg-gradient-to-l from-neutral-700 to-neutral-500/10 cursor-pointer rounded-tr-3xl z-10"
         onClick={onClick}
       >
-        <ArrowForwardIos />
-      </span>
+        <span
+          className={className?.includes("slick-disabled") && "invisible"}
+          style={{ display: "block" }}
+        >
+          {RightArrow}
+        </span>
+      </div>
     );
   }
 
   function PrevArrow(props) {
     const { onClick, className } = props;
     return (
-      <span
-        className={`absolute top-[85px] -left-0 md:-left-10 hover:text-neutral-700 z-10 cursor-pointer ${
-          className?.includes("slick-disabled") && "invisible"
-        }`}
-        style={{ display: "block" }}
+      <div
+        className="absolute top-0 bottom-0 grid place-content-center mt-0.5 -left-3 h-full bg-gradient-to-r from-neutral-700 to-neutral-500/10 cursor-pointer rounded-tl-3xl z-10"
         onClick={onClick}
       >
-        <ArrowBackIos />
-      </span>
+        <span
+          className={className?.includes("slick-disabled") && "invisible"}
+          style={{ display: "block" }}
+        >
+          {LeftArrow}
+        </span>
+      </div>
     );
   }
   return (
