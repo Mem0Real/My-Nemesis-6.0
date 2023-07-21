@@ -17,7 +17,7 @@ export default function Items({ categoryId, parentId, childId, items }) {
                 <div
                   className={`${
                     !item.images && "invisible"
-                  } relative w-full h-44 border border-black rounded-t-3xl shadow-inner shadow-neutral-950 hover:shadow-neutral-700 transition-all ease-in-out`}
+                  } relative w-full h-44 border-2 border-neutral-500 rounded-t-3xl shadow-inner shadow-neutral-900 hover:shadow-neutral-700 transition-all ease-in-out duration-1000`}
                 >
                   {item.images && (
                     <NestedCarousel>
@@ -40,7 +40,7 @@ export default function Items({ categoryId, parentId, childId, items }) {
 
                 <Link
                   href={`/collection/${categoryId}/${parentId}/${childId}/${item.id}`}
-                  className="w-full h-12 flex flex-col items-start ps-4 pt-3 rounded-b-2xl bg-neutral-800 text-neutral-200 shadow-xl shadow-neutral-950 transition-all ease-in-out duration-1000 group-hover:shadow-neutral-700 "
+                  className="w-full h-12 flex flex-col items-center pt-3 rounded-b-2xl bg-neutral-800 text-neutral-200 shadow-xl shadow-neutral-900 transition-all ease-in-out duration-1000 group-hover:shadow-neutral-700 group-hover:shadow-md "
                 >
                   <h1>{item.name}</h1>
                 </Link>

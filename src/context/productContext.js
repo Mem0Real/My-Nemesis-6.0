@@ -20,14 +20,13 @@ export default function ProductDataContext({ children }) {
       product = JSON.parse(cookieStore.Product);
 
     if (product?.length > 0) {
-      console.log(product);
       setData(product);
     }
     if (cookieStore.Cart && cookieStore.Cart !== undefined)
       cart = JSON.parse(cookieStore.Cart);
     if (cart?.length > 0) {
       setCartData(cart);
-      setCookie(null, "Cart_State", true);
+      setCookie(null, "Cart_State", JSON.stringify(true));
     }
   }, []);
 
@@ -152,7 +151,7 @@ export default function ProductDataContext({ children }) {
       setData((prev) => [...prev, newArray]);
       setCookie(null, "Product", JSON.stringify(newArray));
     } else {
-      console.log("Item not found");
+      toast.error("Item not found");
     }
   };
 
@@ -180,7 +179,7 @@ export default function ProductDataContext({ children }) {
       setData((prev) => [...prev, newArray]);
       setCookie(null, "Product", JSON.stringify(newArray));
     } else {
-      console.log("Item not found!");
+      toast.error("Item not found");
     }
   };
 
@@ -203,7 +202,7 @@ export default function ProductDataContext({ children }) {
       setCartData((prev) => [...prev, newArray]);
       setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
-      console.log("Item not found");
+      toast.error("Item not found");
     }
   };
 
@@ -226,7 +225,7 @@ export default function ProductDataContext({ children }) {
       setCartData((prev) => [...prev, newArray]);
       setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
-      console.log("Item not found");
+      toast.error("Item not found");
     }
   };
 
@@ -263,7 +262,7 @@ export default function ProductDataContext({ children }) {
       setData((prev) => [...prev, newArray]);
       setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
-      console.log("Item not found!");
+      toast.error("Item not found");
     }
   };
 
@@ -283,7 +282,7 @@ export default function ProductDataContext({ children }) {
         .filter((item) => item !== null);
       setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
-      console.log("Item not found.");
+      toast.error("Item not found");
     }
   };
 
@@ -303,7 +302,7 @@ export default function ProductDataContext({ children }) {
         .filter((item) => item !== null);
       setCookie(null, "Product", JSON.stringify(newArray));
     } else {
-      console.log("Item not found.");
+      toast.error("Item not found");
     }
   };
 

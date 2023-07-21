@@ -13,7 +13,7 @@ const SwiperContext = createContext({});
 
 export default function SlickCarousel({ children }) {
   const [activeSlide, setActiveSlide] = useState();
-  const { RightArrow, LeftArrow } = useIcons();
+  const { RightArrowIcon, LeftArrowIcon } = useIcons();
   const [parentSwipe, setParentSwipe] = useState(true);
 
   const settings = {
@@ -71,7 +71,7 @@ export default function SlickCarousel({ children }) {
         style={{ display: "block" }}
         onClick={onClick}
       >
-        {RightArrow}
+        {RightArrowIcon}
       </span>
     );
   }
@@ -86,7 +86,7 @@ export default function SlickCarousel({ children }) {
         style={{ display: "block" }}
         onClick={onClick}
       >
-        {LeftArrow}
+        {LeftArrowIcon}
       </span>
     );
   }

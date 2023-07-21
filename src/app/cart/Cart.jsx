@@ -1,18 +1,19 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 
 import { useProductContext } from "@/context/productContext";
-
-import { PlusOutlined, MinusOutlined, DeleteOutlined } from "@ant-design/icons";
-import { motion } from "framer-motion";
 import { useCartContext } from "./CartBase";
 
-export default function CartCustom({ closeCartModal }) {
+import { motion } from "framer-motion";
+import { useIcons } from "../utils/CustomIcons";
+
+export default function Cart({ closeCartModal }) {
   const {
     subtractQuantity,
     addQuantity,
     changeQuantity,
     removeItem,
+    updater,
     setUpdater,
   } = useProductContext();
 
@@ -26,6 +27,8 @@ export default function CartCustom({ closeCartModal }) {
     invoiceTaxes,
     invoiceTotal,
   } = useCartContext();
+
+  const { PlusIcon, MinusIcon, DeleteIcon } = useIcons();
 
   const modalRef = useRef();
 
@@ -106,7 +109,7 @@ export default function CartCustom({ closeCartModal }) {
                 Quantity
               </th>
               <th className="text-center py-2  w-24 md:w-24 lg:w-24">Price</th>
-              <th className="w-5 md:w-4 lg:w-5 text-center"></th>
+              <th className="w-8 text-center"></th>
             </tr>
           </thead>
           <tbody>
@@ -116,14 +119,14 @@ export default function CartCustom({ closeCartModal }) {
                   <tr key={item.id} className="border-b border-neutral-200">
                     <td className="text-center py-3 ps-2">{item.name}</td>
                     <td className="text-center py-3">
-                      <div className="flex items-center gap-2">
+                      <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleMinus(item.id)}
                           type="button"
                           disabled={item.amount <= 1}
                           className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed "
                         >
-                          <MinusOutlined />
+                          {MinusIcon}
                         </button>
                         <input
                           type="number"
@@ -142,7 +145,7 @@ export default function CartCustom({ closeCartModal }) {
                           disabled={item.amount === item.quantity}
                           className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed"
                         >
-                          <PlusOutlined />
+                          {PlusIcon}
                         </button>
                       </div>
                     </td>
@@ -152,11 +155,13 @@ export default function CartCustom({ closeCartModal }) {
                         ETB
                       </span>
                     </td>
-                    <td className="text-center">
-                      <DeleteOutlined
-                        className="text-red-600"
-                        onClick={() => handleRemove(item.id, item.quantity)}
-                      />
+                    <td align="center" className="text-center">
+                      <button
+                        className="flex flex-col items-center justify-center self-center h-full"
+                        onClick={() => handleRemove(item.id)}
+                      >
+                        {DeleteIcon}
+                      </button>
                     </td>
                   </tr>
                 ))}

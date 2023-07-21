@@ -14,7 +14,7 @@ import "slick-carousel/slick/slick-theme.css";
 export default function NestedCarousel({ children }) {
   const [activeSlide, setActiveSlide] = useState();
 
-  const { RightArrow, LeftArrow } = useIcons();
+  const { RightArrowIcon, LeftArrowIcon } = useIcons();
 
   const settings = {
     init: true,
@@ -40,7 +40,7 @@ export default function NestedCarousel({ children }) {
           className={`${className?.includes("slick-disabled") && "invisible"}`}
           style={{ display: "block" }}
         >
-          {RightArrow}
+          {RightArrowIcon}
         </span>
       </div>
     );
@@ -57,7 +57,7 @@ export default function NestedCarousel({ children }) {
           className={`${className?.includes("slick-disabled") && "invisible"}`}
           style={{ display: "block" }}
         >
-          {LeftArrow}
+          {LeftArrowIcon}
         </span>
       </div>
     );

@@ -16,7 +16,7 @@ export default async function Children({ categoryId, parentId }) {
 
   if (isObjEmpty(childData)) {
     content = (
-      <div className="flex flex-col justify-around items-center text-sm mb-1 w-screen bg-neutral-300 text-neutral-900 h-fit">
+      <div className="flex flex-col justify-around items-center text-sm mb-1 w-screen bg-neutral-800 text-neutral-200 h-fit">
         <h1>Empty</h1>
       </div>
     );
@@ -25,13 +25,13 @@ export default async function Children({ categoryId, parentId }) {
       return (
         <div
           key={child.id}
-          className="flex flex-col items-center md:items-start text-sm mb-1 w-full bg-neutral-200/80 text-neutral-800"
+          className="flex flex-col items-center md:items-start text-sm mb-1 w-full bg-neutral-800 text-neutral-200"
         >
           <Link
             href={`/collection/${categoryId}/${parentId}/${child.id}`}
             className="flex-none"
           >
-            <h1 className="md:ml-12 text-lg my-5 sm:my-9 ring ring-neutral-600 bg-neutral-100 ring-offset-4 hover:ring-offset-2 hover:ring-neutral-800 ring-opacity-40 shadow-lg shadow-neutral-800 px-5 rounded-md">
+            <h1 className="md:ml-12 text-lg my-5 sm:my-9 ring ring-black bg-neutral-800 ring-offset-4 hover:ring-offset-2 hover:ring-neutral-800 ring-opacity-40 shadow-lg shadow-neutral-500 px-5 rounded-md">
               {child.name}
             </h1>
           </Link>

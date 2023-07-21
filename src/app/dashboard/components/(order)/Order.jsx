@@ -46,7 +46,7 @@ export default function Order({
   }, []);
 
   useEffect(() => {
-    setCookie(null, "Delivered", delivered);
+    setCookie(null, "Delivered", JSON.stringify(delivered));
   }, [delivered]);
 
   const toggleDelivered = () => {

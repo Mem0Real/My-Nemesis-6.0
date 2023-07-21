@@ -9,7 +9,7 @@ import { useProductContext } from "@/context/productContext";
 import { parseCookies } from "nookies";
 
 import { motion, AnimatePresence } from "framer-motion";
-const AddToCartModal = dynamic(() => import("./components/AddToCartCustom"));
+const AddToCartModal = dynamic(() => import("@/app/cart/AddToCart"));
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
@@ -180,11 +180,9 @@ export default function Item({ item }) {
                 key="addCategory"
                 whileTap={{
                   scale: 0.95,
-                  y: 0,
                 }}
                 whileHover={{
                   borderRadius: "12px",
-                  y: "-1px",
                 }}
                 className="px-3 py-2 rounded-lg outline outline-1"
                 onClick={handleOrder}

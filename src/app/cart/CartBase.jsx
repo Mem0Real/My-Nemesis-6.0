@@ -41,10 +41,11 @@ export default function CartBase({ children }) {
     if (cart?.length > 0) {
       setCartList(() => cart);
       setNewCart(() => true);
-      setCookie(null, "Cart_State", true);
+      setCookie(null, "Cart_State", JSON.stringify(true));
     } else {
+      setCartList(() => []);
       setNewCart(() => false);
-      setCookie(null, "Cart_State", false);
+      setCookie(null, "Cart_State", JSON.stringify(false));
     }
   }, [updater]);
 
@@ -69,7 +70,7 @@ export default function CartBase({ children }) {
   const clearCart = () => {
     setCookie(null, "Cart", JSON.stringify([]));
     setCookie(null, "Product", JSON.stringify([]));
-    setCookie(null, "Cart_State", false);
+    setCookie(null, "Cart_State", JSON.stringify(false));
 
     // setUpdater((prev) => !prev);
     setCartList(() => []);

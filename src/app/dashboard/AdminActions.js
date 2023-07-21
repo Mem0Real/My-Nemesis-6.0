@@ -29,16 +29,16 @@ export default function AdminActions({
     setShowList((prev) => !prev);
     setShowOrder(() => false);
 
-    setCookie(null, "List", !showList);
-    setCookie(null, "Order", false);
+    setCookie(null, "List", JSON.stringify(!showList));
+    setCookie(null, "Order", JSON.stringify(false));
   };
 
   const toggleOrder = () => {
     setShowOrder((prev) => !prev);
     setShowList(false);
 
-    setCookie(null, "Order", !showOrder);
-    setCookie(null, "List", false);
+    setCookie(null, "Order", JSON.stringify(!showOrder));
+    setCookie(null, "List", JSON.stringify(false));
   };
 
   useEffect(() => {
