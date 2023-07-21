@@ -4,9 +4,9 @@ import React from "react";
 import Link from "next/link";
 
 import { useDataContext } from "../List";
-import { useTableContext } from "../MyTable";
+import { useTableContext } from "../ListTable";
 
-import ChildRow from "./ChildRow";
+import Child from "./Child";
 
 import { AnimatePresence, motion } from "framer-motion";
 import {
@@ -16,7 +16,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 
-export default function ParentRow({ categoryId, parent }) {
+export default function Parent({ categoryId, parent }) {
   const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
 
   const { cat, parDropDown, par } = useTableContext();
@@ -130,11 +130,7 @@ export default function ParentRow({ categoryId, parent }) {
       (child) =>
         child.ParentId === parent.id && (
           <React.Fragment key={child.id}>
-            <ChildRow
-              categoryId={categoryId}
-              parentId={parent.id}
-              child={child}
-            />
+            <Child categoryId={categoryId} parentId={parent.id} child={child} />
           </React.Fragment>
         )
     ),

@@ -10,7 +10,7 @@ const AddModal = dynamic(() => import("./Add"));
 const EditModal = dynamic(() => import("./Edit"));
 const DeleteModal = dynamic(() => import("./Delete"));
 
-import MyTable from "./MyTable";
+import ListTable from "./ListTable";
 
 const DataContext = createContext({});
 
@@ -122,7 +122,7 @@ export default function List({ data, create, update, deleteItem, url }) {
         </h1>
         <div className="md:mt-6 md:pb-5">
           <Suspense fallback={<h1>Loading...</h1>}>
-            <MyTable />
+            <ListTable />
           </Suspense>
 
           <div className="flex flex-col w-full justify-center items-center md:mt-3">

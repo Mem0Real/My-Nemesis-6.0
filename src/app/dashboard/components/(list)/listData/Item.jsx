@@ -6,7 +6,7 @@ import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 
 import { useDataContext } from "../List";
-import { useTableContext } from "../MyTable";
+import { useTableContext } from "../ListTable";
 
 import {
   DeleteOutlined,
@@ -14,7 +14,7 @@ import {
   SwapRightOutlined,
 } from "@ant-design/icons";
 
-export default function ItemRow({ categoryId, parentId, childId, item }) {
+export default function Item({ categoryId, parentId, childId, item }) {
   const { chi } = useTableContext();
   const { handleEdit, handleDelete } = useDataContext();
 

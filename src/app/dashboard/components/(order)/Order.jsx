@@ -9,7 +9,7 @@ import {
 } from "react";
 import dynamic from "next/dynamic";
 
-import MyOrderTable from "./MyOrderTable";
+import OrderTable from "./OrderTable";
 const RemoveAllModal = dynamic(() => import("./RemoveAll"));
 
 const OrderDataContext = createContext({});

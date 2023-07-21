@@ -3,10 +3,10 @@
 import React from "react";
 import Link from "next/link";
 
-import ParentRow from "./ParentRow";
+import Parent from "./Parent";
 
 import { useDataContext } from "../List";
-import { useTableContext } from "../MyTable";
+import { useTableContext } from "../ListTable";
 
 import { motion } from "framer-motion";
 import {
@@ -16,7 +16,7 @@ import {
   PlusOutlined,
 } from "@ant-design/icons";
 
-export default function CategoryRow({ category }) {
+export default function Category({ category }) {
   const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
   const { catDropDown, cat } = useTableContext();
 
@@ -111,7 +111,7 @@ export default function CategoryRow({ category }) {
       (parent) =>
         parent.CategoryId === category.id && (
           <React.Fragment key={parent.id}>
-            <ParentRow categoryId={category.id} parent={parent} />
+            <Parent categoryId={category.id} parent={parent} />
           </React.Fragment>
         )
     ),

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { useSearchDataContext } from "../SearchModalCustom";
+import { useSearchDataContext } from "../SearchModal";
 import { useSearchContext } from "../../SearchBase";
 
 export default function Items({ children }) {

@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 
-import OrderRow from "./OrderRow";
+import Order from "./Order";
 
-import { useOrderContext } from "../MyOrderTable";
+import { useOrderContext } from "../OrderTable";
 import { useOrderDataContext } from "../Order";
 
 import { AnimatePresence, motion } from "framer-motion";
@@ -17,7 +17,7 @@ import {
 } from "@ant-design/icons";
 import { toast } from "react-hot-toast";
 
-export default function CustomerRow({ customer }) {
+export default function Customer({ customer }) {
   const [hovering, setHovering] = useState(false);
   const [deliverLoading, setDeliverLoading] = useState(false);
 
@@ -231,7 +231,7 @@ export default function CustomerRow({ customer }) {
                       (order) =>
                         order.customerId === customer.id && (
                           <React.Fragment key={order.id}>
-                            <OrderRow
+                            <Order
                               customerId={customer.id}
                               currentOrder={order}
                             />

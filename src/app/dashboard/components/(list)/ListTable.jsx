@@ -1,5 +1,3 @@
-"use client";
-
 import React, {
   useState,
   useEffect,
@@ -7,21 +5,17 @@ import React, {
   useContext,
   Suspense,
 } from "react";
-import dynamic from "next/dynamic";
 
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import { useDataContext } from "./List";
+import Category from "./listData/Category";
 
-const Categories = dynamic(() => import("./listData/Categories"));
+const TableContext = createContext({});
 
-const ListContext = createContext({});
+export default function MyTable() {
+  const { data } = useDataContext();
 
-export default function ListTable() {
+  const categories = data[0];
+
   const [cat, setCat] = useState({});
   const [par, setPar] = useState({});
   const [chi, setChi] = useState({});
@@ -65,6 +59,8 @@ export default function ListTable() {
         }
       } else {
         setCat({ id: cat.id, open: false });
+        setPar({ ...par, open: false });
+        setChi({ ...chi, open: false });
         setCat({ id: categoryId, open: true });
       }
     }
@@ -85,6 +81,7 @@ export default function ListTable() {
         }
       } else {
         setPar({ id: par.id, open: false });
+        setChi({ ...chi, open: false });
         setPar({ id: parentId, open: true });
       }
     }
@@ -108,7 +105,7 @@ export default function ListTable() {
   };
 
   return (
-    <ListContext.Provider
+    <TableContext.Provider
       value={{
         catDropDown,
         parDropDown,
@@ -121,34 +118,38 @@ export default function ListTable() {
         setChi,
       }}
     >
-      <Paper sx={{ width: "100%", overflow: "hidden" }} elevation={0}>
-        <TableContainer component={Paper}>
-          <Table
-            aria-label="Categories Table"
-            size="large"
-            className="bg-neutral-200"
-          >
-            <TableHead elevation={1}>
-              <TableRow>
-                <TableCell></TableCell>
-                <TableCell>
-                  <h1 className="text-md font-semibold">Name</h1>
-                </TableCell>
-                <TableCell>
-                  <h1 className="text-md font-semibold">Description</h1>
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              <Suspense fallback={<h1>Loading...</h1>}>
-                <Categories />
+      <div className="table-container">
+        <div className="mx-auto w-[95%] overflow-auto">
+          <table className="table-fixed w-full text-sm">
+            <thead className="border-b border-black">
+              <tr className="">
+                <th className="text-center md:text-start py-5 w-56 md:w-72 lg:w-96">
+                  Name
+                </th>
+                <th className="text-center md:text-start py-5 w-80 md:w-80 lg:w-96">
+                  Description
+                </th>
+                <th className="w-20 md:w-24 lg:w-36" />
+              </tr>
+            </thead>
+            <tbody>
+              <Suspense
+                fallback={
+                  <h1 className="text-4xl text-black mx-auto">Loading...</h1>
+                }
+              >
+                {categories.map((category, index) => (
+                  <React.Fragment key={category.id}>
+                    <Category category={category} index={index} />
+                  </React.Fragment>
+                ))}
               </Suspense>
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Paper>
-    </ListContext.Provider>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </TableContext.Provider>
   );
 }
 
-export const useListContext = () => useContext(ListContext);
+export const useTableContext = () => useContext(TableContext);

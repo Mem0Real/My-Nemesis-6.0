@@ -15,11 +15,7 @@ import { setCookie, parseCookies } from "nookies";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Poppins, Raleway } from "next/font/google";
-<<<<<<< HEAD
-=======
-import { SearchOutlined, ShoppingCartOutlined } from "@ant-design/icons";
 import { useSearchContext } from "../search/SearchBase";
->>>>>>> custom-design
 
 const FunctionsContext = createContext({});
 
@@ -36,7 +32,6 @@ const raleway = Raleway({
 
 export default function NavComponents({ session }) {
   const [isOpen, setIsOpen] = useState(false);
-  // const [searchModal, showSearchModal] = useState(false);
 
   // TODO new cart notification still not working
   const [newCart, setNewCart] = useState(false);
@@ -48,14 +43,6 @@ export default function NavComponents({ session }) {
   const menuRef = useRef();
   const router = useRouter();
   const cookieStore = parseCookies();
-
-  // useEffect(() => {
-  //   if (cartModal) {
-  //     document.body.style.overflow = "hidden";
-  //   } else {
-  //     document.body.style.overflow = "auto";
-  //   }
-  // }, [cartModal]);
 
   useEffect(() => {
     let handler = (e) => {
@@ -78,14 +65,6 @@ export default function NavComponents({ session }) {
       setNewCart(() => true);
     } else setNewCart(() => false);
   }, [updater]);
-
-  // const handleSearch = () => {
-  //   showSearchModal(true);
-  // };
-
-  // const closeSearch = () => {
-  //   showSearchModal(false);
-  // };
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
@@ -153,8 +132,7 @@ export default function NavComponents({ session }) {
           </div>
 
           <div className="relative">
-<<<<<<< HEAD
-            <span onClick={showCart} className="cursor-pointer text-lg">
+            <span onClick={openCartModal} className="cursor-pointer text-lg">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
@@ -166,12 +144,6 @@ export default function NavComponents({ session }) {
                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
               </svg>
             </span>
-=======
-            <ShoppingCartOutlined
-              onClick={openCartModal}
-              className="cursor-pointer text-lg"
-            />
->>>>>>> custom-design
 
             <div
               className={`absolute w-1.2 h-1.2 top-1 -right-1 bg-red-500 rounded-full p-0.7 ${
@@ -197,8 +169,7 @@ export default function NavComponents({ session }) {
           </svg>
         </button>
         <div className="relative">
-<<<<<<< HEAD
-          <span onClick={showCart} className="cursor-pointer text-lg">
+          <span onClick={openCartModal} className="cursor-pointer text-lg">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -210,12 +181,6 @@ export default function NavComponents({ session }) {
               <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
             </svg>
           </span>
-=======
-          <ShoppingCartOutlined
-            onClick={openCartModal}
-            className="cursor-pointer text-lg"
-          />
->>>>>>> custom-design
           <div
             className={`absolute w-1.2 h-1.2 top-1 -right-1 bg-red-500 rounded-full p-0.7 z-10 ${
               !newCart && "hidden"

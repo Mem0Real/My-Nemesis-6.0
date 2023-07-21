@@ -1,11 +1,11 @@
 "use client";
 
 import React from "react";
-import { useOrderContext } from "../MyOrderTable";
+import { useOrderContext } from "../OrderTable";
 import { AnimatePresence, motion } from "framer-motion";
 
 // TODO price isn't calculated with vat so that should be fixed
-export default function OrderRow({ customerId, currentOrder }) {
+export default function Order({ customerId, currentOrder }) {
   const { cus } = useOrderContext();
 
   const variants = {

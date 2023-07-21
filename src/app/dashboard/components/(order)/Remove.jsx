@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import { useOrderDataContext } from "./Order";
-import { useOrderContext } from "./MyOrderTable";
+import { useOrderContext } from "./OrderTable";
 
 export default function RemoveModal({ removeData, closeRemoveModal }) {
   const [loading, setLoading] = useState(false);

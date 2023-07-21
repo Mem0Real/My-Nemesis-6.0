@@ -3,7 +3,7 @@
 import { useState, useEffect, createContext, useContext } from "react";
 import dynamic from "next/dynamic";
 
-const SearchModal = dynamic(() => import("./(searchModal)/SearchModalCustom"));
+const SearchModal = dynamic(() => import("./(searchModal)/SearchModal"));
 import { motion, AnimatePresence } from "framer-motion";
 
 const SearchContext = createContext({});
