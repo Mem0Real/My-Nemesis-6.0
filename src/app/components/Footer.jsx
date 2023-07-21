@@ -1,6 +1,9 @@
 export default function Footer() {
   return (
-    <div className="navbar text-xl flex justify-between items-center bg-neutral-900 text-neutral-100 h-16">
+    <div
+      className="h-16 text-xl flex justify-between items-center bg-neutral-300 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 shadow-inner 
+    shadow-neutral-500"
+    >
       <div className="ms-4">
         <p>Nemesis</p>
       </div>

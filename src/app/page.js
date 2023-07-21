@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 export default async function Home() {
+  console.log("Server?");
   return (
     <main className="min-h-screen h-fit min-w-screen bg-neutral-100 text-neutral-900">
       <div className="flex flex-col items-center md:mt-12 gap-12">

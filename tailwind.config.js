@@ -1,6 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./src/app/**/*.js", "./src/app/**/*.jsx"],
+  darkMode: ["class"],
   theme: {
     listStyleType: {
       square: "square",

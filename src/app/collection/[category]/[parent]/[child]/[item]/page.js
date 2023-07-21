@@ -38,19 +38,18 @@ export default async function ItemPage({
   } else {
     content = (
       <div className="flex flex-col items-center w-screen min-h-screen bg-neutral-800 text-neutral-200 pt-2">
-        <div className="flex justify-end items-end w-full p-4">
-          <Link
-            href={`/collection/${currentCategory}/${currentParent}/${currentChild}`}
-          >
-            <h2 className="text-xs px-2 py-1 mt-4 md:px-4 md:py-2 bg-neutral-900 text-white rounded-md mr-4">
-              Go Back
-            </h2>
-          </Link>
-        </div>
+        <div className="flex justify-end items-end w-full p-4"></div>
 
         <Suspense fallback={<h1 className="text-xl mx-auto">Loading Item</h1>}>
           <Item item={itemData} />
         </Suspense>
+        <Link
+          href={`/collection/${currentCategory}/${currentParent}/${currentChild}`}
+        >
+          <h2 className="text-xs px-2 py-1 mt-4 md:px-4 md:py-2 bg-neutral-900 text-white rounded-md mr-4">
+            Go Back
+          </h2>
+        </Link>
       </div>
     );
   }

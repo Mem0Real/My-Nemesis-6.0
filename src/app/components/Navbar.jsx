@@ -10,7 +10,10 @@ export const Navbar = async () => {
   const session = await getServerSession(authOptions);
 
   return (
-    <nav className="w-full md:h-16 h-fit shadow-xl bg-neutral-900 text-white navbar drop-shadow-xl">
+    <nav
+      className="w-full md:h-16 h-fit navbar shadow-md drop-shadow-md shadow-neutral-500 dark:shadow-neutral-950 bg-neutral-200
+    text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200"
+    >
       <div className="md:flex justify-between md:justify-normal items-center w-full h-full px-4 lg:px-8 py-4 text-sm">
         <div className="absolute md:static z-40 -mt-[8px] md:mt-0">
           <Link href="/">
