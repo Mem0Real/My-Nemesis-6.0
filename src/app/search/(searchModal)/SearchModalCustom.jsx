@@ -123,7 +123,7 @@ export default function SearchModalCustom({ searchModal, closeSearch }) {
         <button
           name="close-add-modal"
           type="button"
-          className="absolute top-3 md:top-0 right-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+          className="absolute top-3 md:top-0 right-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center z-10"
           data-modal-hide="authentication-modal"
           onClick={() => closeAddModal()}
         >

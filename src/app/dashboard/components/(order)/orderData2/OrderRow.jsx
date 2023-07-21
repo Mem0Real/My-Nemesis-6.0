@@ -4,7 +4,8 @@ import React from "react";
 import { useOrderContext } from "../MyOrderTable";
 import { AnimatePresence, motion } from "framer-motion";
 
-export default function ParentRow({ customerId, currentOrder }) {
+// TODO price isn't calculated with vat so that should be fixed
+export default function OrderRow({ customerId, currentOrder }) {
   const { cus } = useOrderContext();
 
   const variants = {

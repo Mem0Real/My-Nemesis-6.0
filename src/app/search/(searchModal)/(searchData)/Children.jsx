@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { useFunctionsContext } from "@/app/components/NavComponents";
 import { useSearchDataContext } from "../SearchModalCustom";
+import { useSearchContext } from "../../SearchBase";
 
 export default function Children({ children }) {
-  const { closeSearch } = useFunctionsContext();
+  const { closeSearch } = useSearchContext();
   const { data } = useSearchDataContext();
 
   return (
