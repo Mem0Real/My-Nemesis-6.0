@@ -4,10 +4,7 @@ import { useEffect, useState, useRef, createContext, useContext } from "react";
 import { signOut } from "next-auth/react";
 
 import Link from "next/link";
-import dynamic from "next/dynamic";
 
-import SearchModal from "../search/(searchModal)/SearchModal";
-import { useProductContext } from "@/context/productContext";
 import { useCartContext } from "./CartBase";
 
 import { useRouter } from "next/navigation";
@@ -34,10 +31,8 @@ export default function NavComponents({ session }) {
   const [isOpen, setIsOpen] = useState(false);
 
   // TODO new cart notification still not working
-  const [newCart, setNewCart] = useState(false);
 
-  const { updater, setUpdater } = useProductContext();
-  const { openCartModal } = useCartContext();
+  const { openCartModal, newCart } = useCartContext();
   const { handleSearch } = useSearchContext();
 
   const menuRef = useRef();
@@ -55,16 +50,6 @@ export default function NavComponents({ session }) {
 
     return () => document.removeEventListener("mousedown", handler);
   }, []);
-
-  useEffect(() => {
-    let cartState;
-    if (cookieStore.Cart_State && cookieStore.Cart_State !== undefined)
-      cartState = JSON.parse(cookieStore.Cart_State);
-
-    if (cartState && cartState === true) {
-      setNewCart(() => true);
-    } else setNewCart(() => false);
-  }, [updater]);
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
@@ -84,7 +69,7 @@ export default function NavComponents({ session }) {
       <div className="hidden md:flex justify-between items-center">
         {/* <SearchInput /> */}
         <div
-          className="relative flex items-center cursor-pointer justify-end py-2 rounded-lg w-40 text-zinc-200 bg-zinc-800"
+          className="relative flex-initial mr-4 flex items-center cursor-pointer justify-end py-2 rounded-lg w-40 text-zinc-200 bg-zinc-800"
           onClick={handleSearch}
         >
           <p className="md:pr-2 lg:pr-4">Search Products</p>
@@ -146,7 +131,7 @@ export default function NavComponents({ session }) {
             </span>
 
             <div
-              className={`absolute w-1.2 h-1.2 top-1 -right-1 bg-red-500 rounded-full p-0.7 ${
+              className={`absolute w-1.2 h-1.2 -top-1 -right-1 bg-red-600 rounded-full p-1 ${
                 !newCart && "hidden"
               }`}
             />
@@ -182,7 +167,7 @@ export default function NavComponents({ session }) {
             </svg>
           </span>
           <div
-            className={`absolute w-1.2 h-1.2 top-1 -right-1 bg-red-500 rounded-full p-0.7 z-10 ${
+            className={`absolute w-1.2 h-1.2 -top-1 -right-1 bg-red-600 rounded-full p-1 ${
               !newCart && "hidden"
             }`}
           />

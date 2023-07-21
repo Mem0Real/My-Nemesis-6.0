@@ -17,6 +17,7 @@ const CartContext = createContext({});
 export default function CartBase({ children }) {
   const [cartModal, showCartModal] = useState(false);
   const [infoModal, showInfoModal] = useState(false);
+  const [newCart, setNewCart] = useState(false);
 
   const [cartList, setCartList] = useState();
 
@@ -39,7 +40,11 @@ export default function CartBase({ children }) {
 
     if (cart?.length > 0) {
       setCartList(() => cart);
+      setNewCart(() => true);
+      setCookie(null, "Cart_State", true);
     } else {
+      setNewCart(() => false);
+      setCookie(null, "Cart_State", false);
     }
   }, [updater]);
 
@@ -112,6 +117,7 @@ export default function CartBase({ children }) {
   return (
     <CartContext.Provider
       value={{
+        newCart,
         cartModal,
         openCartModal,
         infoModal,
