@@ -24,20 +24,15 @@ export default function RemoveModal({ removeData, closeRemoveModal }) {
   }, []);
 
   const confirmDelete = async () => {
-    // setLoading(() => true);
-    // const loaderToast = toast.loading(`Removing ${removeData.id}`);
-
     setRemoveLoading(() => ({ id: removeData.id, loading: true }));
     closeRemoveModal();
+
     const res = await removeOne(removeData.entry, removeData.id);
-    // setLoading(() => false);
-    // toast.remove(loaderToast);
+
     if (res?.error) toast.error(res.error, { duration: 10000 });
     else {
-      // toast.remove(loaderToast);
       toast.success(res.success);
       setRemoveLoading(() => ({ id: removeData.id, loading: false }));
-      // closeRemoveModal();
     }
   };
 
@@ -99,7 +94,6 @@ export default function RemoveModal({ removeData, closeRemoveModal }) {
           name="removeAll"
           className="text-red-600 bg-transparent px-3 py-2"
           whileHover={{
-            // scale: 1.05,
             backgroundColor: "rgba(68 18 18 0.1)",
             borderRadius: "8px",
             transition: {

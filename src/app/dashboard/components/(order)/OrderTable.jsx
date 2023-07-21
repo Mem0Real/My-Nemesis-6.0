@@ -17,7 +17,6 @@ const OrderContext = createContext({});
 
 export default function OrderTable() {
   const [cus, setCus] = useState({ id: null, open: false });
-  // const [dialogOpen, setDialogOpen] = useState(false);
   const [removeLoading, setRemoveLoading] = useState({
     id: null,
     loading: false,

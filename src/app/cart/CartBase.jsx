@@ -73,7 +73,6 @@ export default function CartBase({ children }) {
 
     // setUpdater((prev) => !prev);
     setCartList(() => []);
-    // setData(() => false);
 
     toast("Cart cleared!");
     setTimeout(() => {

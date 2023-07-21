@@ -15,7 +15,6 @@ export default function ProductDataContext({ children }) {
   const cookieStore = parseCookies();
 
   useEffect(() => {
-    // const product = JSON.parse(localStorage.getItem("Product"));
     let cart, product;
     if (cookieStore.Product && cookieStore.Product !== undefined)
       product = JSON.parse(cookieStore.Product);
@@ -26,11 +25,9 @@ export default function ProductDataContext({ children }) {
     }
     if (cookieStore.Cart && cookieStore.Cart !== undefined)
       cart = JSON.parse(cookieStore.Cart);
-    // const cart = JSON.parse(localStorage.getItem("Cart"));
     if (cart?.length > 0) {
       setCartData(cart);
       setCookie(null, "Cart_State", true);
-      // localStorage.setItem("Cart_State", JSON.stringify(true));
     }
   }, []);
 
@@ -52,26 +49,22 @@ export default function ProductDataContext({ children }) {
           return item;
         });
         setData(productData);
-        // localStorage.setItem("Product", JSON.stringify(productData));
         setCookie(null, "Product", JSON.stringify(productData));
       } else {
         const newData = { id: id, quantity: quantity };
 
         setData((prev) => [...prev, newData]);
         product.push(newData);
-        // localStorage.setItem("Product", JSON.stringify(product));
         setCookie(null, "Product", JSON.stringify(product));
       }
     } else {
       let newEntry = { id: id, quantity: quantity };
       setData(() => [newEntry]);
-      // localStorage.setItem("Product", JSON.stringify([newEntry]));
       setCookie(null, "Product", JSON.stringify([newEntry]));
     }
   };
 
   const addCartData = (id, name, quantity, amount, itemPrice) => {
-    // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
     if (cookieStore.Cart && cookieStore.Cart !== undefined)
       cart = JSON.parse(cookieStore.Cart);
@@ -92,7 +85,6 @@ export default function ProductDataContext({ children }) {
         });
 
         setCartData(cartItems);
-        // localStorage.setItem("Cart", JSON.stringify(cartItems));
         setCookie(null, "Cart", JSON.stringify(cartItems));
         toast("Cart item updated!");
       } else {
@@ -107,7 +99,6 @@ export default function ProductDataContext({ children }) {
 
         setCartData((prev) => [...prev, newCartItem]);
         cart.push(newCartItem);
-        // localStorage.setItem("Cart", JSON.stringify(cart));
         setCookie(null, "Cart", JSON.stringify(cart));
         toast("Item added to cart!");
       }
@@ -121,7 +112,6 @@ export default function ProductDataContext({ children }) {
         totalPrice: amount * itemPrice,
       };
       setCartData(() => [newCartItem]);
-      // localStorage.setItem("Cart", JSON.stringify([newCartItem]));
       setCookie(null, "Cart", JSON.stringify([newCartItem]));
 
       toast("Item added to cart!");
@@ -129,8 +119,6 @@ export default function ProductDataContext({ children }) {
   };
 
   const addProductQuantity = (id) => {
-    // const product = JSON.parse(localStorage.getItem("Product"));
-
     let product;
     if (cookieStore.Product && cookieStore.Product !== undefined)
       product = JSON.parse(cookieStore.Product);
@@ -143,7 +131,6 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setData((prev) => [...prev, newArray]);
-      // localStorage.setItem("Product", JSON.stringify(newArray));
       setCookie(null, "Product", JSON.stringify(newArray));
     } else {
       toast.error("Item not found!");
@@ -151,8 +138,6 @@ export default function ProductDataContext({ children }) {
   };
 
   const subtractProductQuantity = (id) => {
-    // const product = JSON.parse(localStorage.getItem("Product"));
-
     let product;
     if (cookieStore.Product && cookieStore.Product !== undefined)
       product = JSON.parse(cookieStore.Product);
@@ -165,7 +150,6 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setData((prev) => [...prev, newArray]);
-      // localStorage.setItem("Product", JSON.stringify(newArray));
       setCookie(null, "Product", JSON.stringify(newArray));
     } else {
       console.log("Item not found");
@@ -173,7 +157,6 @@ export default function ProductDataContext({ children }) {
   };
 
   const changeProductQuantity = (id, newQuantity) => {
-    // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
     if (cookieStore.Cart && cookieStore.Cart !== undefined)
       cart = JSON.parse(cookieStore.Cart);
@@ -195,7 +178,6 @@ export default function ProductDataContext({ children }) {
         return { id: item.id, quantity: item.quantity - item.amount };
       });
       setData((prev) => [...prev, newArray]);
-      // localStorage.setItem("Product", JSON.stringify(newArray));
       setCookie(null, "Product", JSON.stringify(newArray));
     } else {
       console.log("Item not found!");
@@ -203,7 +185,6 @@ export default function ProductDataContext({ children }) {
   };
 
   const addCartQuantity = (id) => {
-    // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
     if (cookieStore.Cart && cookieStore.Cart !== undefined)
       cart = JSON.parse(cookieStore.Cart);
@@ -220,7 +201,6 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setCartData((prev) => [...prev, newArray]);
-      // localStorage.setItem("Cart", JSON.stringify(newArray));
       setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
       console.log("Item not found");
@@ -228,7 +208,6 @@ export default function ProductDataContext({ children }) {
   };
 
   const subtractCartQuantity = (id) => {
-    // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
     if (cookieStore.Cart && cookieStore.Cart !== undefined)
       cart = JSON.parse(cookieStore.Cart);
@@ -245,7 +224,6 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setCartData((prev) => [...prev, newArray]);
-      // localStorage.setItem("Cart", JSON.stringify(newArray));
       setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
       console.log("Item not found");
@@ -253,7 +231,6 @@ export default function ProductDataContext({ children }) {
   };
 
   const changeCartQuantity = (id, newQuantity) => {
-    // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
     if (cookieStore.Cart && cookieStore.Cart !== undefined)
       cart = JSON.parse(cookieStore.Cart);
@@ -284,7 +261,6 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setData((prev) => [...prev, newArray]);
-      // localStorage.setItem("Cart", JSON.stringify(newArray));
       setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
       console.log("Item not found!");
@@ -292,7 +268,6 @@ export default function ProductDataContext({ children }) {
   };
 
   const removeCartItem = (id) => {
-    // const cart = JSON.parse(localStorage.getItem("Cart"));
     let cart;
     if (cookieStore.Cart && cookieStore.Cart !== undefined)
       cart = JSON.parse(cookieStore.Cart);
@@ -306,7 +281,6 @@ export default function ProductDataContext({ children }) {
           return item;
         })
         .filter((item) => item !== null);
-      // localStorage.setItem("Cart", JSON.stringify(newArray));
       setCookie(null, "Cart", JSON.stringify(newArray));
     } else {
       console.log("Item not found.");
@@ -314,8 +288,6 @@ export default function ProductDataContext({ children }) {
   };
 
   const removeProductItem = (id) => {
-    // const product = JSON.parse(localStorage.getItem("Product"));
-
     let product;
     if (cookieStore.Product && cookieStore.Product !== undefined)
       product = JSON.parse(cookieStore.Product);
@@ -329,7 +301,6 @@ export default function ProductDataContext({ children }) {
           return item;
         })
         .filter((item) => item !== null);
-      // localStorage.setItem("Product", JSON.stringify(newArray));
       setCookie(null, "Product", JSON.stringify(newArray));
     } else {
       console.log("Item not found.");
@@ -352,9 +323,7 @@ export default function ProductDataContext({ children }) {
   };
 
   const removeItem = (id) => {
-    // restoreCartQuantity(id);
     removeCartItem(id);
-    // restoreProductQuantity(id);
     removeProductItem(id);
   };
 

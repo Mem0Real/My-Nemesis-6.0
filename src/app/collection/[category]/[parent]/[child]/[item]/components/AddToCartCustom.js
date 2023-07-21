@@ -36,7 +36,6 @@ export default function AddToCartCustom({
   // Set initial quantity to 1
   useEffect(() => {
     if (addToCartModal === true) {
-      // const cart = JSON.parse(localStorage.getItem("Cart"));
       let cart;
       if (cookieStore.Cart && cookieStore.Cart !== undefined)
         cart = JSON.parse(cookieStore.Cart);

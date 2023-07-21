@@ -93,7 +93,6 @@ export default function DeleteModal({
           name="delete"
           className="text-red-600 bg-transparent px-3 py-2"
           whileHover={{
-            // scale: 1.05,
             backgroundColor: "rgba(68 18 18 0.1)",
             borderRadius: "8px",
             transition: {

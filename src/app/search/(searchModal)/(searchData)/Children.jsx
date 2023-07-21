@@ -13,7 +13,6 @@ export default function Children({ children }) {
       </h1>
       <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">
         {children.map((child) => {
-          // Getting parent & category id
           let category, parent;
           data[1].map((par) => {
             if (par.id === child.ParentId) {

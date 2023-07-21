@@ -87,7 +87,6 @@ export default function LoginPage() {
               }}
               whileHover={{
                 borderRadius: "12px",
-                // outline: "2px solid white",
               }}
               className="px-4 py-2 rounded-lg outline outline-1 outline-blue-600 mb-4"
               type="submit"
