@@ -16,10 +16,10 @@ import { getAll } from "../search/searchActions";
 // import { getEntry } from "../search/searchActions";
 
 export const Navbar = async () => {
-  const fetchSession = getServerSession(authOptions);
-  const fetchData = getAll();
+  const session = await getServerSession(authOptions);
+  // const fetchData = getAll();
 
-  const [session, data] = await Promise.all([fetchSession, fetchData]);
+  // const [session, data] = await Promise.all([fetchSession, fetchData]);
 
   return (
     <nav className="w-full md:h-16 h-fit shadow-xl bg-neutral-900 text-white navbar drop-shadow-xl">
@@ -46,7 +46,7 @@ export const Navbar = async () => {
           </Link>
         </div>
         <div className="flex flex-col justify-end w-full">
-          <NavComponents data={data} getAll={getAll} session={session} />
+          <NavComponents session={session} />
         </div>
       </div>
     </nav>

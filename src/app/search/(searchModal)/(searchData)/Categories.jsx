@@ -1,12 +1,11 @@
 import Link from "next/link";
-import { useFunctionsContext } from "@/app/components/NavComponents";
+import { useSearchContext } from "../../SearchBase";
 
 export default function Categories({ children }) {
-  const { closeSearch } = useFunctionsContext();
-
+  const { closeSearch } = useSearchContext();
   return (
     <div className="flex flex-col itmes-start gap-4">
-      <h1 className="text-start md:ms-3 text-lg font-semibold underline w-full">
+      <h1 className="text-start ms-3 text-lg font-semibold underline w-full">
         Categories
       </h1>
       <div className="ms-5 border-l border-neutral-500 flex flex-col items-start gap-3">

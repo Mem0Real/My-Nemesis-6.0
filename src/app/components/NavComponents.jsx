@@ -6,10 +6,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import dynamic from "next/dynamic";
 
-const CartModal = dynamic(() => import("../cart/CartCustom"));
-
 import SearchModal from "../search/(searchModal)/SearchModal";
-// import Cart from "../cart/Cart";
 import { useProductContext } from "@/context/productContext";
 import { useCartContext } from "./CartBase";
 
@@ -19,6 +16,7 @@ import { setCookie, parseCookies } from "nookies";
 import { motion, AnimatePresence } from "framer-motion";
 import { Poppins, Raleway } from "next/font/google";
 import { SearchOutlined, ShoppingCartOutlined } from "@ant-design/icons";
+import { useSearchContext } from "../search/SearchBase";
 
 const FunctionsContext = createContext({});
 
@@ -33,14 +31,16 @@ const raleway = Raleway({
   display: "swap",
 });
 
-export default function NavComponents({ data, getAll, getOne, session }) {
+export default function NavComponents({ session }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [searchModal, showSearchModal] = useState(false);
-  // const [cartModal, showCartModal] = useState(false);
+  // const [searchModal, showSearchModal] = useState(false);
+
+  // TODO new cart notification still not working
   const [newCart, setNewCart] = useState(false);
 
   const { updater, setUpdater } = useProductContext();
   const { openCartModal } = useCartContext();
+  const { handleSearch } = useSearchContext();
 
   const menuRef = useRef();
   const router = useRouter();
@@ -76,21 +76,12 @@ export default function NavComponents({ data, getAll, getOne, session }) {
     } else setNewCart(() => false);
   }, [updater]);
 
-  const handleSearch = () => {
-    showSearchModal(true);
-  };
-
-  const closeSearch = () => {
-    showSearchModal(false);
-  };
-
-  // const showCart = () => {
-  //   showCartModal(true);
+  // const handleSearch = () => {
+  //   showSearchModal(true);
   // };
 
-  // const closeCartModal = () => {
-  //   showCartModal(false);
-  //   setUpdater((prev) => !prev);
+  // const closeSearch = () => {
+  //   showSearchModal(false);
   // };
 
   const handleSignOut = async () => {
@@ -252,10 +243,10 @@ export default function NavComponents({ data, getAll, getOne, session }) {
         </ul>
       </div>
 
-      <FunctionsContext.Provider value={{ getOne, getAll, data, closeSearch }}>
-        <SearchModal modal={searchModal} />
-        {/* <Cart modal={cartModal} closeCart={closeCart} /> */}
-      </FunctionsContext.Provider>
+      {/* <FunctionsContext.Provider value={{ getOne, getAll, data, closeSearch }}> */}
+      {/* <SearchModal modal={searchModal} /> */}
+      {/* <Cart modal={cartModal} closeCart={closeCart} /> */}
+      {/* </FunctionsContext.Provider> */}
     </div>
   );
 }
