@@ -6,9 +6,7 @@ import "./globals.css";
 import ProductDataContext from "@/context/productContext";
 import { NextAuthProvider } from "../context/sessionContext";
 import ToasterContext from "@/context/ToasterContext";
-// import { ThemeProvider } from "@/context/themeContext";
-// import { ThemeSwitcher } from "./components/ThemeSwitcher";
-import Providers from "@/context/Providers";
+import ThemeContext from "@/context/themeContext";
 
 import CartBase from "./cart/CartBase";
 import SearchBase from "./search/SearchBase";
@@ -27,7 +25,7 @@ export default function RootLayout({ children }) {
         <NextAuthProvider>
           <ProductDataContext>
             <ToasterContext />
-            <Providers>
+            <ThemeContext>
               <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative transition-all ease-in-out duration-300">
                 <CustomIcons>
                   <CartBase>
@@ -41,7 +39,7 @@ export default function RootLayout({ children }) {
                   </div>
                 </CustomIcons>
               </div>
-            </Providers>
+            </ThemeContext>
           </ProductDataContext>
         </NextAuthProvider>
       </body>
