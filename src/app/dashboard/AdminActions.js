@@ -43,13 +43,15 @@ export default function AdminActions({
 
   useEffect(() => {
     let data;
-    if (cookies?.List !== undefined) data = JSON.parse(cookies.List);
+    if (cookies.List && cookies.List !== undefined)
+      data = JSON.parse(cookies.List);
     setShowList(data);
   }, []);
 
   useEffect(() => {
     let data;
-    if (cookies?.Order !== undefined) data = JSON.parse(cookies.Order);
+    if (cookies.List && cookies.Order !== undefined)
+      data = JSON.parse(cookies.Order);
     setShowOrder(data);
   }, []);
 
