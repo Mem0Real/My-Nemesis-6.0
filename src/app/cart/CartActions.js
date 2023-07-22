@@ -28,6 +28,7 @@ export async function sendOrder(user, cartList, orderTotalPrice) {
     remainingQuantity: item.quantity - item.amount,
   }));
 
+  // TODO should update the quantity of purchased goods if user selects same product with different amount
   const createCustomer = async () => {
     try {
       await prisma.customers.upsert({
@@ -47,7 +48,7 @@ export async function sendOrder(user, cartList, orderTotalPrice) {
         },
       });
     } catch (error) {
-      return { error: `Problem while creating customer: \n ${error.message}` };
+      return { error: `Problem while creating customer: \n ${error}` };
     }
   };
 
@@ -57,47 +58,46 @@ export async function sendOrder(user, cartList, orderTotalPrice) {
         data,
       });
     } catch (error) {
-      return { error: `Problem while creating order: \n ${error.message}` };
-    }
-
-    const updateProduct = async () => {
-      try {
-        await prisma.$transaction(
-          tran.map((product) =>
-            prisma.items.update({
-              where: { id: product.productId },
-              data: { quantity: product.remainingQuantity },
-            })
-          )
-        );
-      } catch (error) {
-        return { error: "Error updating product quantity: \n" + error.message };
-      }
-    };
-
-    const customer = await createCustomer();
-    const order = await createOrder();
-    const product = await updateProduct();
-
-    if (customer.error || order.error || product.error) {
-      if (customer.error) {
-        errorData.push(customer.error);
-      }
-      if (order.error) {
-        errorData.push(order.error);
-      }
-      if (product.error) {
-        errorData.push(product.error);
-      }
-
-      return { error: `Problem creating order: \n ${errorData.join}` };
-    } else {
-      revalidatePath("/collection");
-      revalidatePath("/dashboard");
-
-      return {
-        success: "Cart Items Sent.",
-      };
+      return { error: `Problem while creating order: \n ${error}` };
     }
   };
+  const updateProduct = async () => {
+    try {
+      await prisma.$transaction(
+        tran.map((product) =>
+          prisma.items.update({
+            where: { id: product.productId },
+            data: { quantity: product.remainingQuantity },
+          })
+        )
+      );
+    } catch (error) {
+      return { error: "Error updating product quantity: \n" + error };
+    }
+  };
+
+  const customerError = await createCustomer();
+  const orderError = await createOrder();
+  const productError = await updateProduct();
+
+  if (customerError || orderError || productError) {
+    if (customerError) {
+      errorData.push(customerError);
+    }
+    if (orderError) {
+      errorData.push(orderError);
+    }
+    if (productError) {
+      errorData.push(productError);
+    }
+
+    return { error: `Problem creating order: \n ${errorData.join}` };
+  } else {
+    revalidatePath("/collection");
+    revalidatePath("/dashboard");
+
+    return {
+      success: "Cart Items Sent.",
+    };
+  }
 }

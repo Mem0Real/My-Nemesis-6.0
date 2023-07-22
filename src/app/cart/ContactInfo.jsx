@@ -34,14 +34,18 @@ export default function ContactInfo({
 
     setLoading(() => true);
     const toastId = toast.loading("Sending Purchased data. Please wait...");
+
     const res = await sendOrder(user, cartList, orderTotalPrice);
 
     setLoading(() => false);
-    if (res.error)
+
+    if (res.error) {
+      toast.remove(toastId);
       toast.error(res.error, {
         duration: 10000,
       });
-    else {
+    } else {
+      toast.remove(toastId);
       toast.success(res.success, {
         duration: 2000,
         id: toastId,
@@ -151,12 +155,16 @@ export default function ContactInfo({
               key="contactInfoBtn"
               type="submit"
               disabled={loading}
-              whileTap={{
-                scale: 0.9,
-              }}
-              whileHover={{
-                borderRadius: "12px",
-              }}
+              whileTap={
+                !loading && {
+                  scale: 0.9,
+                }
+              }
+              whileHover={
+                !loading && {
+                  borderRadius: "12px",
+                }
+              }
               className="px-4 py-2 rounded-lg outline outline-1 outline-green-700 mb-4"
             >
               Confirm
@@ -169,8 +177,9 @@ export default function ContactInfo({
               whileHover={{
                 borderRadius: "12px",
               }}
-              className="px-4 py-2 rounded-lg outline outline-1 mb-4"
+              className="px-4 py-2 rounded-lg outline outline-1 mb-4 disabled:bg-neutral-500 scale-90"
               onClick={closeInfoModal}
+              disabled={loading}
             >
               Cancel
             </motion.button>

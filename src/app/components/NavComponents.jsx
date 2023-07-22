@@ -142,8 +142,13 @@ export default function NavComponents({ session }) {
       </div>
 
       {/* Hamburger */}
-      <div className="flex gap-7 justify-end items-center md:hidden text-white relative">
-        <button name="search-small" onClick={handleSearch} className="text-lg">
+      <div className="relative flex gap-7 justify-end items-center md:hidden text-neutral-800 dark:text-neutral-200 ">
+        <ThemeSwitcher />
+        <button
+          name="search-small"
+          onClick={handleSearch}
+          className="text-lg text-neutral-800 dark:text-neutral-200"
+        >
           <svg
             xmlns="http://www.w3.org/2000/svg"
             width="16"
