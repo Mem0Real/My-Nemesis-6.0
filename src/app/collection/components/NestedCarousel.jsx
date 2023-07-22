@@ -2,9 +2,7 @@
 
 import React, { useState } from "react";
 import Slider from "react-slick";
-import Link from "next/link";
 import { Suspense } from "react";
-import Image from "next/image";
 
 import { useIcons } from "@/app/utils/CustomIcons";
 

@@ -19,7 +19,7 @@ export default function SlickCarousel({ children }) {
   const settings = {
     init: true,
     draggable: true,
-    lazyLoad: "progressive",
+    lazyLoad: "anticipated",
     infinite: false,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
