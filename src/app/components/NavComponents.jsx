@@ -6,7 +6,8 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 import { useCartContext } from "../cart/CartBase";
-import DarkToggle from "./DarkToggle";
+// import DarkToggle from "./DarkToggle";
+import { ThemeSwitcher } from "./ThemeSwitcher";
 
 import { useRouter } from "next/navigation";
 import { setCookie, parseCookies } from "nookies";
@@ -86,7 +87,8 @@ export default function NavComponents({ session }) {
           </div>
         </div>
         <div className="flex justify-end items-center gap-2 md:gap-7 lg:gap-10">
-          <DarkToggle />
+          {/* <DarkToggle /> */}
+          <ThemeSwitcher />
 
           <Link href="/collection">
             <div className="underline underline-offset-8 hover:underline-offset-4">

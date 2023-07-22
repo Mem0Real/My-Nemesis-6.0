@@ -6,7 +6,8 @@ import "./globals.css";
 import ProductDataContext from "@/context/productContext";
 import { NextAuthProvider } from "../context/sessionContext";
 import ToasterContext from "@/context/ToasterContext";
-import ThemeContext from "@/context/themeContext";
+// import ThemeContext from "@/context/themeContext";
+import { ThemeProvider } from "@/context/theme-provider";
 
 import CartBase from "./cart/CartBase";
 import SearchBase from "./search/SearchBase";
@@ -20,12 +21,13 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
+    <html lang="en" style={{ colorScheme: "dark" }} className="dark">
       <body>
         <NextAuthProvider>
           <ProductDataContext>
             <ToasterContext />
-            <ThemeContext>
+            {/* <ThemeContext> */}
+            <ThemeProvider attribute="class" defaultTheme="dark">
               <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative transition-all ease-in-out duration-300">
                 <CustomIcons>
                   <CartBase>
@@ -39,7 +41,8 @@ export default function RootLayout({ children }) {
                   </div>
                 </CustomIcons>
               </div>
-            </ThemeContext>
+              {/* </ThemeContext> */}
+            </ThemeProvider>
           </ProductDataContext>
         </NextAuthProvider>
       </body>
