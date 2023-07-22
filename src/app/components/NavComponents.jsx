@@ -6,7 +6,6 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 import { useCartContext } from "../cart/CartBase";
-// import DarkToggle from "./DarkToggle";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
 import { useRouter } from "next/navigation";
