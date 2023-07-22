@@ -70,10 +70,12 @@ export default function ProductDataContext({ children }) {
 
     if (cart?.length > 0) {
       const cartCache = cart.find((item) => item.id === id);
+      let change = true;
 
       if (cartCache) {
         let cartItems = cart.map((item) => {
           if (item.id === id) {
+            if (item.amount === amount) change = false;
             return {
               ...item,
               amount: parseInt(amount),
@@ -85,7 +87,7 @@ export default function ProductDataContext({ children }) {
 
         setCartData(cartItems);
         setCookie(null, "Cart", JSON.stringify(cartItems));
-        toast("Cart item updated!");
+        change === true && toast.success("Cart item updated!");
       } else {
         const newCartItem = {
           id: id,
@@ -99,7 +101,7 @@ export default function ProductDataContext({ children }) {
         setCartData((prev) => [...prev, newCartItem]);
         cart.push(newCartItem);
         setCookie(null, "Cart", JSON.stringify(cart));
-        toast("Item added to cart!");
+        toast.success("Item added to cart!");
       }
     } else {
       let newCartItem = {

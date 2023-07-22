@@ -6,7 +6,7 @@ const ToasterContext = () => {
   return (
     <div>
       <Toaster
-        position="top-right"
+        position="top-center"
         reverseOrder={true}
         gutter={8}
         toastOptions={{

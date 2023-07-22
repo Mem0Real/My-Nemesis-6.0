@@ -67,15 +67,15 @@ export default function CartBase({ children }) {
     showInfoModal(() => false);
   };
 
-  const clearCart = () => {
+  const clearCart = (submitted = false) => {
     setCookie(null, "Cart", JSON.stringify([]));
     setCookie(null, "Product", JSON.stringify([]));
     setCookie(null, "Cart_State", JSON.stringify(false));
 
     // setUpdater((prev) => !prev);
     setCartList(() => []);
+    submitted === false && toast("Cart cleared!");
 
-    toast("Cart cleared!");
     setTimeout(() => {
       closeCartModal();
     }, 100);

@@ -238,7 +238,7 @@ export default function Cart({ closeCartModal }) {
                 borderRadius: "12px",
               }}
               className="px-4 py-2 rounded-lg outline outline-1 outline-red-600 mb-4"
-              onClick={clearCart}
+              onClick={() => clearCart()}
             >
               Clear
             </motion.button>

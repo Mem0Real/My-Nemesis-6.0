@@ -30,6 +30,7 @@ export default function ContactInfo({
   }, []);
 
   const handleSubmit = async (e) => {
+    console.log("Submit");
     e.preventDefault();
 
     setLoading(() => true);
@@ -39,6 +40,7 @@ export default function ContactInfo({
 
     setLoading(() => false);
 
+    toast.remove(toastId);
     if (res.error) {
       toast.remove(toastId);
       toast.error(res.error, {
@@ -50,13 +52,10 @@ export default function ContactInfo({
         duration: 2000,
         id: toastId,
       });
-      toast.success(res.message, {
-        duration: 5000,
-      });
       setPurchasedData(() => cartList);
       setUser(() => {});
       closeInfoModal();
-      clearCart();
+      clearCart(true);
     }
   };
 
@@ -165,19 +164,20 @@ export default function ContactInfo({
                   borderRadius: "12px",
                 }
               }
-              className="px-4 py-2 rounded-lg outline outline-1 outline-green-700 mb-4"
+              className="px-4 py-2 rounded-lg outline outline-1 outline-green-700 mb-4 disabled:outline-neutral-400 disabled:scale-90 disabled:cursor-not-allowed"
             >
               Confirm
             </motion.button>
             <motion.button
               key="cancelInfo"
+              type="button"
               whileTap={{
                 scale: 0.9,
               }}
               whileHover={{
                 borderRadius: "12px",
               }}
-              className="px-4 py-2 rounded-lg outline outline-1 mb-4 disabled:bg-neutral-500 scale-90"
+              className="px-4 py-2 rounded-lg outline outline-1 mb-4 disabled:outline-neutral-500 disabled:scale-90 disabled:cursor-not-allowed"
               onClick={closeInfoModal}
               disabled={loading}
             >
