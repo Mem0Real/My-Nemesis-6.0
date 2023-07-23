@@ -24,10 +24,10 @@ export default function RootLayout({ children }) {
       <body>
         <NextAuthProvider>
           <ProductDataContext>
-            <ToasterContext />
-            <ThemeProvider attribute="class" defaultTheme="dark">
-              <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative transition-all ease-in-out duration-300">
-                <CustomIcons>
+            <ThemeProvider attribute="class">
+              <CustomIcons>
+                <ToasterContext />
+                <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative transition-all ease-in-out duration-300">
                   <CartBase>
                     <SearchBase>
                       <Navbar />
@@ -37,8 +37,8 @@ export default function RootLayout({ children }) {
                   <div className="w-full">
                     <Footer />
                   </div>
-                </CustomIcons>
-              </div>
+                </div>
+              </CustomIcons>
             </ThemeProvider>
           </ProductDataContext>
         </NextAuthProvider>

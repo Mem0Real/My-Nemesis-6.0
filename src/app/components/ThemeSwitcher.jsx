@@ -1,13 +1,22 @@
 "use client";
-
 import { useTheme } from "next-themes";
 
 import { useIcons } from "../utils/CustomIcons";
 import { motion, AnimatePresence } from "framer-motion";
+import { useState, useEffect } from "react";
 
 export const ThemeSwitcher = () => {
+  const [mounted, setMounted] = useState(false);
   const { theme, setTheme } = useTheme();
   const { DarkIcon, LightIcon } = useIcons();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
   return (
     <AnimatePresence>
       <motion.button
