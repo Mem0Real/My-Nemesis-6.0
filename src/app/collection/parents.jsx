@@ -17,7 +17,7 @@ export default async function Parents({ categoryId, parents }) {
                 <div
                   className={`${
                     !parent.image && "invisible"
-                  } relative w-full h-44 border border-black rounded-t-3xl shadow-inner shadow-neutral-950 hover:shadow-neutral-700 transition-all ease-in-out`}
+                  } relative w-full h-44 border border-neutral-200 rounded-t-3xl shadow-inner shadow-neutral-900 hover:shadow-black transition-all ease-in-out dark:border-neutral-800 min-h-fit min-w-fit`}
                 >
                   {parent.image && (
                     <Image
@@ -33,7 +33,10 @@ export default async function Parents({ categoryId, parents }) {
                     />
                   )}
                 </div>
-                <div className="w-full h-12 flex flex-col items-start ps-4 pt-3 rounded-b-2xl bg-neutral-800 text-neutral-200 shadow-xl shadow-neutral-950 transition-all ease-in-out duration-1000 group-hover:shadow-neutral-700 ">
+                <div
+                  className="w-full h-12 flex flex-col items-start ps-4 pt-3 rounded-b-2xl bg-neutral-300 text-neutral-800 shadow-xl shadow-neutral-50 transition-all ease-in-out duration-500 group-hover:shadow-white dark:bg-neutral-800 dark:text-neutral-200 dark:shadow-neutral-950 dark:group-hover:shadow-black
+                "
+                >
                   <h1>{parent.name}</h1>
                 </div>
               </Link>

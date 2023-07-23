@@ -24,6 +24,7 @@ export default function LoginPage() {
 
     const toastId = toast.loading("Authenticating");
     setLoading(true);
+
     const result = await signIn("credentials", {
       email,
       password,
@@ -37,8 +38,6 @@ export default function LoginPage() {
     } else {
       toast.success("Logged in successfully!");
       setCookie(null, "accessToken", result.accessToken);
-
-      // Refresh the page to update the session
       router.refresh();
       router.push("/dashboard");
     }
@@ -113,7 +112,7 @@ export default function LoginPage() {
                   borderRadius: "12px",
                 }
               }
-              className="px-4 py-2 rounded-lg outline outline-1"
+              className="px-4 py-2 rounded-lg outline outline-1 text-sm"
               type="submit"
               disabled={loading}
             >

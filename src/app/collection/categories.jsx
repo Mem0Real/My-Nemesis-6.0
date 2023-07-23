@@ -12,10 +12,10 @@ export default async function Categories() {
     return (
       <div
         key={category.id}
-        className="flex flex-col items-center md:items-start text-sm mb-1 w-full bg-neutral-200/80 text-neutral-800"
+        className="flex flex-col items-center md:items-start text-sm mb-1 w-full bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
       >
         <Link href={`/collection/${category.id}`} className="flex-none">
-          <h1 className="md:ml-12 text-lg my-5 sm:my-9 ring ring-neutral-600 bg-neutral-100 ring-offset-4 hover:ring-offset-2 hover:ring-neutral-800 ring-opacity-40 shadow-lg shadow-neutral-800 px-5 rounded-md">
+          <h1 className="md:ml-12 text-lg my-5 sm:my-9 ring ring-neutral-600 dark:ring-neutral-800 bg-neutral-100 dark:bg-neutral-900 ring-offset-4 hover:ring-offset-2 hover:ring-neutral-800 ring-opacity-40 shadow-lg  shadow-neutral-800 hover:shadow-neutral-600 dark:shadow-neutral-200 dark:hover:shadow-neutral-400 px-5 rounded-md">
             {category.name}
           </h1>
         </Link>
