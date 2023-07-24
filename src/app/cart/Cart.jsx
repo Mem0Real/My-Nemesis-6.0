@@ -28,7 +28,7 @@ export default function Cart({ closeCartModal }) {
     invoiceTotal,
   } = useCartContext();
 
-  const { PlusIcon, MinusIcon, DeleteIcon } = useIcons();
+  const { PlusIcon, MinusIcon, RemoveIcon } = useIcons();
 
   const modalRef = useRef();
 
@@ -157,10 +157,10 @@ export default function Cart({ closeCartModal }) {
                     </td>
                     <td align="center" className="text-center">
                       <button
-                        className="flex flex-col items-center justify-center self-center h-full"
+                        className="flex flex-col items-center justify-center self-center h-full text-red-600/90"
                         onClick={() => handleRemove(item.id)}
                       >
-                        {DeleteIcon}
+                        {RemoveIcon}
                       </button>
                     </td>
                   </tr>

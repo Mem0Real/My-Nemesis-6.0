@@ -8,15 +8,13 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useDataContext } from "../List";
 import { useTableContext } from "../ListTable";
 
-import {
-  DeleteOutlined,
-  EditOutlined,
-  SwapRightOutlined,
-} from "@ant-design/icons";
+import { useIcons } from "@/app/utils/CustomIcons";
 
 export default function Item({ categoryId, parentId, childId, item }) {
   const { chi } = useTableContext();
   const { handleEdit, handleDelete } = useDataContext();
+
+  const { BagIcon, EditIcon, DeleteIcon } = useIcons();
 
   const variants = {
     open: {
@@ -43,7 +41,7 @@ export default function Item({ categoryId, parentId, childId, item }) {
               className="flex items-center gap-2 text-center hover:underline underline-offset-4"
               href={`/collection/${categoryId}/${parentId}/${childId}/${item.id}`}
             >
-              <SwapRightOutlined />
+              {BagIcon}
               {item.name}
             </Link>
           </td>
@@ -65,6 +63,8 @@ export default function Item({ categoryId, parentId, childId, item }) {
           <td className="border border-black">
             <div className="flex items-center justify-center gap-3">
               <motion.div
+                className="text-blue-700 text-base"
+                onClick={() => handleEdit("items", item)}
                 whileHover={{
                   scale: 1.5,
                 }}
@@ -72,12 +72,11 @@ export default function Item({ categoryId, parentId, childId, item }) {
                   scale: 1,
                 }}
               >
-                <EditOutlined
-                  className="text-blue-700 text-base"
-                  onClick={() => handleEdit("items", item)}
-                />
+                {EditIcon}
               </motion.div>
               <motion.div
+                className="text-red-700 text-base"
+                onClick={() => handleDelete("items", item)}
                 whileHover={{
                   scale: 1.5,
                 }}
@@ -85,10 +84,7 @@ export default function Item({ categoryId, parentId, childId, item }) {
                   scale: 1,
                 }}
               >
-                <DeleteOutlined
-                  className="text-red-700 text-base"
-                  onClick={() => handleDelete("items", item)}
-                />
+                {DeleteIcon}
               </motion.div>
             </div>
           </td>

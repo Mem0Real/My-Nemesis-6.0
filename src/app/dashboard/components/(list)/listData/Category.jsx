@@ -9,18 +9,16 @@ import { useDataContext } from "../List";
 import { useTableContext } from "../ListTable";
 
 import { motion } from "framer-motion";
-import {
-  RightOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+
+import { useIcons } from "@/app/utils/CustomIcons";
 
 export default function Category({ category }) {
   const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
   const { catDropDown, cat } = useTableContext();
 
   const parents = data[1];
+
+  const { RightArrowIcon, PlusIcon, EditIcon, DeleteIcon } = useIcons();
 
   const toggleExpander = () => {
     catDropDown(category.id);
@@ -39,13 +37,15 @@ export default function Category({ category }) {
           className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
           onClick={toggleExpander}
         >
-          <RightOutlined
+          <span
             className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
               cat.id === category.id && cat.open === true
                 ? "rotate-90 translate-x-0.5 translate-y-0.5"
                 : ""
             }`}
-          />
+          >
+            {RightArrowIcon}
+          </span>
           <motion.div whileHover={{ scale: 1.02 }}>
             <Link
               className="hover:underline underline-offset-4 z-10"
@@ -67,42 +67,41 @@ export default function Category({ category }) {
         <div className="flex items-center justify-center gap-3">
           <motion.div
             whileHover={{
-              scale: 1.5,
+              scale: 1.3,
             }}
             whileTap={{
               scale: 1,
             }}
+            className="text-green-700 text-base"
+            onClick={() => handleAdd("parents", category.id)}
           >
-            <PlusOutlined
-              className="text-green-700 text-base"
-              onClick={() => handleAdd("parents", category.id)}
-            />
+            {PlusIcon}
           </motion.div>
+
           <motion.div
+            className="text-blue-700 text-base"
+            onClick={() => handleEdit("categories", category)}
             whileHover={{
-              scale: 1.5,
+              scale: 1.3,
             }}
             whileTap={{
               scale: 1,
             }}
           >
-            <EditOutlined
-              className="text-blue-700 text-base"
-              onClick={() => handleEdit("categories", category)}
-            />
+            {EditIcon}
           </motion.div>
+
           <motion.div
+            className="text-red-700 text-base"
+            onClick={() => handleDelete("categories", category)}
             whileHover={{
-              scale: 1.5,
+              scale: 1.3,
             }}
             whileTap={{
               scale: 1,
             }}
           >
-            <DeleteOutlined
-              className="text-red-700 text-base"
-              onClick={() => handleDelete("categories", category)}
-            />
+            {DeleteIcon}
           </motion.div>
         </div>
       </td>

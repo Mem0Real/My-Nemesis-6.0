@@ -9,12 +9,7 @@ import { useOrderDataContext } from "../Order";
 
 import { AnimatePresence, motion } from "framer-motion";
 
-import {
-  RightOutlined,
-  CheckCircleOutlined,
-  CloseCircleOutlined,
-  LoadingOutlined,
-} from "@ant-design/icons";
+import { useIcons } from "@/app/utils/CustomIcons";
 import { toast } from "react-hot-toast";
 
 export default function Customer({ customer }) {
@@ -24,6 +19,14 @@ export default function Customer({ customer }) {
   const { order, markDelivered } = useOrderDataContext();
   const { customerDropDown, cus, handleRemove, removeLoading } =
     useOrderContext();
+
+  const {
+    RightArrowIcon,
+    NotDeliveredIcon,
+    DeliveredIcon,
+    DeleteIcon,
+    LoadingIcon,
+  } = useIcons();
 
   const orders = order[1];
 
@@ -85,12 +88,10 @@ export default function Customer({ customer }) {
     deliveredCheck: {
       color: "rgb(10 190 40)",
       opacity: 0.6,
-      cursor: "not-allowed",
     },
     notDeliveredCheck: {
       color: "rgb(21 128 61)",
       opacity: 1,
-      cursor: "pointer",
     },
     deliveredRemove: {
       color: "rgb(240 48 48)",
@@ -124,13 +125,15 @@ export default function Customer({ customer }) {
           className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
           onClick={toggleExpander}
         >
-          <RightOutlined
+          <span
             className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
               cus?.id === customer.id && cus?.open === true
                 ? "rotate-90 translate-x-0.5 translate-y-0.5"
                 : ""
             }`}
-          />
+          >
+            {RightArrowIcon}
+          </span>
           {customer.name}
         </div>
       </motion.td>
@@ -150,28 +153,54 @@ export default function Customer({ customer }) {
             }
             variants={variants}
             whileHover={
-              !customer.delivered && {
+              !customer.delivered ||
+              (!deliverLoading && {
                 scale: 1.2,
                 textShadow: "4px 0px 0px black",
-              }
+              })
             }
             whileTap={
-              !customer.delivered && { scale: 0.9, cursor: "not-allowed" }
+              !customer.delivered || (!deliverLoading && { scale: 0.9 })
             }
           >
-            {deliverLoading ? (
-              <LoadingOutlined
-                className={`text-xl pb-2 text-green-600`}
-                disabled
-              />
-            ) : (
-              <CheckCircleOutlined
-                className={`text-lg md:text-xl lg:text-2xl pb-2`}
-                onClick={() =>
-                  handleDeliver("customers", customer.id, customer.delivered)
-                }
-              />
-            )}
+            <AnimatePresence>
+              {deliverLoading ? (
+                <motion.div
+                  key="loader"
+                  className={`text-green-600 w-fit`}
+                  disabled
+                  animate={{
+                    x: 0,
+                    rotate: 360,
+                  }}
+                  transition={{
+                    ease: "linear",
+                    duration: 1,
+                    repeat: Infinity,
+                  }}
+                >
+                  {LoadingIcon}
+                </motion.div>
+              ) : customer.delivered ? (
+                <span
+                  className={`text-lg md:text-xl lg:text-2xl pb-2 cursor-pointer`}
+                  onClick={() =>
+                    handleDeliver("customers", customer.id, customer.delivered)
+                  }
+                >
+                  {DeliveredIcon}
+                </span>
+              ) : (
+                <span
+                  className={`text-lg md:text-xl lg:text-2xl pb-2 cursor-pointer`}
+                  onClick={() =>
+                    handleDeliver("customers", customer.id, customer.delivered)
+                  }
+                >
+                  {NotDeliveredIcon}
+                </span>
+              )}
+            </AnimatePresence>
           </motion.div>
           <motion.div
             whileHover={{
@@ -180,21 +209,49 @@ export default function Customer({ customer }) {
             }}
             whileTap={{ scale: 0.9 }}
           >
-            {removeLoading &&
-            removeLoading.id === customer.id &&
-            removeLoading.loading ? (
-              <LoadingOutlined
-                className={`text-xl pb-2 text-red-600/90`}
-                disabled
-              />
-            ) : (
-              <CloseCircleOutlined
-                className="text-lg md:text-xl lg:text-2xl pb-2 text-red-600/90"
-                onClick={() => handleRemove(customer.id)}
-              />
-            )}
+            <AnimatePresence>
+              {removeLoading &&
+              removeLoading.id === customer.id &&
+              removeLoading.loading ? (
+                <motion.div
+                  className={`text-red-600/90 cursor-pointer`}
+                  disabled
+                  animate={{
+                    x: 0,
+                    rotate: 360,
+                  }}
+                  transition={{
+                    ease: "linear",
+                    duration: 1,
+                    repeat: Infinity,
+                  }}
+                  whileHover={{ scale: 1 }}
+                  whileTap={{ scale: 1 }}
+                >
+                  {LoadingIcon}
+                </motion.div>
+              ) : (
+                <span
+                  className="text-lg md:text-xl lg:text-2xl pb-2 text-red-600/90 cursor-pointer"
+                  onClick={() => handleRemove(customer.id)}
+                >
+                  {DeleteIcon}
+                </span>
+              )}
+            </AnimatePresence>
           </motion.div>
         </div>
+        {/* <AnimatePresence>
+          <motion.div
+            key="loader"
+            className={`text-xl text-green-600 w-fit`}
+            disabled
+            animate={{ x: 0, rotate: 360 }}
+            transition={{ ease: "linear", duration: 2, repeat: Infinity }}
+          >
+            {LoadingIcon}
+          </motion.div>
+        </AnimatePresence> */}
       </td>
     </motion.tr>,
     <AnimatePresence key={customer.id + "orders"}>

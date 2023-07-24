@@ -25,7 +25,11 @@ export const ThemeSwitcher = () => {
         whileTap={{ scale: 2, opacity: 0 }}
         initial={{ opacity: 0 }}
       >
-        {theme === "light" ? DarkIcon : LightIcon}
+        {theme === "light" ? (
+          <span className="text-blue-950">{DarkIcon}</span>
+        ) : (
+          <span className="text-yellow-500">{LightIcon}</span>
+        )}
       </motion.button>
     </AnimatePresence>
   );

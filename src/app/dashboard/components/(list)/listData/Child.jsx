@@ -9,18 +9,16 @@ import { useTableContext } from "../ListTable";
 import Item from "./Item";
 
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  RightOutlined,
-  DeleteOutlined,
-  EditOutlined,
-  PlusOutlined,
-} from "@ant-design/icons";
+
+import { useIcons } from "@/app/utils/CustomIcons";
 
 export default function Child({ categoryId, parentId, child }) {
   const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
   const { par, childDropDown, chi } = useTableContext();
 
   const items = data[3];
+
+  const { RightArrowIcon, PlusIcon, EditIcon, DeleteIcon } = useIcons();
 
   const toggleExpander = () => {
     childDropDown(child.id);
@@ -55,13 +53,15 @@ export default function Child({ categoryId, parentId, child }) {
               className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
               onClick={toggleExpander}
             >
-              <RightOutlined
+              <span
                 className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
                   chi.id === child.id && chi.open === true
                     ? "rotate-90 translate-x-0.5 translate-y-0.5"
                     : ""
                 }`}
-              />
+              >
+                {RightArrowIcon}
+              </span>
               <Link
                 className="hover:underline underline-offset-4 z-10"
                 href={`collection/${categoryId}/${parentId}/${child.id}`}
@@ -77,6 +77,10 @@ export default function Child({ categoryId, parentId, child }) {
           <td>
             <div className="flex items-center justify-center gap-3">
               <motion.div
+                className="text-green-700 text-base"
+                onClick={() =>
+                  handleAdd("items", categoryId, parentId, child.id)
+                }
                 whileHover={{
                   scale: 1.5,
                 }}
@@ -84,14 +88,11 @@ export default function Child({ categoryId, parentId, child }) {
                   scale: 1,
                 }}
               >
-                <PlusOutlined
-                  className="text-green-700 text-base"
-                  onClick={() =>
-                    handleAdd("items", categoryId, parentId, child.id)
-                  }
-                />
+                {PlusIcon}
               </motion.div>
               <motion.div
+                className="text-blue-700 text-base"
+                onClick={() => handleEdit("children", child)}
                 whileHover={{
                   scale: 1.5,
                 }}
@@ -99,12 +100,11 @@ export default function Child({ categoryId, parentId, child }) {
                   scale: 1,
                 }}
               >
-                <EditOutlined
-                  className="text-blue-700 text-base"
-                  onClick={() => handleEdit("children", child)}
-                />
+                {EditIcon}
               </motion.div>
               <motion.div
+                className="text-red-700 text-base"
+                onClick={() => handleDelete("children", child)}
                 whileHover={{
                   scale: 1.5,
                 }}
@@ -112,10 +112,7 @@ export default function Child({ categoryId, parentId, child }) {
                   scale: 1,
                 }}
               >
-                <DeleteOutlined
-                  className="text-red-700 text-base"
-                  onClick={() => handleDelete("children", child)}
-                />
+                {DeleteIcon}
               </motion.div>
             </div>
           </td>

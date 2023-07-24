@@ -10,8 +10,8 @@ import Parents from "./(searchData)/Parents";
 import Children from "./(searchData)/Children";
 import Items from "./(searchData)/Items";
 
-import { SearchOutlined } from "@ant-design/icons";
 import { motion, AnimatePresence } from "framer-motion";
+import { useIcons } from "@/app/utils/CustomIcons";
 
 const SearchDataContext = createContext({});
 
@@ -25,6 +25,8 @@ export default function SearchModal({ searchModal, closeSearch }) {
 
   const router = useRouter();
   const modalRef = useRef();
+
+  const { SearchIcon } = useIcons();
 
   useEffect(() => {
     if (searchModal) {
@@ -152,10 +154,12 @@ export default function SearchModal({ searchModal, closeSearch }) {
           <span className="sr-only">Close modal</span>
         </button>
         <div className="relative flex items-center w-[90%] mx-auto">
-          <SearchOutlined
+          <div
             className="absolute left-0 top-0 bottom-0 grid place-content-center"
             onClick={handleSubmit}
-          />
+          >
+            {SearchIcon}
+          </div>
           <div className="w-full border-b border-neutral-600/60">
             <input
               autoFocus={searchModal}

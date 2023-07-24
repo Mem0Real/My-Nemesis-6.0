@@ -14,6 +14,7 @@ import { setCookie, parseCookies } from "nookies";
 import { motion, AnimatePresence } from "framer-motion";
 import { Poppins, Raleway } from "next/font/google";
 import { useSearchContext } from "../search/SearchBase";
+import { useIcons } from "../utils/CustomIcons";
 
 const FunctionsContext = createContext({});
 
@@ -37,6 +38,8 @@ export default function NavComponents({ session }) {
   const menuRef = useRef();
   const router = useRouter();
   const cookieStore = parseCookies();
+
+  const { SearchIcon, CartIcon } = useIcons();
 
   useEffect(() => {
     let handler = (e) => {
@@ -67,26 +70,16 @@ export default function NavComponents({ session }) {
       {/* Buttons */}
       <div className="hidden md:flex justify-between items-center">
         {/* <SearchInput /> */}
-        <div
+        <button
           className="relative flex-initial mr-4 flex items-center cursor-pointer justify-end py-2 rounded-md outline outline-1 hover:outline-2outline-neutral-800 text-zinc-800 bg-zinc-200 dark:outline-neutral-200 w-40 dark:text-zinc-200 dark:bg-zinc-800"
           onClick={handleSearch}
         >
           <p className="md:pr-2 lg:pr-4">Search Products...</p>
           <div className="text-lg absolute left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-800 dark:text-neutral-200">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-search"
-              viewBox="0 0 16 16"
-            >
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-            </svg>
+            {SearchIcon}
           </div>
-        </div>
+        </button>
         <div className="flex justify-end items-center gap-2 md:gap-7 lg:gap-10">
-          {/* <DarkToggle /> */}
           <ThemeSwitcher />
 
           <Link href="/collection">
@@ -109,29 +102,22 @@ export default function NavComponents({ session }) {
               Dashboard
             </div>
           </Link>
-          <div
+          <button
             className={`border-red-800 px-2 py-1 rounded-md cursor-pointer transition-all ease-in-out border-b shadow-sm shadow-red-800/70 hover:shadow-red-500/70 ${
               !session && "hidden"
             }`}
             onClick={handleSignOut}
           >
             Logout
-          </div>
+          </button>
 
           <div className="relative">
-            <span onClick={openCartModal} className="cursor-pointer text-lg">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-cart"
-                viewBox="0 0 16 16"
-              >
-                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-              </svg>
-            </span>
-
+            <button
+              onClick={openCartModal}
+              className="cursor-pointer flex flex-col items-end"
+            >
+              {CartIcon}
+            </button>
             <div
               className={`absolute w-1.2 h-1.2 -top-1 -right-1 bg-red-600 rounded-full p-1 ${
                 !newCart && "hidden"
@@ -149,30 +135,12 @@ export default function NavComponents({ session }) {
           onClick={handleSearch}
           className="text-lg text-neutral-800 dark:text-neutral-200"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="16"
-            height="16"
-            fill="currentColor"
-            className="bi bi-search"
-            viewBox="0 0 16 16"
-          >
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
-          </svg>
+          {SearchIcon}
         </button>
         <div className="relative">
-          <span onClick={openCartModal} className="cursor-pointer text-lg">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="16"
-              height="16"
-              fill="currentColor"
-              className="bi bi-cart"
-              viewBox="0 0 16 16"
-            >
-              <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-            </svg>
-          </span>
+          <button onClick={openCartModal} className="cursor-pointer text-lg">
+            {CartIcon}
+          </button>
           <div
             className={`absolute w-1.2 h-1.2 -top-1 -right-1 bg-red-600 rounded-full p-1 ${
               !newCart && "hidden"

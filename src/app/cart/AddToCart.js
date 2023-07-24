@@ -5,7 +5,6 @@ import { useIcons } from "../utils/CustomIcons";
 
 import { setCookie, parseCookies } from "nookies";
 
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 
 export default function AddToCartModal({
@@ -150,9 +149,10 @@ export default function AddToCartModal({
             onClick={handleMinus}
             type="button"
             disabled={amount === 1}
-            className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed flex flex-col items-center w-full h-full"
+            className="text-neutral-800 dark:text-neutral-200 disabled:text-neutral-600 disabled:dark:text-neutral-400 disabled:hover:cursor-not-allowed flex flex-col items-center w-full h-full"
           >
-            <MinusOutlined className="self-center" />
+            {/* <MinusOutlined className="self-center" /> */}
+            {MinusIcon}
           </button>
           <input
             type="number"
@@ -169,9 +169,10 @@ export default function AddToCartModal({
             onClick={handlePlus}
             type="button"
             disabled={amount === item.quantity}
-            className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed flex flex-col items-center w-full h-full"
+            className="text-neutral-800 dark:text-neutral-200 disabled:text-neutral-600 disabled:dark:text-neutral-400 disabled:hover:cursor-not-allowed flex flex-col items-center w-full h-full"
           >
-            <PlusOutlined className="self-center" />
+            {/* <PlusOutlined className="self-center" /> */}
+            {PlusIcon}
           </button>
         </div>
         <div className="py-5 flex flex-col justify-center items-center gap-5">
