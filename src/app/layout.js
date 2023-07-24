@@ -1,7 +1,9 @@
+import "./globals.css";
+
+import { Suspense } from "react";
+
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-
-import "./globals.css";
 
 import ProductDataContext from "@/context/productContext";
 import { NextAuthProvider } from "../context/sessionContext";
@@ -11,6 +13,7 @@ import { ThemeProvider } from "@/context/theme-provider";
 import CartBase from "./cart/CartBase";
 import SearchBase from "./search/SearchBase";
 import CustomIcons from "./utils/CustomIcons";
+import SideBarBase from "./sidebar/SideBarBase";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -33,6 +36,13 @@ export default function RootLayout({ children }) {
                       <Navbar />
                     </SearchBase>
                   </CartBase>
+                  <div className="relative">
+                    <SideBarBase>
+                      <Suspense>
+                        <SideBarBase />
+                      </Suspense>
+                    </SideBarBase>
+                  </div>
                   <div className={`min-h-screen`}>{children}</div>
                   <div className="w-full">
                     <Footer />
