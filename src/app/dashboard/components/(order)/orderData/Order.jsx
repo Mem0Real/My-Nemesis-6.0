@@ -3,10 +3,12 @@
 import React from "react";
 import { useOrderContext } from "../OrderTable";
 import { AnimatePresence, motion } from "framer-motion";
+import { useIcons } from "@/app/utils/CustomIcons";
 
 // TODO price isn't calculated with vat so that should be fixed
 export default function Order({ customerId, currentOrder }) {
   const { cus } = useOrderContext();
+  const { BagIcon } = useIcons();
 
   const variants = {
     open: {
@@ -40,7 +42,10 @@ export default function Order({ customerId, currentOrder }) {
           whileHover={{ backgroundColor: "#999" }}
         >
           <td className="py-2 max-w-md text-center">
-            {currentOrder.productName}
+            <div className="flex items-center justify-center gap-2">
+              {BagIcon}
+              {currentOrder.productName}
+            </div>
           </td>
           <td className="py-2 max-w-md text-center">
             {currentOrder.orderedQuantity}

@@ -11,6 +11,8 @@ import { parseCookies } from "nookies";
 import { motion, AnimatePresence } from "framer-motion";
 const AddToCartModal = dynamic(() => import("@/app/cart/AddToCart"));
 
+// TODO skip the add to cart modal and directly apply item to cart
+
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [modal, showModal] = useState(false);

@@ -29,6 +29,7 @@ const raleway = Raleway({
   display: "swap",
 });
 
+// TODO should create a loading status bar
 export default function NavComponents({ session }) {
   const [isOpen, setIsOpen] = useState(false);
 

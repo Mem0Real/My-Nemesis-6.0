@@ -13,6 +13,7 @@ import OrderTable from "./OrderTable";
 const RemoveAllModal = dynamic(() => import("./RemoveAll"));
 
 const OrderDataContext = createContext({});
+
 import { motion, AnimatePresence } from "framer-motion";
 import { setCookie, parseCookies } from "nookies";
 

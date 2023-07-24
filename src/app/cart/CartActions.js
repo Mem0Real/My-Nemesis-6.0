@@ -28,7 +28,7 @@ export async function sendOrder(user, cartList, orderTotalPrice) {
     remainingQuantity: item.quantity - item.amount,
   }));
 
-  // TODO should update the quantity of purchased goods if user selects same product with different amount
+  // TODO should update the quantity of purchased goods if user selects same product with different amount and is not delivered
   const createCustomer = async () => {
     try {
       await prisma.customers.upsert({

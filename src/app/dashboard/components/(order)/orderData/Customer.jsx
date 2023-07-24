@@ -241,17 +241,6 @@ export default function Customer({ customer }) {
             </AnimatePresence>
           </motion.div>
         </div>
-        {/* <AnimatePresence>
-          <motion.div
-            key="loader"
-            className={`text-xl text-green-600 w-fit`}
-            disabled
-            animate={{ x: 0, rotate: 360 }}
-            transition={{ ease: "linear", duration: 2, repeat: Infinity }}
-          >
-            {LoadingIcon}
-          </motion.div>
-        </AnimatePresence> */}
       </td>
     </motion.tr>,
     <AnimatePresence key={customer.id + "orders"}>
