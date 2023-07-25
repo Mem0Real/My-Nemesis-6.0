@@ -39,7 +39,6 @@ export default function SideBarComponent({ data }) {
 
   const buttonVariants = {
     open: {
-      top: 0,
       right: 0,
       rotate: -180,
       borderLeftWidth: "1px",
@@ -50,7 +49,6 @@ export default function SideBarComponent({ data }) {
       },
     },
     close: {
-      // top: 0,
       right: -30,
       rotate: 0,
       transition: {
@@ -175,7 +173,7 @@ export default function SideBarComponent({ data }) {
           setOpenParent((prev) => ({ ...prev, open: true }));
         }
       } else {
-        setOpenParent(() => ({ id: id, open: true }));
+        setOpenParent((prev) => ({ id: id, open: true }));
       }
     } else {
       setOpenParent(() => ({ id: id, open: true }));
