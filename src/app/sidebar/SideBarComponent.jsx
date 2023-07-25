@@ -1,23 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useState, createContext, useContext } from "react";
 import { AnimatePresence, motion, useCycle } from "framer-motion";
 import { useIcons } from "../utils/CustomIcons";
 import Link from "next/link";
+import Categories from "./(sidebarData)/Categories";
 
-const links = [
-  { name: "Home", to: "#", id: 1 },
-  { name: "About", to: "#", id: 2 },
-  { name: "Blog", to: "#", id: 3 },
-  { name: "Contact", to: "#", id: 4 },
-];
+const SidebarContext = createContext({});
 
 export default function SideBarComponent({ data }) {
   const [open, cycleOpen] = useCycle(false, true);
 
-  const [openParent, setOpenParent] = useState(false);
-  const [openChild, setOpenChild] = useState(false);
-  const [openProduct, setOpenProduct] = useState(false);
+  const [openParent, setOpenParent] = useState({ id: null, open: false });
+  const [openChild, setOpenChild] = useState({ id: null, open: false });
+  const [openProduct, setOpenProduct] = useState({ id: null, open: false });
 
   const categories = data[0];
   const parents = data[1];
@@ -50,6 +46,21 @@ export default function SideBarComponent({ data }) {
       borderLeftWidth: 0,
       borderRadius: "0 6px 6px 0",
     },
+    opened: {
+      rotate: -90,
+      transition: {
+        ease: "easeInOut",
+        duration: 0.3,
+      },
+    },
+    closed: {
+      rotate: 90,
+      transition: {
+        delay: 0.5,
+        ease: "easeInOut",
+        duration: 0.3,
+      },
+    },
   };
   const sideVariants = {
     closed: {
@@ -71,6 +82,7 @@ export default function SideBarComponent({ data }) {
     },
     open: { opacity: 1 },
   };
+
   const parentSideVariants = {
     closedParent: {
       transition: {
@@ -137,6 +149,55 @@ export default function SideBarComponent({ data }) {
     closeSidebars();
   };
 
+  const toggleParent = (id) => {
+    if (openParent) {
+      if (openParent.id === id) {
+        if (openParent?.open) {
+          setOpenParent((prev) => ({ ...prev, open: false }));
+          setOpenChild(null);
+          setOpenProduct(null);
+        } else {
+          setOpenParent((prev) => ({ ...prev, open: true }));
+        }
+      } else {
+        setOpenParent(() => ({ id: id, open: true }));
+      }
+    } else {
+      setOpenParent(() => ({ id: id, open: true }));
+    }
+  };
+
+  const toggleChild = (id) => {
+    if (openChild) {
+      if (openChild.id === id) {
+        if (openChild?.open) {
+          setOpenChild((prev) => ({ ...prev, open: false }));
+          setOpenProduct(null);
+        } else {
+          setOpenChild((prev) => ({ ...prev, open: true }));
+        }
+      } else {
+        setOpenChild(() => ({ id: id, open: true }));
+      }
+    } else {
+      setOpenChild(() => ({ id: id, open: true }));
+    }
+  };
+
+  const toggleProduct = (id) => {
+    if (openProduct) {
+      if (openProduct.id === id) {
+        openProduct?.open
+          ? setOpenProduct((prev) => ({ ...prev, open: false }))
+          : setOpenProduct((prev) => ({ ...prev, open: true }));
+      } else {
+        setOpenProduct(() => ({ id: id, open: true }));
+      }
+    } else {
+      setOpenProduct(() => ({ id: id, open: true }));
+    }
+  };
+
   const closeSidebars = () => {
     setOpenParent();
     setOpenChild();
@@ -161,226 +222,45 @@ export default function SideBarComponent({ data }) {
     }
   };
   return (
-    <motion.main className="relative flex w-fit h-fit">
-      <motion.div
-        className="btn-container absolute top-3 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 rounded-md border border-neutral-500 pt-1.5 px-1"
-        animate={open ? "open" : "close"}
-        initial="closed"
-        variants={buttonVariants}
-      >
-        <motion.button onClick={toggleSidebar}>{RightArrowIcon}</motion.button>
-      </motion.div>
-      {/* Categories */}
-      <AnimatePresence>
-        {open && (
-          <motion.aside
-            onHoverStart={() => closeChildren("categories")}
-            initial={{ width: 0 }}
-            animate={{ width: 120 }}
-            exit={{
-              width: 0,
-              transition: { delay: 0.5, duration: 0.3 },
-            }}
-            className="bg-neutral-100 dark:bg-neutral-900 border border-neutral-700 dark:border-neutral-500 rounded-xl rounded-l-none min-h-72 h-fit"
-          >
-            <motion.div
-              className="flex flex-col items-start justify-center gap-4"
-              initial="closed"
-              animate="open"
-              exit="closed"
-              variants={sideVariants}
-            >
-              <motion.div
-                whileHover={{ scale: 1.05 }}
-                className="mt-3 self-center"
-                variants={itemVariants}
-              >
-                <Link href="/collection">Browse all</Link>
-              </motion.div>
-              {categories.map(({ id }) => (
-                <motion.div
-                  key={id}
-                  whileHover={{ scale: 1.05 }}
-                  variants={itemVariants}
-                  className=" ps-2 capitalize"
-                  onHoverStart={() => setOpenParent(id)}
-                >
-                  <Link href={`/collection/${id}`}>{id}</Link>
-                </motion.div>
-              ))}
-            </motion.div>
-          </motion.aside>
-        )}
-      </AnimatePresence>
-
-      {/* Parents */}
-      <AnimatePresence>
-        {openParent && (
-          <motion.aside
-            key="parentSb"
-            onHoverStart={() => closeChildren("parents")}
-            initial={{ width: 0 }}
-            animate={
-              openChild
-                ? {
-                    width: 150,
-                    height: "max-content",
-                    borderRightWidth: "0px",
-                    borderTopRightRadius: "0px",
-                    borderBottomRightRadius: "0px",
-                  }
-                : {
-                    width: 150,
-                    height: "max-content",
-                    borderRightWidth: "1px",
-                    borderTopRightRadius: "8px",
-                    borderBottomRightRadius: "8px",
-                  }
-            }
-            exit={{
-              width: 0,
-              transition: { delay: 0.5, duration: 0.3 },
-            }}
-            className="absolute left-[120px] top-3 bg-neutral-100 dark:bg-neutral-900 border border-l-0 border-neutral-700 dark:border-neutral-500 rounded-r-lg h-fit"
-          >
-            <motion.div
-              key="parentContainer"
-              className="flex flex-col items-center justify-start gap-4"
-              initial="closedParent"
-              animate="openParent"
-              exit="closedParent"
-              variants={parentSideVariants}
-            >
-              {parents.map(
-                ({ id, CategoryId }) =>
-                  openParent === CategoryId && (
-                    <motion.div
-                      key={id}
-                      whileHover={{ scale: 1.05 }}
-                      variants={parentItemVariants}
-                      className=" ps-2 capitalize"
-                      onHoverStart={() => setOpenChild(id)}
-                    >
-                      <Link href={`/collection/${CategoryId}/${id}`}>{id}</Link>
-                    </motion.div>
-                  )
-              )}
-            </motion.div>
-          </motion.aside>
-        )}
-      </AnimatePresence>
-
-      {/* Children */}
-      <AnimatePresence>
-        {openChild && (
-          <motion.aside
-            layout
-            onHoverStart={() => closeChildren("children")}
-            key="childSb"
-            initial={{ width: 0 }}
-            animate={
-              openProduct
-                ? {
-                    width: 150,
-                    height: "max-content",
-                    borderRightWidth: "0px",
-                    borderTopRightRadius: "0px",
-                    borderBottomRightRadius: "0px",
-                  }
-                : {
-                    width: 150,
-                    height: "max-content",
-                    borderRightWidth: "1px",
-                    borderTopRightRadius: "8px",
-                    borderBottomRightRadius: "8px",
-                  }
-            }
-            exit={{
-              width: 0,
-              transition: { delay: 0.5, duration: 0.3 },
-              height: 0,
-            }}
-            className="absolute left-[19.3em] top-3 bg-neutral-100 dark:bg-neutral-900 border border-l-0 border-neutral-700 dark:border-neutral-500 h-fit z-20"
-          >
-            <motion.div
-              key="childContainer"
-              className="flex flex-col items-center justify-start gap-4 h-fit"
-              initial="closedChild"
-              animate="openChild"
-              exit="closedChild"
-              variants={childSideVariants}
-            >
-              {children.map(
-                ({ id, ParentId }) =>
-                  openChild === ParentId && (
-                    <motion.div
-                      key={id}
-                      whileHover={{ scale: 1.05 }}
-                      variants={childItemVariants}
-                      className=" ps-2 capitalize"
-                      onHoverStart={() => setOpenProduct(id)}
-                    >
-                      <Link
-                        href={`/collection/${openParent}/${ParentId}/${id}`}
-                      >
-                        {id}
-                      </Link>
-                    </motion.div>
-                  )
-              )}
-            </motion.div>
-          </motion.aside>
-        )}
-      </AnimatePresence>
-
-      {/* Items */}
-      <AnimatePresence>
-        {openProduct && (
-          <motion.aside
-            layout
-            key="productSb"
-            initial={{ width: 0, height: 0 }}
-            animate={{
-              width: 200,
-              height: "max-content",
-              transition: { duration: 0.5 },
-            }}
-            exit={{
-              width: 0,
-              height: 0,
-              transition: { delay: 0.5, duration: 0.3 },
-            }}
-            className="absolute left-[29.8em] top-3 z-10 bg-neutral-100 dark:bg-neutral-900 border border-neutral-700 dark:border-neutral-500 rounded-r-lg py-5 h-max"
-          >
-            <motion.div
-              key="productContainer"
-              className="flex flex-col items-start justify-center gap-4"
-              initial="closedProduct"
-              animate="openProduct"
-              exit="closedProduct"
-              variants={productSideVariants}
-            >
-              {products.map(
-                ({ id, name, ChildId }) =>
-                  openProduct === ChildId && (
-                    <motion.div
-                      key={id}
-                      whileHover={{ scale: 1.05 }}
-                      variants={productItemVariants}
-                      className=" ps-2 capitalize"
-                    >
-                      <Link
-                        href={`/collection/${openParent}/${openChild}/${ChildId}/${id}`}
-                      >
-                        {name}
-                      </Link>
-                    </motion.div>
-                  )
-              )}
-            </motion.div>
-          </motion.aside>
-        )}
-      </AnimatePresence>
-    </motion.main>
+    <SidebarContext.Provider
+      value={{
+        categories,
+        parents,
+        children,
+        products,
+        open,
+        openParent,
+        openChild,
+        openProduct,
+        buttonVariants,
+        sideVariants,
+        itemVariants,
+        parentSideVariants,
+        parentItemVariants,
+        childSideVariants,
+        childItemVariants,
+        productSideVariants,
+        productItemVariants,
+        toggleParent,
+        toggleChild,
+        toggleProduct,
+      }}
+    >
+      <motion.main className="flex flex-col lg:flex">
+        <motion.div
+          className="btn-container absolute top-3 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 rounded-md border border-neutral-500 pt-1.5 px-1"
+          animate={open ? "open" : "close"}
+          initial="close"
+          variants={buttonVariants}
+        >
+          <motion.button onClick={toggleSidebar}>
+            {RightArrowIcon}
+          </motion.button>
+        </motion.div>
+        <Categories />
+      </motion.main>
+    </SidebarContext.Provider>
   );
 }
+
+export const useSidebarContext = () => useContext(SidebarContext);
