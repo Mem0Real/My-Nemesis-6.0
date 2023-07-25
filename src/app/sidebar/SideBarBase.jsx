@@ -16,11 +16,11 @@ async function getData() {
   return data;
 }
 
-export default async function SideBarBase({ children }) {
+export default async function SideBarBase() {
   const data = await getData();
 
   return (
-    <div className="absolute left-0 top-5 z-20">
+    <div className="absolute left-0 top-0 z-20">
       <SideBarComponent data={data} />
     </div>
   );

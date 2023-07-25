@@ -12,6 +12,7 @@ export default function Products({ category, parent, child }) {
     openProduct,
     productSideVariants,
     productItemVariants,
+    closeSidebars,
   } = useSidebarContext();
   return (
     <AnimatePresence>

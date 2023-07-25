@@ -10,18 +10,19 @@ import Parents from "./Parents";
 export default function Categories() {
   const {
     categories,
-    open,
+    openCategory,
     openParent,
     buttonVariants,
     sideVariants,
     itemVariants,
     toggleParent,
+    closeSidebars,
   } = useSidebarContext();
   const { RightArrowIcon } = useIcons();
 
   return (
     <AnimatePresence>
-      {open && (
+      {openCategory && (
         <motion.aside
           initial={{ width: 0 }}
           animate={{ width: 200 }}

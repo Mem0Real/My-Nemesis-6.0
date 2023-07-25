@@ -37,11 +37,9 @@ export default function RootLayout({ children }) {
                     </SearchBase>
                   </CartBase>
                   <div className="relative text-sm text-neutral-800 dark:text-neutral-200">
-                    <SideBarBase>
-                      <Suspense>
-                        <SideBarBase />
-                      </Suspense>
-                    </SideBarBase>
+                    <Suspense>
+                      <SideBarBase />
+                    </Suspense>
                   </div>
                   <div className={`min-h-screen`}>{children}</div>
                   <div className="w-full">

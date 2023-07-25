@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, createContext, useContext } from "react";
-import { AnimatePresence, motion, useCycle } from "framer-motion";
+import { useState, useEffect, createContext, useContext, useRef } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { useIcons } from "../utils/CustomIcons";
 import Link from "next/link";
 import Categories from "./(sidebarData)/Categories";
@@ -9,7 +9,22 @@ import Categories from "./(sidebarData)/Categories";
 const SidebarContext = createContext({});
 
 export default function SideBarComponent({ data }) {
-  const [open, cycleOpen] = useCycle(false, true);
+  // const [open, cycleOpen] = useCycle(false, true);
+  const [openCategory, setOpenCategory] = useState(false);
+
+  const sideBarRef = useRef();
+
+  useEffect(() => {
+    let handler = (e) => {
+      if (!sideBarRef.current.contains(e.target)) {
+        setOpenCategory(() => false);
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
 
   const [openParent, setOpenParent] = useState({ id: null, open: false });
   const [openChild, setOpenChild] = useState({ id: null, open: false });
@@ -24,7 +39,7 @@ export default function SideBarComponent({ data }) {
 
   const buttonVariants = {
     open: {
-      top: -20,
+      top: 0,
       right: 0,
       rotate: -180,
       borderLeftWidth: "1px",
@@ -35,7 +50,7 @@ export default function SideBarComponent({ data }) {
       },
     },
     close: {
-      top: 0,
+      // top: 0,
       right: -30,
       rotate: 0,
       transition: {
@@ -144,8 +159,8 @@ export default function SideBarComponent({ data }) {
     openProduct: { opacity: 1 },
   };
 
-  const toggleSidebar = () => {
-    cycleOpen();
+  const toggleCategory = () => {
+    setOpenCategory((prev) => !prev);
     closeSidebars();
   };
 
@@ -228,7 +243,7 @@ export default function SideBarComponent({ data }) {
         parents,
         children,
         products,
-        open,
+        openCategory,
         openParent,
         openChild,
         openProduct,
@@ -244,16 +259,20 @@ export default function SideBarComponent({ data }) {
         toggleParent,
         toggleChild,
         toggleProduct,
+        closeSidebars,
       }}
     >
-      <motion.main className="flex flex-col lg:flex">
+      <motion.main
+        className="flex flex-col lg:flex items-start"
+        ref={sideBarRef}
+      >
         <motion.div
-          className="btn-container absolute top-3 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 rounded-md border border-neutral-500 pt-1.5 px-1"
-          animate={open ? "open" : "close"}
+          className="btn-container absolute top-0 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 rounded-md border border-neutral-500 pt-1.5 px-1"
+          animate={openCategory ? "open" : "close"}
           initial="close"
           variants={buttonVariants}
         >
-          <motion.button onClick={toggleSidebar}>
+          <motion.button onClick={toggleCategory}>
             {RightArrowIcon}
           </motion.button>
         </motion.div>
