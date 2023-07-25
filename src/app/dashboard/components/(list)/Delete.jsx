@@ -39,14 +39,14 @@ export default function DeleteModal({
 
   return (
     <section
-      className="my-auto w-[80%] md:w-[65%] lg:w-[40%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-900"
+      className="my-auto w-[80%] md:w-[65%] lg:w-[40%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-300 dark:bg-neutral-900 "
       ref={modalRef}
     >
       <header className="p-4 relative">
         <button
           name="close-delete-modal"
           type="button"
-          className="absolute top-5 right-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+          className="absolute top-5 right-5 text-neutral-800 dark:text-neutral-200 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
           data-modal-hide="authentication-modal"
           onClick={() => closeDeleteModal()}
         >
@@ -69,20 +69,22 @@ export default function DeleteModal({
           {`Remove ${deleteData?.data?.id}?`}
         </h3>
       </header>
-      <div className="text-center text-white w-full">
+      <div className="text-center text-neutral-800 dark:text-neutral-200 w-full">
         <div
           id="alert-dialog-description"
           className="py-5 flex flex-col items-center justify-between gap-5"
         >
-          <span className="text-md w-full border-y text-center py-3 ">
+          <span className="text-md w-full border-y border-neutral-800 dark:border-neutral-200 text-center py-3 ">
             This Action is Irreversible !
           </span>
-          <span className="text-white">
+          <span className="text-neutral-800 dark:text-neutral-200">
             If you proceed, the <b>selected item</b> as well as
             <b> all of it&apos;s children</b> will be removed from the database
             permanently.
           </span>
-          <span className="font-semibold text-white">Proceed with Caution</span>
+          <span className="font-semibold text-neutral-800 dark:text-neutral-200">
+            Proceed with Caution
+          </span>
         </div>
       </div>
       <footer className=" flex justify-center items-center gap-6 py-2">

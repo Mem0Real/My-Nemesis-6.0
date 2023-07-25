@@ -11,6 +11,7 @@ import Category from "./listData/Category";
 
 const TableContext = createContext({});
 
+// TODO if entry is empty show empty data or smtn
 export default function MyTable() {
   const { data } = useDataContext();
 
