@@ -27,50 +27,60 @@ export default function Parent({ categoryId, parent }) {
 
   const variants = {
     open: {
-      y: "10px",
       opacity: 1,
     },
-    closed: {
-      y: "-10px",
+    close: {
       opacity: 0,
+    },
+  };
+
+  const buttonVariants = {
+    open: {
+      rotate: 90,
+      x: 0.5,
+      y: 0.5,
+    },
+    close: {
+      rotate: 0,
+      x: 0,
+      y: 0,
     },
   };
   return [
     <AnimatePresence key={parent.id}>
       {cat.id === categoryId && cat.open === true && (
         <motion.tr
-          key={parent.id}
           animate={
-            cat.id === categoryId && cat.open === true ? "open" : "closed"
+            cat.id === categoryId && cat.open === true ? "open" : "close"
           }
           variants={variants}
-          exit={"closed"}
-          className={`cursor-pointer bg-neutral-400/40 ${
+          exit={"close"}
+          className={`cursor-pointer bg-neutral-300 dark:bg-neutral-700 hover:bg-neutral-400 dark:hover:bg-neutral-600 ${
             par.id === parent.id && par.open === true && "font-semibold"
           }`}
-          whileHover={{ backgroundColor: "#888" }}
         >
-          <td className="py-4">
-            <div
-              className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
-              onClick={toggleExpander}
-            >
-              <span
-                className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
-                  par.id === parent.id && par.open === true
-                    ? "rotate-90 translate-x-0.5 translate-y-0.5"
-                    : ""
-                }`}
+          <td className="py-3" onClick={toggleExpander}>
+            <div className="list-outside flex items-center gap-3">
+              <motion.div
+                className={`text-sm text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 hover:dark:text-neutral-400 `}
+                initial="close"
+                animate={
+                  par.id === parent.id && par.open === true ? "open" : "close"
+                }
+                exit="close"
+                variants={buttonVariants}
               >
                 {RightArrowIcon}
-              </span>
-              <Link
-                className="hover:underline underline-offset-4 z-10"
-                href={`collection/${categoryId}/${parent.id}`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {parent.name}
-              </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.02 }}>
+                <Link
+                  className="hover:underline underline-offset-4 z-10"
+                  href={`collection/${categoryId}/${parent.id}`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {parent.name}
+                </Link>
+              </motion.div>
             </div>
           </td>
           <td

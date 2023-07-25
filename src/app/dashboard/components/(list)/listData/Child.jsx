@@ -26,15 +26,25 @@ export default function Child({ categoryId, parentId, child }) {
 
   const variants = {
     open: {
-      y: "10px",
       opacity: 1,
     },
     closed: {
-      y: "-10px",
       opacity: 0,
     },
   };
 
+  const buttonVariants = {
+    open: {
+      rotate: 90,
+      x: 0.5,
+      y: 0.5,
+    },
+    close: {
+      rotate: 0,
+      x: 0,
+      y: 0,
+    },
+  };
   return [
     <AnimatePresence key={child.id}>
       {par.id === parentId && par.open === true && (
@@ -43,32 +53,35 @@ export default function Child({ categoryId, parentId, child }) {
           animate={par.id === parentId && par.open === true ? "open" : "closed"}
           variants={variants}
           exit={"closed"}
-          className={`cursor-pointer bg-neutral-400/90 ${
+          className={`cursor-pointer bg-neutral-400 dark:bg-neutral-600 hover:bg-neutral-500 dark:hover:bg-neutral-500 ${
             chi.id === child.id && chi.open === true && "font-semibold"
           }`}
-          whileHover={{ backgroundColor: "#777" }}
         >
-          <td className="py-3">
+          <td className="py-4" onClick={toggleExpander}>
             <div
-              className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
+              className="list-outside flex items-center gap-3"
               onClick={toggleExpander}
             >
-              <span
-                className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
-                  chi.id === child.id && chi.open === true
-                    ? "rotate-90 translate-x-0.5 translate-y-0.5"
-                    : ""
-                }`}
+              <motion.div
+                className={`text-sm text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 hover:dark:text-neutral-400`}
+                initial="close"
+                animate={
+                  chi.id === child.id && chi.open === true ? "open" : "close"
+                }
+                exit="close"
+                variants={buttonVariants}
               >
                 {RightArrowIcon}
-              </span>
-              <Link
-                className="hover:underline underline-offset-4 z-10"
-                href={`collection/${categoryId}/${parentId}/${child.id}`}
-                onClick={(e) => e.stopPropagation()}
-              >
-                {child.name}
-              </Link>
+              </motion.div>
+              <motion.div whileHover={{ scale: 1.02 }}>
+                <Link
+                  className="hover:underline underline-offset-4 z-10"
+                  href={`collection/${categoryId}/${parentId}/${child.id}`}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {child.name}
+                </Link>{" "}
+              </motion.div>
             </div>
           </td>
           <td className="pl-6 py-3" onClick={toggleExpander}>
@@ -128,7 +141,7 @@ export default function Child({ categoryId, parentId, child }) {
           exit={"closed"}
         >
           <td colSpan={3}>
-            <div className="mx-auto mt-5 rounded-3xl border-2 border-neutral-700 overflow-auto">
+            <div className="mx-auto mt-5 rounded-xl overflow-auto overflow-y-hidden no-scrollbar">
               <table
                 className="table-fixed w-full"
                 border={2}
@@ -136,25 +149,25 @@ export default function Child({ categoryId, parentId, child }) {
               >
                 <thead>
                   <tr>
-                    <th className="text-center border border-black py-2 w-36 md:w-40 lg:w-36">
+                    <th className="text-center border border-black dark:border-white py-2 w-36 md:w-40 lg:w-36">
                       Name
                     </th>
-                    <th className="text-center border border-black py-2 w-64 md:w-80 lg:w-96">
+                    <th className="text-center border border-black dark:border-white py-2 w-64 md:w-80 lg:w-96">
                       Description
                     </th>
-                    <th className="text-center border border-black py-2 w-24">
+                    <th className="text-center border border-black dark:border-white py-2 w-24">
                       Brand
                     </th>
-                    <th className="text-center border border-black py-2 w-24">
+                    <th className="text-center border border-black dark:border-white py-2 w-24">
                       Model
                     </th>
-                    <th className="text-center border border-black py-2 w-24 md:w-24 lg:w-24">
+                    <th className="text-center border border-black dark:border-white py-2 w-24 md:w-24 lg:w-24">
                       Qunatity
                     </th>
-                    <th className="text-center border border-black py-2 w-24 md:w-24 lg:w-24">
+                    <th className="text-center border border-black dark:border-white py-2 w-24 md:w-24 lg:w-24">
                       Price
                     </th>
-                    <th className="w-20 md:w-14 lg:w-20 border border-black" />
+                    <th className="w-20 md:w-14 lg:w-20 border border-black dark:border-white" />
                   </tr>
                 </thead>
                 <tbody>

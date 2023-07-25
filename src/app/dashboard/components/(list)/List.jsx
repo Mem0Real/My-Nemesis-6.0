@@ -116,7 +116,7 @@ export default function List({ data, create, update, deleteItem, url }) {
     <DataContext.Provider
       value={{ handleAdd, handleEdit, handleDelete, data, url }}
     >
-      <div className="flex-flex-col w-full items-center justify-center relative bg-neutral-300 text-neutral-800 md:mt-6">
+      <div className="flex-flex-col w-full items-center justify-center relative bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 md:mt-6">
         <h1 className="text-xl font-mono font-thin mt-2 underline underline-offset-4 text-center">
           Category list
         </h1>
@@ -128,7 +128,7 @@ export default function List({ data, create, update, deleteItem, url }) {
           <div className="flex flex-col w-full justify-center items-center md:mt-3">
             <motion.button
               key="addCategory"
-              className="px-3 py-2 rounded-md bg-green-900 text-neutral-200"
+              className="px-3 py-2 rounded-md bg-green-900 text-neutral-800 dark:text-neutral-200"
               whileTap={{
                 scale: 0.9,
               }}
@@ -153,7 +153,7 @@ export default function List({ data, create, update, deleteItem, url }) {
             animate={addModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-30 bg-white/70 dark:bg-black/70 backdrop-blur-sm  flex ${
               addModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
@@ -176,7 +176,7 @@ export default function List({ data, create, update, deleteItem, url }) {
             animate={editModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-30 bg-white/70 dark:bg-black/70 backdrop-blur-sm flex ${
               editModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
@@ -199,7 +199,7 @@ export default function List({ data, create, update, deleteItem, url }) {
             animate={deleteModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-30 bg-white/70 dark:bg-black/70 backdrop-blur-sm flex ${
               deleteModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >

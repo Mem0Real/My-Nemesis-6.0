@@ -107,12 +107,12 @@ export default function AdminActions({
         </motion.button>
       </div>
 
-      <div className="flex flex-col w-full bg-neutral-300 min-h-screen">
+      <div className="flex flex-col w-full bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen">
         <AnimatePresence key="list">
           {showList && (
             <Suspense
               fallback={
-                <h1 className="text-2xl text-neutral-800 bg-neutral-300">
+                <h1 className="text-2xl bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
                   Loading...
                 </h1>
               }
@@ -139,7 +139,7 @@ export default function AdminActions({
           {showOrder && (
             <Suspense
               fallback={
-                <h1 className="text-2xl text-neutral-800 bg-neutral-300">
+                <h1 className="text-2xl bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
                   Loading...
                 </h1>
               }

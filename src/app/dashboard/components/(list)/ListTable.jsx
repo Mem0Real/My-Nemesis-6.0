@@ -120,9 +120,9 @@ export default function MyTable() {
       }}
     >
       <div className="table-container">
-        <div className="mx-auto w-[95%] overflow-auto">
+        <div className="mx-auto w-[98%] overflow-auto">
           <table className="table-fixed w-full text-sm">
-            <thead className="border-b border-black">
+            <thead className="border-b border-black dark:border-white">
               <tr className="">
                 <th className="text-center md:text-start py-5 w-56 md:w-72 lg:w-96">
                   Name
@@ -136,7 +136,9 @@ export default function MyTable() {
             <tbody>
               <Suspense
                 fallback={
-                  <h1 className="text-4xl text-black mx-auto">Loading...</h1>
+                  <h1 className="text-4xl text-neutral-800 dark:text-neutral-200 mx-auto">
+                    Loading...
+                  </h1>
                 }
               >
                 {categories.map((category, index) => (

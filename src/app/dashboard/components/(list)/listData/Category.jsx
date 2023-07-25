@@ -24,28 +24,38 @@ export default function Category({ category }) {
     catDropDown(category.id);
   };
 
+  const buttonVariants = {
+    open: {
+      rotate: 90,
+      x: 0.5,
+      y: 0.5,
+    },
+    close: {
+      rotate: 0,
+      x: 0,
+      y: 0,
+    },
+  };
   return [
     <motion.tr
       key={category.id}
-      className={`cursor-pointer ${
+      className={`cursor-pointer bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 ${
         cat.id === category.id && cat.open === true && "font-semibold"
       }`}
-      whileHover={{ backgroundColor: "#aaa", transition: { duration: 2 } }}
     >
-      <td className="py-2">
-        <div
-          className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
-          onClick={toggleExpander}
-        >
-          <span
-            className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
-              cat.id === category.id && cat.open === true
-                ? "rotate-90 translate-x-0.5 translate-y-0.5"
-                : ""
-            }`}
+      <td className="py-2" onClick={toggleExpander}>
+        <div className="list-outside flex items-center gap-3">
+          <motion.div
+            className={`text-sm text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 hover:dark:text-neutral-400 `}
+            initial="open"
+            animate={
+              cat.id === category.id && cat.open === true ? "open" : "close"
+            }
+            exit="close"
+            variants={buttonVariants}
           >
             {RightArrowIcon}
-          </span>
+          </motion.div>
           <motion.div whileHover={{ scale: 1.02 }}>
             <Link
               className="hover:underline underline-offset-4 z-10"
