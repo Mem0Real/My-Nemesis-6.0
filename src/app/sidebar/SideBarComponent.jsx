@@ -16,32 +16,16 @@ export default function SideBarComponent({ data }) {
   const [open, cycleOpen] = useCycle(false, true);
 
   const [openParent, setOpenParent] = useState(false);
+  const [openChild, setOpenChild] = useState(false);
+  const [openProduct, setOpenProduct] = useState(false);
 
   const categories = data[0];
   const parents = data[1];
+  const children = data[2];
+  const products = data[3];
 
   const { RightArrowIcon } = useIcons();
 
-  const sideVariants = {
-    closed: {
-      transition: {
-        staggerChildren: 0.05,
-        staggerDirection: -1,
-      },
-    },
-    open: {
-      transition: {
-        staggerChildren: 0.05,
-        staggerDirection: 1,
-      },
-    },
-  };
-  const itemVariants = {
-    closed: {
-      opacity: 0,
-    },
-    open: { opacity: 1 },
-  };
   const buttonVariants = {
     open: {
       top: -20,
@@ -67,12 +51,25 @@ export default function SideBarComponent({ data }) {
       borderRadius: "0 6px 6px 0",
     },
   };
-
-  const parentItemVariants = {
-    closedParent: {
+  const sideVariants = {
+    closed: {
+      transition: {
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+      },
+    },
+    open: {
+      transition: {
+        staggerChildren: 0.05,
+        staggerDirection: 1,
+      },
+    },
+  };
+  const itemVariants = {
+    closed: {
       opacity: 0,
     },
-    openParent: { opacity: 1 },
+    open: { opacity: 1 },
   };
   const parentSideVariants = {
     closedParent: {
@@ -88,10 +85,80 @@ export default function SideBarComponent({ data }) {
       },
     },
   };
+  const parentItemVariants = {
+    closedParent: {
+      opacity: 0,
+    },
+    openParent: { opacity: 1 },
+  };
+  const childSideVariants = {
+    closedChild: {
+      transition: {
+        staggerChildren: 0.1,
+        staggerDirection: -1,
+      },
+    },
+    openChild: {
+      transition: {
+        staggerChildren: 0.1,
+        staggerDirection: 1,
+      },
+    },
+  };
+  const childItemVariants = {
+    closedChild: {
+      opacity: 0,
+    },
+    openChild: { opacity: 1 },
+  };
+  const productSideVariants = {
+    closedProduct: {
+      transition: {
+        staggerChildren: 0.1,
+        staggerDirection: -1,
+      },
+    },
+    openProduct: {
+      transition: {
+        staggerChildren: 0.1,
+        staggerDirection: 1,
+      },
+    },
+  };
+  const productItemVariants = {
+    closedProduct: {
+      opacity: 0,
+    },
+    openProduct: { opacity: 1 },
+  };
 
   const toggleSidebar = () => {
     cycleOpen();
+    closeSidebars();
+  };
+
+  const closeSidebars = () => {
     setOpenParent();
+    setOpenChild();
+    setOpenProduct();
+  };
+  const closeChildren = (entry) => {
+    switch (entry) {
+      case "categories": {
+        openParent && setOpenParent(null);
+        openChild && setOpenChild(null);
+        openProduct && setOpenProduct(null);
+      }
+
+      case "parents": {
+        openChild && setOpenChild(null);
+        openProduct && setOpenProduct(null);
+      }
+
+      case "children": {
+        openProduct && setOpenProduct(null);
+      }
+    }
   };
   return (
     <motion.main className="relative flex w-fit h-fit">
@@ -103,9 +170,11 @@ export default function SideBarComponent({ data }) {
       >
         <motion.button onClick={toggleSidebar}>{RightArrowIcon}</motion.button>
       </motion.div>
+      {/* Categories */}
       <AnimatePresence>
         {open && (
           <motion.aside
+            onHoverStart={() => closeChildren("categories")}
             initial={{ width: 0 }}
             animate={{ width: 120 }}
             exit={{
@@ -143,13 +212,31 @@ export default function SideBarComponent({ data }) {
           </motion.aside>
         )}
       </AnimatePresence>
+
+      {/* Parents */}
       <AnimatePresence>
         {openParent && (
           <motion.aside
             key="parentSb"
-            onHoverEnd={() => setOpenParent()}
+            onHoverStart={() => closeChildren("parents")}
             initial={{ width: 0 }}
-            animate={{ width: 150 }}
+            animate={
+              openChild
+                ? {
+                    width: 150,
+                    height: "max-content",
+                    borderRightWidth: "0px",
+                    borderTopRightRadius: "0px",
+                    borderBottomRightRadius: "0px",
+                  }
+                : {
+                    width: 150,
+                    height: "max-content",
+                    borderRightWidth: "1px",
+                    borderTopRightRadius: "8px",
+                    borderBottomRightRadius: "8px",
+                  }
+            }
             exit={{
               width: 0,
               transition: { delay: 0.5, duration: 0.3 },
@@ -172,8 +259,121 @@ export default function SideBarComponent({ data }) {
                       whileHover={{ scale: 1.05 }}
                       variants={parentItemVariants}
                       className=" ps-2 capitalize"
+                      onHoverStart={() => setOpenChild(id)}
                     >
                       <Link href={`/collection/${CategoryId}/${id}`}>{id}</Link>
+                    </motion.div>
+                  )
+              )}
+            </motion.div>
+          </motion.aside>
+        )}
+      </AnimatePresence>
+
+      {/* Children */}
+      <AnimatePresence>
+        {openChild && (
+          <motion.aside
+            layout
+            onHoverStart={() => closeChildren("children")}
+            key="childSb"
+            initial={{ width: 0 }}
+            animate={
+              openProduct
+                ? {
+                    width: 150,
+                    height: "max-content",
+                    borderRightWidth: "0px",
+                    borderTopRightRadius: "0px",
+                    borderBottomRightRadius: "0px",
+                  }
+                : {
+                    width: 150,
+                    height: "max-content",
+                    borderRightWidth: "1px",
+                    borderTopRightRadius: "8px",
+                    borderBottomRightRadius: "8px",
+                  }
+            }
+            exit={{
+              width: 0,
+              transition: { delay: 0.5, duration: 0.3 },
+              height: 0,
+            }}
+            className="absolute left-[19.3em] top-3 bg-neutral-100 dark:bg-neutral-900 border border-l-0 border-neutral-700 dark:border-neutral-500 h-fit z-20"
+          >
+            <motion.div
+              key="childContainer"
+              className="flex flex-col items-center justify-start gap-4 h-fit"
+              initial="closedChild"
+              animate="openChild"
+              exit="closedChild"
+              variants={childSideVariants}
+            >
+              {children.map(
+                ({ id, ParentId }) =>
+                  openChild === ParentId && (
+                    <motion.div
+                      key={id}
+                      whileHover={{ scale: 1.05 }}
+                      variants={childItemVariants}
+                      className=" ps-2 capitalize"
+                      onHoverStart={() => setOpenProduct(id)}
+                    >
+                      <Link
+                        href={`/collection/${openParent}/${ParentId}/${id}`}
+                      >
+                        {id}
+                      </Link>
+                    </motion.div>
+                  )
+              )}
+            </motion.div>
+          </motion.aside>
+        )}
+      </AnimatePresence>
+
+      {/* Items */}
+      <AnimatePresence>
+        {openProduct && (
+          <motion.aside
+            layout
+            key="productSb"
+            initial={{ width: 0, height: 0 }}
+            animate={{
+              width: 200,
+              height: "max-content",
+              transition: { duration: 0.5 },
+            }}
+            exit={{
+              width: 0,
+              height: 0,
+              transition: { delay: 0.5, duration: 0.3 },
+            }}
+            className="absolute left-[29.8em] top-3 z-10 bg-neutral-100 dark:bg-neutral-900 border border-neutral-700 dark:border-neutral-500 rounded-r-lg py-5 h-max"
+          >
+            <motion.div
+              key="productContainer"
+              className="flex flex-col items-start justify-center gap-4"
+              initial="closedProduct"
+              animate="openProduct"
+              exit="closedProduct"
+              variants={productSideVariants}
+            >
+              {products.map(
+                ({ id, name, ChildId }) =>
+                  openProduct === ChildId && (
+                    <motion.div
+                      key={id}
+                      whileHover={{ scale: 1.05 }}
+                      variants={productItemVariants}
+                      className=" ps-2 capitalize"
+                    >
+                      <Link
+                        href={`/collection/${openParent}/${openChild}/${ChildId}/${id}`}
+                      >
+                        {name}
+                      </Link>
                     </motion.div>
                   )
               )}
