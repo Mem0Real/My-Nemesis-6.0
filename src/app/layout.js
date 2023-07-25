@@ -36,7 +36,7 @@ export default function RootLayout({ children }) {
                       <Navbar />
                     </SearchBase>
                   </CartBase>
-                  <div className="relative">
+                  <div className="relative text-sm text-neutral-800 dark:text-neutral-200">
                     <SideBarBase>
                       <Suspense>
                         <SideBarBase />

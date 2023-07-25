@@ -43,23 +43,33 @@ export default function SideBarComponent({ data }) {
     open: { opacity: 1 },
   };
   const buttonVariants = {
-    close: {
-      top: 0,
-      right: -40,
-      rotate: 0,
-      transition: {
-        delay: 0.5,
-      },
-    },
     open: {
       top: -20,
       right: 0,
-      rotate: 180,
+      rotate: -180,
+      borderLeftWidth: "1px",
+      borderRadius: "6px",
+      transition: {
+        ease: "easeInOut",
+        duration: 0.3,
+      },
+    },
+    close: {
+      top: 0,
+      right: -30,
+      rotate: 0,
+      transition: {
+        delay: 0.5,
+        ease: "easeInOut",
+        duration: 0.3,
+      },
+      borderLeftWidth: 0,
+      borderRadius: "0 6px 6px 0",
     },
   };
 
   const parentItemVariants = {
-    closeParent: {
+    closedParent: {
       opacity: 0,
     },
     openParent: { opacity: 1 },
@@ -67,13 +77,13 @@ export default function SideBarComponent({ data }) {
   const parentSideVariants = {
     closedParent: {
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.1,
         staggerDirection: -1,
       },
     },
     openParent: {
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.1,
         staggerDirection: 1,
       },
     },
@@ -86,7 +96,6 @@ export default function SideBarComponent({ data }) {
   return (
     <motion.main className="relative flex w-fit h-fit">
       <motion.div
-        layout
         className="btn-container absolute top-3 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 rounded-md border border-neutral-500 pt-1.5 px-1"
         animate={open ? "open" : "close"}
         initial="closed"
@@ -97,7 +106,6 @@ export default function SideBarComponent({ data }) {
       <AnimatePresence>
         {open && (
           <motion.aside
-            layout
             initial={{ width: 0 }}
             animate={{ width: 120 }}
             exit={{
@@ -107,16 +115,13 @@ export default function SideBarComponent({ data }) {
             className="bg-neutral-100 dark:bg-neutral-900 border border-neutral-700 dark:border-neutral-500 rounded-xl rounded-l-none min-h-72 h-fit"
           >
             <motion.div
-              layout
               className="flex flex-col items-start justify-center gap-4"
               initial="closed"
               animate="open"
               exit="closed"
               variants={sideVariants}
-              onHoverStart={() => setOpenParent()}
             >
               <motion.div
-                layout
                 whileHover={{ scale: 1.05 }}
                 className="mt-3 self-center"
                 variants={itemVariants}
@@ -125,7 +130,6 @@ export default function SideBarComponent({ data }) {
               </motion.div>
               {categories.map(({ id }) => (
                 <motion.div
-                  layout
                   key={id}
                   whileHover={{ scale: 1.05 }}
                   variants={itemVariants}
@@ -142,6 +146,8 @@ export default function SideBarComponent({ data }) {
       <AnimatePresence>
         {openParent && (
           <motion.aside
+            key="parentSb"
+            onHoverEnd={() => setOpenParent()}
             initial={{ width: 0 }}
             animate={{ width: 150 }}
             exit={{
@@ -151,6 +157,7 @@ export default function SideBarComponent({ data }) {
             className="absolute left-[120px] top-3 bg-neutral-100 dark:bg-neutral-900 border border-l-0 border-neutral-700 dark:border-neutral-500 rounded-r-lg h-fit"
           >
             <motion.div
+              key="parentContainer"
               className="flex flex-col items-center justify-start gap-4"
               initial="closedParent"
               animate="openParent"
