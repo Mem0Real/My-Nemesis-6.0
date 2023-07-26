@@ -79,14 +79,14 @@ export default function Order({
     <OrderDataContext.Provider
       value={{ order, url, delivered, markDelivered, removeOne }}
     >
-      <div className="flex-flex-col w-full items-center justify-center relative min-h-screen bg-neutral-300 text-neutral-900 md:mt-6">
+      <div className="flex-flex-col w-full items-center justify-center relative min-h-screen bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 md:mt-6">
         <h1 className="text-2xl font-mono font-thin mt-2 underline underline-offset-4 text-center">
           Order list
         </h1>
-        <div className="md:mt-6 md:pb-5 min-h-screen bg-neutral-300">
+        <div className="md:mt-6 md:pb-5 min-h-screen bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
           <Suspense
             fallback={
-              <h1 className="text-3xl w-full flex flex-col items-center text-neutral-800 bg-neutral-300">
+              <h1 className="text-3xl w-full flex flex-col items-center bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
                 Loading...
               </h1>
             }
@@ -143,12 +143,6 @@ export default function Order({
           </div>
         </div>
       </div>
-      {/* <RemoveAll
-        removeAlert={removeAlert}
-        removeData={removeData}
-        remove={remove}
-        closeRemoveModal={closeRemoveModal}
-      /> */}
       <AnimatePresence id="removeAllM" className="my-3">
         {removeAllModal && (
           <motion.div
@@ -157,7 +151,7 @@ export default function Order({
             animate={removeAllModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-neutral-200/30 dark:bg-neutral-900/30 backdrop-blur-sm  flex ${
               removeAllModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >

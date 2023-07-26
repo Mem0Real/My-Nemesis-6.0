@@ -63,7 +63,7 @@ export default function OrderTable() {
     showRemoveModal(() => false);
   };
 
-  const variants = {
+  const modalVariants = {
     open: {
       opacity: 1,
       display: "flex",
@@ -75,7 +75,58 @@ export default function OrderTable() {
       },
     },
   };
-
+  const buttonVariants = {
+    open: {
+      rotate: 90,
+      x: 0.5,
+      y: 0.5,
+    },
+    close: {
+      rotate: 0,
+      x: 0,
+      y: 0,
+    },
+    deliveredCheck: {
+      color: "rgb(10 190 40)",
+      opacity: 0.6,
+    },
+    notDeliveredCheck: {
+      color: "rgb(21 128 61)",
+      opacity: 1,
+    },
+    deliveredRemove: {
+      color: "rgb(240 48 48)",
+      opacity: 0.6,
+      cursor: "not-allowed",
+    },
+    notDeliveredRemove: {
+      color: "rgb(220 38 38)",
+      opacity: 1,
+      cursor: "pointer",
+    },
+  };
+  const contentVariants = {
+    open: {
+      opacity: 1,
+      y: "0px",
+      transition: {
+        duration: 0.2,
+        ease: "linear",
+        staggerChildren: 0.05,
+        staggerDirection: 1,
+      },
+    },
+    close: {
+      opacity: 0,
+      y: "-15px",
+      transition: {
+        duration: 0.2,
+        ease: "linear",
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+      },
+    },
+  };
   return (
     <OrderContext.Provider
       value={{
@@ -85,9 +136,11 @@ export default function OrderTable() {
         handleRemove,
         removeLoading,
         setRemoveLoading,
+        contentVariants,
+        buttonVariants,
       }}
     >
-      <div className="table-container text-neutral-800">
+      <div className="table-container bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
         <div className="mx-auto w-[95%] md:w-[75%] overflow-auto">
           <table className="table-fixed w-full text-sm">
             <thead className="border-b border-black">
@@ -99,10 +152,13 @@ export default function OrderTable() {
                 <th className="w-16" />
               </tr>
             </thead>
-            <tbody>
+            <motion.tbody
+              className="bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
+              layout="position"
+            >
               <Suspense
                 fallback={
-                  <h1 className="text-4xl text-neutral-800 bg-neutral-300 mx-auto">
+                  <h1 className="text-4xl bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 mx-auto">
                     Loading...
                   </h1>
                 }
@@ -123,19 +179,19 @@ export default function OrderTable() {
                   )}
                 </AnimatePresence>
               </Suspense>
-            </tbody>
+            </motion.tbody>
           </table>
         </div>
       </div>
-      <AnimatePresence id="removeM" className="my-3">
+      <AnimatePresence className="my-3">
         {removeModal && (
           <motion.div
             key="innerRemoveM"
             initial={"close"}
             animate={removeModal ? "open" : "close"}
-            variants={variants}
+            variants={modalVariants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-neutral-200/30 dark:bg-neutral-900/30 backdrop-blur-sm  flex ${
               removeModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >

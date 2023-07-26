@@ -17,8 +17,14 @@ export default function Customer({ customer }) {
   const [deliverLoading, setDeliverLoading] = useState(false);
 
   const { order, markDelivered } = useOrderDataContext();
-  const { customerDropDown, cus, handleRemove, removeLoading } =
-    useOrderContext();
+  const {
+    customerDropDown,
+    cus,
+    handleRemove,
+    removeLoading,
+    contentVariants,
+    buttonVariants,
+  } = useOrderContext();
 
   const {
     RightArrowIcon,
@@ -69,100 +75,37 @@ export default function Customer({ customer }) {
   let totalPrice = subTotal();
   totalPrice = formatter.format(totalPrice);
 
-  const variants = {
-    open: {
-      y: 0,
-      opacity: 1,
-    },
-    closed: {
-      y: "-5px",
-      opacity: 0,
-    },
-    hover: {
-      backgroundColor: "#777",
-      cursor: "pointer",
-    },
-    none: {
-      backgroundColor: "#ddd",
-    },
-    deliveredCheck: {
-      color: "rgb(10 190 40)",
-      opacity: 0.6,
-    },
-    notDeliveredCheck: {
-      color: "rgb(21 128 61)",
-      opacity: 1,
-    },
-    deliveredRemove: {
-      color: "rgb(240 48 48)",
-      opacity: 0.6,
-      cursor: "not-allowed",
-    },
-    notDeliveredRemove: {
-      color: "rgb(220 38 38)",
-      opacity: 1,
-      cursor: "pointer",
-    },
-  };
-  // TODO Add multiple deliver & delete functionality
   return [
     <motion.tr
       key={customer.id}
-      className={`${
+      className={`bg-neutral-200 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 cursor-pointer hover:bg-neutral-400 dark:hover:bg-neutral-700 ${
         cus?.id === customer.id && cus?.open === true && "font-semibold"
       }`}
-      animate={hovering ? "hover" : "none"}
-      variants={variants}
-      initial={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: "-20px" }}
+      animate="open"
+      variants={contentVariants}
+      initial="close"
+      exit="close"
+      onClick={toggleExpander}
     >
-      <motion.td
-        className="py-2"
-        onHoverStart={() => setHovering(() => true)}
-        onHoverEnd={() => setHovering(() => false)}
-      >
-        <div
-          className="list-outside flex items-center gap-3 transition-all ease-in-out duration-300"
-          onClick={toggleExpander}
+      <motion.td className="py-2 flex items-center gap-3">
+        <motion.span
+          className={`text-sm text-neutral-800 hover:text-neutral-950 dark:text-neutral-200 dark:hover:text-neutral-300 `}
+          initial="close"
+          animate={
+            cus?.id === customer.id && cus?.open === true ? "open" : "close"
+          }
+          variants={buttonVariants}
         >
-          <span
-            className={`text-sm transition-all ease-in-out duration-500 text-neutral-800 hover:text-neutral-950 ${
-              cus?.id === customer.id && cus?.open === true
-                ? "rotate-90 translate-x-0.5 translate-y-0.5"
-                : ""
-            }`}
-          >
-            {RightArrowIcon}
-          </span>
-          {customer.name}
-        </div>
+          {RightArrowIcon}
+        </motion.span>
+        {customer.name}
       </motion.td>
-      <motion.td
-        onHoverStart={() => setHovering(() => true)}
-        onHoverEnd={() => setHovering(false)}
-        className="py-4 max-w-36 text-center md:text-start"
-        onClick={toggleExpander}
-      >
+      <motion.td className="py-4 max-w-36 text-center md:text-start">
         +251 {customer.phone}
       </motion.td>
       <td>
         <div className="flex items-center justify-center gap-2 md:gap-3 lg:gap-5">
-          <motion.div
-            animate={
-              customer.delivered ? "deliveredCheck" : "notDeliveredCheck"
-            }
-            variants={variants}
-            whileHover={
-              !customer.delivered ||
-              (!deliverLoading && {
-                scale: 1.2,
-                textShadow: "4px 0px 0px black",
-              })
-            }
-            whileTap={
-              !customer.delivered || (!deliverLoading && { scale: 0.9 })
-            }
-          >
+          <motion.div onClick={(e) => e.stopPropagation()}>
             <AnimatePresence>
               {deliverLoading ? (
                 <motion.div
@@ -182,33 +125,37 @@ export default function Customer({ customer }) {
                   {LoadingIcon}
                 </motion.div>
               ) : customer.delivered ? (
-                <span
-                  className={`text-lg md:text-xl lg:text-2xl pb-2 cursor-pointer`}
+                <motion.div
+                  whileHover={{
+                    scale: 1.2,
+                    textShadow: "4px 0px 0px black",
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  className={`text-lg md:text-xl lg:text-2xl pb-2 cursor-pointer text-green-700/70 dark:text-green-700/40`}
                   onClick={() =>
                     handleDeliver("customers", customer.id, customer.delivered)
                   }
                 >
                   {DeliveredIcon}
-                </span>
+                </motion.div>
               ) : (
-                <span
-                  className={`text-lg md:text-xl lg:text-2xl pb-2 cursor-pointer`}
+                <motion.div
+                  whileHover={{
+                    scale: 1.2,
+                    textShadow: "4px 0px 0px black",
+                  }}
+                  whileTap={{ scale: 0.9 }}
+                  className={`text-lg md:text-xl lg:text-2xl pb-2 cursor-pointer text-green-700 dark:text-green-700`}
                   onClick={() =>
                     handleDeliver("customers", customer.id, customer.delivered)
                   }
                 >
                   {NotDeliveredIcon}
-                </span>
+                </motion.div>
               )}
             </AnimatePresence>
           </motion.div>
-          <motion.div
-            whileHover={{
-              scale: 1.2,
-              textShadow: "4px 0px 12px red",
-            }}
-            whileTap={{ scale: 0.9 }}
-          >
+          <motion.div onClick={(e) => e.stopPropagation()}>
             <AnimatePresence>
               {removeLoading &&
               removeLoading.id === customer.id &&
@@ -231,12 +178,17 @@ export default function Customer({ customer }) {
                   {LoadingIcon}
                 </motion.div>
               ) : (
-                <span
+                <motion.div
                   className="text-lg md:text-xl lg:text-2xl pb-2 text-red-600/90 cursor-pointer"
                   onClick={() => handleRemove(customer.id)}
+                  whileHover={{
+                    scale: 1.2,
+                    textShadow: "4px 0px 12px red",
+                  }}
+                  whileTap={{ scale: 0.9 }}
                 >
                   {DeleteIcon}
-                </span>
+                </motion.div>
               )}
             </AnimatePresence>
           </motion.div>
@@ -250,24 +202,27 @@ export default function Customer({ customer }) {
           <motion.tr
             key={`${customer.id}-table`}
             animate={
-              cus?.id === customer.id && cus?.open === true ? "open" : "closed"
+              cus?.id === customer.id && cus?.open === true ? "open" : "close"
             }
-            variants={variants}
-            exit={"closed"}
-            whileHover={{ backgroundColor: "#777" }}
+            initial="close"
+            variants={contentVariants}
+            exit="close"
           >
-            <td colSpan={3}>
-              <div className="mx-auto bg-[#ccc]">
+            <td
+              colSpan={3}
+              className="bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
+            >
+              <div className="mx-auto">
                 <table className="table-fixed w-full overflow-hidden border-0">
                   <thead>
                     <tr>
-                      <th className="text-center py-2 w-9 border-b border-black">
+                      <th className="text-center py-2 w-9 border-b border-black dark:border-white">
                         Product Name
                       </th>
-                      <th className="text-center py-2 w-6 border-b border-black">
+                      <th className="text-center py-2 w-6 border-b border-black dark:border-white">
                         Ordered Amount
                       </th>
-                      <th className="text-center py-2 w-6 border-b border-black">
+                      <th className="text-center py-2 w-6 border-b border-black dark:border-white">
                         Product Price
                       </th>
                     </tr>
@@ -290,10 +245,11 @@ export default function Customer({ customer }) {
                           animate={
                             cus?.id === customer.id && cus?.open === true
                               ? "open"
-                              : "closed"
+                              : "close"
                           }
-                          variants={variants}
-                          exit={"closed"}
+                          initial="close"
+                          variants={contentVariants}
+                          exit="close"
                         >
                           <td className="" />
                           <td

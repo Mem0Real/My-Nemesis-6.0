@@ -28,8 +28,6 @@ export default function Category({ category }) {
         className={`cursor-pointer bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 ${
           cat.id === category.id && cat.open === true && "font-semibold"
         }`}
-        initial="closed"
-        animate="opened"
         onClick={() => toggleCatDrop(category.id)}
       >
         <motion.td
