@@ -7,12 +7,12 @@ import ChildList from "./childList";
 
 export default function ParentList({ categoryId, parents }) {
   const {
-    // parents,
     parentDrop,
     childDrop,
     btnVariants,
     contentVariants,
     toggleChild,
+    handleSelection,
   } = useProductListContext();
 
   const { RightArrowIcon } = useIcons();
@@ -35,6 +35,12 @@ export default function ParentList({ categoryId, parents }) {
             return (
               <div key={parent.id} className="w-full flex flex-col px-1">
                 <div className="flex items-center justify-between h-4 text-sm">
+                  <input
+                    type="checkbox"
+                    name="cat"
+                    onChange={() => handleSelection(null, parent.id)}
+                    className="ml-3"
+                  />
                   <h1>{parent.id}</h1>
                   <motion.button
                     className="text-sm text-start text-neutral-800 dark:text-neutral-200 hover:text-neutral-600 dark:hover:text-neutral-400"

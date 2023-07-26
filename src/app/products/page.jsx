@@ -27,12 +27,6 @@ async function getData() {
         },
       },
     });
-    // parents = prisma.parents.findMany({ orderBy: { id: "asc" } });
-    // children = prisma.children.findMany({ orderBy: { id: "asc" } });
-    // products = prisma.items.findMany({ orderBy: { id: "asc" } });
-
-    // data = await Promise.all([categories, parents, children, products]);
-    // return data;
     return categories;
   } catch (error) {
     return { error: "Error fetching data. \n Please try again later." };

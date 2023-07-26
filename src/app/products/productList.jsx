@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, createContext, useContext, useEffect } from "react";
-import { useIcons } from "../utils/CustomIcons";
-import { motion, AnimatePresence } from "framer-motion";
-import CategoryList from "./(categories)/categoryList";
-import List from "./List";
-import Features from "./Features";
+
+import FilterData from "./components/filterData";
+import Search from "./components/search";
+import Sort from "./components/sort";
+import List from "./components/list";
 
 const ProductListContext = createContext({});
 
@@ -25,8 +25,6 @@ export default function ProductList({ data }) {
   }, [filterCatData]);
 
   const categories = data;
-
-  const { RightArrowIcon } = useIcons();
 
   const toggleCategory = () => {
     showCategoryDrop((prev) => !prev);
@@ -155,101 +153,43 @@ export default function ProductList({ data }) {
     }
   };
   return (
-    <div className="bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center px-5 ">
-      <div className="h-48 w-full flex flex-col items-center justify-center">
-        <h1 className="text-5xl font-semibold">Products</h1>
-      </div>
-      <div className="flex flex-col gap-6 w-full">
-        <Features />
-        <div className="flex items-center w-full gap-6">
-          <ProductListContext.Provider
-            value={{
-              categories,
-              // parents,
-              // children,
-              categoryDrop,
-              parentDrop,
-              childDrop,
-              btnVariants,
-              contentVariants,
-              toggleParent,
-              toggleChild,
-              handleSelection,
-            }}
-          >
-            {/* Filter */}
-            <div className="basis-1/5 flex flex-col items-center gap-5">
-              <h1 className="text-2xl self-start font-light ">Filter by</h1>
-              {/* Dropdownbtns */}
-              <div className="flex items-center justify-between w-full border-y border-neutral-400 px-2 h-12 cursor-pointer text-sm">
-                <h1>Category</h1>
-                <motion.button
-                  className="text-neutral-800 dark:text-neutral-200 hover:text-neutral-600 dark:hover:text-neutral-400"
-                  onClick={toggleCategory}
-                  initail="close"
-                  animate={categoryDrop ? "open" : "close"}
-                  exit="close"
-                  variants={btnVariants}
-                >
-                  {RightArrowIcon}
-                </motion.button>
-              </div>
-
-              <CategoryList />
-
-              <div className="flex items-center justify-between w-full border-y border-neutral-400 px-2 h-12 cursor-pointer text-sm">
-                <h1>Price</h1>
-                <motion.button
-                  className="text-neutral-800 dark:text-neutral-200 hover:text-neutral-600 dark:hover:text-neutral-400"
-                  onClick={() => showPriceDrop((prev) => !prev)}
-                  initail="close"
-                  animate={priceDrop ? "open" : "close"}
-                  exit="close"
-                  variants={btnVariants}
-                >
-                  {RightArrowIcon}
-                </motion.button>
-              </div>
-              <AnimatePresence>
-                {priceDrop && (
-                  <motion.div
-                    className={`w-full`}
-                    initial="closed"
-                    animate={priceDrop ? "opened" : "closed"}
-                    exit="closed"
-                    variants={contentVariants}
-                  >
-                    <h1>hi</h1>
-                    <h1>hi</h1>
-                    <h1>hi</h1>
-                    <h1>hi</h1>
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </div>
-          </ProductListContext.Provider>
-          {/* Products */}
-          <div className="basis-4/5 flex flex-col items-center">
-            {filterCatData.length > 0 && (
-              <div className="flex flex-col items-center justify-center gap-3">
-                {/* {categories.map((category) => {
-                if (filterCatData.includes(category.id)) {
-                  return category.parents.map((parent) => {
-                    return parent.children.map((child) => {
-                      return child.items.map((item) => {
-                        return item.name;
-                      });
-                    });
-                  });
-                }
-              })} */}
-                {/* <List data={categories} /> */}
-              </div>
-            )}
+    <ProductListContext.Provider
+      value={{
+        categories,
+        priceDrop,
+        categoryDrop,
+        parentDrop,
+        childDrop,
+        btnVariants,
+        contentVariants,
+        filterCatData,
+        filterChiData,
+        filterParData,
+        toggleCategory,
+        toggleParent,
+        toggleChild,
+        handleSelection,
+      }}
+    >
+      <div className="bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center px-5 ">
+        <div className="h-36 w-full flex flex-col items-center justify-center">
+          <h1 className="text-5xl font-semibold">Products</h1>
+        </div>
+        <div className="flex flex-col gap-6 w-full">
+          <div className="flex items-center justify-between">
+            <Search />
+            <Sort />
           </div>
+          <div className="flex items-center justify-start w-full gap-6">
+            <div className="basis-1/5 self-start">
+              <FilterData />
+            </div>
+            <List />
+          </div>
+          {/* <Pagination /> */}
         </div>
       </div>
-    </div>
+    </ProductListContext.Provider>
   );
 }
 
