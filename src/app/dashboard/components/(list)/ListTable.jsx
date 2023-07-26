@@ -145,11 +145,19 @@ export default function MyTable() {
   const contentVariants = {
     open: {
       opacity: 1,
-      // height: "max-content",
+      y: "0px",
+      transition: {
+        duration: 0.2,
+        ease: "linear",
+      },
     },
     close: {
       opacity: 0,
-      // height: "0px",
+      y: "-25px",
+      transition: {
+        duration: 0.2,
+        ease: "linear",
+      },
     },
   };
   return (

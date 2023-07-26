@@ -11,29 +11,29 @@ import { useTableContext } from "../ListTable";
 import { useIcons } from "@/app/utils/CustomIcons";
 
 export default function Item({ categoryId, parentId, childId, item }) {
-  const { chi } = useTableContext();
+  const { chi, contentVariants } = useTableContext();
   const { handleEdit, handleDelete } = useDataContext();
 
   const { BagIcon, EditIcon, DeleteIcon } = useIcons();
 
-  const variants = {
-    open: {
-      y: "10px",
-      opacity: 1,
-    },
-    closed: {
-      y: "-10px",
-      opacity: 0,
-    },
-  };
+  // const variants = {
+  //   open: {
+  //     y: "10px",
+  //     opacity: 1,
+  //   },
+  //   closed: {
+  //     y: "-10px",
+  //     opacity: 0,
+  //   },
+  // };
   return [
     <AnimatePresence key={item.id}>
       {chi.id === childId && chi.open === true && (
         <motion.tr
           key={item.id}
-          animate={chi.id === childId && chi.open === true ? "open" : "closed"}
-          variants={variants}
-          exit={"closed"}
+          animate={chi.id === childId && chi.open === true ? "open" : "close"}
+          variants={contentVariants}
+          exit="close"
           className="border border-neutral-500"
         >
           <td className="border border-black dark:border-white py-5 max-w-md">
