@@ -14,9 +14,7 @@ export default function List({ data }) {
 
   return (
     <div className="flex flex-col">
-      {/* {data.map((item) => item.id)} */}
       <Pagination
-        items={data.length}
         currentPage={currentPage}
         pageSize={pageSize}
         onPageChange={onPageChange}

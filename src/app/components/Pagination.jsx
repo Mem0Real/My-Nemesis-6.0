@@ -1,9 +1,4 @@
-export default function Pagination({
-  items,
-  pageSize,
-  currentPage,
-  onPageChange,
-}) {
+export default function Pagination({ pageSize, currentPage, onPageChange }) {
   const pagesCount = Math.ceil(items / pageSize);
 
   console.log(items);
