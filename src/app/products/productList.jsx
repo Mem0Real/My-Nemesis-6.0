@@ -93,13 +93,62 @@ export default function ProductList({ data }) {
 
   const handleSelection = (cat = null, par = null, chi = null) => {
     if (cat) {
-      setFilterCatData((prev) => [...prev, { id: cat }]);
+      //   if (filterCatData?.length > 0) {
+      //     const prevCatData = filterCatData.find((item) => item.id === cat);
+      //     if (prevCatData) {
+      //       let catData = filterCatData.map((data) => {
+      //         if (data.id === cat) {
+      //           return { ...data, open: !data.open };
+      //         }
+      //         return data;
+      //       });
+      //       setFilterCatData(catData);
+      //     } else {
+      //       const newData = { id: cat, open: true };
+      //       setFilterCatData((prev) => [...prev, newData]);
+      //     }
+      //   } else {
+      //     let newEntry = [{ id: cat, open: true }];
+
+      //     setFilterCatData(() => newEntry);
+      //   }
+      let newArray = [...filterCatData];
+      if (newArray?.length > 0) {
+        let prev = newArray.indexOf(cat);
+
+        if (prev !== -1) newArray.splice(prev, 1);
+        else newArray.push(cat);
+        setFilterCatData(newArray);
+      } else {
+        newArray.push(cat);
+        setFilterCatData(newArray);
+      }
     }
     if (par) {
-      setFilterParData((prev) => [...prev, { id: par }]);
+      let newArray = [...filterParData];
+      if (newArray?.length > 0) {
+        let prev = newArray.indexOf(par);
+
+        if (prev !== -1) newArray.splice(prev, 1);
+        else newArray.push(par);
+        setFilterParData(newArray);
+      } else {
+        newArray.push(par);
+        setFilterParData(newArray);
+      }
     }
     if (chi) {
-      setFilterChiData((prev) => [...prev, { id: chi }]);
+      let newArray = [...filterChiData];
+      if (newArray?.length > 0) {
+        let prev = newArray.indexOf(chi);
+
+        if (prev !== -1) newArray.splice(prev, 1);
+        else newArray.push(chi);
+        setFilterChiData(newArray);
+      } else {
+        newArray.push(chi);
+        setFilterChiData(newArray);
+      }
     }
   };
   return (
@@ -176,11 +225,7 @@ export default function ProductList({ data }) {
         </ProductListContext.Provider>
         {/* Products */}
         <div className="basis-4/5 flex flex-col items-center">
-          <h1>hello</h1>
-          <h1>hello</h1>
-          <h1>hello</h1>
-          <h1>hello</h1>
-          <h1>hello</h1>
+          {/* {filterCatData.length > 0 && ()} */}
         </div>
       </div>
     </div>
