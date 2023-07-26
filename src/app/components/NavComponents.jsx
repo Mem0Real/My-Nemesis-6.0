@@ -84,22 +84,28 @@ export default function NavComponents({ session }) {
           <ThemeSwitcher />
 
           <Link href="/collection">
-            <div className="underline underline-offset-8 hover:underline-offset-4">
+            {/* <div className="underline underline-offset-8 hover:underline-offset-4">
               Collection
-            </div>
+            </div> */}
+            <motion.div
+              className="border border-b-4 border-neutral-500 py-1 px-2 w-24 rounded-lg"
+              whileTap={{ borderBottomWidth: "1px" }}
+            >
+              Collection
+            </motion.div>
           </Link>
           <Link href="/services">
-            <div className="underline underline-offset-8 hover:underline-offset-4">
+            <div className="border border-b-4 border-neutral-500 py-1 px-2 w-24 rounded-lg">
               Services
             </div>
           </Link>
           <Link href="/about">
-            <div className="underline underline-offset-8 hover:underline-offset-4">
+            <div className="border border-b-4 border-neutral-500 py-1 px-2 w-24 rounded-lg">
               About
             </div>
           </Link>
           <Link href="/dashboard">
-            <div className="underline underline-offset-8 hover:underline-offset-4">
+            <div className="border border-b-4 border-neutral-500 py-1 px-2 w-24 rounded-lg">
               Dashboard
             </div>
           </Link>
