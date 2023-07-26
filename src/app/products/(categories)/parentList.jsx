@@ -5,9 +5,9 @@ import { useProductListContext } from "../productList";
 import { useIcons } from "@/app/utils/CustomIcons";
 import ChildList from "./childList";
 
-export default function ParentList({ categoryId }) {
+export default function ParentList({ categoryId, parents }) {
   const {
-    parents,
+    // parents,
     parentDrop,
     childDrop,
     btnVariants,
@@ -33,27 +33,25 @@ export default function ParentList({ categoryId }) {
         >
           {parents.map((parent) => {
             return (
-              parent.CategoryId === categoryId && (
-                <div key={parent.id} className="w-full flex flex-col px-1">
-                  <div className="flex items-center justify-between h-4 text-sm">
-                    <h1>{parent.id}</h1>
-                    <motion.button
-                      className="text-sm text-start text-neutral-800 dark:text-neutral-200 hover:text-neutral-600 dark:hover:text-neutral-400"
-                      onClick={() => toggleChild(parent.id)}
-                      animate={
-                        childDrop.id === parent.id && childDrop.open === true
-                          ? "open"
-                          : "close"
-                      }
-                      exit="close"
-                      variants={btnVariants}
-                    >
-                      {RightArrowIcon}
-                    </motion.button>
-                  </div>
-                  <ChildList parentId={parent.id} />
+              <div key={parent.id} className="w-full flex flex-col px-1">
+                <div className="flex items-center justify-between h-4 text-sm">
+                  <h1>{parent.id}</h1>
+                  <motion.button
+                    className="text-sm text-start text-neutral-800 dark:text-neutral-200 hover:text-neutral-600 dark:hover:text-neutral-400"
+                    onClick={() => toggleChild(parent.id)}
+                    animate={
+                      childDrop.id === parent.id && childDrop.open === true
+                        ? "open"
+                        : "close"
+                    }
+                    exit="close"
+                    variants={btnVariants}
+                  >
+                    {RightArrowIcon}
+                  </motion.button>
                 </div>
-              )
+                <ChildList parentId={parent.id} children={parent.children} />
+              </div>
             );
           })}
         </motion.div>

@@ -18,11 +18,13 @@ export default function ProductList({ data }) {
 
   const [priceDrop, showPriceDrop] = useState(false);
 
+  console.log(data);
   useEffect(() => {
-    console.log("Categories: ", filterCatData);
+    // console.log("Categories: ", filterCatData);
   }, [filterCatData]);
 
-  const [categories, parents, children, products] = data;
+  const categories = data;
+
   const { RightArrowIcon } = useIcons();
 
   const toggleCategory = () => {
@@ -151,6 +153,7 @@ export default function ProductList({ data }) {
       }
     }
   };
+  console.log();
   return (
     <div className="bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center px-5 ">
       <div className="h-48 w-full flex flex-col items-center justify-center">
@@ -160,8 +163,8 @@ export default function ProductList({ data }) {
         <ProductListContext.Provider
           value={{
             categories,
-            parents,
-            children,
+            // parents,
+            // children,
             categoryDrop,
             parentDrop,
             childDrop,
@@ -225,7 +228,21 @@ export default function ProductList({ data }) {
         </ProductListContext.Provider>
         {/* Products */}
         <div className="basis-4/5 flex flex-col items-center">
-          {/* {filterCatData.length > 0 && ()} */}
+          {filterCatData.length > 0 && (
+            <div className="flex flex-col items-center justify-center gap-3">
+              {categories.map((category) => {
+                if (filterCatData.includes(category.id)) {
+                  return category.parents.map((parent) => {
+                    return parent.children.map((child) => {
+                      return child.items.map((item) => {
+                        return item.name;
+                      });
+                    });
+                  });
+                }
+              })}
+            </div>
+          )}
         </div>
       </div>
     </div>

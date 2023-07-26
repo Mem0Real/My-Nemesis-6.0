@@ -52,7 +52,10 @@ export default function CategoryList() {
                     {RightArrowIcon}
                   </motion.button>
                 </div>
-                <ParentList categoryId={category.id} />
+                <ParentList
+                  categoryId={category.id}
+                  parents={category.parents}
+                />
               </div>
             );
           })}
