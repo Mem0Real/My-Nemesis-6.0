@@ -39,6 +39,7 @@ export default function CartBase({ children }) {
       window.removeEventListener("wheel", handleWindowWheel);
     };
   }, [cartModal, infoModal]);
+
   useEffect(() => {
     let cart;
     if (cookieStore.Cart && cookieStore?.Cart !== undefined)

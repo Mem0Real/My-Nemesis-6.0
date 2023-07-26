@@ -41,6 +41,7 @@ export default function SideBarComponent({ data }) {
     open: {
       right: 0,
       rotate: -180,
+      borderTopWidth: "1px",
       borderLeftWidth: "1px",
       borderRadius: "6px",
       transition: {
@@ -56,8 +57,9 @@ export default function SideBarComponent({ data }) {
         ease: "easeInOut",
         duration: 0.3,
       },
+      borderTopWidth: 0,
       borderLeftWidth: 0,
-      borderRadius: "0 6px 6px 0",
+      borderRadius: "0 0 6px 0",
     },
     opened: {
       rotate: -90,
