@@ -29,6 +29,21 @@ export default function OrderTable() {
 
   const cookieStore = parseCookies();
 
+  // Disable scrollbar on modal open
+  useEffect(() => {
+    const handleWindowWheel = (event) => {
+      if (removeModal) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("wheel", handleWindowWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWindowWheel);
+    };
+  }, [removeModal]);
+
   useEffect(() => {
     let data;
     if (cookieStore.Customer && cookieStore.Customer !== "undefined") {

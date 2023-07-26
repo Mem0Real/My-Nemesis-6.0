@@ -38,14 +38,14 @@ export default function RemoveModal({ removeData, closeRemoveModal }) {
 
   return (
     <section
-      className="my-auto w-[80%] md:w-[65%] lg:w-[40%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-900"
+      className="my-auto w-[80%] md:w-[65%] lg:w-[40%] mx-auto overflow-hidden rounded-lg bg-neutral-300 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200"
       ref={modalRef}
     >
       <header className="p-4 relative">
         <button
           name="close-delete-modal"
           type="button"
-          className="absolute top-5 right-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+          className="absolute top-5 right-5 text-neutral-800 dark:text-neutral-200 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
           data-modal-hide="authentication-modal"
           onClick={() => closeRemoveModal()}
         >
@@ -68,19 +68,19 @@ export default function RemoveModal({ removeData, closeRemoveModal }) {
           {`Remove ${removeData?.id} from ${removeData?.entry}?`}
         </h3>
       </header>
-      <div className="text-center text-white w-[97%] mx-auto">
+      <div className="text-center text-neutral-800 dark:text-neutral-200 w-[97%] mx-auto">
         <div
           id="alert-dialog-description"
           className="py-5 flex flex-col items-center justify-between gap-5"
         >
-          <span className="text-md w-full border-y text-center py-3 ">
+          <span className="text-md w-full border-y border-neutral-800 dark:border-neutral-200 text-center py-3 ">
             This Action is Irreversible !
           </span>
-          <span className="text-white mb-2">
+          <span className="text-neutral-800 dark:text-neutral-200 mb-2">
             This will remove the customer <b>{removeData?.id}</b> along with all
             his/her orders.
           </span>
-          <span className="font-semibold text-white">
+          <span className="font-semibold text-neutral-800 dark:text-neutral-200">
             Are you sure you want to continue?
           </span>
         </div>

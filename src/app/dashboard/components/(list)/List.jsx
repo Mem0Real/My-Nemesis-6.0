@@ -24,12 +24,27 @@ export default function List({ data, create, update, deleteItem, url }) {
   const [deleteModal, showDeleteModal] = useState(false);
   const [deleteData, setDeleteData] = useState({});
 
+  // useEffect(() => {
+  //   if (addModal || editModal || deleteModal) {
+  //     document.body.style.overflow = "hidden";
+  //   } else {
+  //     document.body.style.overflow = "auto";
+  //   }
+  // }, [addModal, editModal, deleteModal]);
+
+  // Disable scrollbar on modal open
   useEffect(() => {
-    if (addModal || editModal || deleteModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    const handleWindowWheel = (event) => {
+      if (addModal || editModal || deleteModal) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("wheel", handleWindowWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWindowWheel);
+    };
   }, [addModal, editModal, deleteModal]);
 
   const handleAdd = (

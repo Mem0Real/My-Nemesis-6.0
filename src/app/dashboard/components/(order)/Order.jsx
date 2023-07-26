@@ -17,6 +17,7 @@ const OrderDataContext = createContext({});
 import { motion, AnimatePresence } from "framer-motion";
 import { setCookie, parseCookies } from "nookies";
 
+// TODO should disable hiding of scrollbar on modal open cuz its shifting
 export default function Order({
   order,
   url,
@@ -31,12 +32,19 @@ export default function Order({
 
   const cookieStore = parseCookies();
 
+  // Disable scrollbar on modal open
   useEffect(() => {
-    if (removeAllModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    const handleWindowWheel = (event) => {
+      if (removeAllModal) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("wheel", handleWindowWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWindowWheel);
+    };
   }, [removeAllModal]);
 
   useEffect(() => {
@@ -77,7 +85,13 @@ export default function Order({
   };
   return (
     <OrderDataContext.Provider
-      value={{ order, url, delivered, markDelivered, removeOne }}
+      value={{
+        order,
+        url,
+        delivered,
+        markDelivered,
+        removeOne,
+      }}
     >
       <div className="flex-flex-col w-full items-center justify-center relative min-h-screen bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 md:mt-6">
         <h1 className="text-2xl font-mono font-thin mt-2 underline underline-offset-4 text-center">

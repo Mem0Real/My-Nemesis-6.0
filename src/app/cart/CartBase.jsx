@@ -25,14 +25,20 @@ export default function CartBase({ children }) {
 
   const cookieStore = parseCookies();
 
+  // Disable scrollbar on modal open
   useEffect(() => {
-    if (cartModal || infoModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [cartModal, infoModal]);
+    const handleWindowWheel = (event) => {
+      if (cartModal || infoModal) {
+        event.preventDefault();
+      }
+    };
 
+    window.addEventListener("wheel", handleWindowWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWindowWheel);
+    };
+  }, [cartModal, infoModal]);
   useEffect(() => {
     let cart;
     if (cookieStore.Cart && cookieStore?.Cart !== undefined)
