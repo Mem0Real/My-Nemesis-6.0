@@ -16,7 +16,6 @@ export default function Categories() {
     sideVariants,
     itemVariants,
     toggleParent,
-    closeSidebars,
   } = useSidebarContext();
   const { RightArrowIcon } = useIcons();
 

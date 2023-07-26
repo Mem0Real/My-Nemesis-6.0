@@ -14,54 +14,29 @@ import { useIcons } from "@/app/utils/CustomIcons";
 
 export default function Child({ categoryId, parentId, child }) {
   const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
-  const { par, childDropDown, chi } = useTableContext();
+  const { par, chi, buttonVariants, contentVariants, toggleChiDrop } =
+    useTableContext();
 
   const items = data[3];
 
   const { RightArrowIcon, PlusIcon, EditIcon, DeleteIcon } = useIcons();
 
-  const toggleExpander = () => {
-    childDropDown(child.id);
-  };
-
-  const variants = {
-    open: {
-      opacity: 1,
-    },
-    closed: {
-      opacity: 0,
-    },
-  };
-
-  const buttonVariants = {
-    open: {
-      rotate: 90,
-      x: 0.5,
-      y: 0.5,
-    },
-    close: {
-      rotate: 0,
-      x: 0,
-      y: 0,
-    },
-  };
   return [
     <AnimatePresence key={child.id}>
       {par.id === parentId && par.open === true && (
         <motion.tr
           key={child.id}
-          animate={par.id === parentId && par.open === true ? "open" : "closed"}
-          variants={variants}
-          exit={"closed"}
           className={`cursor-pointer bg-neutral-400 dark:bg-neutral-600 hover:bg-neutral-500 dark:hover:bg-neutral-500 ${
             chi.id === child.id && chi.open === true && "font-semibold"
           }`}
+          initial="close"
+          animate={par.id === parentId && par.open === true ? "open" : "close"}
+          exit="close"
+          variants={contentVariants}
+          onClick={() => toggleChiDrop(child.id)}
         >
-          <td className="py-4" onClick={toggleExpander}>
-            <div
-              className="list-outside flex items-center gap-3"
-              onClick={toggleExpander}
-            >
+          <td className="py-4">
+            <div className="list-outside flex items-center gap-3">
               <motion.div
                 className={`text-sm text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 hover:dark:text-neutral-400`}
                 initial="close"
@@ -84,9 +59,7 @@ export default function Child({ categoryId, parentId, child }) {
               </motion.div>
             </div>
           </td>
-          <td className="pl-6 py-3" onClick={toggleExpander}>
-            {child.description}
-          </td>
+          <td className="pl-6 py-3">{child.description}</td>
           <td>
             <div className="flex items-center justify-center gap-3">
               <motion.div
@@ -136,9 +109,10 @@ export default function Child({ categoryId, parentId, child }) {
       {chi.id === child.id && chi.open === true && (
         <motion.tr
           key={`${child.id}-table`}
-          animate={chi.id === child.id && chi.open === true ? "open" : "closed"}
-          variants={variants}
-          exit={"closed"}
+          initial="close"
+          animate={chi.id === child.id && chi.open === true ? "open" : "close"}
+          exit="close"
+          variants={contentVariants}
         >
           <td colSpan={3}>
             <div className="mx-auto mt-5 rounded-xl overflow-auto overflow-y-hidden no-scrollbar">

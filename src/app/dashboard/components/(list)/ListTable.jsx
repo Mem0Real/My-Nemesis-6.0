@@ -105,6 +105,53 @@ export default function MyTable() {
     }
   };
 
+  const toggleCatDrop = (id) => {
+    catDropDown(id);
+  };
+
+  const toggleParDrop = (id) => {
+    parDropDown(id);
+  };
+
+  const toggleChiDrop = (id) => {
+    childDropDown(id);
+  };
+  const buttonVariants = {
+    open: {
+      rotate: 90,
+      x: 0.5,
+      y: 0.5,
+    },
+    close: {
+      rotate: 0,
+      x: 0,
+      y: 0,
+    },
+  };
+  const dropVariants = {
+    opened: {
+      transition: {
+        staggerChildren: 0.05,
+        staggerDirection: 1,
+      },
+    },
+    closed: {
+      transition: {
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+      },
+    },
+  };
+  const contentVariants = {
+    open: {
+      opacity: 1,
+      // height: "max-content",
+    },
+    close: {
+      opacity: 0,
+      // height: "0px",
+    },
+  };
   return (
     <TableContext.Provider
       value={{
@@ -117,6 +164,12 @@ export default function MyTable() {
         setCat,
         setPar,
         setChi,
+        toggleCatDrop,
+        toggleParDrop,
+        toggleChiDrop,
+        buttonVariants,
+        dropVariants,
+        contentVariants,
       }}
     >
       <div className="table-container">

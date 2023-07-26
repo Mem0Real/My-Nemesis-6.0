@@ -8,73 +8,64 @@ import Parent from "./Parent";
 import { useDataContext } from "../List";
 import { useTableContext } from "../ListTable";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 import { useIcons } from "@/app/utils/CustomIcons";
 
 export default function Category({ category }) {
   const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
-  const { catDropDown, cat } = useTableContext();
+  const { catDropDown, cat, buttonVariants, dropVariants, toggleCatDrop } =
+    useTableContext();
 
   const parents = data[1];
 
   const { RightArrowIcon, PlusIcon, EditIcon, DeleteIcon } = useIcons();
 
-  const toggleExpander = () => {
-    catDropDown(category.id);
-  };
-
-  const buttonVariants = {
-    open: {
-      rotate: 90,
-      x: 0.5,
-      y: 0.5,
-    },
-    close: {
-      rotate: 0,
-      x: 0,
-      y: 0,
-    },
-  };
   return [
-    <motion.tr
-      key={category.id}
-      className={`cursor-pointer bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 ${
-        cat.id === category.id && cat.open === true && "font-semibold"
-      }`}
-    >
-      <td className="py-2" onClick={toggleExpander}>
-        <div className="list-outside flex items-center gap-3">
+    <AnimatePresence key={category.id}>
+      <motion.tr
+        key={category.id}
+        className={`cursor-pointer bg-neutral-200 dark:bg-neutral-800 hover:bg-neutral-300 dark:hover:bg-neutral-700 ${
+          cat.id === category.id && cat.open === true && "font-semibold"
+        }`}
+        initial="closed"
+        animate="opened"
+        onClick={() => toggleCatDrop(category.id)}
+      >
+        <motion.td
+          className="flex items-center justify-start gap-3"
+          height="50"
+        >
           <motion.div
             className={`text-sm text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 hover:dark:text-neutral-400 `}
-            initial="open"
             animate={
               cat.id === category.id && cat.open === true ? "open" : "close"
             }
+            initial="close"
             exit="close"
             variants={buttonVariants}
           >
             {RightArrowIcon}
           </motion.div>
-          <motion.div whileHover={{ scale: 1.02 }}>
+          <motion.div
+            whileHover={{ scale: 1.02 }}
+            onClick={(e) => e.stopPropagation()}
+          >
             <Link
               className="hover:underline underline-offset-4 z-10"
               href={`collection/${category.id}`}
-              onClick={(e) => e.stopPropagation()}
             >
               {category.name}
             </Link>
           </motion.div>
-        </div>
-      </td>
-      <td
-        className="py-4 max-w-36 text-center md:text-start"
-        onClick={toggleExpander}
-      >
-        {category.description}
-      </td>
-      <td>
-        <div className="flex items-center justify-center gap-3">
+        </motion.td>
+        <td className="max-w-36 text-center md:text-start">
+          {category.description}
+        </td>
+        <td
+          className="flex items-center justify-center gap-3"
+          onClick={(e) => e.stopPropagation()}
+        >
           <motion.div
             whileHover={{
               scale: 1.3,
@@ -113,9 +104,9 @@ export default function Category({ category }) {
           >
             {DeleteIcon}
           </motion.div>
-        </div>
-      </td>
-    </motion.tr>,
+        </td>
+      </motion.tr>
+    </AnimatePresence>,
     parents.map(
       (parent) =>
         parent.CategoryId === category.id && (
