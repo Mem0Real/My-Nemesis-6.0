@@ -5,23 +5,24 @@ import ProductList from "./productList";
 
 async function getData(searchParams) {
   const search = searchParams.search || undefined;
+  const sort = searchParams.sort || "asc";
 
   if (search) {
     try {
       const categories = prisma.categories.findMany({
-        orderBy: { id: "asc" },
+        orderBy: { id: sort },
         select: {
           id: true,
           parents: {
-            orderBy: { id: "asc" },
+            orderBy: { id: sort },
             select: {
               id: true,
               children: {
-                orderBy: { id: "asc" },
+                orderBy: { id: sort },
                 select: {
                   id: true,
                   items: {
-                    orderBy: { name: "asc" },
+                    orderBy: { name: sort },
                     where: {
                       OR: [
                         { name: { contains: search, mode: "insensitive" } },
@@ -42,19 +43,19 @@ async function getData(searchParams) {
   } else {
     try {
       const categories = prisma.categories.findMany({
-        orderBy: { id: "asc" },
+        orderBy: { id: sort },
         select: {
           id: true,
           parents: {
-            orderBy: { id: "asc" },
+            orderBy: { id: sort },
             select: {
               id: true,
               children: {
-                orderBy: { id: "asc" },
+                orderBy: { id: sort },
                 select: {
                   id: true,
                   items: {
-                    orderBy: { name: "asc" },
+                    orderBy: { name: sort },
                   },
                 },
               },
