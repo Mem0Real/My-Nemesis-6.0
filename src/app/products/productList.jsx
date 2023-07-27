@@ -9,7 +9,7 @@ import List from "./components/list";
 
 const ProductListContext = createContext({});
 
-export default function ProductList({ data }) {
+export default function ProductList({ data, products }) {
   const [categoryDrop, showCategoryDrop] = useState(false);
   const [parentDrop, setParentDrop] = useState(false);
   const [childDrop, setChildDrop] = useState(false);
@@ -155,6 +155,7 @@ export default function ProductList({ data }) {
   return (
     <ProductListContext.Provider
       value={{
+        products,
         categories,
         priceDrop,
         categoryDrop,
