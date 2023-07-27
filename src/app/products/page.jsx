@@ -78,7 +78,7 @@ async function getData(searchParams) {
     itemArray.map((prod) => (prodArray = prodArray.concat(prod.items)));
 
     counter = prodArray.reduce((acc, val) => acc + val);
-    totalPage = Math.ceil((counter - 1) / limit);
+    totalPage = Math.ceil(counter / limit);
   } else {
     let c1, c2, c3, c4;
 
