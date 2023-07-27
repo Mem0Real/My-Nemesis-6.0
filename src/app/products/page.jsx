@@ -9,6 +9,10 @@ async function getData(searchParams) {
 
   const filter = searchParams.filter || undefined;
 
+  let decodedFilter = decodeURIComponent(filter);
+
+  let filterArray = decodedFilter.split(",");
+
   let limit, page, skip;
 
   if (filter || search) {
@@ -35,7 +39,10 @@ async function getData(searchParams) {
     searchCheck = undefined;
   }
 
-  filterCheck = filter ? { id: filter } : undefined;
+  if (filter) {
+    filterCheck = { id: { in: filterArray } };
+  } else filterCheck = undefined;
+  // filterCheck = filter ? { id: filter } : undefined;
 
   if (filter || search) {
     const count = await prisma.categories.findMany({
@@ -71,7 +78,7 @@ async function getData(searchParams) {
     itemArray.map((prod) => (prodArray = prodArray.concat(prod.items)));
 
     counter = prodArray.reduce((acc, val) => acc + val);
-    totalPage = Math.ceil(counter / limit);
+    totalPage = Math.ceil((counter - 1) / limit);
   } else {
     let c1, c2, c3, c4;
 
