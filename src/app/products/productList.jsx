@@ -6,10 +6,13 @@ import FilterData from "./components/filterData";
 import Search from "./components/search";
 import Sort from "./components/sort";
 import List from "./components/list";
+import Pagination from "./components/pagination";
+
+import useCustomRouter from "@/hooks/useCustomRouter";
 
 const ProductListContext = createContext({});
 
-export default function ProductList({ data }) {
+export default function ProductList({ data, totalPage }) {
   const [categoryDrop, showCategoryDrop] = useState(false);
   const [parentDrop, setParentDrop] = useState(false);
   const [childDrop, setChildDrop] = useState(false);
@@ -20,8 +23,10 @@ export default function ProductList({ data }) {
 
   const [priceDrop, showPriceDrop] = useState(false);
 
+  const { pushQuery } = useCustomRouter();
+
   useEffect(() => {
-    // console.log("Categories: ", filterCatData);
+    pushQuery({ filter: filterCatData.toString() });
   }, [filterCatData]);
 
   const categories = data;
@@ -169,6 +174,7 @@ export default function ProductList({ data }) {
         toggleParent,
         toggleChild,
         handleSelection,
+        totalPage,
       }}
     >
       <div className="bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center px-5 ">
@@ -186,7 +192,7 @@ export default function ProductList({ data }) {
             </div>
             <List />
           </div>
-          {/* <Pagination /> */}
+          {totalPage && <Pagination />}
         </div>
       </div>
     </ProductListContext.Provider>
