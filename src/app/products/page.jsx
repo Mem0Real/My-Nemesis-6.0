@@ -14,48 +14,41 @@ async function getData(searchParams) {
   if (filter || search) {
     limit = searchParams.limit * 1 || 5;
     page = searchParams.page * 1 || 1;
-    skip = searchParams.skip * 1 || page * (page - 1);
+    skip = searchParams.skip * 1 || limit * (page - 1);
   } else {
     limit = searchParams.limit * 1 || 1;
     page = searchParams.page * 1 || 1;
     skip = searchParams.skip * 1 || page - 1;
   }
 
-  let c1, c2, c3, c4;
+  let counter, totalPage;
 
-  c1 = prisma.categories.count({});
-  c2 = prisma.parents.count({});
-  c3 = prisma.children.count({});
-  c4 = prisma.items.count({});
-
-  const count = await Promise.all([c1, c2, c3, c4]);
-  const totalCount = count.reduce((acc, val) => acc + val, 0);
-
-  const totalPage = Math.ceil(totalCount / limit);
-
+  let searchCheck, filterCheck;
   if (search) {
-    try {
-      const categories = await prisma.categories.findMany({
-        orderBy: { id: sort },
-        select: {
-          id: true,
-          parents: {
-            orderBy: { id: sort },
-            select: {
-              id: true,
-              children: {
-                orderBy: { id: sort },
-                select: {
-                  id: true,
-                  items: {
-                    orderBy: { name: sort },
-                    take: limit,
-                    skip: skip,
-                    where: {
-                      OR: [
-                        { name: { contains: search, mode: "insensitive" } },
-                        { id: { contains: search, mode: "insensitive" } },
-                      ],
+    searchCheck = {
+      OR: [
+        { name: { contains: search, mode: "insensitive" } },
+        { id: { contains: search, mode: "insensitive" } },
+      ],
+    };
+  } else {
+    searchCheck = undefined;
+  }
+
+  filterCheck = filter ? { id: filter } : undefined;
+
+  if (filter || search) {
+    const count = await prisma.categories.findMany({
+      where: filterCheck,
+      select: {
+        parents: {
+          select: {
+            children: {
+              select: {
+                _count: {
+                  select: {
+                    items: {
+                      where: searchCheck,
                     },
                   },
                 },
@@ -63,94 +56,74 @@ async function getData(searchParams) {
             },
           },
         },
-      });
+      },
+    });
 
-      return { categories, totalCount, totalPage };
-    } catch (error) {
-      return { error: "Error fetching data. \n Please try again later." };
-    }
+    let childArray = [];
+    count[0].parents.map(
+      (child) => (childArray = childArray.concat(child.children))
+    );
+
+    let itemArray = [];
+    childArray.map((item) => (itemArray = itemArray.concat(item._count)));
+
+    let prodArray = [];
+    itemArray.map((prod) => (prodArray = prodArray.concat(prod.items)));
+
+    counter = prodArray.reduce((acc, val) => acc + val);
+    totalPage = Math.ceil(counter / limit);
   } else {
-    try {
-      const categories = await prisma.categories.findMany({
-        orderBy: { id: sort },
-        select: {
-          id: true,
-          parents: {
-            orderBy: { id: sort },
-            select: {
-              id: true,
-              children: {
-                orderBy: { id: sort },
-                select: {
-                  id: true,
-                  items: {
-                    take: limit,
-                    skip: skip,
-                    orderBy: { name: sort },
-                  },
+    let c1, c2, c3, c4;
+
+    c1 = prisma.categories.count({});
+    c2 = prisma.parents.count({});
+    c3 = prisma.children.count({});
+    c4 = prisma.items.count({});
+
+    const count = await Promise.all([c1, c2, c3, c4]);
+    counter = count.reduce((acc, val) => acc + val, 0);
+
+    totalPage = Math.ceil(counter / limit);
+  }
+
+  try {
+    const categories = await prisma.categories.findMany({
+      orderBy: { id: sort },
+      select: {
+        id: true,
+        parents: {
+          orderBy: { id: sort },
+          select: {
+            id: true,
+            children: {
+              orderBy: { id: sort },
+              select: {
+                id: true,
+                items: {
+                  orderBy: { name: sort },
+                  take: limit,
+                  skip: skip,
+                  where: searchCheck,
                 },
               },
             },
           },
         },
-      });
+      },
+    });
 
-      return { categories, totalCount, totalPage };
+    // const [categories, count] = await Promise.all([categoriesData, countData]);
 
-      // const counter = await prisma.categories.count({
-      //   where: {},
-      //   select: {
-      //     id: true,
-      //     parents: {
-      //       select: {
-      //         id: true,
-      //         children: {
-      //           select: {
-      //             id: true,
-      //             items: {
-      //               take: limit,
-      //               skip: skip,
-      //             },
-      //           },
-      //         },
-      //       },
-      //     },
-      //   },
-      // });
-    } catch (error) {
-      return { error: "Error fetching data. \n Please try again later." };
-    }
+    return { categories, counter, totalPage };
+  } catch (error) {
+    return { error: "Error fetching data. \n Please try again later." };
   }
 }
-
-// async function getProducts(searchParams) {
-//   const search = searchParams.search || undefined;
-
-//   try {
-//     // const res = await prisma.items.findMany({
-//     //   where: {
-//     //     name: {
-//     //       search: search,
-//     //     },
-//     //   },
-//     // });
-//     const res = await prisma.items.findMany({
-//       where: {
-//         OR: [
-//           { name: { contains: search, mode: "insensitive" } },
-//           { id: { contains: search, mode: "insensitive" } },
-//         ],
-//       },
-//     });
-//     return res;
-//   } catch (error) {
-//     return { error: error };
-//   }
-// }
 
 export default async function ProductsPage({ params, searchParams }) {
   try {
     const { categories, totalPage } = await getData(searchParams);
+    // console.log(categories, totalPage);
     return <ProductList data={categories} totalPage={totalPage} />;
   } catch (error) {
     console.log(error);
