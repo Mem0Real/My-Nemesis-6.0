@@ -4,45 +4,18 @@ import { useProductListContext } from "../productList";
 
 // TODO add cookies to store opened data
 export default function List() {
-  const { filterCatData, categories } = useProductListContext();
+  const { products } = useProductListContext();
 
   return (
-    <div className="basis-4/5 flex flex-col items-center justify-start min-h-screen pt-5 gap-3">
-      {filterCatData?.length > 0
-        ? categories.map((category) => {
-            if (filterCatData?.includes(category.id)) {
-              return category.parents.map((parent) => {
-                return parent.children.map((child) => {
-                  return child.items.map((item) => {
-                    return (
-                      <div
-                        key={item.id}
-                        className="flex flex-col items-center gap-3"
-                      >
-                        {item.name}
-                      </div>
-                    );
-                  });
-                });
-              });
-            }
-          })
-        : categories.map((category) => {
-            return category.parents.map((parent) => {
-              return parent.children.map((child) => {
-                return child.items.map((item) => {
-                  return (
-                    <div
-                      key={item.id}
-                      className="flex flex-col items-center gap-3"
-                    >
-                      {item.name}
-                    </div>
-                  );
-                });
-              });
-            });
-          })}
+    <div className="basis-4/5 flex flex-col items-center min-h-screen">
+      {products.map((product) => {
+        return (
+          <div key={product.id} className="flex flex-col gap-4">
+            <h1>{product.name}</h1>
+            <p>{product.description}</p>
+          </div>
+        );
+      })}
     </div>
   );
 }

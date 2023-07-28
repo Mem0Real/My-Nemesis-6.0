@@ -14,7 +14,7 @@ import useCustomRouter from "@/hooks/useCustomRouter";
 
 const ProductListContext = createContext({});
 
-export default function ProductList({ data, totalPage }) {
+export default function ProductList({ products, menu, totalPage }) {
   const [categoryDrop, showCategoryDrop] = useState(false);
   const [parentDrop, setParentDrop] = useState(false);
   const [childDrop, setChildDrop] = useState(false);
@@ -46,8 +46,6 @@ export default function ProductList({ data, totalPage }) {
       pushQuery({ filter: filterCatData.toString() });
     } else pushQuery({ filter: "" });
   }, [filterCatData]);
-
-  const categories = data;
 
   const toggleCategory = () => {
     showCategoryDrop((prev) => !prev);
@@ -116,12 +114,7 @@ export default function ProductList({ data, totalPage }) {
     },
   };
 
-  const handleSelection = (
-    cat = null,
-    par = null,
-    chi = null,
-    filter = null
-  ) => {
+  const handleSelection = (cat = null, par = null, chi = null) => {
     if (cat) {
       //   if (filterCatData?.length > 0) {
       //     const prevCatData = filterCatData.find((item) => item.id === cat);
@@ -188,7 +181,8 @@ export default function ProductList({ data, totalPage }) {
   return (
     <ProductListContext.Provider
       value={{
-        categories,
+        menu,
+        products,
         priceDrop,
         categoryDrop,
         parentDrop,

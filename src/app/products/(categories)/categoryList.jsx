@@ -16,7 +16,7 @@ export default function CategoryList() {
   const cookieStore = parseCookies();
 
   const {
-    categories,
+    menu,
     categoryDrop,
     parentDrop,
     btnVariants,
@@ -47,7 +47,7 @@ export default function CategoryList() {
           exit="closed"
           variants={contentVariants}
         >
-          {categories.map((category) => {
+          {menu.map((category) => {
             return (
               <div key={category.id} className="w-full flex flex-col px-3">
                 <div className="flex items-center justify-between h-5 text-sm">

@@ -4,7 +4,6 @@ import { NextResponse } from "next/server";
 export async function middleware(req) {
   const pathname = req.nextUrl.pathname;
 
-  console.log(req);
   const protectedPaths = ["/dashboard"];
   const isPathProtected = protectedPaths?.some((path) => pathname == path);
 

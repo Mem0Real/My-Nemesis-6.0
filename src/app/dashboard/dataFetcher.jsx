@@ -5,7 +5,6 @@ import { create, update, deleteItem } from "./listActions";
 import { removeOne, removeAll, markDelivered } from "./orderActions";
 
 import AdminActions from "./AdminActions";
-import copyIds from "../utils/copyIds";
 
 async function categoryList() {
   const categories = prisma.categories.findMany({ orderBy: { id: "asc" } });
@@ -34,12 +33,6 @@ async function orderList() {
 
   return data;
 }
-async function copy(id, upId) {
-  const res = await prisma.items.update({
-    where: { id: id },
-    data: { CategoryId: upId },
-  });
-}
 
 export default async function DataFetcher() {
   const listData = categoryList();
@@ -50,26 +43,6 @@ export default async function DataFetcher() {
   const list = data[0];
   const order = data[1];
 
-  const [categories, parents, children, items] = list;
-  const editor = () => {
-    parents.map((parent) => {
-      // console.log("Parents: ", parent.id, parent.CategoryId);
-      children.map(({ id, ParentId, CategoryId }) => {
-        if (ParentId === parent.id) console.log(id, parent.CategoryId);
-      });
-    });
-  };
-
-  const editor2 = () => {
-    children.map((child) => {
-      // console.log("Children: ", child.id, child.CategoryId);
-      items.map(({ id, name, ChildId, CategoryId }) => {
-        if (ChildId === child.id) console.log(name, child.CategoryId);
-      });
-    });
-  };
-
-  editor2();
   return (
     <AdminActions
       data={list}
