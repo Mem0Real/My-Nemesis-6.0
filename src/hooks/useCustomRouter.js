@@ -38,7 +38,6 @@ const useCustomRouter = () => {
       page === 1 ? delete query.page : (query.page = page);
     }
 
-    console.log("Query: ", query);
     const newQuery = new URLSearchParams(query).toString();
     router.push(`?${newQuery}`);
   };

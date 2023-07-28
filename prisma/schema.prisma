@@ -5,6 +5,8 @@ model Categories {
   description   String?
   image         String?
   parents       Parents[]
+  children      Children[]
+  items         Items[]
 }
 
 model Parents {
@@ -12,10 +14,12 @@ model Parents {
   name          String        
   description   String?
   image         String?
+  
   category      Categories    @relation(fields: [CategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   CategoryId    String
   
   children      Children[]
+  items         Items[]
 }
 
 model Children {
@@ -23,8 +27,11 @@ model Children {
   name          String        
   description   String?
   image         String?
+  
+  category      Categories    @relation(fields: [CategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   parent        Parents       @relation(fields: [ParentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
 
+  CategoryId    String
   ParentId      String
 
   items         Items[]
@@ -39,9 +46,14 @@ model Items {
   quantity      Int?
   price         Float?
   images        String[]
+
   child         Children         @relation(fields: [ChildId], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  
+  parent        Parents          @relation(fields: [ParentId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  category      Categories       @relation(fields: [CategoryId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
   ChildId       String
+  ParentId      String
+  CategoryId    String
 }
 
 model Customers {
