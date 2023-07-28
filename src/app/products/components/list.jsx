@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { motion, AnimatePresence } from "framer-motion";
 
 import { useProductListContext } from "../productList";
@@ -17,25 +19,35 @@ export default function List() {
     );
   }
   return (
-    <div className="flex items-center justify-evenly flex-wrap gap-12 pb-6">
+    <div className="flex items-center content-start justify-center flex-wrap gap-0 py-6 w-full">
       {products.map((product) => {
         let image = product.images[0];
         return (
-          <div key={product.id} className="flex flex-col gap-8 items-center">
-            <div
-              className={`relative w-72 h-60 border border-neutral-200 rounded-t-3xl shadow-innerGlow shadow-neutral-900 hover:shadow-black transition-all ease-in-out dark:border-neutral-800 min-h-fit min-w-fit`}
+          <div
+            key={product.id}
+            className="flex flex-col gap-8 w-72 h-60 items-center border border-neutral-500"
+          >
+            <motion.div
+              className={`relative w-60 h-60 cursor-pointer`}
+              whileHover={{
+                scale: 1.25,
+                transition: { duration: 0.25 },
+              }}
             >
               {product.images.length > 0 && (
-                <Image
-                  src={image}
-                  alt={product.id}
-                  fill={true}
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="absolute object-contain"
-                  placeholder={product.id}
-                />
+                <Link
+                  href={`/collection/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
+                >
+                  <Image
+                    src={image}
+                    alt={product.id}
+                    fill={true}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="absolute object-contain object-center overflow-crop"
+                  />
+                </Link>
               )}
-            </div>
+            </motion.div>
 
             <h1 className="text-center">{product.name}</h1>
           </div>

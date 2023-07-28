@@ -15,11 +15,11 @@ export default function Pagination() {
 
   const buttonVariants = {
     selected: {
-      borderColor: "blue",
+      borderColor: "rgb(18 18 68)",
       borderWidth: "2px",
     },
     notSelected: {
-      borderColor: "",
+      borderColor: "rgb(200 200 200)",
       borderWidth: "1px",
     },
   };
@@ -29,7 +29,7 @@ export default function Pagination() {
         <motion.button
           key={page}
           onClick={() => pushQuery({ page })}
-          className="py-0.5 text-sm w-6 border border-neutral-800 dark:border-neutral-200 rounded-md "
+          className="py-0.5 text-sm w-6 border rounded-md "
           animate={query.page === page ? "selected" : "notSelected"}
           variants={buttonVariants}
         >
