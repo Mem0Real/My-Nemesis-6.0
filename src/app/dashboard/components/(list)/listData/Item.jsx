@@ -16,16 +16,6 @@ export default function Item({ categoryId, parentId, childId, item }) {
 
   const { BagIcon, EditIcon, DeleteIcon } = useIcons();
 
-  // const variants = {
-  //   open: {
-  //     y: "10px",
-  //     opacity: 1,
-  //   },
-  //   closed: {
-  //     y: "-10px",
-  //     opacity: 0,
-  //   },
-  // };
   return [
     <AnimatePresence key={item.id}>
       {chi.id === childId && chi.open === true && (
@@ -63,7 +53,7 @@ export default function Item({ categoryId, parentId, childId, item }) {
           <td className="border border-black dark:border-white">
             <div className="flex items-center justify-center gap-3">
               <motion.div
-                className="text-blue-700 text-base"
+                className="text-blue-700 text-base cursor-pointer"
                 onClick={() => handleEdit("items", item)}
                 whileHover={{
                   scale: 1.5,
@@ -75,7 +65,7 @@ export default function Item({ categoryId, parentId, childId, item }) {
                 {EditIcon}
               </motion.div>
               <motion.div
-                className="text-red-700 text-base"
+                className="text-red-700 text-base cursor-pointer"
                 onClick={() => handleDelete("items", item)}
                 whileHover={{
                   scale: 1.5,

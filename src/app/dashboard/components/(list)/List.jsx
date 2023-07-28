@@ -39,10 +39,10 @@ export default function List({ data, create, update, deleteItem, url }) {
   // Disable scrollbar on modal open
   useEffect(() => {
     const handleWindowWheel = (event) => {
-      if (addModal && !addRef.current.contains(event.target)) {
+      if (addModal && !addRef?.current.contains(event.target)) {
         event.preventDefault();
       }
-      if (editModal && !editRef.current.contains(event.target)) {
+      if (editModal && !editRef?.current.contains(event.target)) {
         event.preventDefault();
       }
       if (deleteModal) event.preventDefault();
@@ -82,8 +82,18 @@ export default function List({ data, create, update, deleteItem, url }) {
   ) => {
     !categoryId && !parentId && !childId && setAddData({ entry: entry });
     categoryId && setAddData({ entry: entry, categories: categoryId });
-    parentId && setAddData({ entry: entry, parents: parentId });
-    childId && setAddData({ entry: entry, children: childId });
+    categoryId &&
+      parentId &&
+      setAddData({ entry: entry, categories: categoryId, parents: parentId });
+    categoryId &&
+      parentId &&
+      childId &&
+      setAddData({
+        entry: entry,
+        categories: categoryId,
+        parents: parentId,
+        children: childId,
+      });
     showAddModal(true);
   };
 

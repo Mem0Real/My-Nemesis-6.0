@@ -71,14 +71,14 @@ export default function Category({ category }) {
             whileTap={{
               scale: 1,
             }}
-            className="text-green-700 text-base"
+            className="text-green-700 text-base cursor-pointer"
             onClick={() => handleAdd("parents", category.id)}
           >
             {PlusIcon}
           </motion.div>
 
           <motion.div
-            className="text-blue-700 text-base"
+            className="text-blue-700 text-base cursor-pointer"
             onClick={() => handleEdit("categories", category)}
             whileHover={{
               scale: 1.3,
@@ -91,7 +91,7 @@ export default function Category({ category }) {
           </motion.div>
 
           <motion.div
-            className="text-red-700 text-base"
+            className="text-red-700 text-base cursor-pointer"
             onClick={() => handleDelete("categories", category)}
             whileHover={{
               scale: 1.3,

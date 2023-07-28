@@ -28,6 +28,8 @@ export async function create(formData) {
   let description = formData.get("description");
 
   let category = { name: undefined, val: undefined };
+  let parent = { name: undefined, val: undefined };
+  let child = { name: undefined, val: undefined };
 
   if (!id) {
     let idName = name.toLowerCase();
@@ -39,11 +41,19 @@ export async function create(formData) {
   }
 
   if (childId !== null) {
-    category = { name: "ChildId", val: childId };
-  } else if (parentId !== null) {
-    category = { name: "ParentId", val: parentId };
-  } else if (categoryId !== null) {
+    child = { name: "ChildId", val: childId };
+  } else {
+    child = { name: undefined, val: undefined };
+  }
+  if (parentId !== null) {
+    parent = { name: "ParentId", val: parentId };
+  } else {
+    parent = { name: undefined, val: undefined };
+  }
+  if (categoryId !== null) {
     category = { name: "CategoryId", val: categoryId };
+  } else {
+    category = { name: undefined, val: undefined };
   }
 
   const writeToDb = async (dir = null) => {
@@ -60,6 +70,8 @@ export async function create(formData) {
             description: description ? description : undefined,
             image: dir ? dir : undefined,
             [category.name]: category.val,
+            [parent.name]: parent.val,
+            [child.name]: child.val,
           },
         });
         return { success: "Item created!" };
@@ -79,6 +91,8 @@ export async function create(formData) {
             description: description ? description : undefined,
             images: dir ? dir : undefined,
             [category.name]: category.val,
+            [parent.name]: parent.val,
+            [child.name]: child.val,
           },
         });
         return { success: "Item created successfully!" };
@@ -86,6 +100,7 @@ export async function create(formData) {
         return { error: ("Error Creating Item: \n", error) };
       }
     }
+    console.log(categoryId, parentId);
   };
   if (!file) {
     const query = await writeToDb();
@@ -158,8 +173,10 @@ export async function create(formData) {
         }
       }
       const query = await writeToDb(imageUrl);
-      if (query?.error) return { error: `Error creating item \n ${error}` };
-      else {
+      if (query?.error) {
+        console.log(query.error);
+        return { error: `Error creating item ` };
+      } else {
         revalidatePath("/collection");
         revalidatePath("/dashboard");
         revalidateTag("search");
