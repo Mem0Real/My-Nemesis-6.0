@@ -100,7 +100,6 @@ export async function create(formData) {
         return { error: ("Error Creating Item: \n", error) };
       }
     }
-    console.log(categoryId, parentId);
   };
   if (!file) {
     const query = await writeToDb();

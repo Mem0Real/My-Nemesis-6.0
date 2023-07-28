@@ -27,17 +27,17 @@ export default function List() {
             key={product.id}
             className="flex flex-col gap-8 w-72 h-60 items-center border border-neutral-500"
           >
-            <motion.div
-              className={`relative w-60 h-60 cursor-pointer`}
-              whileHover={{
-                scale: 1.25,
-                transition: { duration: 0.25 },
-              }}
+            <Link
+              href={`/collection/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
             >
-              {product.images.length > 0 && (
-                <Link
-                  href={`/collection/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
-                >
+              <motion.div
+                className={`relative w-60 h-60 cursor-pointer`}
+                whileHover={{
+                  scale: 1.25,
+                  transition: { duration: 0.25 },
+                }}
+              >
+                {product.images.length > 0 && (
                   <Image
                     src={image}
                     alt={product.id}
@@ -45,10 +45,9 @@ export default function List() {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     className="absolute object-contain object-center overflow-crop"
                   />
-                </Link>
-              )}
-            </motion.div>
-
+                )}
+              </motion.div>
+            </Link>
             <h1 className="text-center">{product.name}</h1>
           </div>
         );

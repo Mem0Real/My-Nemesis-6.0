@@ -172,7 +172,7 @@ export default function Child({ categoryId, parentId, child }) {
                   scale: 0.9,
                 }}
                 whileHover={{
-                  backgroundColor: "rgba(18 58 18 0.9)",
+                  backgroundColor: "rgba(15 83 40 0.9)",
                   borderRadius: "10px",
                 }}
               >
