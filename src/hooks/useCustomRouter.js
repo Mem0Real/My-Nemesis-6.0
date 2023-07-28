@@ -17,7 +17,6 @@ const useCustomRouter = () => {
 
   if (filter) {
     let decodedFilter = decodeURIComponent(filter);
-    console.log(decodedFilter);
     query.filter = decodedFilter;
   }
 
@@ -31,13 +30,15 @@ const useCustomRouter = () => {
       sort === "" ? delete query.sort : (query.sort = sort);
     }
 
-    if (filter?.length > 0) {
+    if (filter !== undefined) {
       filter === "" ? delete query.filter : (query.filter = filter);
     }
 
     if (page !== undefined) {
       page === 1 ? delete query.page : (query.page = page);
     }
+
+    console.log("Query: ", query);
     const newQuery = new URLSearchParams(query).toString();
     router.push(`?${newQuery}`);
   };

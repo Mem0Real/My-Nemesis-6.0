@@ -84,47 +84,29 @@ export default function NavComponents({ session }) {
           <ThemeSwitcher />
 
           <Link href="/products">
-            <motion.div
-              className="border border-b-4 border-neutral-500 self-center text-center py-1 px-2 w-20 rounded-lg"
-              whileTap={{ borderBottomWidth: "1px" }}
-            >
+            <div className="underline underline-offset-8 hover:underline-offset-4">
               Products
-            </motion.div>
+            </div>
           </Link>
           <Link href="/collection">
-            {/* <div className="underline underline-offset-8 hover:underline-offset-4">
-              Collection
-            </div> */}
-            <motion.div
-              className="border border-b-4 border-neutral-500 self-center text-center py-1 px-2 w-20 rounded-lg"
-              whileTap={{ borderBottomWidth: "1px" }}
-            >
+            <div className="underline underline-offset-8 hover:underline-offset-4">
               Catalog
-            </motion.div>
+            </div>
           </Link>
           <Link href="/services">
-            <motion.div
-              className="border border-b-4 border-neutral-500 self-center text-center py-1 px-2 w-20 rounded-lg"
-              whileTap={{ borderBottomWidth: "1px" }}
-            >
+            <div className="underline underline-offset-8 hover:underline-offset-4">
               Services
-            </motion.div>
+            </div>
           </Link>
           <Link href="/about">
-            <motion.div
-              className="border border-b-4 border-neutral-500 self-center text-center py-1 px-2 w-20 rounded-lg"
-              whileTap={{ borderBottomWidth: "1px" }}
-            >
+            <div className="underline underline-offset-8 hover:underline-offset-4">
               About
-            </motion.div>
+            </div>
           </Link>
           <Link href="/dashboard">
-            <motion.div
-              className="border border-b-4 border-neutral-500 self-center text-center py-1 px-2 w-20 rounded-lg"
-              whileTap={{ borderBottomWidth: "1px" }}
-            >
+            <div className="underline underline-offset-8 hover:underline-offset-4">
               Dashboard
-            </motion.div>
+            </div>
           </Link>
           <button
             className={`border-red-800 px-2 py-1 rounded-md cursor-pointer transition-all ease-in-out border-b shadow-sm shadow-red-800/70 hover:shadow-red-500/70 ${

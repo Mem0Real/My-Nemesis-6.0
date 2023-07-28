@@ -2,6 +2,8 @@
 
 import { useState, createContext, useContext, useEffect } from "react";
 
+import { setCookie, parseCookies } from "nookies";
+
 import FilterData from "./components/filterData";
 import Search from "./components/search";
 import Sort from "./components/sort";
@@ -24,15 +26,32 @@ export default function ProductList({ data, totalPage }) {
   const [priceDrop, showPriceDrop] = useState(false);
 
   const { pushQuery } = useCustomRouter();
+  const cookieStore = parseCookies();
 
   useEffect(() => {
-    pushQuery({ filter: filterCatData.toString() });
+    let data, filter;
+    if (cookieStore.CategoryDrop && cookieStore.CategoryDrop !== undefined)
+      data = JSON.parse(cookieStore.CategoryDrop);
+
+    if (cookieStore.FilterCat && cookieStore.FilterCat !== undefined)
+      filter = JSON.parse(cookieStore.FilterCat);
+
+    data && showCategoryDrop(() => data);
+    filter && setFilterCatData(() => filter);
+  }, []);
+
+  useEffect(() => {
+    setCookie(null, "FilterCat", JSON.stringify(filterCatData));
+    if (filterCatData?.length > 0 && filterCatData !== undefined) {
+      pushQuery({ filter: filterCatData.toString() });
+    } else pushQuery({ filter: "" });
   }, [filterCatData]);
 
   const categories = data;
 
   const toggleCategory = () => {
     showCategoryDrop((prev) => !prev);
+    setCookie(null, "CategoryDrop", !categoryDrop);
   };
 
   const toggleParent = (id) => {
@@ -41,7 +60,7 @@ export default function ProductList({ data, totalPage }) {
     } else {
       if (parentDrop.id === id) {
         setParentDrop((prev) => ({ ...prev, open: !prev.open }));
-        console.log(!parentDrop.open);
+        // console.log(!parentDrop.open);
       } else {
         setParentDrop(() => ({ id: id, open: true }));
       }
@@ -54,7 +73,7 @@ export default function ProductList({ data, totalPage }) {
     } else {
       if (childDrop.id === id) {
         setChildDrop((prev) => ({ ...prev, open: !prev.open }));
-        console.log(!childDrop.open);
+        // console.log(!childDrop.open);
       } else {
         setChildDrop(() => ({ id: id, open: true }));
       }
@@ -97,7 +116,12 @@ export default function ProductList({ data, totalPage }) {
     },
   };
 
-  const handleSelection = (cat = null, par = null, chi = null) => {
+  const handleSelection = (
+    cat = null,
+    par = null,
+    chi = null,
+    filter = null
+  ) => {
     if (cat) {
       //   if (filterCatData?.length > 0) {
       //     const prevCatData = filterCatData.find((item) => item.id === cat);
@@ -124,11 +148,15 @@ export default function ProductList({ data, totalPage }) {
 
         if (prev !== -1) newArray.splice(prev, 1);
         else newArray.push(cat);
+
         setFilterCatData(newArray);
+        pushQuery({ filter: newArray.toString() });
       } else {
         newArray.push(cat);
         setFilterCatData(newArray);
+        pushQuery({ filter: newArray.toString() });
       }
+      console.log("newD");
     }
     if (par) {
       let newArray = [...filterParData];

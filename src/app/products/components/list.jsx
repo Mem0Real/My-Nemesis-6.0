@@ -2,6 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { useProductListContext } from "../productList";
 
+// TODO add cookies to store opened data
 export default function List() {
   const { filterCatData, categories } = useProductListContext();
 

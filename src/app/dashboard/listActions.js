@@ -260,7 +260,6 @@ export async function update(formData) {
 
   if (!file) {
     const query = await writeToDb();
-    console.log("no file");
     if (query?.error) return { error: `Error Updating Item: \n ${error}` };
     else {
       revalidatePath("/collection");
@@ -270,7 +269,6 @@ export async function update(formData) {
     }
   } else if (typeof file === "string" && entry !== "items") {
     const query = await writeToDb(file);
-    console.log("file not changed");
     if (query?.error)
       return { error: `Error Updating Item: \n ${query.error}` };
     else {
@@ -280,7 +278,6 @@ export async function update(formData) {
       return { success: `Updated Successfully!` };
     }
   } else {
-    console.log("new file");
     let relativeUploadDir;
     if (entry !== "category") {
       relativeUploadDir = `/uploads/${entry}/${id}`;

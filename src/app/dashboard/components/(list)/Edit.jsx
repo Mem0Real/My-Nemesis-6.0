@@ -45,13 +45,11 @@ export default function EditModal({
       }
     } else {
       if (editData.images !== []) {
-        console.log(editData.images);
         let imgData = editData.images;
         let prevImg = [];
         imgData.map((img) => prevImg.push(img));
         setImages(prevImg);
       } else {
-        console.log("Empty");
         setImages([]);
       }
     }

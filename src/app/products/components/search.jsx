@@ -1,13 +1,34 @@
 "use client";
 
 import { useState, useEffect } from "react";
+
+import useCustomRouter from "@/hooks/useCustomRouter";
+import { setCookie, parseCookies } from "nookies";
+
 import { useIcons } from "@/app/utils/CustomIcons";
 import { motion } from "framer-motion";
-import useCustomRouter from "@/hooks/useCustomRouter";
 
 export default function SearchForm() {
   const { pushQuery, query } = useCustomRouter();
-  const [text, setText] = useState({ search: "" });
+  const cookieStore = parseCookies();
+  const [text, setText] = useState(
+    cookieStore.Search !== undefined
+      ? JSON.parse(cookieStore.Search)
+      : { search: "" }
+  );
+
+  useEffect(() => {
+    let searchData;
+    if (cookieStore.Search && cookieStore.Search !== undefined) {
+      searchData = JSON.parse(cookieStore.Search);
+      setText(() => searchData);
+      handleSearch(searchData);
+    }
+  }, []);
+
+  useEffect(() => {
+    setCookie(null, "Search", JSON.stringify(text));
+  }, [text]);
 
   useEffect(() => {
     const timeOutId = setTimeout(() => handleSearch(text), 500);
@@ -36,7 +57,7 @@ export default function SearchForm() {
         name="search"
         placeholder="Search"
         className="ps-7 pe-2 w-44 py-2 rounded-md"
-        defaultValue={query.search || ""}
+        defaultValue={query.search || text.search || ""}
         onChange={(e) => setText({ search: e.target.value })}
       />
     </form>

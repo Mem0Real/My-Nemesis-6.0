@@ -127,7 +127,7 @@ export async function getEntry(entry, id) {
 
   data1 = JSON.stringify(res1);
 
-  console.log(res1);
+  // console.log(res1);
   //   if(entry === "parents") {
 
   //     res2 = await prisma.categories.findUnique({

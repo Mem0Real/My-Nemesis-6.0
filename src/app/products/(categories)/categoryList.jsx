@@ -1,11 +1,20 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
+import { parseCookies } from "nookies";
+
 import { motion, AnimatePresence } from "framer-motion";
 import { useProductListContext } from "../productList";
 import { useIcons } from "@/app/utils/CustomIcons";
 import ParentList from "./parentList";
 
 export default function CategoryList() {
+  const [check, setCheck] = useState([]);
+  const [checked, setChecked] = useState(false);
+
+  const cookieStore = parseCookies();
+
   const {
     categories,
     categoryDrop,
@@ -13,8 +22,18 @@ export default function CategoryList() {
     btnVariants,
     contentVariants,
     toggleParent,
+    filterCatData,
     handleSelection,
   } = useProductListContext();
+
+  // useEffect(() => {
+  //   let filter;
+  //   if (cookieStore.FilterCat && cookieStore.FilterCat !== undefined)
+  //     filter = JSON.parse(cookieStore.FilterCat);
+
+  //   filter && setCheck(() => filter);
+  //   console.log(filter);
+  // }, []);
 
   const { RightArrowIcon } = useIcons();
 
@@ -35,6 +54,7 @@ export default function CategoryList() {
                   <input
                     type="checkbox"
                     name="cat"
+                    checked={filterCatData?.includes(category.id)}
                     onChange={() => handleSelection(category.id)}
                   />
                   <h1>{category.id}</h1>

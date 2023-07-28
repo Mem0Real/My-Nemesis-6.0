@@ -15,7 +15,11 @@ async function getData(searchParams) {
 
   let limit, page, skip;
 
-  if (filter || search) {
+  if ((filter && !search) || (!filter && search)) {
+    limit = searchParams.limit * 1 || 2;
+    page = searchParams.page * 1 || 1;
+    skip = searchParams.skip * 1 || limit * (page - 1);
+  } else if (filter && search) {
     limit = searchParams.limit * 1 || 5;
     page = searchParams.page * 1 || 1;
     skip = searchParams.skip * 1 || limit * (page - 1);
@@ -77,8 +81,12 @@ async function getData(searchParams) {
     let prodArray = [];
     itemArray.map((prod) => (prodArray = prodArray.concat(prod.items)));
 
-    counter = prodArray.reduce((acc, val) => acc + val);
-    totalPage = Math.ceil(counter / limit);
+    if (prodArray.length > 0) {
+      counter = prodArray.reduce((acc, val) => acc + val);
+      totalPage = Math.ceil(counter / limit);
+    } else {
+      totalPage = 0;
+    }
   } else {
     let c1, c2, c3, c4;
 

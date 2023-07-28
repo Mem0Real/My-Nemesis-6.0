@@ -56,7 +56,6 @@ export default function AddModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(addData);
     const formData = formatData(addData);
 
     setLoading(() => true);
