@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import ImagePreview from "./ImagePreview";
 
 import formatData from "@/app/utils/format";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import { useDataContext } from "./List";
 
 export default function AddModal({
   closeAddModal,
@@ -16,19 +17,7 @@ export default function AddModal({
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const modalRef = useRef();
-
-  useEffect(() => {
-    let handler = (e) => {
-      if (!modalRef.current.contains(e.target)) {
-        closeAddModal();
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  const { addRef } = useDataContext();
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
@@ -77,7 +66,7 @@ export default function AddModal({
   return (
     <section
       className="h-[95%] w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] my-5 md:py-3 mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-300 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200"
-      ref={modalRef}
+      ref={addRef}
     >
       <header className="pb-4 relative">
         <button

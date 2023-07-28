@@ -1,26 +1,16 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import { useDataContext } from "./List";
 
 export default function DeleteModal({
   closeDeleteModal,
   deleteData,
   deleteItem,
 }) {
-  const modalRef = useRef();
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    let handler = (e) => {
-      if (!modalRef.current.contains(e.target)) {
-        closeDeleteModal();
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  const { deleteRef } = useDataContext();
 
   const confirmDelete = async (deleteData) => {
     setLoading(() => true);
@@ -40,7 +30,7 @@ export default function DeleteModal({
   return (
     <section
       className="my-auto w-[80%] md:w-[65%] lg:w-[40%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-300 dark:bg-neutral-900 "
-      ref={modalRef}
+      ref={deleteRef}
     >
       <header className="p-4 relative">
         <button

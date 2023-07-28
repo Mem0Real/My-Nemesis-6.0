@@ -5,6 +5,7 @@ import ImagePreview from "./ImagePreview";
 import formatData from "@/app/utils/format";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
+import { useDataContext } from "./List";
 
 export default function EditModal({
   closeEditModal,
@@ -16,19 +17,7 @@ export default function EditModal({
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const modalRef = useRef();
-
-  useEffect(() => {
-    let handler = (e) => {
-      if (!modalRef.current.contains(e.target)) {
-        closeEditModal();
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  // const modalRef = useRef();
 
   // Show image if any
   useEffect(() => {
@@ -54,6 +43,8 @@ export default function EditModal({
       }
     }
   }, [editData.image, editData.images, editData.entry]);
+
+  const { editRef } = useDataContext();
 
   const handleFileSelect = (changeEvent) => {
     const reader = new FileReader();
@@ -116,8 +107,8 @@ export default function EditModal({
 
   return (
     <section
-      className="h-[95%] w-[85%] md:w-[40%] lg:w-[30%] my-5 no-scrollbar md:py-3 mx-auto overflow-y-scroll rounded-lg bg-neutral-300 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200"
-      ref={modalRef}
+      className="h-[95%] w-[85%] md:w-[40%] lg:w-[30%] my-5 overflow-y-scroll no-scrollbar md:py-3 mx-auto  rounded-lg bg-neutral-300 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200"
+      ref={editRef}
     >
       <header className="pb-4 relative">
         <button

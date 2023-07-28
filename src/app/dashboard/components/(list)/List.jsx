@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useState, createContext, useContext, useEffect } from "react";
+import { useState, createContext, useContext, useEffect, useRef } from "react";
 import { Suspense } from "react";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -32,12 +32,20 @@ export default function List({ data, create, update, deleteItem, url }) {
   //   }
   // }, [addModal, editModal, deleteModal]);
 
+  const addRef = useRef();
+  const editRef = useRef();
+  const deleteRef = useRef();
+
   // Disable scrollbar on modal open
   useEffect(() => {
     const handleWindowWheel = (event) => {
-      if (addModal || editModal || deleteModal) {
+      if (addModal && !addRef.current.contains(event.target)) {
         event.preventDefault();
       }
+      if (editModal && !editRef.current.contains(event.target)) {
+        event.preventDefault();
+      }
+      if (deleteModal) event.preventDefault();
     };
 
     window.addEventListener("wheel", handleWindowWheel, { passive: false });
@@ -45,6 +53,25 @@ export default function List({ data, create, update, deleteItem, url }) {
     return () => {
       window.removeEventListener("wheel", handleWindowWheel);
     };
+  }, [addModal, editModal, deleteModal]);
+
+  // Close modal on click outside
+  useEffect(() => {
+    let handler = (e) => {
+      if (addModal && !addRef.current.contains(e.target)) {
+        closeAddModal();
+      }
+      if (editModal && !editRef.current.contains(e.target)) {
+        closeEditModal();
+      }
+      if (deleteModal && !deleteRef.current.contains(e.target)) {
+        closeDeleteModal();
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => document.removeEventListener("mousedown", handler);
   }, [addModal, editModal, deleteModal]);
 
   const handleAdd = (
@@ -129,7 +156,16 @@ export default function List({ data, create, update, deleteItem, url }) {
   };
   return (
     <DataContext.Provider
-      value={{ handleAdd, handleEdit, handleDelete, data, url }}
+      value={{
+        handleAdd,
+        handleEdit,
+        handleDelete,
+        data,
+        url,
+        addRef,
+        editRef,
+        deleteRef,
+      }}
     >
       <div className="flex-flex-col w-full items-center justify-center relative bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 md:mt-6">
         <h1 className="text-xl font-mono font-thin mt-2 underline underline-offset-4 text-center">
