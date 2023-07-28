@@ -199,7 +199,7 @@ export default function ProductList({ products, menu, totalPage }) {
         totalPage,
       }}
     >
-      <div className="bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center px-5 ">
+      <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center px-5 ">
         <div className="h-36 w-full flex flex-col items-center justify-center">
           <h1 className="text-5xl font-semibold">Products</h1>
         </div>
@@ -212,7 +212,7 @@ export default function ProductList({ products, menu, totalPage }) {
             <div className="basis-1/6 self-start">
               <FilterData />
             </div>
-            <div className="basis-5/6 flex flex-col">
+            <div className="basis-5/6 flex flex-col justify-between">
               <List />
               <div className="self-center">{totalPage && <Pagination />}</div>
             </div>

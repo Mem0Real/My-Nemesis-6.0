@@ -67,7 +67,7 @@ async function getProducts(searchParams) {
 
   // Pagination
   let limit, page, skip, count, totalPage;
-  limit = searchParams.limit * 1 || 5;
+  limit = searchParams.limit * 1 || 15;
   page = searchParams.page * 1 || 1;
   skip = searchParams.skip * 1 || limit * (page - 1);
 

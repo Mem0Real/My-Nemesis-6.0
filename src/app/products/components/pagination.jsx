@@ -15,7 +15,7 @@ export default function Pagination() {
 
   const buttonVariants = {
     selected: {
-      borderColor: "rgb(18 18 68)",
+      borderColor: "rgb(38 38 88)",
       borderWidth: "2px",
     },
     notSelected: {
@@ -24,7 +24,7 @@ export default function Pagination() {
     },
   };
   return (
-    <div className="flex flex-wrap items-center gap-3">
+    <div className="flex flex-wrap items-center gap-3 my-6">
       {newArray.map((page) => (
         <motion.button
           key={page}

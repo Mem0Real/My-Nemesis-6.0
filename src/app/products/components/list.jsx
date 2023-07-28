@@ -19,13 +19,13 @@ export default function List() {
     );
   }
   return (
-    <div className="flex items-center content-start justify-center flex-wrap gap-0 py-6 w-full">
+    <div className="flex items-center content-start justify-center flex-wrap gap-10 py-6 w-full">
       {products.map((product) => {
         let image = product.images[0];
         return (
           <div
             key={product.id}
-            className="flex flex-col gap-8 w-72 h-60 items-center border border-neutral-500"
+            className="flex flex-col gap-8 w-72 h-60 items-center mb-12"
           >
             <Link
               href={`/collection/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
