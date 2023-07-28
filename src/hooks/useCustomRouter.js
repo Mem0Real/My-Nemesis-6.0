@@ -24,14 +24,26 @@ const useCustomRouter = () => {
 
   const pushQuery = ({ search, sort, filter, page }) => {
     if (search !== undefined) {
-      search === "" ? delete query.search : (query.search = search);
+      if (search === "") delete query.search;
+      else {
+        query.search = search;
+        query.page = 1;
+      }
     }
     if (sort !== undefined) {
-      sort === "" ? delete query.sort : (query.sort = sort);
+      if (sort === "") delete query.sort;
+      else {
+        query.sort = sort;
+        query.page = 1;
+      }
     }
 
     if (filter !== undefined) {
-      filter === "" ? delete query.filter : (query.filter = filter);
+      if (filter === "") delete query.filter;
+      else {
+        query.filter = filter;
+        query.page = 1;
+      }
     }
 
     if (page !== undefined) {

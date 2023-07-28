@@ -100,6 +100,6 @@ export default async function ProductsPage({ params, searchParams }) {
       <ProductList menu={menu} products={products} totalPage={totalPage} />
     );
   } catch (error) {
-    console.log(error);
+    throw new Error("Error fetching data! Please try again later.");
   }
 }

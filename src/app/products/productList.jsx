@@ -212,9 +212,11 @@ export default function ProductList({ products, menu, totalPage }) {
             <div className="basis-1/5 self-start">
               <FilterData />
             </div>
-            <List />
+            <div className="basis-4/5 flex flex-col">
+              <List />
+              <div className="self-center">{totalPage && <Pagination />}</div>
+            </div>
           </div>
-          {totalPage && <Pagination />}
         </div>
       </div>
     </ProductListContext.Provider>
