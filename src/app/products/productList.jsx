@@ -199,16 +199,16 @@ export default function ProductList({ products, menu, totalPage }) {
         totalPage,
       }}
     >
-      <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center px-5 ">
+      <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center ">
         <div className="h-36 w-full flex flex-col items-center justify-center">
           <h1 className="text-5xl font-semibold">Products</h1>
         </div>
         <div className="flex flex-col gap-6 w-full">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-evenly md:justify-between gap-4 px-2 lg:px-5">
             <Search />
             <Sort />
           </div>
-          <div className="flex items-center justify-start w-full gap-6">
+          <div className="flex items-center justify-start w-full">
             <div className="basis-1/6 self-start">
               <FilterData />
             </div>
