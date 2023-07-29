@@ -55,21 +55,74 @@ export default function List() {
   //   </div>
   // );
 
+  // return (
+  //   <div className="w-full grid gap-x-0 gap-y-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border border-neutral-300/80 dark:border-neutral-900/80">
+  //     {products.map((product) => {
+  //       let image = product.images[0];
+  //       return (
+  //         <Link
+  //           key={product.id}
+  //           href={`/collection/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
+  //         >
+  //           <div className="grid grid-cols-1 gap-12 justify-between w-[90%] h-fit place-content-center border border-neutral-300/80 dark:border-neutral-900/80">
+  //             <motion.div
+  //               className="relative w-56 h-56 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-60 lg:h-60 mx-auto justify-self-center"
+  //               whileHover={{ scale: 1.1, overflow: "hidden" }}
+  //             >
+  //               {product.images.length > 0 && (
+  //                 <Image
+  //                   src={image}
+  //                   alt={product.id}
+  //                   fill
+  //                   sizes="(max-width: 768px) 50vw, (max-width: 1200px) 50vw, 33vw"
+  //                   className="object-contain object-center"
+  //                 />
+  //               )}
+  //             </motion.div>
+  //             <motion.div
+  //               className="flex flex-col items-start shadow-myShadow1 text-lg bg-neutral-300 pb-5"
+  //               whileHover={{
+  //                 scale: 1.05,
+  //                 transition: {
+  //                   type: "spring",
+  //                   damping: 25,
+  //                   stiffness: 120,
+  //                 },
+  //               }}
+  //             >
+  //               <motion.h1
+  //                 className="text-start pl-5 w-fit"
+  //                 whileHover={{
+  //                   outlineOffset: "4px",
+  //                 }}
+  //               >
+  //                 {product.name}
+  //               </motion.h1>
+  //             </motion.div>
+  //           </div>
+  //         </Link>
+  //       );
+  //     })}
+  //   </div>
+  // );
+
   return (
-    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+    <div className="grid w-full min-h-screen gap-x-0 gap-y-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-evenly">
       {products.map((product) => {
         let image = product.images[0];
+        let price;
+        price = product.price ? product.price?.toLocaleString() : 0;
         return (
           <Link
             key={product.id}
             href={`/collection/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
           >
-            <div className="grid grid-cols-1 gap-12 justify-between w-[90%] h-96 place-content-center">
+            <div className="grid grid-cols-1 gap-12 justify-between w-full h-fit place-content-center border border-neutral-300/80 dark:border-neutral-600/80">
               <motion.div
                 className="relative w-56 h-56 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-60 lg:h-60 mx-auto justify-self-center"
                 whileHover={{ scale: 1.1, overflow: "hidden" }}
               >
-                {product.images.length > 0 && (
+                {product.images?.length > 0 && (
                   <Image
                     src={image}
                     alt={product.id}
@@ -79,24 +132,15 @@ export default function List() {
                   />
                 )}
               </motion.div>
-              <motion.div
-                className="flex flex-col items-center"
-                whileHover={{
-                  scale: 1.05,
-                  transition: {
-                    type: "spring",
-                    damping: 25,
-                    stiffness: 120,
-                  },
-                }}
-              >
-                <motion.h1
-                  className="justify-self-center w-fit"
-                  whileHover={{
-                    outlineOffset: "4px",
-                  }}
-                >
+              <motion.div className="flex flex-col items-start pb-5 text-base">
+                <motion.h1 className="text-start pl-5 w-fit hover:underline underline-offset-2 font-semibold">
                   {product.name}
+                </motion.h1>
+                <motion.h1 className="text-start font-thin text-neutral-800 dark:text-neutral-200 pl-5 w-fit hover:animate-pulse">
+                  ${price}.00
+                  <span className="px-2 text-[14px] italic font-light text-neutra-600 dark:text-neutral-400">
+                    ETB
+                  </span>
                 </motion.h1>
               </motion.div>
             </div>

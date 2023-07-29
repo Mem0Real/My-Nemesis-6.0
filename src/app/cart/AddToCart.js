@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 
 import { useProductContext } from "@/context/productContext";
 import { useIcons } from "../utils/CustomIcons";
@@ -11,30 +11,18 @@ export default function AddToCartModal({
   item,
   addToCartModal,
   closeAddToCartModal,
+  addToCartRef,
 }) {
   const [newCart, setNewCart] = useState(false);
   const [amount, setAmount] = useState();
   const [remainingQuantity, setRemainingQuantity] = useState();
 
-  const modalRef = useRef();
   const cookieStore = parseCookies();
 
   const { storeProduct, addCartData, updater, setUpdater } =
     useProductContext();
 
   const { PlusIcon, MinusIcon } = useIcons();
-
-  useEffect(() => {
-    let handler = (e) => {
-      if (!modalRef.current.contains(e.target)) {
-        closeAddToCartModal();
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
 
   // Set initial quantity to 1
   useEffect(() => {
@@ -109,8 +97,8 @@ export default function AddToCartModal({
 
   return (
     <section
-      className="my-auto w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-900"
-      ref={modalRef}
+      className="my-auto w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] mx-auto overflow-hidden rounded-lg bg-neutral-900"
+      ref={addToCartRef}
     >
       <header className="pb-4 relative">
         <button

@@ -15,7 +15,7 @@ import { useIcons } from "@/app/utils/CustomIcons";
 
 const SearchDataContext = createContext({});
 
-export default function SearchModal({ searchModal, closeSearch }) {
+export default function SearchModal({ searchModal, closeSearch, searchRef }) {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchWord, setSearchWord] = useState("");
 
@@ -24,9 +24,16 @@ export default function SearchModal({ searchModal, closeSearch }) {
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
-  const modalRef = useRef();
 
   const { SearchIcon } = useIcons();
+
+  const inputRef = useRef();
+  // Focus on load
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   useEffect(() => {
     if (searchModal) {
@@ -40,18 +47,6 @@ export default function SearchModal({ searchModal, closeSearch }) {
       getter();
     }
   }, [searchModal]);
-
-  useEffect(() => {
-    let handler = (e) => {
-      if (!modalRef.current.contains(e.target)) {
-        closeSearch();
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
 
   useEffect(() => {
     if (loading) {
@@ -128,7 +123,7 @@ export default function SearchModal({ searchModal, closeSearch }) {
   return (
     <section
       className="h-fit mt-12 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[60%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-900"
-      ref={modalRef}
+      ref={searchRef}
     >
       <header className="pb-4 relative">
         <button
@@ -162,12 +157,12 @@ export default function SearchModal({ searchModal, closeSearch }) {
           </div>
           <div className="w-full border-b border-neutral-600/60">
             <input
-              autoFocus={searchModal}
               type="text"
               value={searchQuery || ""}
               className="ps-6 py-3 w-full flex-1 text-lg bg-transparent focus:border-none focus:outline-none"
               placeholder="Search products..."
               onChange={handleChange}
+              ref={inputRef}
             />
           </div>
         </div>

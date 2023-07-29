@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import dynamic from "next/dynamic";
 import Image from "next/image";
@@ -25,12 +25,35 @@ export default function Item({ item }) {
   const cookieStore = parseCookies();
 
   // TODO check to see if scroll works for addToCart long items
+
+  const addToCartRef = useRef();
+
+  // Disable scrollbar on modal open
   useEffect(() => {
-    if (addToCartModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    const handleWindowWheel = (event) => {
+      if (addToCartModal) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("wheel", handleWindowWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWindowWheel);
+    };
+  }, [addToCartModal]);
+
+  // Close addToCartModal
+  useEffect(() => {
+    let handler = (e) => {
+      if (addToCartModal && !addToCartRef.current.contains(e.target)) {
+        closeAddToCartModal();
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => document.removeEventListener("mousedown", handler);
   }, [addToCartModal]);
 
   useEffect(() => {
@@ -211,6 +234,7 @@ export default function Item({ item }) {
               item={item}
               addToCartModal={addToCartModal}
               closeAddToCartModal={closeAddToCartModal}
+              addToCartRef={addToCartRef}
             />
           </motion.div>
         )}

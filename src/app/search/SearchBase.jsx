@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, createContext, useContext } from "react";
+import { useState, useEffect, createContext, useContext, useRef } from "react";
 import dynamic from "next/dynamic";
 
 const SearchModal = dynamic(() => import("./(searchModal)/SearchModal"));
@@ -9,13 +9,34 @@ import { motion, AnimatePresence } from "framer-motion";
 const SearchContext = createContext({});
 export default function SearchBase({ children }) {
   const [searchModal, showSearchModal] = useState(false);
+  const searchRef = useRef();
 
+  // Disable scrollbar on modal open
   useEffect(() => {
-    if (searchModal) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
+    const handleWindowWheel = (event) => {
+      if (searchModal && !searchRef?.current.contains(event.target)) {
+        event.preventDefault();
+      }
+    };
+
+    window.addEventListener("wheel", handleWindowWheel, { passive: false });
+
+    return () => {
+      window.removeEventListener("wheel", handleWindowWheel);
+    };
+  }, [searchModal]);
+
+  // Close Search Modal on click outside
+  useEffect(() => {
+    let handler = (e) => {
+      if (searchModal && !searchRef.current.contains(e.target)) {
+        closeSearch();
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => document.removeEventListener("mousedown", handler);
   }, [searchModal]);
 
   const handleSearch = () => {
@@ -53,7 +74,11 @@ export default function SearchBase({ children }) {
               searchModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
-            <SearchModal searchModal={searchModal} closeSearch={closeSearch} />
+            <SearchModal
+              searchModal={searchModal}
+              closeSearch={closeSearch}
+              searchRef={searchRef}
+            />
           </motion.div>
         )}
       </AnimatePresence>
