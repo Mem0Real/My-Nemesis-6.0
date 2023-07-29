@@ -10,7 +10,7 @@ export default function ChildList({ parentId, children }) {
     <AnimatePresence>
       {childDrop.id === parentId && childDrop.open === true && (
         <motion.div
-          className={`flex flex-col items-start gap-3 w-[90%] mx-auto my-2`}
+          className={`flex flex-col items-center gap-1 bg-neutral-300/80 dark:bg-neutral-700/80`}
           initial="closed"
           animate={
             childDrop.id === parentId && childDrop.open === true
@@ -23,17 +23,14 @@ export default function ChildList({ parentId, children }) {
           {children.map((child) => {
             return (
               <div key={child.id} className="w-full flex flex-col">
-                <div className="flex items-center justify-between w-full h-4 text-sm">
-                  <h1>{child.id}</h1>
-                  {/* <motion.button
-                    className="text-sm text-start text-neutral-800 dark:text-neutral-200 hover:text-neutral-600 dark:hover:text-neutral-400"
-                    onClick={toggleChild}
-                    animate={childDrop.id === parent.id && childDrop.open === true ? "open" : "close"}
-                    exit="close"
-                    variants={btnVariants}
-                  >
-                    {RightArrowIcon}
-                  </motion.button> */}
+                <div className="flex items-center text-sm gap-3">
+                  <input
+                    type="checkbox"
+                    name="cat"
+                    onChange={() => handleSelection(null, child.id)}
+                    className="ml-3 self-start"
+                  />
+                  <h1 className="self-center">{child.id}</h1>
                 </div>
               </div>
             );

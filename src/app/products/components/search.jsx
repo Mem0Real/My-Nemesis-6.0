@@ -42,7 +42,7 @@ export default function SearchForm() {
   }
   return (
     <form
-      className="flex justify-between relative"
+      className="flex justify-between relative border border-neutral-600 dark:border-neutral-400 rounded-md "
       action={() => handleSearch(text)}
     >
       <motion.button

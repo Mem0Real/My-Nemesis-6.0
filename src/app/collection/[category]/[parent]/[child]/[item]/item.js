@@ -15,7 +15,6 @@ const AddToCartModal = dynamic(() => import("@/app/cart/AddToCart"));
 
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
-  const [modal, showModal] = useState(false);
   const [quantity, setQuantity] = useState();
 
   const [addToCartModal, showAddToCartModal] = useState(false);
@@ -25,6 +24,7 @@ export default function Item({ item }) {
 
   const cookieStore = parseCookies();
 
+  // TODO check to see if scroll works for addToCart long items
   useEffect(() => {
     if (addToCartModal) {
       document.body.style.overflow = "hidden";
@@ -140,36 +140,36 @@ export default function Item({ item }) {
           )}
         </div>
       </div>
-      <div className="h-fit w-[45em] justify-center sm:justify-normal mx-auto items-center">
+      <div className="h-fit w-[43em] justify-center sm:justify-normal mx-auto items-center">
         <div className="">
-          <h1 className="text-4xl font-bold ms-4 mb-2">Product Details</h1>
+          <h1 className="text-3xl font-bold ms-4 mb-2">Product Details</h1>
           <div className="flex flex-col items-start ps-5 gap-7 py-6 w-full lg:w-[90%] bg-neutral-900 border border-neutral-200 text-neutral-200 rounded-xl drop-shadow-2xl ">
             <div className="flex gap-4 w-full">
-              <h1 className=" text-md font-semibold">Product Name: </h1>
-              <h2 className="ms-3 text-md"> {item.name}</h2>
+              <h1 className=" text-sm font-semibold">Product Name: </h1>
+              <h2 className="ms-3 text-sm"> {item.name}</h2>
             </div>
             <div className="flex gap-4 w-full">
-              <h1 className="text-md font-semibold">Product Brand: </h1>
-              <h2 className="ms-3 text-md"> {item.brand}</h2>
+              <h1 className="text-sm font-semibold">Product Brand: </h1>
+              <h2 className="ms-3 text-sm"> {item.brand}</h2>
             </div>
             <div className="flex gap-4 w-full">
-              <h1 className="text-md font-semibold">Product Model:</h1>
-              <h2 className="ms-3 text-md"> {item.model}</h2>
+              <h1 className="text-sm font-semibold">Product Model:</h1>
+              <h2 className="ms-3 text-sm"> {item.model}</h2>
             </div>
             <div className="w-[96%]">
-              <h1 className="text-md font-semibold md:mb-3">Description</h1>
+              <h1 className="text-sm font-semibold sm:mb-3">Description</h1>
               <div className="h-48 border border-neutral-500 rounded-md">
-                <h2 className="ms-3 text-md"> {item.description}</h2>
+                <h2 className="ms-3 text-sm"> {item.description}</h2>
               </div>
             </div>
             <div className="flex gap-4 w-full">
-              <h1 className="text-md font-semibold">Quantity:</h1>
-              <h2 className="ms-3 text-md">{quantity}</h2>
+              <h1 className="text-sm font-semibold">Quantity:</h1>
+              <h2 className="ms-3 text-sm">{quantity}</h2>
             </div>
             <div className="flex gap-4 w-full">
-              <h1 className="text-md font-semibold">Price:</h1>
+              <h1 className="text-sm font-semibold">Price:</h1>
               {item.price && (
-                <h2 className="ms-3 text-md flex gap-1">
+                <h2 className="ms-3 text-sm flex gap-1">
                   {item.price}
                   <span className="text-neutral-400 py-0.5 text-sm font-medium  my-auto">
                     ETB
@@ -203,7 +203,7 @@ export default function Item({ item }) {
             animate={addToCartModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-30 bg-black/50 backdrop-blur-sm  flex ${
               addToCartModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >

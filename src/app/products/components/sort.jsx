@@ -19,10 +19,8 @@ export default function Sort() {
       defaultValue="asc"
       onChange={(e) => setSort({ sort: e.target.value })}
       className="px-2 py-1 rounded-md border-b border-neutral-800 dark:border-neutral-200 cursor-pointer"
-      initial={{ borderWidth: "1px", borderBottomWidth: "2px" }}
       whileTap={{
-        borderBottomWidth: "1px",
-        transition: { duration: 0.2, ease: "linear" },
+        scale: 0.98,
       }}
     >
       <option value="asc" disabled>

@@ -18,7 +18,7 @@ export default function FilterData() {
 
   return (
     <div className="flex flex-col items-center gap-5">
-      <h1 className="text-2xl self-start font-light ">Filter by</h1>
+      <h1 className="text-xl self-start font-medium ">Filter by</h1>
       <div className="flex items-center justify-between w-full border-y border-neutral-400 px-2 h-12 cursor-pointer text-sm">
         <h1>Category</h1>
         <motion.button

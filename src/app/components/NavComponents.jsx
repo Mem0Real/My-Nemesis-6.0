@@ -72,11 +72,11 @@ export default function NavComponents({ session }) {
       <div className="hidden md:flex justify-between items-center">
         {/* <SearchInput /> */}
         <button
-          className="relative flex-initial mr-4 flex items-center cursor-pointer justify-end py-2 rounded-md outline outline-1 hover:outline-2outline-neutral-800 text-zinc-800 bg-zinc-200 dark:outline-neutral-200 w-40 dark:text-zinc-200 dark:bg-zinc-800"
+          className="relative flex-initial mr-3 flex items-center cursor-pointer justify-end py-1 rounded-md outline outline-1 hover:outline-2outline-neutral-800 text-zinc-800 bg-zinc-200 dark:outline-neutral-200 w-40 dark:text-zinc-200 dark:bg-zinc-800"
           onClick={handleSearch}
         >
           <p className="md:pr-2 lg:pr-4">Search Products...</p>
-          <div className="text-lg absolute left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-800 dark:text-neutral-200">
+          <div className="text-base absolute left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-800 dark:text-neutral-200">
             {SearchIcon}
           </div>
         </button>
@@ -90,7 +90,7 @@ export default function NavComponents({ session }) {
           </Link>
           <Link href="/collection">
             <div className="underline underline-offset-8 hover:underline-offset-4">
-              Catalog
+              Catalogue
             </div>
           </Link>
           <Link href="/services">
@@ -184,10 +184,18 @@ export default function NavComponents({ session }) {
         <ul className="text-sm md:hidden block bg-neutral-900 py-5 mt-0 md:mt-9 list-none">
           <li>
             <Link
+              href="/products"
+              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
+            >
+              Products
+            </Link>
+          </li>
+          <li>
+            <Link
               href="/collection"
               className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
             >
-              Collection
+              Catalogue
             </Link>
           </li>
           <li>
@@ -226,11 +234,6 @@ export default function NavComponents({ session }) {
           )}
         </ul>
       </div>
-
-      {/* <FunctionsContext.Provider value={{ getOne, getAll, data, closeSearch }}> */}
-      {/* <SearchModal modal={searchModal} /> */}
-      {/* <Cart modal={cartModal} closeCart={closeCart} /> */}
-      {/* </FunctionsContext.Provider> */}
     </div>
   );
 }

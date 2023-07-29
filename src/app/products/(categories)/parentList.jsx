@@ -21,7 +21,7 @@ export default function ParentList({ categoryId, parents }) {
     <AnimatePresence>
       {parentDrop.id === categoryId && parentDrop.open === true && (
         <motion.div
-          className={`flex flex-col items-start gap-3 w-[93%] mx-auto my-2`}
+          className={`flex flex-col items-center gap-1 bg-neutral-200/80 dark:bg-neutral-800/80`}
           initial="closed"
           animate={
             parentDrop.id === categoryId && parentDrop.open === true
@@ -33,13 +33,13 @@ export default function ParentList({ categoryId, parents }) {
         >
           {parents.map((parent) => {
             return (
-              <div key={parent.id} className="w-full flex flex-col px-1">
-                <div className="flex items-center justify-between h-4 text-sm">
+              <div key={parent.id} className="flex flex-col w-full gap-2">
+                <div className="flex items-center justify-between text-sm">
                   <input
                     type="checkbox"
                     name="cat"
                     onChange={() => handleSelection(null, parent.id)}
-                    className="ml-3"
+                    className="ml-2"
                   />
                   <h1>{parent.id}</h1>
                   <motion.button

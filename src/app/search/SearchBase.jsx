@@ -49,7 +49,7 @@ export default function SearchBase({ children }) {
             animate={searchModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-30 bg-black/50 backdrop-blur-sm  flex ${
               searchModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >

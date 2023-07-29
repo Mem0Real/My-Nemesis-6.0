@@ -98,8 +98,8 @@ export default function Cart({ closeCartModal }) {
           List of Items
         </h1>
       </header>
-      <main className="pb-5">
-        <table className="table-fixed shadow-inner w-[95%] mx-auto bg-neutral-900 shadow-white/60 rounded rounded-b-2xl border-collapse">
+      <main className="py-5">
+        <table className="table-fixed drop-shadow-2xl shadow-sm w-[95%] mx-auto bg-neutral-900 shadow-white/60 rounded-2xl border-collapse">
           <thead>
             <tr className="border-b border-1 border-neutral-200">
               <th className="text-center py-2 ps-2 w-36 md:w-40 lg:w-36">

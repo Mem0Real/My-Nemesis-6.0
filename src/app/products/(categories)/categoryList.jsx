@@ -41,7 +41,7 @@ export default function CategoryList() {
     <AnimatePresence>
       {categoryDrop && (
         <motion.div
-          className={`flex flex-col items-start gap-3 w-full`}
+          className={`flex flex-col items-start gap-2 w-full text-sm`}
           initial="closed"
           animate={categoryDrop ? "opened" : "closed"}
           exit="closed"
@@ -53,7 +53,7 @@ export default function CategoryList() {
                 key={category.id}
                 className="w-full flex flex-col px-1 gap-5 md:gap-2"
               >
-                <div className="flex items-center justify-between h-5 text-sm">
+                <div className="flex items-center justify-between text-sm">
                   <input
                     type="checkbox"
                     name="cat"

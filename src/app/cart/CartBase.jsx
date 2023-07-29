@@ -147,7 +147,7 @@ export default function CartBase({ children }) {
             animate={cartModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-30 bg-black/50 backdrop-blur-sm  flex ${
               cartModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
@@ -161,7 +161,7 @@ export default function CartBase({ children }) {
             animate={infoModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-black/50 backdrop-blur-sm  flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-30 bg-black/50 backdrop-blur-sm  flex ${
               infoModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
