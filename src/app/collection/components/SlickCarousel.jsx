@@ -13,7 +13,7 @@ const SwiperContext = createContext({});
 
 export default function SlickCarousel({ children }) {
   const [activeSlide, setActiveSlide] = useState();
-  const { RightArrowIcon, LeftArrowIcon } = useIcons();
+  const { RightIcon, LeftIcon } = useIcons();
   const [parentSwipe, setParentSwipe] = useState(true);
 
   const settings = {
@@ -64,14 +64,23 @@ export default function SlickCarousel({ children }) {
   function NextArrow(props) {
     const { onClick, className } = props;
     return (
+      // <span
+      //   className={`absolute text-xl top-[100px] md:top-28 -right-0 md:-right-5 hover:text-neutral-700 z-10 cursor-pointer ${
+      //     className?.includes("slick-disabled") && "invisible"
+      //   }`}
+      //   style={{ display: "block" }}
+      //   onClick={onClick}
+      // >
+      //   {RightIcon}
+      // </span>
       <span
-        className={`absolute top-[100px] md:top-28 -right-0 md:-right-5 hover:text-neutral-700 z-10 cursor-pointer ${
+        className={`absolute top-0 bottom-0 right-0 h-fit my-auto grid place-items-center z-10 cursor-pointer ${
           className?.includes("slick-disabled") && "invisible"
         }`}
         style={{ display: "block" }}
         onClick={onClick}
       >
-        {RightArrowIcon}
+        {RightIcon}
       </span>
     );
   }
@@ -80,19 +89,28 @@ export default function SlickCarousel({ children }) {
     const { onClick, className } = props;
     return (
       <span
-        className={`absolute top-[100px] md:top-28 -left-0 md:-left-5 hover:text-neutral-700 z-10 cursor-pointer ${
+        className={`absolute top-0 bottom-0 h-fit my-auto grid place-items-center z-10 cursor-pointer ${
           className?.includes("slick-disabled") && "invisible"
         }`}
         style={{ display: "block" }}
         onClick={onClick}
       >
-        {LeftArrowIcon}
+        {LeftIcon}
       </span>
+      // <span
+      //   className={`h-full absolute bottom-0 left-0 right-0 top-0 grid place-items-center hover:text-neutral-700 z-10 cursor-pointer ${
+      //     className?.includes("slick-disabled") && "invisible"
+      //   }`}
+      //   style={{ display: "block" }}
+      //   onClick={onClick}
+      // >
+      //   {LeftIcon}
+      // </span>
     );
   }
 
   return (
-    <div className={`w-[90%] mx-auto`}>
+    <div className="w-full">
       <Suspense fallback={<h1>Loading...</h1>}>
         <Slider {...settings}>{children}</Slider>
       </Suspense>
