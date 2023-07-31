@@ -10,6 +10,10 @@ if (!process.env.NEXTAUTH_SECRET) {
 }
 
 export const authOptions = {
+  session: {
+    strategy: "jwt",
+  },
+  secret: process.env.NEXTAUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -44,17 +48,12 @@ export const authOptions = {
         if (!isPasswordValid) throw new Error("Wrong password");
 
         return {
-          id: user.id + "",
           email: user.email,
           name: user.name,
-          randomKey: "My Nemesis",
         };
       },
     }),
   ],
-  session: {
-    strategy: "jwt",
-  },
   pages: {
     signIn: "/login",
     error: "/login",

@@ -6,7 +6,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
 import ProductDataContext from "@/context/productContext";
-import { NextAuthProvider } from "../context/sessionContext";
 import ToasterContext from "@/context/ToasterContext";
 import { ThemeProvider } from "@/context/theme-provider";
 
@@ -25,31 +24,29 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" style={{ colorScheme: "dark" }} className="dark">
       <body>
-        <NextAuthProvider>
-          <ProductDataContext>
-            <ThemeProvider attribute="class">
-              <CustomIcons>
-                <ToasterContext />
-                <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative transition-all ease-in-out duration-300">
-                  <CartBase>
-                    <SearchBase>
-                      <Navbar />
-                    </SearchBase>
-                  </CartBase>
-                  <div className="relative text-sm text-neutral-800 dark:text-neutral-200 z-10">
-                    <Suspense>
-                      <SideBarBase />
-                    </Suspense>
-                  </div>
-                  <div className={`min-h-screen`}>{children}</div>
-                  <div className="w-full">
-                    <Footer />
-                  </div>
+        <ProductDataContext>
+          <ThemeProvider attribute="class">
+            <CustomIcons>
+              <ToasterContext />
+              <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative transition-all ease-in-out duration-300">
+                <CartBase>
+                  <SearchBase>
+                    <Navbar />
+                  </SearchBase>
+                </CartBase>
+                <div className="relative text-sm text-neutral-800 dark:text-neutral-200 z-10">
+                  <Suspense>
+                    <SideBarBase />
+                  </Suspense>
                 </div>
-              </CustomIcons>
-            </ThemeProvider>
-          </ProductDataContext>
-        </NextAuthProvider>
+                <div className={`min-h-screen`}>{children}</div>
+                <div className="w-full">
+                  <Footer />
+                </div>
+              </div>
+            </CustomIcons>
+          </ThemeProvider>
+        </ProductDataContext>
       </body>
     </html>
   );

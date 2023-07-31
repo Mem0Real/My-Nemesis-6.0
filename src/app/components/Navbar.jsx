@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { authOptions } from "@/lib/auth";
-import { getServerSession } from "next-auth";
+import { getServerSession } from "next-auth/next";
 
 import NavComponents from "./NavComponents";
 
