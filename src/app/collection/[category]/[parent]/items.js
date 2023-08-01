@@ -40,7 +40,7 @@ export default function Items({ categoryId, parentId, childId, items }) {
 
                 <Link
                   href={`/collection/${categoryId}/${parentId}/${childId}/${item.id}`}
-                  className="w-full h-12 flex flex-col items-center pt-3 rounded-b-2xl bg-neutral-800 text-neutral-200 shadow-xl shadow-neutral-900 transition-all ease-in-out duration-1000 group-hover:shadow-neutral-700 group-hover:shadow-md "
+                  className="w-full h-12 border-2 border-neutral-500 flex flex-col items-center pt-3 rounded-b-2xl bg-neutral-800 text-neutral-200 shadow-xl shadow-neutral-900 transition-all ease-in-out duration-1000 group-hover:shadow-neutral-700 group-hover:shadow-md "
                 >
                   <h1>{item.name}</h1>
                 </Link>

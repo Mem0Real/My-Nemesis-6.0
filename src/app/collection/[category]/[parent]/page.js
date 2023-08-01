@@ -28,7 +28,7 @@ export default async function ParentData({ params: { parent, category } }) {
       </Suspense>
       <Link
         href={`/collection/${currentCategory}`}
-        className="absolute top-5 right-0 md:right-12 bg-neutral-700 rounded-md px-4 py-2 text-neutral-200 hover:outline outline-1 outline-black"
+        className="absolute top-5 right-0 md:right-12 bg-transparent rounded-md px-4 py-2 text-neutral-800 dark:text-neutral-200 hover:outline outline-1 outline-neutral-800 dark:outline-neutral-200"
       >
         Back
       </Link>
