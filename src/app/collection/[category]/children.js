@@ -8,34 +8,35 @@ export default function Children({ categoryId, parentId, childrenData }) {
       {childrenData.map((child) => {
         return (
           child.ParentId === parentId && (
-            <div key={child.id} className="flex gap-4">
-              <Link
-                href={`/collection/${categoryId}/${parentId}/${child.id}`}
-                className="flex w-56 mx-auto flex-col items-center group md:my-5 bg-transparent "
-              >
-                <div
-                  className={`${
-                    !child.image && "invisible"
-                  } relative w-full h-44 border border-black rounded-t-3xl shadow-inner shadow-neutral-950 hover:shadow-neutral-700 transition-all ease-in-out`}
+            <div
+              key={child.id}
+              className="flex flex-col gap-3 items-center justify-between"
+            >
+              <div className="relative w-56 h-56 mx-auto">
+                {child.image ? (
+                  <Image
+                    src={child.image}
+                    srcSet={child.id}
+                    alt={child.id}
+                    fill={true}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    className="absolute object-contain"
+                    priority={true}
+                  />
+                ) : (
+                  <div className="w-56 h-56 mx-auto flex flex-col items-center justify-center text-neutral-700 dark:text-neutral-300">
+                    <h1 className="text-xs italic">No Image</h1>
+                  </div>
+                )}{" "}
+              </div>
+              <div className="text-center text-lg py-5 hover:underline underline-offset-2">
+                <Link
+                  href={`/collection/${categoryId}/${parentId}/${child.id}`}
+                  className="flex w-56 mx-auto flex-col items-center group md:my-5 bg-transparent "
                 >
-                  {child.image && (
-                    <Image
-                      src={child.image}
-                      srcSet={child.id}
-                      alt={child.id}
-                      fill={true}
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="absolute object-contain"
-                      priority={true}
-                      blurDataURL="URL"
-                      placeholder="blur"
-                    />
-                  )}
-                </div>
-                <div className="w-full h-12 flex flex-col items-start ps-4 pt-3 rounded-b-2xl bg-neutral-800 text-neutral-200 shadow-xl shadow-neutral-950 transition-all ease-in-out duration-1000 group-hover:shadow-neutral-700 ">
                   <h1>{child.name}</h1>
-                </div>
-              </Link>
+                </Link>
+              </div>
             </div>
           )
         );

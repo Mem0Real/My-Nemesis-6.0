@@ -64,15 +64,6 @@ export default function SlickCarousel({ children }) {
   function NextArrow(props) {
     const { onClick, className } = props;
     return (
-      // <span
-      //   className={`absolute text-xl top-[100px] md:top-28 -right-0 md:-right-5 hover:text-neutral-700 z-10 cursor-pointer ${
-      //     className?.includes("slick-disabled") && "invisible"
-      //   }`}
-      //   style={{ display: "block" }}
-      //   onClick={onClick}
-      // >
-      //   {RightIcon}
-      // </span>
       <span
         className={`absolute top-0 bottom-0 right-0 h-fit my-auto grid place-items-center z-10 cursor-pointer ${
           className?.includes("slick-disabled") && "invisible"
@@ -97,15 +88,6 @@ export default function SlickCarousel({ children }) {
       >
         {LeftIcon}
       </span>
-      // <span
-      //   className={`h-full absolute bottom-0 left-0 right-0 top-0 grid place-items-center hover:text-neutral-700 z-10 cursor-pointer ${
-      //     className?.includes("slick-disabled") && "invisible"
-      //   }`}
-      //   style={{ display: "block" }}
-      //   onClick={onClick}
-      // >
-      //   {LeftIcon}
-      // </span>
     );
   }
 

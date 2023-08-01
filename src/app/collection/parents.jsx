@@ -9,9 +9,12 @@ export default async function Parents({ categoryId, parents }) {
       {parents.map((parent) => {
         return (
           parent.CategoryId === categoryId && (
-            <div className="flex flex-col gap-3 items-center justify-between">
-              <div className={`relative w-56 h-56 mx-auto`}>
-                {parent.image && (
+            <div
+              key={parent.id}
+              className="flex flex-col gap-3 items-center justify-between"
+            >
+              <div className="relative w-56 h-56 mx-auto">
+                {parent.image ? (
                   <Image
                     src={parent.image}
                     srcSet={parent.id}
@@ -21,9 +24,13 @@ export default async function Parents({ categoryId, parents }) {
                     className="absolute object-contain"
                     priority={true}
                   />
+                ) : (
+                  <div className="w-56 h-56 mx-auto flex flex-col items-center justify-center text-neutral-700 dark:text-neutral-300">
+                    <h1 className="text-xs italic">No Image</h1>
+                  </div>
                 )}
               </div>
-              <div className="text-center text-lg py-5">
+              <div className="text-center text-lg py-5 hover:underline underline-offset-2">
                 <Link
                   key={parent.id}
                   href={`/collection/${categoryId}/${parent.id}`}
