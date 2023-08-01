@@ -209,10 +209,10 @@ export default function ProductList({ products, menu, totalPage }) {
             <Sort />
           </div>
           <div className="flex items-center justify-start w-full">
-            <div className="basis-[13%] self-start md:ml-3 ">
+            <div className="basis-1/5 lg:basis-[13%] self-start md:ml-3 ">
               <FilterData />
             </div>
-            <div className="basis-5/6 mx-auto flex flex-col justify-between">
+            <div className="basis-4/5 mx-auto flex flex-col justify-between">
               <List />
               <div className="self-center">{totalPage && <Pagination />}</div>
             </div>

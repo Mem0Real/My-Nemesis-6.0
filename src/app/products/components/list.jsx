@@ -107,7 +107,8 @@ export default function List() {
   // );
 
   return (
-    <div className="grid w-full min-h-screen gap-x-0 gap-y-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-evenly">
+    // <div className="grid w-full min-h-screen gap-x-0 gap-y-12 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-evenly">
+    <div className="grid w-full gap-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-between">
       {products.map((product) => {
         let image = product.images[0];
         let price;
@@ -117,10 +118,16 @@ export default function List() {
             key={product.id}
             href={`/collection/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
           >
-            <div className="grid grid-cols-1 gap-12 justify-between w-full h-fit place-content-center border border-neutral-300/80 dark:border-neutral-600/80">
+            <div className="grid grid-cols-1 h-96 w-full border border-neutral-300/80 dark:border-neutral-700/90">
               <motion.div
-                className="relative w-56 h-56 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-60 lg:h-60 mx-auto justify-self-center"
-                whileHover={{ scale: 1.1, overflow: "hidden" }}
+                className="row-span-6 relative w-56 h-56 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-56 lg:h-56 mx-auto self-center"
+                whileHover={{
+                  scale: 1.2,
+                  transition: {
+                    duration: 0.2,
+                    ease: "easeInOut",
+                  },
+                }}
               >
                 {product.images?.length > 0 && (
                   <Image
@@ -132,11 +139,11 @@ export default function List() {
                   />
                 )}
               </motion.div>
-              <motion.div className="flex flex-col items-start pb-5 text-base">
-                <motion.h1 className="text-start pl-5 w-fit hover:underline underline-offset-2 font-semibold">
+              <motion.div className="flex flex-col items-center w-full pb-5 text-base justify-start">
+                <motion.h1 className="text-justify pl-5 w-full min-h-max self-center hover:underline underline-offset-2 font-semibold">
                   {product.name}
                 </motion.h1>
-                <motion.h1 className="text-start font-thin text-neutral-800 dark:text-neutral-200 pl-5 w-fit hover:animate-pulse">
+                <motion.h1 className="text-start font-thin text-neutral-800 dark:text-neutral-200 pl-5 w-full hover:animate-pulse">
                   ${price}.00
                   <span className="px-2 text-[14px] italic font-light text-neutra-600 dark:text-neutral-400">
                     ETB

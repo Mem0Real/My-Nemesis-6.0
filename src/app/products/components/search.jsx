@@ -31,7 +31,7 @@ export default function SearchForm() {
   }, [text]);
 
   useEffect(() => {
-    const timeOutId = setTimeout(() => handleSearch(text), 500);
+    const timeOutId = setTimeout(() => handleSearch(text), 100);
     return () => clearTimeout(timeOutId);
   }, [text]);
 
@@ -58,7 +58,8 @@ export default function SearchForm() {
         placeholder="Search"
         className="ps-7 pe-2 w-44 py-2 rounded-md"
         defaultValue={query.search || text.search || ""}
-        onChange={(e) => setText({ search: e.target.value })}
+        // onChange={(e) => setText({ search: e.target.value })}
+        onChange={(e) => handleSearch({ search: e.target.value })}
       />
     </form>
   );
