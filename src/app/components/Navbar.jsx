@@ -29,7 +29,7 @@ export const Navbar = async () => {
                 />
               </div>
               <h1
-                className={`lg:px-8 px-6 hidden sm:block text-lg uppercase font-medium tracking-wider`}
+                className={`px-6 hidden sm:block text-lg uppercase font-medium tracking-wider`}
               >
                 Nemesis
               </h1>

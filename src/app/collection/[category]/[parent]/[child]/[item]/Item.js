@@ -186,10 +186,10 @@ export default function Item({ item }) {
               <h1 className="text-sm font-semibold">Quantity:</h1>
               <h2 className="ms-3 text-sm">{quantity}</h2>
             </div>
-            <div className="flex gap-4 w-full">
+            <div className="flex gap-4 w-full items-center">
               <h1 className="text-sm font-semibold">Price:</h1>
               {item.price && (
-                <h2 className="ms-3 text-sm flex gap-1">
+                <h2 className="ms-3 text-sm flex gap-1 items-center">
                   {item.price}
                   <span className="text-neutral-600 dark:text-neutral-400 py-0.5 text-sm font-medium  my-auto">
                     ETB

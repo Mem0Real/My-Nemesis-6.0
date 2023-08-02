@@ -71,14 +71,14 @@ export default function NavComponents({ session }) {
       <div className="hidden md:flex justify-between items-center">
         {/* <SearchInput /> */}
         <button
-          className="relative flex-initial mr-3 flex items-center cursor-pointer justify-end py-1 rounded-md outline outline-1 hover:outline-2outline-neutral-800 text-zinc-800 bg-zinc-200 dark:outline-neutral-200 w-40 dark:text-zinc-200 dark:bg-zinc-800"
+          className="relative w-48 flex-initial flex items-center cursor-pointer justify-evenly py-1 rounded-md outline outline-1 hover:outline-2outline-neutral-800 text-zinc-800 bg-zinc-200 dark:outline-neutral-200 dark:text-zinc-200 dark:bg-zinc-800"
           onClick={handleSearch}
         >
           <p className="md:pr-2 lg:pr-4">Search Products...</p>
           <div className="text-base absolute left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-800 dark:text-neutral-200">
             {SearchIcon}
           </div>
-          <p className="absolute right-0 top-0 bottom-0 grid place-content-center">
+          <p className="absolute right-2 top-0 bottom-0 grid place-content-center text-sm">
             Ctrl K
           </p>
         </button>
