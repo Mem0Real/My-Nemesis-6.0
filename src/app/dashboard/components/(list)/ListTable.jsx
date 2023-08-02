@@ -9,7 +9,7 @@ import React, {
 import { useDataContext } from "./List";
 import Category from "./listData/Category";
 
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, getCookie, hasCookie } from "cookies-next";
 
 const TableContext = createContext({});
 
@@ -23,27 +23,30 @@ export default function MyTable() {
   const [par, setPar] = useState({});
   const [chi, setChi] = useState({});
 
-  const cookieStore = parseCookies();
+  // const cookieStore = parseCookies();
 
   useEffect(() => {
-    let catData, parData, chiData;
-    if (cookieStore.Category_Drop && cookieStore.Category_Drop !== "undefined")
-      catData = JSON.parse(cookieStore.Category_Drop);
-    catData && setCat(catData);
+    let category, parent, child;
+    if (hasCookie("Category_Drop")) {
+      category = JSON.parse(getCookie("Category_Drop"));
+      setCat(category);
+    } else setCat();
 
-    if (cookieStore.Parent_Drop && cookieStore.Parent_Drop !== "undefined")
-      parData = JSON.parse(cookieStore.Parent_Drop);
-    parData && setPar(parData);
+    if (hasCookie("Parent_Drop")) {
+      parent = JSON.parse(getCookie("Parent_Drop"));
+      setPar(parent);
+    } else setPar();
 
-    if (cookieStore.Child_Drop && cookieStore.Child_Drop !== "undefined")
-      chiData = JSON.parse(cookieStore.Child_Drop);
-    chiData && setChi(chiData);
+    if (hasCookie("Child_Drop")) {
+      child = JSON.parse(getCookie("Child_Drop"));
+      setChi(child);
+    } else setChi();
   }, []);
 
   useEffect(() => {
-    setCookie(null, "Category_Drop", JSON.stringify(cat));
-    setCookie(null, "Parent_Drop", JSON.stringify(par));
-    setCookie(null, "Child_Drop", JSON.stringify(chi));
+    setCookie("Category_Drop", cat);
+    setCookie("Parent_Drop", par);
+    setCookie("Child_Drop", chi);
   }, [cat, par, chi]);
 
   const catDropDown = (categoryId) => {

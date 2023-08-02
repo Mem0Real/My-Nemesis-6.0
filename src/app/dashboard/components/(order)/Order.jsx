@@ -15,7 +15,7 @@ const RemoveAllModal = dynamic(() => import("./RemoveAll"));
 const OrderDataContext = createContext({});
 
 import { motion, AnimatePresence } from "framer-motion";
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, getCookie, hasCookie } from "cookies-next";
 
 // TODO should disable hiding of scrollbar on modal open cuz its shifting
 export default function Order({
@@ -30,7 +30,7 @@ export default function Order({
   const [removeAllModal, showRemoveAllModal] = useState(false);
   const [removeAllData, setRemoveAllData] = useState({});
 
-  const cookieStore = parseCookies();
+  // const cookieStore = parseCookies();
 
   // Disable scrollbar on modal open
   useEffect(() => {
@@ -48,14 +48,12 @@ export default function Order({
   }, [removeAllModal]);
 
   useEffect(() => {
-    let data;
-    if (cookieStore.Delivered && cookieStore.Delivered !== "undefined")
-      data = JSON.parse(cookieStore.Delivered);
-    data && showDelivered(() => data);
+    if (hasCookie("Delivered")) showDelivered(true);
+    else showDelivered(false);
   }, []);
 
   useEffect(() => {
-    setCookie(null, "Delivered", JSON.stringify(delivered));
+    setCookie("Delivered", delivered);
   }, [delivered]);
 
   const toggleDelivered = () => {

@@ -2,7 +2,7 @@
 
 import { useState, createContext, useContext, useEffect } from "react";
 
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, getCookie, hasCookie, deleteCookie } from "cookies-next";
 
 import FilterData from "./components/FilterData";
 import Search from "./components/Search";
@@ -26,30 +26,41 @@ export default function ProductList({ products, menu, totalPage }) {
   const [priceDrop, showPriceDrop] = useState(false);
 
   const { pushQuery } = useCustomRouter();
-  const cookieStore = parseCookies();
+  // const cookieStore = parseCookies();
 
   useEffect(() => {
-    let data, filter;
-    if (cookieStore.CategoryDrop && cookieStore.CategoryDrop !== undefined)
-      data = JSON.parse(cookieStore.CategoryDrop);
+    // let data, filter;
+    // if (cookieStore.CategoryDrop && cookieStore.CategoryDrop !== undefined)
+    //   data = JSON.parse(cookieStore.CategoryDrop);
 
-    if (cookieStore.FilterCat && cookieStore.FilterCat !== undefined)
-      filter = JSON.parse(cookieStore.FilterCat);
+    // if (cookieStore.FilterCat && cookieStore.FilterCat !== undefined)
+    //   filter = JSON.parse(cookieStore.FilterCat);
 
-    data && showCategoryDrop(() => data);
-    filter && setFilterCatData(() => filter);
+    // data && showCategoryDrop(() => data);
+    // filter && setFilterCatData(() => filter);
+
+    if (hasCookie("Product_CatDrop")) showCategoryDrop(true);
+    else showCategoryDrop(false);
+
+    if (hasCookie("FilterCat")) {
+      const filter = JSON.parse(getCookie("FilterCat"));
+      setFilterCatData(filter);
+    }
   }, []);
 
   useEffect(() => {
-    setCookie(null, "FilterCat", JSON.stringify(filterCatData));
     if (filterCatData?.length > 0 && filterCatData !== undefined) {
+      setCookie("FilterCat", filterCatData);
       pushQuery({ filter: filterCatData.toString() });
-    } else pushQuery({ filter: "" });
-  }, [filterCatData, pushQuery]);
+    } else {
+      deleteCookie("FilterCat");
+      pushQuery({ filter: "" });
+    }
+  }, [filterCatData]);
 
   const toggleCategory = () => {
     showCategoryDrop((prev) => !prev);
-    setCookie(null, "CategoryDrop", !categoryDrop);
+    setCookie("Product_CatDrop", !categoryDrop);
   };
 
   const toggleParent = (id) => {

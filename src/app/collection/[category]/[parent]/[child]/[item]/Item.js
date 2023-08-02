@@ -6,7 +6,7 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 
 import { useProductContext } from "@/context/ProductContext";
-import { parseCookies } from "nookies";
+import { getCookie, hasCookie } from "cookies-next";
 
 import { motion, AnimatePresence } from "framer-motion";
 const AddToCartModal = dynamic(() => import("@/app/cart/AddToCart"));
@@ -22,7 +22,7 @@ export default function Item({ item }) {
   const { data, updater, purchasedData, setPurchasedData } =
     useProductContext();
 
-  const cookieStore = parseCookies();
+  // const cookieStore = parseCookies();
 
   // TODO check to see if scroll works for addToCart long items
 
@@ -58,10 +58,9 @@ export default function Item({ item }) {
 
   useEffect(() => {
     let product;
-    if (cookieStore.Product && cookieStore?.Product !== undefined)
-      product = JSON.parse(cookieStore.Product);
+    if (hasCookie("Product")) product = JSON.parse(getCookie("Product"));
 
-    if (product && product.length > 0) {
+    if (product?.length > 0) {
       for (let i = 0; i < product.length; i++) {
         if (product[i].id === item.id) {
           setQuantity(() => product[i].quantity);
@@ -88,14 +87,7 @@ export default function Item({ item }) {
         setQuantity(() => item.quantity);
       }
     }
-  }, [
-    data,
-    updater,
-    cookieStore.Product,
-    item,
-    purchasedData,
-    setPurchasedData,
-  ]);
+  }, [data, updater, item, purchasedData, setPurchasedData]);
 
   // Show image if any
   useEffect(() => {

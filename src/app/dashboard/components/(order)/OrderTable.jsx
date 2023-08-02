@@ -10,7 +10,7 @@ import Customer from "./orderData/Customer";
 import RemoveModal from "./Remove";
 
 import { useOrderDataContext } from "./Order";
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, getCookie, hasCookie } from "cookies-next";
 import { motion, AnimatePresence } from "framer-motion";
 
 const OrderContext = createContext({});
@@ -26,8 +26,6 @@ export default function OrderTable() {
 
   const { order, delivered } = useOrderDataContext();
   const customers = order[0];
-
-  const cookieStore = parseCookies();
 
   // Disable scrollbar on modal open
   useEffect(() => {
@@ -45,15 +43,12 @@ export default function OrderTable() {
   }, [removeModal]);
 
   useEffect(() => {
-    let data;
-    if (cookieStore.Customer && cookieStore.Customer !== "undefined") {
-      data = JSON.parse(cookieStore.Customer);
-      setCus(() => data);
-    }
+    if (hasCookie("Customer")) setCus(JSON.parse(getCookie("Customer")));
+    else setCus();
   }, []);
 
   useEffect(() => {
-    setCookie(null, "Customer", JSON.stringify(cus));
+    setCookie("Customer", cus);
   }, [cus]);
 
   const customerDropDown = (customerId) => {

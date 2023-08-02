@@ -9,7 +9,7 @@ import { useCartContext } from "../cart/CartBase";
 import { ThemeSwitcher } from "./ThemeSwitcher";
 
 import { useRouter } from "next/navigation";
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, getCookie, hasCookie, deleteCookie } from "cookies-next";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Poppins, Raleway } from "next/font/google";
@@ -38,7 +38,7 @@ export default function NavComponents({ session }) {
 
   const menuRef = useRef();
   const router = useRouter();
-  const cookieStore = parseCookies();
+  // const cookieStore = parseCookies();
 
   const { SearchIcon, CartIcon } = useIcons();
 
@@ -56,10 +56,14 @@ export default function NavComponents({ session }) {
 
   const handleSignOut = async () => {
     await signOut({ redirect: false });
-    setCookie(null, "next-auth.session-token");
-    setCookie(null, "next-auth.callback-url");
-    setCookie(null, "accessToken");
-    setCookie(null, "next-auth.csrf-token");
+    deleteCookie("next-auth.session-token");
+    deleteCookie("next-auth.callback-url");
+    deleteCookie("accessToken");
+    deleteCookie("next-auth.csrf-token");
+    // setCookie(null, "next-auth.session-token");
+    // setCookie(null, "next-auth.callback-url");
+    // setCookie(null, "accessToken");
+    // setCookie(null, "next-auth.csrf-token");
 
     // Refresh the page to update the session
     router.refresh();
@@ -181,11 +185,11 @@ export default function NavComponents({ session }) {
           isOpen ? "block" : "hidden"
         }`}
       >
-        <ul className="text-sm md:hidden block bg-neutral-900 py-5 mt-0 md:mt-9 list-none">
+        <ul className="text-sm md:hidden block bg-neutral-100 dark:bg-neutral-900 py-5 mt-0 md:mt-9 list-none">
           <li>
             <Link
               href="/products"
-              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
+              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
             >
               Products
             </Link>
@@ -193,7 +197,7 @@ export default function NavComponents({ session }) {
           <li>
             <Link
               href="/collection"
-              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
+              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
             >
               Catalogue
             </Link>
@@ -201,7 +205,7 @@ export default function NavComponents({ session }) {
           <li>
             <Link
               href="/services"
-              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
+              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
             >
               Services
             </Link>
@@ -209,7 +213,7 @@ export default function NavComponents({ session }) {
           <li>
             <Link
               href="/about"
-              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
+              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
             >
               About
             </Link>
@@ -217,7 +221,7 @@ export default function NavComponents({ session }) {
           <li>
             <Link
               href="/dashboard"
-              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-white border-spacing-y-2 py-3 font-medium"
+              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
             >
               Dashboard
             </Link>
@@ -226,7 +230,7 @@ export default function NavComponents({ session }) {
             <li className="relative py-6">
               <button
                 onClick={handleSignOut}
-                className="block absolute right-4 top-2 z-10 mt-4 border rounded-xl lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-red-700 border-spacing-y-2 py-3 px-4 font-medium"
+                className="block absolute right-4 top-2 z-10 mt-4 border rounded-xl lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-red-700 border-spacing-y-2 py-2 px-3 font-medium"
               >
                 Logout
               </button>

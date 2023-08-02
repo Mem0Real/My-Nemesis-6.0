@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useProductContext } from "@/context/ProductContext";
 import { useIcons } from "../utils/CustomIcons";
 
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, getCookie, hasCookie } from "cookies-next";
 
 import { motion } from "framer-motion";
 
@@ -17,8 +17,6 @@ export default function AddToCartModal({
   const [amount, setAmount] = useState();
   const [remainingQuantity, setRemainingQuantity] = useState();
 
-  const cookieStore = parseCookies();
-
   const { storeProduct, addCartData, updater, setUpdater } =
     useProductContext();
 
@@ -28,9 +26,8 @@ export default function AddToCartModal({
   useEffect(() => {
     if (addToCartModal === true) {
       let cart;
-      if (cookieStore.Cart && cookieStore.Cart !== undefined)
-        cart = JSON.parse(cookieStore.Cart);
 
+      if (hasCookie("Cart")) cart = JSON.parse(getCookie("Cart"));
       if (cart?.length > 0) {
         cart.map((product) => {
           if (product.id === item.id) {
@@ -56,21 +53,21 @@ export default function AddToCartModal({
     }
   }, [amount, item.quantity]);
 
-  useEffect(() => {
-    let cart;
-    if (cookieStore.Cart && cookieStore.Cart !== undefined)
-      cart = JSON.parse(cookieStore.Cart);
+  // useEffect(() => {
+  //   let cart;
+  //   if (cookieStore.Cart && cookieStore.Cart !== undefined)
+  //     cart = JSON.parse(cookieStore.Cart);
 
-    if (cart?.length > 0) {
-      setNewCart(() => true);
-    } else {
-      setNewCart(() => false);
-    }
-  }, [updater]);
+  //   if (cart?.length > 0) {
+  //     setNewCart(() => true);
+  //   } else {
+  //     setNewCart(() => false);
+  //   }
+  // }, [updater]);
 
-  useEffect(() => {
-    setCookie(null, "Cart_State", JSON.stringify(newCart));
-  }, [newCart]);
+  // useEffect(() => {
+  //   setCookie("Cart_State", JSON.stringify(newCart));
+  // }, [newCart]);
 
   const handleChange = (e) => {
     if (e.target.value > 0) {
@@ -90,7 +87,7 @@ export default function AddToCartModal({
     storeProduct(item.id, remainingQuantity);
     addCartData(item.id, item.name, item.quantity, amount, item.price);
     setNewCart(() => true);
-    // setCookie(null, "Cart_State", JSON.stringify(true));
+    // setCookie("Cart_State", true, { path: "/" });
     setUpdater((prev) => !prev);
     closeAddToCartModal();
   };

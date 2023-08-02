@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import { Suspense, useState, useEffect } from "react";
 
-import { parseCookies, setCookie } from "nookies";
+import { setCookie, getCookie, hasCookie } from "cookies-next";
 
 const List = dynamic(() => import("./components/(list)/List"));
 const Order = dynamic(() => import("./components/(order)/Order"));
@@ -23,37 +23,36 @@ export default function AdminActions({
 }) {
   const [showList, setShowList] = useState();
   const [showOrder, setShowOrder] = useState();
-  const cookies = parseCookies();
+  // const cookies = parseCookies();
 
   const toggleList = () => {
     setShowList((prev) => !prev);
     setShowOrder(() => false);
 
-    setCookie(null, "List", JSON.stringify(!showList));
-    setCookie(null, "Order", JSON.stringify(false));
+    setCookie("List", !showList);
+    setCookie("Order", false);
   };
 
   const toggleOrder = () => {
     setShowOrder((prev) => !prev);
     setShowList(false);
 
-    setCookie(null, "Order", JSON.stringify(!showOrder));
-    setCookie(null, "List", JSON.stringify(false));
+    setCookie("Order", !showOrder);
+    setCookie("List", false);
   };
 
   useEffect(() => {
-    let data;
-    if (cookies.List && cookies.List !== undefined)
-      data = JSON.parse(cookies.List);
-    setShowList(data);
-  }, [cookies.List]);
+    let list, order;
+    if (hasCookie("List")) {
+      list = JSON.parse(getCookie("List"));
+      setShowList(list);
+    } else setShowList();
 
-  useEffect(() => {
-    let data;
-    if (cookies.Order && cookies.Order !== undefined)
-      data = JSON.parse(cookies.Order);
-    setShowOrder(data);
-  }, [cookies.Order]);
+    if (hasCookie("Order")) {
+      order = JSON.parse(getCookie("Order"));
+      setShowOrder(order);
+    } else setShowOrder();
+  }, []);
 
   const variants = {
     open: {

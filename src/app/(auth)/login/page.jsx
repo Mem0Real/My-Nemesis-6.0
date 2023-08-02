@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 
 import { toast } from "react-hot-toast";
 
-import { setCookie } from "nookies";
+import { setCookie } from "cookies-next";
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -37,7 +37,7 @@ export default function LoginPage() {
       toast.error(result.error);
     } else {
       toast.success("Logged in successfully!");
-      setCookie(null, "accessToken", result.accessToken);
+      setCookie("accessToken", result.accessToken);
       router.refresh();
       router.push("/dashboard");
     }

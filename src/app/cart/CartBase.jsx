@@ -13,7 +13,7 @@ const CartModal = dynamic(() => import("./Cart"));
 const ContactInfo = dynamic(() => import("./ContactInfo"));
 
 import { useProductContext } from "@/context/ProductContext";
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, getCookie, hasCookie, deleteCookie } from "cookies-next";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-hot-toast";
@@ -29,7 +29,7 @@ export default function CartBase({ children }) {
 
   const { updater, setUpdater } = useProductContext();
 
-  const cookieStore = parseCookies();
+  // const cookieStore = parseCookies();
   const cartModalRef = useRef();
   const infoModalRef = useRef();
 
@@ -82,17 +82,15 @@ export default function CartBase({ children }) {
 
   useEffect(() => {
     let cart;
-    if (cookieStore.Cart && cookieStore?.Cart !== undefined)
-      cart = JSON.parse(cookieStore.Cart);
 
+    if (hasCookie("Cart")) cart = JSON.parse(getCookie("Cart"));
     if (cart?.length > 0) {
       setCartList(() => cart);
       setNewCart(() => true);
-      setCookie(null, "Cart_State", JSON.stringify(true));
     } else {
       setCartList(() => []);
       setNewCart(() => false);
-      setCookie(null, "Cart_State", JSON.stringify(false));
+      // setCookie(null, "Cart_State", JSON.stringify(false));
     }
   }, [updater]);
 
@@ -115,9 +113,13 @@ export default function CartBase({ children }) {
   };
 
   const clearCart = (submitted = false) => {
-    setCookie(null, "Cart", JSON.stringify([]));
-    setCookie(null, "Product", JSON.stringify([]));
-    setCookie(null, "Cart_State", JSON.stringify(false));
+    // setCookie("Cart", JSON.stringify([]));
+    // setCookie("Product", JSON.stringify([]));
+    // setCookie("Cart_State", JSON.stringify(false));
+
+    deleteCookie("Cart");
+    deleteCookie("Product");
+    deleteCookie("Cart_State");
 
     // setUpdater((prev) => !prev);
     setCartList(() => []);

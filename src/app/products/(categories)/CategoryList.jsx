@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-import { parseCookies } from "nookies";
+import { hasCookie, getCookie } from "cookies-next";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useProductListContext } from "../ProductList";
@@ -13,7 +13,7 @@ export default function CategoryList() {
   const [check, setCheck] = useState([]);
   const [checked, setChecked] = useState(false);
 
-  const cookieStore = parseCookies();
+  // const cookieStore = parseCookies();
 
   const {
     menu,

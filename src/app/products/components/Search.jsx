@@ -3,31 +3,35 @@
 import { useState, useEffect } from "react";
 
 import useCustomRouter from "@/hooks/useCustomRouter";
-import { setCookie, parseCookies } from "nookies";
+import { setCookie, getCookie, hasCookie } from "cookies-next";
 
 import { useIcons } from "@/app/utils/CustomIcons";
 import { motion } from "framer-motion";
 
 export default function SearchForm() {
   const { pushQuery, query } = useCustomRouter();
-  const cookieStore = parseCookies();
+  // const cookieStore = parseCookies();
+
+  // const [text, setText] = useState(
+  //   cookieStore.Search !== undefined
+  //     ? JSON.parse(cookieStore.Search)
+  //     : { search: "" }
+  // );
+
   const [text, setText] = useState(
-    cookieStore.Search !== undefined
-      ? JSON.parse(cookieStore.Search)
-      : { search: "" }
+    hasCookie("Search") ? JSON.parse(getCookie("Search")) : { search: "" }
   );
 
   useEffect(() => {
-    let searchData;
-    if (cookieStore.Search && cookieStore.Search !== undefined) {
-      searchData = JSON.parse(cookieStore.Search);
+    if (hasCookie("Search")) {
+      const searchData = JSON.parse(getCookie("Search"));
       setText(() => searchData);
       handleSearch(searchData);
     }
   }, []);
 
   useEffect(() => {
-    setCookie(null, "Search", JSON.stringify(text));
+    setCookie("Search", text);
   }, [text]);
 
   // useEffect(() => {
