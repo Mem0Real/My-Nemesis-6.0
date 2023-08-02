@@ -5,7 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useProductListContext } from "../ProductList";
 import Image from "next/image";
 
-// TODO add to cart functionality on the page itself
+// TODO add to cart functionality on the page itself. Should somehow join it with cart data
 
 export default function ListData() {
   const { products } = useProductListContext();
