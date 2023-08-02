@@ -6,6 +6,7 @@ import {
   Suspense,
   createContext,
   useContext,
+  useRef,
 } from "react";
 import dynamic from "next/dynamic";
 
@@ -30,6 +31,8 @@ export default function Order({
   const [removeAllModal, showRemoveAllModal] = useState(false);
   const [removeAllData, setRemoveAllData] = useState({});
 
+  const removeAllRef = useRef();
+
   // Disable scrollbar on modal open
   useEffect(() => {
     const handleWindowWheel = (event) => {
@@ -43,6 +46,18 @@ export default function Order({
     return () => {
       window.removeEventListener("wheel", handleWindowWheel);
     };
+  }, [removeAllModal]);
+
+  // Close "RemoveAll" modal on click outside
+  useEffect(() => {
+    let handler = (e) => {
+      if (removeAllModal && !removeAllRef.current.contains(e.target)) {
+        closeRemoveAllModal();
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => document.removeEventListener("mousedown", handler);
   }, [removeAllModal]);
 
   useEffect(() => {
@@ -88,6 +103,7 @@ export default function Order({
         delivered,
         markDelivered,
         removeOne,
+        removeAllRef,
       }}
     >
       <div className="flex-flex-col w-full items-center justify-center relative min-h-screen bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 md:mt-6">
@@ -170,6 +186,7 @@ export default function Order({
               removeAllData={removeAllData}
               removeAll={removeAll}
               closeRemoveAllModal={closeRemoveAllModal}
+              removeAllRef={removeAllRef}
             />
           </motion.div>
         )}

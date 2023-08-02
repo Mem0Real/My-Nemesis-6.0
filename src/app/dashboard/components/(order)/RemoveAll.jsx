@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 
@@ -6,20 +6,9 @@ export default function RemoveAllModal({
   closeRemoveAllModal,
   removeAllData,
   removeAll,
+  removeAllRef,
 }) {
-  const modalRef = useRef();
   const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    let handler = (e) => {
-      if (!modalRef.current.contains(e.target)) {
-        closeRemoveAllModal();
-      }
-    };
-    document.addEventListener("mousedown", handler);
-
-    return () => document.removeEventListener("mousedown", handler);
-  }, [closeRemoveAllModal]);
 
   const confirmDelete = async (removeAllData) => {
     setLoading(() => true);
@@ -39,7 +28,7 @@ export default function RemoveAllModal({
   return (
     <section
       className="my-auto w-[80%] md:w-[65%] lg:w-[40%] mx-auto overflow-hidden rounded-lg bg-neutral-300 dark:bg-neutral-900"
-      ref={modalRef}
+      ref={removeAllRef}
     >
       <header className="p-4 relative">
         <button

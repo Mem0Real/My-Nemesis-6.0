@@ -1,27 +1,18 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-hot-toast";
 import { useOrderDataContext } from "./Order";
 import { useOrderContext } from "./OrderTable";
 
-export default function RemoveModal({ removeData, closeRemoveModal }) {
+export default function RemoveModal({
+  removeData,
+  closeRemoveModal,
+  removeRef,
+}) {
   const [loading, setLoading] = useState(false);
 
-  const modalRef = useRef();
   const { removeOne } = useOrderDataContext();
   const { setRemoveLoading } = useOrderContext();
-
-  useEffect(() => {
-    let handler = (e) => {
-      if (!modalRef.current.contains(e.target)) {
-        closeRemoveModal();
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-
-    return () => document.removeEventListener("mousedown", handler);
-  }, [closeRemoveModal]);
 
   const confirmDelete = async () => {
     setRemoveLoading(() => ({ id: removeData.id, loading: true }));
@@ -39,7 +30,7 @@ export default function RemoveModal({ removeData, closeRemoveModal }) {
   return (
     <section
       className="my-auto w-[80%] md:w-[65%] lg:w-[40%] mx-auto overflow-hidden rounded-lg bg-neutral-300 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200"
-      ref={modalRef}
+      ref={removeRef}
     >
       <header className="p-4 relative">
         <button

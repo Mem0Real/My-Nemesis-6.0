@@ -97,6 +97,7 @@ export default function CartBase({ children }) {
     };
   }, []);
 
+  // Update Cart Data
   useEffect(() => {
     let cart;
 

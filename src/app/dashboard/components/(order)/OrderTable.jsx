@@ -4,6 +4,7 @@ import React, {
   createContext,
   useContext,
   Suspense,
+  useRef,
 } from "react";
 
 import Customer from "./orderData/Customer";
@@ -27,6 +28,8 @@ export default function OrderTable() {
   const { order, delivered } = useOrderDataContext();
   const customers = order[0];
 
+  const removeRef = useRef();
+
   // Disable scrollbar on modal open
   useEffect(() => {
     const handleWindowWheel = (event) => {
@@ -41,6 +44,35 @@ export default function OrderTable() {
       window.removeEventListener("wheel", handleWindowWheel);
     };
   }, [removeModal]);
+
+  // Close "Remove" modal on click outside
+  useEffect(() => {
+    let handler = (e) => {
+      if (removeModal && !removeRef.current.contains(e.target)) {
+        closeRemoveModal();
+      }
+    };
+    document.addEventListener("mousedown", handler);
+
+    return () => document.removeEventListener("mousedown", handler);
+  }, [removeModal]);
+
+  // Close remove modal on keypress "Esc"
+  useEffect(() => {
+    const esc = (e) => e.key === "Escape";
+
+    const handler = (e) => {
+      if (esc(e)) {
+        closeRemoveModal();
+      }
+    };
+
+    window.addEventListener("keyup", handler);
+
+    return () => {
+      window.removeEventListener("keyup", handler);
+    };
+  }, []);
 
   useEffect(() => {
     if (hasCookie("Customer")) setCus(JSON.parse(getCookie("Customer")));
@@ -208,6 +240,7 @@ export default function OrderTable() {
             <RemoveModal
               removeData={removeData}
               closeRemoveModal={closeRemoveModal}
+              removeRef={removeRef}
             />
           </motion.div>
         )}
