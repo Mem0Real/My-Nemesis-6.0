@@ -4,6 +4,7 @@ import { sendOrder } from "./CartActions";
 import { useProductContext } from "@/context/ProductContext";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
+import { setCookie } from "cookies-next";
 
 export default function ContactInfo({
   cartList,
@@ -18,7 +19,6 @@ export default function ContactInfo({
   const { setPurchasedData } = useProductContext();
 
   const handleSubmit = async (e) => {
-    console.log("Submit");
     e.preventDefault();
 
     setLoading(() => true);

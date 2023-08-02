@@ -38,7 +38,6 @@ export default function NavComponents({ session }) {
 
   const menuRef = useRef();
   const router = useRouter();
-  // const cookieStore = parseCookies();
 
   const { SearchIcon, CartIcon } = useIcons();
 
@@ -60,10 +59,6 @@ export default function NavComponents({ session }) {
     deleteCookie("next-auth.callback-url");
     deleteCookie("accessToken");
     deleteCookie("next-auth.csrf-token");
-    // setCookie(null, "next-auth.session-token");
-    // setCookie(null, "next-auth.callback-url");
-    // setCookie(null, "accessToken");
-    // setCookie(null, "next-auth.csrf-token");
 
     // Refresh the page to update the session
     router.refresh();

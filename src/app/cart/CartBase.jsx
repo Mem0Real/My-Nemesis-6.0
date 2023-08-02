@@ -29,7 +29,6 @@ export default function CartBase({ children }) {
 
   const { updater, setUpdater } = useProductContext();
 
-  // const cookieStore = parseCookies();
   const cartModalRef = useRef();
   const infoModalRef = useRef();
 
@@ -117,9 +116,9 @@ export default function CartBase({ children }) {
     // setCookie("Product", JSON.stringify([]));
     // setCookie("Cart_State", JSON.stringify(false));
 
-    deleteCookie("Cart");
-    deleteCookie("Product");
-    deleteCookie("Cart_State");
+    deleteCookie("Cart", { path: "/" });
+    deleteCookie("Product", { path: "/" });
+    deleteCookie("Cart_State", { path: "/" });
 
     // setUpdater((prev) => !prev);
     setCartList(() => []);

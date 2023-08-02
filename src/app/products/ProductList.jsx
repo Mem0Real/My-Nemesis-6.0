@@ -26,19 +26,8 @@ export default function ProductList({ products, menu, totalPage }) {
   const [priceDrop, showPriceDrop] = useState(false);
 
   const { pushQuery } = useCustomRouter();
-  // const cookieStore = parseCookies();
 
   useEffect(() => {
-    // let data, filter;
-    // if (cookieStore.CategoryDrop && cookieStore.CategoryDrop !== undefined)
-    //   data = JSON.parse(cookieStore.CategoryDrop);
-
-    // if (cookieStore.FilterCat && cookieStore.FilterCat !== undefined)
-    //   filter = JSON.parse(cookieStore.FilterCat);
-
-    // data && showCategoryDrop(() => data);
-    // filter && setFilterCatData(() => filter);
-
     if (hasCookie("Product_CatDrop")) showCategoryDrop(true);
     else showCategoryDrop(false);
 
@@ -69,7 +58,6 @@ export default function ProductList({ products, menu, totalPage }) {
     } else {
       if (parentDrop.id === id) {
         setParentDrop((prev) => ({ ...prev, open: !prev.open }));
-        // console.log(!parentDrop.open);
       } else {
         setParentDrop(() => ({ id: id, open: true }));
       }
@@ -82,7 +70,6 @@ export default function ProductList({ products, menu, totalPage }) {
     } else {
       if (childDrop.id === id) {
         setChildDrop((prev) => ({ ...prev, open: !prev.open }));
-        // console.log(!childDrop.open);
       } else {
         setChildDrop(() => ({ id: id, open: true }));
       }

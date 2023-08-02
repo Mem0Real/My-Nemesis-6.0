@@ -22,8 +22,6 @@ export default function Item({ item }) {
   const { data, updater, purchasedData, setPurchasedData } =
     useProductContext();
 
-  // const cookieStore = parseCookies();
-
   // TODO check to see if scroll works for addToCart long items
 
   const addToCartRef = useRef();

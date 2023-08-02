@@ -30,8 +30,6 @@ export default function Order({
   const [removeAllModal, showRemoveAllModal] = useState(false);
   const [removeAllData, setRemoveAllData] = useState({});
 
-  // const cookieStore = parseCookies();
-
   // Disable scrollbar on modal open
   useEffect(() => {
     const handleWindowWheel = (event) => {
@@ -48,7 +46,8 @@ export default function Order({
   }, [removeAllModal]);
 
   useEffect(() => {
-    if (hasCookie("Delivered")) showDelivered(true);
+    if (hasCookie("Delivered"))
+      showDelivered(JSON.parse(getCookie("Delivered")));
     else showDelivered(false);
   }, []);
 

@@ -53,22 +53,6 @@ export default function AddToCartModal({
     }
   }, [amount, item.quantity]);
 
-  // useEffect(() => {
-  //   let cart;
-  //   if (cookieStore.Cart && cookieStore.Cart !== undefined)
-  //     cart = JSON.parse(cookieStore.Cart);
-
-  //   if (cart?.length > 0) {
-  //     setNewCart(() => true);
-  //   } else {
-  //     setNewCart(() => false);
-  //   }
-  // }, [updater]);
-
-  // useEffect(() => {
-  //   setCookie("Cart_State", JSON.stringify(newCart));
-  // }, [newCart]);
-
   const handleChange = (e) => {
     if (e.target.value > 0) {
       setAmount(() => e.target.value);

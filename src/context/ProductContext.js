@@ -12,23 +12,7 @@ export default function ProductDataContext({ children }) {
   const [updater, setUpdater] = useState(false);
   const [purchasedData, setPurchasedData] = useState([]);
 
-  // const cookieStore = parseCookies();
-
   useEffect(() => {
-    // let cart, product;
-    // if (cookieStore.Product && cookieStore.Product !== undefined)
-    //   product = JSON.parse(cookieStore.Product);
-
-    // if (product?.length > 0) {
-    //   setData(product);
-    // }
-    // if (cookieStore.Cart && cookieStore.Cart !== undefined)
-    //   cart = JSON.parse(cookieStore.Cart);
-    // if (cart?.length > 0) {
-    //   setCartData(cart);
-    //   setCookie(null, "Cart_State", true);
-    // }
-
     if (hasCookie("Product")) {
       const product = JSON.parse(getCookie("Product"));
       setData(product);
@@ -91,7 +75,7 @@ export default function ProductDataContext({ children }) {
         });
 
         setCartData(cartItems);
-        setCookie("Cart", cartItems);
+        setCookie("Cart", cartItems, { path: "/" });
         change === true && toast.success("Cart item updated!");
       } else {
         const newCartItem = {
@@ -105,7 +89,7 @@ export default function ProductDataContext({ children }) {
 
         setCartData((prev) => [...prev, newCartItem]);
         cart.push(newCartItem);
-        setCookie("Cart", cart);
+        setCookie("Cart", cart, { path: "/" });
         toast.success("Item added to cart!");
       }
     } else {
@@ -118,7 +102,7 @@ export default function ProductDataContext({ children }) {
         totalPrice: amount * itemPrice,
       };
       setCartData(() => [newCartItem]);
-      setCookie("Cart", [newCartItem]);
+      setCookie("Cart", [newCartItem], { path: "/" });
 
       toast.success("Item added to cart!");
     }
@@ -135,7 +119,7 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setData((prev) => [...prev, newArray]);
-      setCookie("Product", newArray);
+      setCookie("Product", newArray, { path: "/" });
     } else {
       toast.error("Item not found!");
     }
@@ -151,7 +135,7 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setData((prev) => [...prev, newArray]);
-      setCookie("Product", newArray);
+      setCookie("Product", newArray, { path: "/" });
     } else {
       toast.error("Item not found");
     }
@@ -177,7 +161,7 @@ export default function ProductDataContext({ children }) {
         return { id: item.id, quantity: item.quantity - item.amount };
       });
       setData((prev) => [...prev, newArray]);
-      setCookie("Product", newArray);
+      setCookie("Product", newArray, { path: "/" });
     } else {
       toast.error("Item not found");
     }
@@ -198,7 +182,7 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setCartData((prev) => [...prev, newArray]);
-      setCookie("Cart", newArray);
+      setCookie("Cart", newArray, { path: "/" });
     } else {
       toast.error("Item not found");
     }
@@ -219,7 +203,7 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setCartData((prev) => [...prev, newArray]);
-      setCookie("Cart", newArray);
+      setCookie("Cart", newArray, { path: "/" });
     } else {
       toast.error("Item not found");
     }
@@ -254,7 +238,7 @@ export default function ProductDataContext({ children }) {
         return item;
       });
       setData((prev) => [...prev, newArray]);
-      setCookie("Cart", newArray);
+      setCookie("Cart", newArray, { path: "/" });
     } else {
       toast.error("Item not found");
     }
@@ -272,7 +256,7 @@ export default function ProductDataContext({ children }) {
           return item;
         })
         .filter((item) => item !== null);
-      setCookie("Cart", newArray);
+      setCookie("Cart", newArray, { path: "/" });
     } else {
       toast.error("Item not found");
     }
@@ -290,7 +274,7 @@ export default function ProductDataContext({ children }) {
           return item;
         })
         .filter((item) => item !== null);
-      setCookie("Product", newArray);
+      setCookie("Product", newArray, { path: "/" });
     } else {
       toast.error("Item not found");
     }

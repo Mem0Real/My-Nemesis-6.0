@@ -10,13 +10,6 @@ import { motion } from "framer-motion";
 
 export default function SearchForm() {
   const { pushQuery, query } = useCustomRouter();
-  // const cookieStore = parseCookies();
-
-  // const [text, setText] = useState(
-  //   cookieStore.Search !== undefined
-  //     ? JSON.parse(cookieStore.Search)
-  //     : { search: "" }
-  // );
 
   const [text, setText] = useState(
     hasCookie("Search") ? JSON.parse(getCookie("Search")) : { search: "" }
@@ -33,11 +26,6 @@ export default function SearchForm() {
   useEffect(() => {
     setCookie("Search", text);
   }, [text]);
-
-  // useEffect(() => {
-  //   const timeOutId = setTimeout(() => handleSearch(text), 100);
-  //   return () => clearTimeout(timeOutId);
-  // }, [text]);
 
   const { SearchIcon } = useIcons();
 
@@ -61,7 +49,7 @@ export default function SearchForm() {
         name="search"
         placeholder="Search"
         className="ps-7 pe-2 w-44 py-2 rounded-md"
-        defaultValue={query.search || text.search || ""}
+        defaultValue={text.search || query.search || ""}
         // onChange={(e) => setText({ search: e.target.value })}
         onChange={(e) => handleSearch({ search: e.target.value })}
       />

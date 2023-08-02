@@ -13,8 +13,6 @@ export default function CategoryList() {
   const [check, setCheck] = useState([]);
   const [checked, setChecked] = useState(false);
 
-  // const cookieStore = parseCookies();
-
   const {
     menu,
     categoryDrop,
@@ -25,6 +23,8 @@ export default function CategoryList() {
     filterCatData,
     handleSelection,
   } = useProductListContext();
+
+  // TODO filter parents & children for products
 
   // useEffect(() => {
   //   let filter;

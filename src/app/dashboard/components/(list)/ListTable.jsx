@@ -23,8 +23,6 @@ export default function MyTable() {
   const [par, setPar] = useState({});
   const [chi, setChi] = useState({});
 
-  // const cookieStore = parseCookies();
-
   useEffect(() => {
     let category, parent, child;
     if (hasCookie("Category_Drop")) {

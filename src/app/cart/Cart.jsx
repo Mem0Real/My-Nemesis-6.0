@@ -52,7 +52,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
 
   return (
     <section
-      className="h-screen my-auto w-[90%] sm:w-[75%] md:w-[60%] lg:w-[60%] mx-auto overflow-y-scroll rounded-lg bg-neutral-900"
+      className="max-h-screen min-h-fit my-auto w-[90%] sm:w-[75%] md:w-[60%] lg:w-[60%] mx-auto overflow-y-scroll rounded-lg bg-neutral-900"
       ref={cartModalRef}
     >
       <header className="pb-4 relative">
