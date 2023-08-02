@@ -25,7 +25,7 @@ export default async function CategoryPage({ params: { category } }) {
       </Suspense>
       <Link
         href={`/collection/`}
-        className="absolute top-5 right-0 md:right-12 bg-transparent rounded-md px-4 py-2 text-neutral-800 dark:text-neutral-200 hover:outline outline-1 outline-neutral-800 dark:outline-neutral-200"
+        className="absolute top-10 right-0 md:right-12 bg-transparent rounded-md px-4 py-2 text-neutral-800 dark:text-neutral-200 hover:outline outline-1 outline-neutral-800 dark:outline-neutral-200"
       >
         Go Back
       </Link>
