@@ -78,6 +78,9 @@ export default function NavComponents({ session }) {
           <div className="text-base absolute left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-800 dark:text-neutral-200">
             {SearchIcon}
           </div>
+          <p className="absolute right-0 top-0 bottom-0 grid place-content-center">
+            Ctrl K
+          </p>
         </button>
         <div className="flex justify-end items-center gap-2 md:gap-7 lg:gap-10">
           <ThemeSwitcher />

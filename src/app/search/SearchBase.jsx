@@ -39,6 +39,51 @@ export default function SearchBase({ children }) {
     return () => document.removeEventListener("mousedown", handler);
   }, [searchModal]);
 
+  // Open Search Modal on "/" press
+
+  // useEffect(() => {
+  //   let keysPressed = {};
+
+  //   const handleKeyDown = (event) => {
+  //     keysPressed[event.key] = true;
+
+  //     if (keysPressed["Control"] && event.key === "/") {
+  //       showSearchModal(true);
+  //     }
+  //     if (event.key === "Escape") {
+  //       showSearchModal(false);
+  //     }
+  //   };
+
+  //   window.addEventListener("keydown", handleKeyDown);
+
+  //   return () => {
+  //     window.removeEventListener("keydown", handleKeyDown);
+  //   };
+  // }, []);
+
+  useEffect(() => {
+    const ctrl = (e) => e.ctrlKey && e.key === "k";
+    const esc = (e) => e.key === "Escape";
+
+    const handler = (e) => {
+      if (ctrl(e)) showSearchModal(true);
+      if (esc(e)) showSearchModal(false);
+    };
+
+    const ignore = (e) => {
+      if (ctrl(e)) e.preventDefault();
+    };
+
+    window.addEventListener("keyup", handler);
+    window.addEventListener("keydown", ignore);
+
+    return () => {
+      window.removeEventListener("keyup", handler);
+      window.removeEventListener("keydown", ignore);
+    };
+  }, []);
+
   const handleSearch = () => {
     showSearchModal(true);
   };

@@ -34,7 +34,9 @@ export default function Items({ children }) {
               <Link
                 href={`/collection/${category.id}/${parent.id}/${child.id}/${item.id}`}
               >
-                <p onClick={closeSearch}>{item.name}</p>
+                <p onClick={closeSearch} className="capitalize">
+                  {item.name}
+                </p>
               </Link>
             </div>
           );

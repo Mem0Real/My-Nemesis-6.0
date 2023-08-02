@@ -24,14 +24,6 @@ export default function List({ data, create, update, deleteItem, url }) {
   const [deleteModal, showDeleteModal] = useState(false);
   const [deleteData, setDeleteData] = useState({});
 
-  // useEffect(() => {
-  //   if (addModal || editModal || deleteModal) {
-  //     document.body.style.overflow = "hidden";
-  //   } else {
-  //     document.body.style.overflow = "auto";
-  //   }
-  // }, [addModal, editModal, deleteModal]);
-
   const addRef = useRef();
   const editRef = useRef();
   const deleteRef = useRef();
