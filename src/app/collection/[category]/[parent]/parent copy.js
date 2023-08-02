@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 
 import { getDetail } from "@/app/collection/lib/fetchFunctions";
-import Children from "./children";
+import Children from "./Children";
 
 export default async function Parent({ categoryId, parentId }) {
   const parentData = await getDetail("parents", parentId);

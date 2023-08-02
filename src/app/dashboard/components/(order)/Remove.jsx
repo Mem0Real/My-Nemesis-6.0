@@ -21,7 +21,7 @@ export default function RemoveModal({ removeData, closeRemoveModal }) {
     document.addEventListener("mousedown", handler);
 
     return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  }, [closeRemoveModal]);
 
   const confirmDelete = async () => {
     setRemoveLoading(() => ({ id: removeData.id, loading: true }));

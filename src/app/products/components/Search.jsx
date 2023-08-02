@@ -30,10 +30,10 @@ export default function SearchForm() {
     setCookie(null, "Search", JSON.stringify(text));
   }, [text]);
 
-  useEffect(() => {
-    const timeOutId = setTimeout(() => handleSearch(text), 100);
-    return () => clearTimeout(timeOutId);
-  }, [text]);
+  // useEffect(() => {
+  //   const timeOutId = setTimeout(() => handleSearch(text), 100);
+  //   return () => clearTimeout(timeOutId);
+  // }, [text]);
 
   const { SearchIcon } = useIcons();
 
@@ -43,7 +43,7 @@ export default function SearchForm() {
   return (
     <form
       className="flex justify-between relative border border-neutral-600 dark:border-neutral-400 rounded-md "
-      action={() => handleSearch(text)}
+      action={() => handleSearch({ search: text })}
     >
       <motion.button
         className="absolute left-1 top-0 bottom-0 grid place-content-center cursor-pointer"

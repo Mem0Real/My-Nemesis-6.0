@@ -1,9 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 
-import CategoryList from "../(categories)/categoryList";
-import PriceModifier from "./priceModifier";
+import CategoryList from "../(categories)/CategoryList";
+import PriceModifier from "./PriceModifier";
 
-import { useProductListContext } from "../productList";
+import { useProductListContext } from "../ProductList";
 import { useIcons } from "../../utils/CustomIcons";
 
 export default function FilterData() {

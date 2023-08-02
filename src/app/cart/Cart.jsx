@@ -1,13 +1,13 @@
 "use client";
-import React, { useEffect, useRef } from "react";
+import React from "react";
 
-import { useProductContext } from "@/context/productContext";
+import { useProductContext } from "@/context/ProductContext";
 import { useCartContext } from "./CartBase";
 
 import { motion } from "framer-motion";
 import { useIcons } from "../utils/CustomIcons";
 
-export default function Cart({ closeCartModal }) {
+export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
   const {
     subtractQuantity,
     addQuantity,
@@ -29,19 +29,6 @@ export default function Cart({ closeCartModal }) {
   } = useCartContext();
 
   const { PlusIcon, MinusIcon, RemoveIcon } = useIcons();
-
-  const modalRef = useRef();
-
-  useEffect(() => {
-    let handler = (e) => {
-      if (!modalRef.current.contains(e.target)) {
-        closeCartModal();
-      }
-    };
-    document.addEventListener("mousedown", handler);
-
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
 
   const handleMinus = (id) => {
     subtractQuantity(id);
@@ -65,8 +52,8 @@ export default function Cart({ closeCartModal }) {
 
   return (
     <section
-      className="h-fit my-auto w-[90%] sm:w-[75%] md:w-[60%] lg:w-[60%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-900"
-      ref={modalRef}
+      className="h-screen my-auto w-[90%] sm:w-[75%] md:w-[60%] lg:w-[60%] mx-auto overflow-y-scroll rounded-lg bg-neutral-900"
+      ref={cartModalRef}
     >
       <header className="pb-4 relative">
         <button

@@ -5,9 +5,9 @@ import { useState, useEffect } from "react";
 import { parseCookies } from "nookies";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useProductListContext } from "../productList";
+import { useProductListContext } from "../ProductList";
 import { useIcons } from "@/app/utils/CustomIcons";
-import ParentList from "./parentList";
+import ParentList from "./ParentList";
 
 export default function CategoryList() {
   const [check, setCheck] = useState([]);

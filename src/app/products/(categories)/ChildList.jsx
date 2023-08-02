@@ -1,9 +1,9 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useProductListContext } from "../productList";
+import { useProductListContext } from "../ProductList";
 
-export default function ChildList({ parentId, children }) {
+export default function ChildList({ parentId, childrenData }) {
   const { childDrop, contentVariants } = useProductListContext();
 
   return (
@@ -20,7 +20,7 @@ export default function ChildList({ parentId, children }) {
           exit="closed"
           variants={contentVariants}
         >
-          {children.map((child) => {
+          {childrenData.map((child) => {
             return (
               <div key={child.id} className="w-full flex flex-col">
                 <div className="flex items-center text-sm gap-3">

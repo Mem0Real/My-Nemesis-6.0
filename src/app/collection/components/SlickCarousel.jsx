@@ -8,11 +8,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import { useIcons } from "@/app/utils/CustomIcons";
+import { AnimatePresence, motion } from "framer-motion";
 
 const SwiperContext = createContext({});
 
 export default function SlickCarousel({ children }) {
   const [activeSlide, setActiveSlide] = useState();
+  const [oldSlide, setOldSlide] = useState();
+  const [nextSlide, setNextSlide] = useState();
+
   const { RightIcon, LeftIcon } = useIcons();
   const [parentSwipe, setParentSwipe] = useState(true);
 
@@ -58,36 +62,59 @@ export default function SlickCarousel({ children }) {
         },
       },
     ],
+    beforeChange: (current, next) => {
+      setOldSlide(current);
+      setNextSlide(next);
+    },
     afterChange: (current) => setActiveSlide(current),
   };
 
   function NextArrow(props) {
     const { onClick, className } = props;
     return (
-      <span
-        className={`absolute top-0 bottom-0 right-0 h-fit my-auto grid place-items-center z-10 cursor-pointer ${
-          className?.includes("slick-disabled") && "invisible"
-        }`}
-        style={{ display: "block" }}
-        onClick={onClick}
-      >
-        {RightIcon}
-      </span>
+      <AnimatePresence>
+        {!className?.includes("slick-disabled") && (
+          <motion.div
+            className={`absolute top-0 bottom-0 -right-2 h-fit my-auto grid place-items-center z-10 cursor-pointer`}
+            style={{ display: "block" }}
+            onClick={onClick}
+            whileTap={{ scale: 0.6 }}
+            exit={{ opacity: 0 }}
+            animate={
+              className?.includes("slick-disabled")
+                ? { opacity: 0 }
+                : { opacity: 1, transition: { duration: 0.5 } }
+            }
+          >
+            {RightIcon}
+          </motion.div>
+        )}
+      </AnimatePresence>
     );
   }
 
   function PrevArrow(props) {
     const { onClick, className } = props;
     return (
-      <span
-        className={`absolute top-0 bottom-0 h-fit my-auto grid place-items-center z-10 cursor-pointer ${
-          className?.includes("slick-disabled") && "invisible"
-        }`}
-        style={{ display: "block" }}
-        onClick={onClick}
-      >
-        {LeftIcon}
-      </span>
+      <AnimatePresence>
+        {!className?.includes("slick-disabled") && (
+          <motion.div
+            className={`absolute top-0 bottom-0 -left-2 h-fit my-auto grid place-items-center z-10 cursor-pointer`}
+            style={{ display: "block" }}
+            onClick={onClick}
+            whileTap={{ scale: 0.6 }}
+            whilehover={{ scale: 1.5 }}
+            exit={{ opacity: 0 }}
+            animate={
+              className?.includes("slick-disabled")
+                ? ""
+                : { opacity: 1, transition: { duration: 0.5 } }
+            }
+          >
+            {LeftIcon}
+          </motion.div>
+        )}
+      </AnimatePresence>
     );
   }
 

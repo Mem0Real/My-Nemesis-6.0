@@ -4,11 +4,11 @@ import { useState, createContext, useContext, useEffect } from "react";
 
 import { setCookie, parseCookies } from "nookies";
 
-import FilterData from "./components/filterData";
-import Search from "./components/search";
-import Sort from "./components/sort";
-import List from "./components/list";
-import Pagination from "./components/pagination";
+import FilterData from "./components/FilterData";
+import Search from "./components/Search";
+import Sort from "./components/Sort";
+import ListData from "./components/ListData";
+import Pagination from "./components/Pagination";
 
 import useCustomRouter from "@/hooks/useCustomRouter";
 
@@ -45,7 +45,7 @@ export default function ProductList({ products, menu, totalPage }) {
     if (filterCatData?.length > 0 && filterCatData !== undefined) {
       pushQuery({ filter: filterCatData.toString() });
     } else pushQuery({ filter: "" });
-  }, [filterCatData]);
+  }, [filterCatData, pushQuery]);
 
   const toggleCategory = () => {
     showCategoryDrop((prev) => !prev);
@@ -149,7 +149,6 @@ export default function ProductList({ products, menu, totalPage }) {
         setFilterCatData(newArray);
         pushQuery({ filter: newArray.toString() });
       }
-      console.log("newD");
     }
     if (par) {
       let newArray = [...filterParData];
@@ -213,7 +212,7 @@ export default function ProductList({ products, menu, totalPage }) {
               <FilterData />
             </div>
             <div className="basis-4/5 mx-auto flex flex-col justify-between">
-              <List />
+              <ListData />
               <div className="self-center">{totalPage && <Pagination />}</div>
             </div>
           </div>

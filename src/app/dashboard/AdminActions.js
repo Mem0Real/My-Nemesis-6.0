@@ -46,14 +46,14 @@ export default function AdminActions({
     if (cookies.List && cookies.List !== undefined)
       data = JSON.parse(cookies.List);
     setShowList(data);
-  }, []);
+  }, [cookies.List]);
 
   useEffect(() => {
     let data;
-    if (cookies.List && cookies.Order !== undefined)
+    if (cookies.Order && cookies.Order !== undefined)
       data = JSON.parse(cookies.Order);
     setShowOrder(data);
-  }, []);
+  }, [cookies.Order]);
 
   const variants = {
     open: {

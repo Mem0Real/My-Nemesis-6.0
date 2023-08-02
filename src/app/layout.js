@@ -5,9 +5,9 @@ import { Suspense } from "react";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import ProductDataContext from "@/context/productContext";
+import ProductDataContext from "@/context/ProductContext";
 import ToasterContext from "@/context/ToasterContext";
-import { ThemeProvider } from "@/context/theme-provider";
+import { ThemeProvider } from "@/context/ThemeProvider";
 
 import CartBase from "./cart/CartBase";
 import SearchBase from "./search/SearchBase";

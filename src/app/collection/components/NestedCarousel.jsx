@@ -5,6 +5,7 @@ import Slider from "react-slick";
 import { Suspense } from "react";
 
 import { useIcons } from "@/app/utils/CustomIcons";
+import { AnimatePresence, motion } from "framer-motion";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -12,7 +13,7 @@ import "slick-carousel/slick/slick-theme.css";
 export default function NestedCarousel({ children }) {
   const [activeSlide, setActiveSlide] = useState();
 
-  const { RightArrowIcon, LeftArrowIcon } = useIcons();
+  const { RightIcon, LeftIcon } = useIcons();
 
   const settings = {
     init: true,
@@ -31,15 +32,26 @@ export default function NestedCarousel({ children }) {
     const { onClick, className } = props;
     return (
       <div
-        className="absolute top-0 bottom-0 grid place-content-center mt-0.5 -right-3 h-full bg-gradient-to-l from-neutral-700 to-neutral-500/10 cursor-pointer rounded-tr-3xl z-10"
+        className="absolute -top-[2.6px] bottom-0 grid place-content-center -right-[10px] h-full bg-gradient-to-l from-neutral-100 dark:from-neutral-800 to-neutral-200/20 dark:to-neutral-700/20 cursor-pointer rounded-tr-3xl z-10"
         onClick={onClick}
       >
-        <span
-          className={`${className?.includes("slick-disabled") && "invisible"}`}
-          style={{ display: "block" }}
-        >
-          {RightArrowIcon}
-        </span>
+        <AnimatePresence>
+          {!className?.includes("slick-disabled") && (
+            <motion.div
+              style={{ display: "block" }}
+              whileTap={{ scale: 0.6 }}
+              whilehover={{ scale: 1.5 }}
+              exit={{ opacity: 0 }}
+              animate={
+                className?.includes("slick-disabled")
+                  ? ""
+                  : { opacity: 1, transition: { duration: 0.5 } }
+              }
+            >
+              {RightIcon}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   }
@@ -48,15 +60,26 @@ export default function NestedCarousel({ children }) {
     const { onClick, className } = props;
     return (
       <div
-        className="absolute top-0 bottom-0 grid place-content-center mt-0.5 -left-3 h-full bg-gradient-to-r from-neutral-700 to-neutral-500/10 cursor-pointer rounded-tl-3xl z-10"
+        className="absolute h-full -top-[2.6px] bottom-0 grid place-content-center -left-[12px] bg-gradient-to-r from-neutral-100 dark:from-neutral-800 to-neutral-200/20 dark:to-neutral-700/20 cursor-pointer rounded-tl-3xl z-10"
         onClick={onClick}
       >
-        <span
-          className={`${className?.includes("slick-disabled") && "invisible"}`}
-          style={{ display: "block" }}
-        >
-          {LeftArrowIcon}
-        </span>
+        <AnimatePresence>
+          {!className?.includes("slick-disabled") && (
+            <motion.div
+              style={{ display: "block" }}
+              whileTap={{ scale: 0.6 }}
+              whilehover={{ scale: 1.5 }}
+              exit={{ opacity: 0 }}
+              animate={
+                className?.includes("slick-disabled")
+                  ? ""
+                  : { opacity: 1, transition: { duration: 0.5 } }
+              }
+            >
+              {LeftIcon}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     );
   }

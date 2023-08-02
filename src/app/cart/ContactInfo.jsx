@@ -1,7 +1,7 @@
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { sendOrder } from "./CartActions";
 
-import { useProductContext } from "@/context/productContext";
+import { useProductContext } from "@/context/ProductContext";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
 
@@ -10,24 +10,12 @@ export default function ContactInfo({
   orderTotalPrice,
   clearCart,
   closeInfoModal,
+  infoModalRef,
 }) {
   const [user, setUser] = useState({});
   const [loading, setLoading] = useState(false);
 
   const { setPurchasedData } = useProductContext();
-  const modalRef = useRef();
-
-  useEffect(() => {
-    let handler = (e) => {
-      if (!modalRef.current.contains(e.target)) {
-        closeInfoModal();
-      }
-    };
-
-    document.addEventListener("mousedown", handler);
-
-    return () => document.removeEventListener("mousedown", handler);
-  }, []);
 
   const handleSubmit = async (e) => {
     console.log("Submit");
@@ -65,7 +53,7 @@ export default function ContactInfo({
   return (
     <section
       className="h-fit my-auto w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-900"
-      ref={modalRef}
+      ref={infoModalRef}
     >
       <header className="pb-4 relative">
         <button

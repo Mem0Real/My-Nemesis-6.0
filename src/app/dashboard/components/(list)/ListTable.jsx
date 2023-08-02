@@ -9,6 +9,8 @@ import React, {
 import { useDataContext } from "./List";
 import Category from "./listData/Category";
 
+import { setCookie, parseCookies } from "nookies";
+
 const TableContext = createContext({});
 
 // TODO if entry is empty show empty data or smtn
@@ -21,32 +23,28 @@ export default function MyTable() {
   const [par, setPar] = useState({});
   const [chi, setChi] = useState({});
 
+  const cookieStore = parseCookies();
+
   useEffect(() => {
-    const data = window.localStorage.getItem("CATEGORY");
-    if (data !== null) setCat(JSON.parse(data));
+    let catData, parData, chiData;
+    if (cookieStore.Category_Drop && cookieStore.Category_Drop !== "undefined")
+      catData = JSON.parse(cookieStore.Category_Drop);
+    catData && setCat(catData);
+
+    if (cookieStore.Parent_Drop && cookieStore.Parent_Drop !== "undefined")
+      parData = JSON.parse(cookieStore.Parent_Drop);
+    parData && setPar(parData);
+
+    if (cookieStore.Child_Drop && cookieStore.Child_Drop !== "undefined")
+      chiData = JSON.parse(cookieStore.Child_Drop);
+    chiData && setChi(chiData);
   }, []);
 
   useEffect(() => {
-    const data = window.localStorage.getItem("PARENT");
-    if (data !== null) setPar(JSON.parse(data));
-  }, []);
-
-  useEffect(() => {
-    const data = window.localStorage.getItem("CHILD");
-    if (data !== null) setChi(JSON.parse(data));
-  }, []);
-
-  useEffect(() => {
-    window.localStorage.setItem("CATEGORY", JSON.stringify(cat));
-  }, [cat]);
-
-  useEffect(() => {
-    window.localStorage.setItem("PARENT", JSON.stringify(par));
-  }, [par]);
-
-  useEffect(() => {
-    window.localStorage.setItem("CHILD", JSON.stringify(chi));
-  }, [chi]);
+    setCookie(null, "Category_Drop", JSON.stringify(cat));
+    setCookie(null, "Parent_Drop", JSON.stringify(par));
+    setCookie(null, "Child_Drop", JSON.stringify(chi));
+  }, [cat, par, chi]);
 
   const catDropDown = (categoryId) => {
     if (!cat.id) {

@@ -49,9 +49,9 @@ export default function Order({
 
   useEffect(() => {
     let data;
-    if (cookieStore.Delivered && cookieStore.Delivered !== undefined)
+    if (cookieStore.Delivered && cookieStore.Delivered !== "undefined")
       data = JSON.parse(cookieStore.Delivered);
-    showDelivered(() => data);
+    data && showDelivered(() => data);
   }, []);
 
   useEffect(() => {

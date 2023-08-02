@@ -2,11 +2,11 @@ import Link from "next/link";
 
 import { motion, AnimatePresence } from "framer-motion";
 
-import { useProductListContext } from "../productList";
+import { useProductListContext } from "../ProductList";
 import Image from "next/image";
 
 // TODO add cookies to store opened data
-export default function List() {
+export default function ListData() {
   const { products } = useProductListContext();
 
   if (products.length === 0) {

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Suspense } from "react";
-import Parents from "./parents";
+import Parents from "./Parents";
 import { getCollectionData } from "./lib/fetchFunctions";
 
 export default async function Categories() {

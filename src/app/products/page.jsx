@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { toast } from "react-hot-toast";
-import ProductList from "./productList";
+import ProductList from "./ProductList";
 
 async function getMenuData() {
   let menu;

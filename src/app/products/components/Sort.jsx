@@ -9,7 +9,7 @@ export default function Sort() {
 
   useEffect(() => {
     handleSort(sort);
-  }, [sort]);
+  }, [sort, handleSort]);
 
   async function handleSort(query) {
     pushQuery(query);

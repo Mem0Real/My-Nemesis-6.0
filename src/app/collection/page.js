@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import Categories from "./categories";
+import Categories from "./Categories";
 export default function CollectionPage() {
   return (
     <div className="flex flex-col items-center gap-20 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 pt-6 min-h-screen">
@@ -11,7 +11,7 @@ export default function CollectionPage() {
       <Suspense
         fallback={
           <h1 className="text-neutral-800 dark:text-neutral-200 m-auto">
-            Loading Categories
+            Loading Categories...
           </h1>
         }
       >

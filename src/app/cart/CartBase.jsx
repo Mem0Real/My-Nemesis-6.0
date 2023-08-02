@@ -1,12 +1,18 @@
 "use client";
 
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, {
+  useState,
+  useEffect,
+  createContext,
+  useContext,
+  useRef,
+} from "react";
 import dynamic from "next/dynamic";
 
 const CartModal = dynamic(() => import("./Cart"));
 const ContactInfo = dynamic(() => import("./ContactInfo"));
 
-import { useProductContext } from "@/context/productContext";
+import { useProductContext } from "@/context/ProductContext";
 import { setCookie, parseCookies } from "nookies";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -24,11 +30,29 @@ export default function CartBase({ children }) {
   const { updater, setUpdater } = useProductContext();
 
   const cookieStore = parseCookies();
+  const cartModalRef = useRef();
+  const infoModalRef = useRef();
 
   // Disable scrollbar on modal open
+  // useEffect(() => {
+  //   const handleWindowWheel = (event) => {
+  //     if (cartModal || infoModal) {
+  //       event.preventDefault();
+  //     }
+  //   };
+
+  //   window.addEventListener("wheel", handleWindowWheel, { passive: false });
+
+  //   return () => {
+  //     window.removeEventListener("wheel", handleWindowWheel);
+  //   };
+  // }, [cartModal, infoModal]);
   useEffect(() => {
     const handleWindowWheel = (event) => {
-      if (cartModal || infoModal) {
+      if (cartModal && !cartModalRef?.current.contains(event.target)) {
+        event.preventDefault();
+      }
+      if (infoModal && !infoModalRef?.current.contains(event.target)) {
         event.preventDefault();
       }
     };
@@ -38,6 +62,22 @@ export default function CartBase({ children }) {
     return () => {
       window.removeEventListener("wheel", handleWindowWheel);
     };
+  }, [cartModal, infoModal]);
+
+  // Close modal on click outside
+  useEffect(() => {
+    let handler = (e) => {
+      if (cartModal && !cartModalRef.current.contains(e.target)) {
+        closeCartModal();
+      }
+      if (infoModal && !infoModalRef.current.contains(e.target)) {
+        closeInfoModal();
+      }
+    };
+
+    document.addEventListener("mousedown", handler);
+
+    return () => document.removeEventListener("mousedown", handler);
   }, [cartModal, infoModal]);
 
   useEffect(() => {
@@ -151,7 +191,11 @@ export default function CartBase({ children }) {
               cartModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
-            <CartModal closeCartModal={closeCartModal} />
+            <CartModal
+              closeCartModal={closeCartModal}
+              cartModalRef={cartModalRef}
+              cartModal={cartModal}
+            />
           </motion.div>
         )}
         {infoModal && (
@@ -170,6 +214,8 @@ export default function CartBase({ children }) {
               orderTotalPrice={invoiceTotal}
               clearCart={clearCart}
               closeInfoModal={closeInfoModal}
+              infoModalRef={infoModalRef}
+              infoModal={infoModal}
             />
           </motion.div>
         )}

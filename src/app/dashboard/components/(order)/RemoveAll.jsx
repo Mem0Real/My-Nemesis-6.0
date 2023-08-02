@@ -19,7 +19,7 @@ export default function RemoveAllModal({
     document.addEventListener("mousedown", handler);
 
     return () => document.removeEventListener("mousedown", handler);
-  }, []);
+  }, [closeRemoveAllModal]);
 
   const confirmDelete = async (removeAllData) => {
     setLoading(() => true);

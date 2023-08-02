@@ -5,7 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 
-import { useProductContext } from "@/context/productContext";
+import { useProductContext } from "@/context/ProductContext";
 import { parseCookies } from "nookies";
 
 import { motion, AnimatePresence } from "framer-motion";
@@ -88,7 +88,14 @@ export default function Item({ item }) {
         setQuantity(() => item.quantity);
       }
     }
-  }, [data, updater]);
+  }, [
+    data,
+    updater,
+    cookieStore.Product,
+    item,
+    purchasedData,
+    setPurchasedData,
+  ]);
 
   // Show image if any
   useEffect(() => {
@@ -132,7 +139,7 @@ export default function Item({ item }) {
               return (
                 <div
                   key={index}
-                  className={`relative h-12 w-12 ms-1 bg-neutral-900 rounded-sm cursor-pointer hover:outline outline-1 outline-neutral-200 ${
+                  className={`relative h-12 w-12 ms-1 bg-neutral-200 dark:bg-neutral-800 rounded-sm cursor-pointer hover:outline outline-1 outline-neutral-700 dark:outline-neutral-200 ${
                     activeImage === url
                       ? "-translate-y-2 sm:translate-x-1 lg:translate-x-2 outline transition-all ease-in-out duration-500"
                       : "translate-y-0 sm:-translate-x-1 lg:-translate-x-2  transition-all ease-in-out duration-500"
@@ -166,7 +173,7 @@ export default function Item({ item }) {
       <div className="h-fit w-[43em] justify-center sm:justify-normal mx-auto items-center">
         <div className="">
           <h1 className="text-3xl font-bold ms-4 mb-2">Product Details</h1>
-          <div className="flex flex-col items-start ps-5 gap-7 py-6 w-full lg:w-[90%] bg-neutral-900 border border-neutral-200 text-neutral-200 rounded-xl drop-shadow-2xl ">
+          <div className="flex flex-col items-start ps-5 gap-7 py-6 w-full lg:w-[90%] bg-neutral-200 dark:bg-neutral-800 border border-neutral-800 dark:border-neutral-200 text-neutral-800 dark:text-neutral-200 rounded-xl drop-shadow-2xl ">
             <div className="flex gap-4 w-full">
               <h1 className=" text-sm font-semibold">Product Name: </h1>
               <h2 className="ms-3 text-sm"> {item.name}</h2>
@@ -194,7 +201,7 @@ export default function Item({ item }) {
               {item.price && (
                 <h2 className="ms-3 text-sm flex gap-1">
                   {item.price}
-                  <span className="text-neutral-400 py-0.5 text-sm font-medium  my-auto">
+                  <span className="text-neutral-600 dark:text-neutral-400 py-0.5 text-sm font-medium  my-auto">
                     ETB
                   </span>
                 </h2>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useProductListContext } from "../productList";
+import { useProductListContext } from "../ProductList";
 import useCustomRouter from "@/hooks/useCustomRouter";
 
 import { motion } from "framer-motion";

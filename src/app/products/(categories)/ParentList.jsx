@@ -1,9 +1,9 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useProductListContext } from "../productList";
+import { useProductListContext } from "../ProductList";
 import { useIcons } from "@/app/utils/CustomIcons";
-import ChildList from "./childList";
+import ChildList from "./ChildList";
 
 export default function ParentList({ categoryId, parents }) {
   const {
@@ -56,7 +56,10 @@ export default function ParentList({ categoryId, parents }) {
                     {RightArrowIcon}
                   </motion.button>
                 </div>
-                <ChildList parentId={parent.id} children={parent.children} />
+                <ChildList
+                  parentId={parent.id}
+                  childrenData={parent.children}
+                />
               </div>
             );
           })}

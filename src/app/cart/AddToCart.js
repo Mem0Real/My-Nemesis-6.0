@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import { useProductContext } from "@/context/productContext";
+import { useProductContext } from "@/context/ProductContext";
 import { useIcons } from "../utils/CustomIcons";
 
 import { setCookie, parseCookies } from "nookies";
@@ -90,21 +90,21 @@ export default function AddToCartModal({
     storeProduct(item.id, remainingQuantity);
     addCartData(item.id, item.name, item.quantity, amount, item.price);
     setNewCart(() => true);
-    setCookie(null, "Cart_State", JSON.stringify(true));
+    // setCookie(null, "Cart_State", JSON.stringify(true));
     setUpdater((prev) => !prev);
     closeAddToCartModal();
   };
 
   return (
     <section
-      className="my-auto w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] mx-auto overflow-hidden rounded-lg bg-neutral-900"
+      className="my-auto w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] mx-auto overflow-hidden rounded-lg bg-neutral-200 dark:bg-neutral-900"
       ref={addToCartRef}
     >
       <header className="pb-4 relative">
         <button
           name="close-adt-modal"
           type="button"
-          className="absolute top-3 md:top-3 right-3 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+          className="absolute top-3 md:top-3 right-3 text-neutral-800 dark:text-neutral-200 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
           data-modal-hide="authentication-modal"
           onClick={() => closeAddToCartModal()}
         >
@@ -123,7 +123,7 @@ export default function AddToCartModal({
           </svg>
           <span className="sr-only">Close modal</span>
         </button>
-        <h3 className="mb-4 border-b border-neutral-200 py-4 text-xl text-center font-medium text-neutral-200">
+        <h3 className="mb-4 border-b border-neutral-800 dark:border-neutral-200 py-4 text-xl text-center font-medium text-neutral-800 dark:text-neutral-200">
           <p className="mt-5">{item.name}</p>
         </h3>
       </header>
@@ -137,16 +137,15 @@ export default function AddToCartModal({
             onClick={handleMinus}
             type="button"
             disabled={amount === 1}
-            className="text-neutral-800 dark:text-neutral-200 disabled:text-neutral-600 disabled:dark:text-neutral-400 disabled:hover:cursor-not-allowed flex flex-col items-center w-full h-full"
+            className="text-neutral-800 dark:text-neutral-200 disabled:text-neutral-400 disabled:dark:text-neutral-600 disabled:hover:cursor-not-allowed flex flex-col items-center w-full h-full"
           >
-            {/* <MinusOutlined className="self-center" /> */}
             {MinusIcon}
           </button>
           <input
             type="number"
             name="amount"
             id="amount"
-            className="text-center content-center py-2 rounded-md bg-neutral-800 text-neutral-200 border border-neutral-200"
+            className="text-center content-center py-2 rounded-md bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-800 dark:border-neutral-200"
             value={amount || ""}
             onChange={handleChange}
             required
@@ -157,9 +156,8 @@ export default function AddToCartModal({
             onClick={handlePlus}
             type="button"
             disabled={amount === item.quantity}
-            className="text-neutral-800 dark:text-neutral-200 disabled:text-neutral-600 disabled:dark:text-neutral-400 disabled:hover:cursor-not-allowed flex flex-col items-center w-full h-full"
+            className="text-neutral-800 dark:text-neutral-200 disabled:text-neutral-400 disabled:dark:text-neutral-600 disabled:hover:cursor-not-allowed flex flex-col items-center w-full h-full"
           >
-            {/* <PlusOutlined className="self-center" /> */}
             {PlusIcon}
           </button>
         </div>

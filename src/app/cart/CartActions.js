@@ -11,7 +11,7 @@ export async function sendOrder(user, cartList, orderTotalPrice) {
   let dateNow = new Date().toISOString();
 
   let res1;
-  let errorData = undefined;
+  let errorData = [];
 
   let data = await cartList.map((item) => ({
     productId: item.id,

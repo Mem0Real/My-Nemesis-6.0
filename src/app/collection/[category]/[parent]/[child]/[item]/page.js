@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import Link from "next/link";
 
 import { getDetail } from "@/app/collection/lib/fetchFunctions";
-import Item from "./item";
+import Item from "./Item";
 
 export async function generateMetadata({ params: { item } }) {
   let firstLetter = item[0];
@@ -31,28 +31,24 @@ export default async function ItemPage({
 
   if (itemData && isObjEmpty(itemData)) {
     content = (
-      <div className="flex flex-col justify-around items-center text-sm mb-1 w-screen bg-neutral-300 text-neutral-900 h-fit">
+      <div className="flex flex-col justify-around items-center text-sm mb-1 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen w-screen">
         <h1>Empty</h1>
       </div>
     );
   } else {
     content = (
-      <div className="flex flex-col items-center w-screen min-h-screen bg-neutral-800 text-neutral-200 pt-2">
-        <div className="flex justify-end items-end w-full p-4"></div>
-
+      <div className="flex flex-col items-center w-screen min-h-screen bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 pt-6">
         <Suspense fallback={<h1 className="text-xl mx-auto">Loading Item</h1>}>
           <Item item={itemData} />
         </Suspense>
         <Link
           href={`/collection/${currentCategory}/${currentParent}/${currentChild}`}
+          className="absolute top-5 right-0 md:right-12 bg-transparent rounded-md px-4 py-2 text-neutral-800 dark:text-neutral-200 hover:outline outline-1 outline-neutral-800 dark:outline-neutral-200"
         >
-          <h2 className="text-xs px-2 py-1 mt-4 md:px-4 md:py-2 bg-neutral-900 text-white rounded-md mr-4">
-            Go Back
-          </h2>
+          Back
         </Link>
       </div>
     );
   }
-
-  return content;
+  return <div className="relative flex flex-col items-center">{content}</div>;
 }

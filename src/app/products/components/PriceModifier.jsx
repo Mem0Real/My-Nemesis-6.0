@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useProductListContext } from "../productList";
+import { useProductListContext } from "../ProductList";
 
 export default function PriceModifier() {
   const { priceDrop, contentVariants } = useProductListContext();

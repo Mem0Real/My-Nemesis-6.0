@@ -281,7 +281,7 @@ export default function Customer({ customer }) {
             animate={
               cus?.id === customer.id && cus?.open === true ? "open" : "closed"
             }
-            variants={variants}
+            variants={contentVariants}
             exit={"closed"}
             whileHover={{ backgroundColor: "#777" }}
           >

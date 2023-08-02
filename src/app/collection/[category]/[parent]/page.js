@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import Link from "next/link";
 
-import Parent from "./parent";
+import Parent from "./Parent";
 
 export async function generateMetadata({ params: { parent } }) {
   let firstLetter = parent[0];
@@ -18,7 +18,7 @@ export default async function ParentData({ params: { parent, category } }) {
   let currentCategory = category;
 
   const content = (
-    <div className="flex flex-col justify-between items-center text-sm mb-1 w-screen bg-neutral-800 text-neutral-200 h-fit pt-12">
+    <div className="flex flex-col justify-between items-center text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 pt-6 w-screen min-h-screen">
       <Suspense
         fallback={
           <h1 className="text-3xl mx-auto">Loading current parent...</h1>
@@ -35,9 +35,5 @@ export default async function ParentData({ params: { parent, category } }) {
     </div>
   );
 
-  return (
-    <div className="relative flex flex-col justify-evenly items-center w-screen">
-      {content}
-    </div>
-  );
+  return <div className="relative flex flex-col items-center">{content}</div>;
 }

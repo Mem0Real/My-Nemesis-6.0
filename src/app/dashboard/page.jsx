@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import DataFetcher from "./dataFetcher";
+import DataFetcher from "./DataFetcher";
 
 export default async function DashboardPage() {
   return (
