@@ -76,7 +76,6 @@ export default function OrderTable() {
 
   useEffect(() => {
     if (hasCookie("Customer")) setCus(JSON.parse(getCookie("Customer")));
-    else setCus();
   }, []);
 
   useEffect(() => {

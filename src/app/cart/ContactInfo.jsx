@@ -52,14 +52,14 @@ export default function ContactInfo({
   };
   return (
     <section
-      className="h-fit my-auto w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-900"
+      className="h-fit my-auto w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
       ref={infoModalRef}
     >
       <header className="pb-4 relative">
         <button
           name="close-contact-modal"
           type="button"
-          className="absolute top-3 right-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+          className="absolute top-3 right-5 text-neutral-800 dark:text-neutral-200 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
           data-modal-hide="authentication-modal"
           onClick={() => closeInfoModal()}
         >
@@ -79,7 +79,7 @@ export default function ContactInfo({
           <span className="sr-only">Close modal</span>
         </button>
         <div className="py-5">
-          <h3 className="mb-4 border-b border-neutral-200 py-4 text-xl text-center font-medium text-neutral-200">
+          <h3 className="mb-4 border-b border-neutral-800 dark:border-neutral-200 py-4 text-xl text-center font-medium text-neutral-800 dark:text-neutral-200">
             Your order is being processed
           </h3>
           <h1 className="pt-3 text-lg px-2 text-center">
@@ -99,14 +99,14 @@ export default function ContactInfo({
                 name="fullname"
                 type="text"
                 placeholder=" "
-                className="block py-2.5 ps-2 w-full text-sm text-neutral-300 bg-transparent border-0 border-b-2 border-neutral-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                className="block py-2.5 ps-2 w-full text-sm text-neutral-700 dark:text-neutral-300 bg-transparent border-0 border-b-2 border-neutral-800 dark:border-neutral-200 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 value={user?.fullname || ""}
                 onChange={handleChange}
               />
               <label
                 htmlFor="fullname"
                 className="text-base absolute peer-placeholder-shown:text-sm
-                    text-neutral-300 duration-300 transform -translate-y-9
+                    text-neutral-700 dark:text-neutral-300 duration-300 transform -translate-y-9
                     scale-75 top-3 -z-10 origin-[0] peer-focus:left-0
                     peer-focus:text-blue-600 peer-placeholder-shown:scale-100
                     peer-placeholder-shown:translate-y-0 peer-focus:scale-75
@@ -116,12 +116,12 @@ export default function ContactInfo({
               </label>
             </div>
 
-            <div className="relative z-0 mb-6 group flex flex-row-reverse items-center border-0 border-b-2 border-neutral-600 gap-2 ">
+            <div className="relative z-0 mb-6 group flex flex-row-reverse items-center border-0 border-b-2 border-neutral-400 dark:border-neutral-600 gap-2 ">
               <input
                 id="phone"
                 name="phone"
-                type="tel"
-                className="block py-2.5 px-0 w-full text-sm text-neutral-900 bg-transparent appearance-none dark:text-white dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                type="number"
+                className="block py-2.5 px-0 w-full text-sm text-neutral-800 dark:text-neutral-200 bg-transparent appearance-none dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 value={user?.phone || ""}
                 placeholder=" "
                 onChange={handleChange}
@@ -152,7 +152,7 @@ export default function ContactInfo({
                   borderRadius: "12px",
                 }
               }
-              className="px-4 py-2 rounded-lg outline outline-1 outline-green-700 mb-4 disabled:outline-neutral-400 disabled:scale-90 disabled:cursor-not-allowed"
+              className="px-3 py-1 rounded-lg outline outline-1 outline-green-700 mb-4 disabled:outline-neutral-400 disabled:scale-90 disabled:cursor-not-allowed"
             >
               Confirm
             </motion.button>
@@ -165,7 +165,7 @@ export default function ContactInfo({
               whileHover={{
                 borderRadius: "12px",
               }}
-              className="px-4 py-2 rounded-lg outline outline-1 mb-4 disabled:outline-neutral-500 disabled:scale-90 disabled:cursor-not-allowed"
+              className="px-3 py-1 rounded-lg outline outline-1 mb-4 disabled:outline-neutral-500 disabled:scale-90 disabled:cursor-not-allowed"
               onClick={closeInfoModal}
               disabled={loading}
             >

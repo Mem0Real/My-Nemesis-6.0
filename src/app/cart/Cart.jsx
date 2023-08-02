@@ -52,14 +52,14 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
 
   return (
     <section
-      className="max-h-screen min-h-fit my-auto w-[90%] sm:w-[75%] md:w-[60%] lg:w-[60%] mx-auto overflow-y-scroll rounded-lg bg-neutral-900"
+      className="max-h-screen min-h-fit my-auto w-[90%] sm:w-[75%] md:w-[60%] lg:w-[60%] mx-auto overflow-y-scroll rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
       ref={cartModalRef}
     >
       <header className="pb-4 relative">
         <button
           name="close-cart-modal"
           type="button"
-          className="absolute top-2 right-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
+          className="absolute top-2 right-5 text-neutral-800 dark:text-neutral-200 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center"
           data-modal-hide="authentication-modal"
           onClick={() => closeCartModal()}
         >
@@ -78,17 +78,17 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
           </svg>
           <span className="sr-only">Close modal</span>
         </button>
-        <h3 className="mb-4 py-5 border-b border-neutral-200 text-xl text-center font-medium text-neutral-200">
+        <h3 className="mb-4 py-5 border-b border-neutral-800 text-xl text-center font-medium ">
           Cart
         </h3>
         <h1 className="py-1 ps-5 self-start text-lg px-2 underline underline-offset-2">
           List of Items
         </h1>
       </header>
-      <main className="py-5">
-        <table className="table-fixed drop-shadow-2xl shadow-sm w-[95%] mx-auto bg-neutral-900 shadow-white/60 rounded-2xl border-collapse">
+      <main className="py-5 bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
+        <table className="table-fixed drop-shadow-2xl shadow-sm w-[95%] mx-auto shadow-black/60 dark:shadow-white/60 rounded-2xl border-collapse">
           <thead>
-            <tr className="border-b border-1 border-neutral-200">
+            <tr className="border-b border-1 border-neutral-800 dark:border-neutral-200">
               <th className="text-center py-2 ps-2 w-36 md:w-40 lg:w-36">
                 Product
               </th>
@@ -103,7 +103,10 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
             {cartList?.length > 0 ? (
               <>
                 {cartList.map((item) => (
-                  <tr key={item.id} className="border-b border-neutral-200">
+                  <tr
+                    key={item.id}
+                    className="border-b border-neutral-800 dark:border-neutral-200"
+                  >
                     <td className="text-center py-3 ps-2">{item.name}</td>
                     <td className="text-center py-3">
                       <div className="flex items-center justify-center gap-2">
@@ -111,7 +114,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                           onClick={() => handleMinus(item.id)}
                           type="button"
                           disabled={item.amount <= 1}
-                          className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed "
+                          className="disabled:text-neutral-400 dark:disabled:text-neutral-600 disabled:hover:cursor-not-allowed "
                         >
                           {MinusIcon}
                         </button>
@@ -119,7 +122,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                           type="number"
                           name="quantity"
                           id="quantity"
-                          className="text-center content-center py-2 rounded-lg bg-neutral-800 text-neutral-200 border border-neutral-200"
+                          className="text-center content-center py-1 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-800 dark:border-neutral-200"
                           value={item.amount || ""}
                           onChange={(e) => handleChange(item.id, e)}
                           required
@@ -130,7 +133,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                           onClick={() => handlePlus(item.id)}
                           type="button"
                           disabled={item.amount === item.quantity}
-                          className="disabled:text-neutral-600 disabled:hover:cursor-not-allowed"
+                          className="disabled:text-neutral-400 dark:disabled:text-neutral-600 disabled:hover:cursor-not-allowed"
                         >
                           {PlusIcon}
                         </button>
@@ -211,7 +214,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
               whileHover={{
                 borderRadius: "12px",
               }}
-              className="px-4 py-2 rounded-lg outline outline-1 outline-green-700 mb-4"
+              className="px-3 py-1 rounded-lg outline outline-1 outline-green-700 mb-4"
               onClick={handleOrder}
             >
               Order
@@ -224,7 +227,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
               whileHover={{
                 borderRadius: "12px",
               }}
-              className="px-4 py-2 rounded-lg outline outline-1 outline-red-600 mb-4"
+              className="px-3 py-1 rounded-lg outline outline-1 outline-red-600 mb-4"
               onClick={() => clearCart()}
             >
               Clear
