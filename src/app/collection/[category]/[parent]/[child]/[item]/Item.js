@@ -225,7 +225,7 @@ export default function Item({ item }) {
                 whileHover={{
                   borderRadius: "12px",
                 }}
-                className="px-3 py-2 rounded-lg outline outline-1"
+                className="px-2 py-1 rounded-lg outline outline-1"
                 onClick={handleOrder}
               >
                 Add to Cart

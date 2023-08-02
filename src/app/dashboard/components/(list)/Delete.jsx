@@ -99,7 +99,7 @@ export default function DeleteModal({
         </motion.button>
         <motion.button
           onClick={closeDeleteModal}
-          className="text-blue-500 bg-transparent px-3 py-2"
+          className="text-blue-500 bg-transparent px-2 py-1"
           whileHover={{
             backgroundColor: "rgba(53 96 130 0.1)",
             borderRadius: "8px",

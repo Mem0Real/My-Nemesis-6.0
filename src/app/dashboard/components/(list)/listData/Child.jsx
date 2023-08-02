@@ -164,7 +164,7 @@ export default function Child({ categoryId, parentId, child }) {
             <span className="w-full flex items-center justify-center py-3">
               <motion.button
                 id="addItemButton"
-                className="px-3 py-2 rounded-md bg-green-900 text-neutral-200"
+                className="px-2 py-1 rounded-md bg-green-900 text-neutral-200"
                 onClick={() =>
                   handleAdd("items", categoryId, parentId, child.id)
                 }

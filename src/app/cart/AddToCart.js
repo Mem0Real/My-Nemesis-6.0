@@ -166,7 +166,7 @@ export default function AddToCartModal({
           whileHover={{
             borderRadius: "12px",
           }}
-          className="px-3 py-2 rounded-lg outline outline-1 mb-4"
+          className="px-2 py-1 rounded-lg outline outline-1 mb-4"
         >
           Submit
         </motion.button>

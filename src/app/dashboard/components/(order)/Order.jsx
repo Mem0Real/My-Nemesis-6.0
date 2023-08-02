@@ -126,7 +126,7 @@ export default function Order({
               {delivered ? (
                 <motion.button
                   id="hideDeliveredBtn"
-                  className="px-3 py-2 text-sm bg-transparent border border-blue-500 rounded-lg"
+                  className="px-2 py-1 text-sm bg-transparent border border-blue-500 rounded-lg"
                   onClick={() => toggleDelivered()}
                   whileHover={{
                     backgroundColor: "#2563eb",
@@ -155,7 +155,7 @@ export default function Order({
             </AnimatePresence>
             <motion.button
               id="removeAllBtn"
-              className="px-3 py-2 text-sm bg-transparent border border-red-700 rounded-lg"
+              className="px-2 py-1 text-sm bg-transparent border border-red-700 rounded-lg"
               onClick={() => handleRemoveAll("customers")}
               whileHover={{
                 backgroundColor: "#dc2626",

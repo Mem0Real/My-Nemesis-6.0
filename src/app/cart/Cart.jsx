@@ -57,7 +57,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
 
   return (
     <section
-      className="max-h-screen overflow-y-scroll min-h-fit my-auto w-[90%] sm:w-[75%] md:w-[60%] lg:w-[60%] mx-auto rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
+      className="max-h-screen overflow-y-auto min-h-fit my-auto w-[90%] sm:w-[75%] md:w-[60%] lg:w-[50%] mx-auto rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
       ref={cartModalRef}
     >
       <header className="pb-4 relative">
@@ -90,17 +90,15 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
           List of Items
         </h1>
       </header>
-      <main className="py-5 bg-neutral-200 overflow-scroll dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
+      <main className="py-5 bg-neutral-200 w-full overflow-auto dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
         <table className="table-fixed drop-shadow-2xl shadow-sm mx-auto shadow-black/60 dark:shadow-white/60 rounded-2xl border-collapse">
           <thead>
             <tr className="border-b border-1 border-neutral-800 dark:border-neutral-200">
-              <th className="text-center py-2 ps-2 w-36 md:w-40 lg:w-36">
+              <th className="text-center py-2 ps-2 w-56 md:w-60 lg:w-56">
                 Product
               </th>
-              <th className="text-center py-2 w-24 md:w-24 lg:w-24">
-                Quantity
-              </th>
-              <th className="text-center py-2  w-24 md:w-24 lg:w-24">Price</th>
+              <th className="text-center py-2 w-28 md:w-44">Quantity</th>
+              <th className="text-center py-2 w-28 md:w-44">Price</th>
               <th className="w-8 text-center"></th>
             </tr>
           </thead>

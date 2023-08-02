@@ -200,7 +200,7 @@ export default function List({ data, create, update, deleteItem, url }) {
           <div className="flex flex-col w-full justify-center items-center md:mt-3">
             <motion.button
               key="addCategory"
-              className="px-3 py-2 rounded-md bg-green-900 text-neutral-800 dark:text-neutral-200"
+              className="px-2 py-1 rounded-md bg-green-900 text-neutral-800 dark:text-neutral-200"
               whileTap={{
                 scale: 0.9,
               }}

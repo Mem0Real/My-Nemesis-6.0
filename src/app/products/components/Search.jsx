@@ -30,13 +30,11 @@ export default function SearchForm() {
   const { SearchIcon } = useIcons();
 
   async function handleSearch(query) {
+    setText(query);
     pushQuery(query);
   }
   return (
-    <form
-      className="flex justify-between relative border border-neutral-600 dark:border-neutral-400 rounded-md "
-      action={() => handleSearch({ search: text })}
-    >
+    <form className="flex justify-between relative border border-neutral-600 dark:border-neutral-400 rounded-md ">
       <motion.button
         className="absolute left-1 top-0 bottom-0 grid place-content-center cursor-pointer"
         whileHover={{ scale: 1.05 }}

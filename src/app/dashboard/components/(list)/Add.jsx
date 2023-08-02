@@ -310,7 +310,7 @@ export default function AddModal({
           disabled={loading}
           name="submit"
           type="submit"
-          className="px-3 py-2 text-neutral-200 rounded-md bg-blue-700"
+          className="px-2 py-1 text-neutral-200 rounded-md bg-blue-700"
           whileHover={{
             backgroundColor: "#2563eb",
             borderRadius: "10px",

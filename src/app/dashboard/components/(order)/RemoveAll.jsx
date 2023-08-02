@@ -81,7 +81,7 @@ export default function RemoveAllModal({
           onClick={() => confirmDelete(removeAllData)}
           autoFocus
           name="removeAll"
-          className="text-red-600 bg-transparent px-3 py-2"
+          className="text-red-600 bg-transparent px-2 py-1"
           whileHover={{
             backgroundColor: "rgba(68 18 18 0.1)",
             borderRadius: "8px",
@@ -97,7 +97,7 @@ export default function RemoveAllModal({
         </motion.button>
         <motion.button
           onClick={closeRemoveAllModal}
-          className="text-blue-500 bg-transparent px-3 py-2"
+          className="text-blue-500 bg-transparent px-2 py-1"
           whileHover={{
             backgroundColor: "rgba(53 96 130 0.1)",
             borderRadius: "8px",
