@@ -11,8 +11,6 @@ import { getCookie, hasCookie } from "cookies-next";
 import { motion, AnimatePresence } from "framer-motion";
 const AddToCartModal = dynamic(() => import("@/app/cart/AddToCart"));
 
-// TODO skip the add to cart modal and directly apply item to cart
-
 export default function Item({ item }) {
   const [activeImage, setActiveImage] = useState("");
   const [quantity, setQuantity] = useState();
@@ -21,8 +19,6 @@ export default function Item({ item }) {
 
   const { data, updater, purchasedData, setPurchasedData } =
     useProductContext();
-
-  // TODO check to see if scroll works for addToCart long items
 
   const addToCartRef = useRef();
 

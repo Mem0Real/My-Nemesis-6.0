@@ -5,7 +5,6 @@ import { useOrderContext } from "../OrderTable";
 import { AnimatePresence, motion } from "framer-motion";
 import { useIcons } from "@/app/utils/CustomIcons";
 
-// TODO price isn't calculated with vat so that should be fixed
 export default function Order({ customerId, currentOrder }) {
   const { cus } = useOrderContext();
   const { BagIcon } = useIcons();
