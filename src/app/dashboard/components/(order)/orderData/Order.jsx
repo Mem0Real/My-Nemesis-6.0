@@ -42,9 +42,9 @@ export default function Order({ customerId, currentOrder }) {
           whileHover={{ backgroundColor: "#999" }}
         >
           <td className="py-2 max-w-md text-center">
-            <div className="flex items-center justify-center gap-2">
-              {BagIcon}
-              {currentOrder.productName}
+            <div className="flex items-center gap-2 mx-auto px-auto">
+              <span className="flex-none self-start">{BagIcon}</span>
+              <span className="self-center">{currentOrder.productName}</span>
             </div>
           </td>
           <td className="py-2 max-w-md text-center">

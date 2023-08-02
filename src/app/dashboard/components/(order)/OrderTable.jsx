@@ -183,7 +183,7 @@ export default function OrderTable() {
       }}
     >
       <div className="table-container bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
-        <div className="mx-auto w-[95%] md:w-[75%] overflow-auto">
+        <div className="mx-auto w-[95%] md:w-[85%] overflow-auto">
           <table className="table-fixed w-full text-sm">
             <thead className="border-b border-black">
               <tr className="">

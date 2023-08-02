@@ -44,18 +44,6 @@ export default function Customer({ customer }) {
     customerDropDown(customer.id);
   };
 
-  const subTotal = () => {
-    const orders = order[1];
-    let userDebt = [];
-    orders.map((order) => {
-      if (order.customerId === customer.id) {
-        userDebt.push(parseFloat(order.productPrice));
-      }
-    });
-    let allPrice = userDebt.reduce((sum, i) => sum + i, 0);
-    return allPrice.toFixed(2);
-  };
-
   const handleDeliver = async (entry, id, current) => {
     setDeliverLoading(() => true);
     const res = await markDelivered(entry, id, current);
@@ -67,13 +55,37 @@ export default function Customer({ customer }) {
     }
   };
 
+  const TAX_RATE = 0.07;
+
+  function ccyFormat(num) {
+    return `${num.toFixed(2)}`;
+  }
+
+  const subTotal = () => {
+    const orders = order[1];
+    let userDebt = [];
+    orders.map((order) => {
+      if (order.customerId === customer.id) {
+        userDebt.push(parseFloat(order.productPrice));
+      }
+    });
+    let allPrice = userDebt.reduce((sum, i) => sum + i, 0);
+    // return allPrice.toFixed(2);
+    return allPrice;
+  };
+
+  const invoiceSubtotal = subTotal();
+  const invoiceTaxes = TAX_RATE * invoiceSubtotal;
+  let invoiceTotal = invoiceTaxes + invoiceSubtotal;
+  invoiceTotal = ccyFormat(invoiceTotal);
+
   const formatter = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: "USD",
   });
 
-  let totalPrice = subTotal();
-  totalPrice = formatter.format(totalPrice);
+  // let totalPrice = subTotal();
+  const totalPrice = formatter.format(invoiceTotal);
 
   return [
     <motion.tr
@@ -216,7 +228,7 @@ export default function Customer({ customer }) {
                 <table className="table-fixed w-full overflow-hidden border-0">
                   <thead>
                     <tr>
-                      <th className="text-center py-2 w-9 border-b border-black dark:border-white">
+                      <th className="text-start py-2 w-9 border-b border-black dark:border-white">
                         Product Name
                       </th>
                       <th className="text-center py-2 w-6 border-b border-black dark:border-white">
@@ -251,19 +263,47 @@ export default function Customer({ customer }) {
                           variants={contentVariants}
                           exit="close"
                         >
-                          <td className="" />
+                          <td className="border-t border-neutral-900 dark:border-neutral-100" />
                           <td
                             colSpan={2}
                             align="right"
-                            className="pt-2 pb-3 font-semibold"
+                            className="pt-2 pb-3 font-semibold border-t border-neutral-900 dark:border-neutral-100"
                           >
-                            <div className="flex gap-4 justify-end items-center lg:pr-10 lg:py-2">
-                              <span>Total Price:</span>
-                              <div className="flex gap-1 items-center">
-                                <span>{totalPrice}</span>
-                                <span className="text-xs italic text-neutral-500 font-bold">
-                                  ETB
-                                </span>
+                            <div className="flex flex-col items-end justify-center gap-5 pr-3 lg:mr-10">
+                              <div className="flex gap-4 justify-end items-center lg:pr-10 lg:py-2">
+                                <span>SubTotal: </span>
+                                <div className="flex items-center justify-center gap-1">
+                                  <span>
+                                    {formatter.format(invoiceSubtotal)}
+                                  </span>
+                                  <span className="text-xs italic text-neutral-500 font-bold">
+                                    ETB
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="flex gap-4 justify-end items-center lg:pr-10 lg:py-2">
+                                <div>
+                                  <span>Tax</span>
+                                  <span className="font-thin italic text-sm">
+                                    ({parseInt(TAX_RATE * 100)}%)
+                                  </span>
+                                  :
+                                </div>
+                                <div className="flex gap-1 justify-center items-center">
+                                  <span>{formatter.format(invoiceTaxes)}</span>
+                                  <span className="text-xs italic text-neutral-500 font-bold">
+                                    ETB
+                                  </span>
+                                </div>
+                              </div>
+                              <div className="flex gap-4 justify-end items-center lg:pr-10 py-2 w-full border-t border-neutral-900 dark:border-neutral-100">
+                                <span>Total Price:</span>
+                                <div className="flex gap-1 items-center">
+                                  <span>{totalPrice}</span>
+                                  <span className="text-xs italic text-neutral-500 font-bold">
+                                    ETB
+                                  </span>
+                                </div>
                               </div>
                             </div>
                           </td>
