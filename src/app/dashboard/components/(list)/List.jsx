@@ -66,6 +66,25 @@ export default function List({ data, create, update, deleteItem, url }) {
     return () => document.removeEventListener("mousedown", handler);
   }, [addModal, editModal, deleteModal]);
 
+  // Close modals using keyboard shortcut "Esc"
+  useEffect(() => {
+    const esc = (e) => e.key === "Escape";
+
+    const handler = (e) => {
+      if (esc(e)) {
+        closeAddModal();
+        closeEditModal();
+        closeDeleteModal();
+      }
+    };
+
+    window.addEventListener("keyup", handler);
+
+    return () => {
+      window.removeEventListener("keyup", handler);
+    };
+  }, []);
+
   const handleAdd = (
     entry,
     categoryId = null,

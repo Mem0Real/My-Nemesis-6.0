@@ -71,7 +71,6 @@ export default function AddToCartModal({
     storeProduct(item.id, remainingQuantity);
     addCartData(item.id, item.name, item.quantity, amount, item.price);
     setNewCart(() => true);
-    // setCookie("Cart_State", true, { path: "/" });
     setUpdater((prev) => !prev);
     closeAddToCartModal();
   };

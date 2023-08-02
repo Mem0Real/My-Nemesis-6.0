@@ -54,6 +54,24 @@ export default function Item({ item }) {
     return () => document.removeEventListener("mousedown", handler);
   }, [addToCartModal]);
 
+  // Close addToCart Modal on key press "Esc"
+  useEffect(() => {
+    const esc = (e) => e.key === "Escape";
+
+    const handler = (e) => {
+      if (esc(e)) {
+        closeAddToCartModal();
+      }
+    };
+
+    window.addEventListener("keyup", handler);
+
+    return () => {
+      window.removeEventListener("keyup", handler);
+    };
+  }, []);
+
+  // Set quantity
   useEffect(() => {
     let product;
     if (hasCookie("Product")) product = JSON.parse(getCookie("Product"));

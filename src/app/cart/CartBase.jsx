@@ -63,7 +63,7 @@ export default function CartBase({ children }) {
     };
   }, [cartModal, infoModal]);
 
-  // Close modal on click outside
+  // Close modals on click outside
   useEffect(() => {
     let handler = (e) => {
       if (cartModal && !cartModalRef.current.contains(e.target)) {
@@ -79,6 +79,24 @@ export default function CartBase({ children }) {
     return () => document.removeEventListener("mousedown", handler);
   }, [cartModal, infoModal]);
 
+  // Close Modals on key press "Esc"
+  useEffect(() => {
+    const esc = (e) => e.key === "Escape";
+
+    const handler = (e) => {
+      if (esc(e)) {
+        closeCartModal();
+        closeInfoModal();
+      }
+    };
+
+    window.addEventListener("keyup", handler);
+
+    return () => {
+      window.removeEventListener("keyup", handler);
+    };
+  }, []);
+
   useEffect(() => {
     let cart;
 
@@ -89,7 +107,6 @@ export default function CartBase({ children }) {
     } else {
       setCartList(() => []);
       setNewCart(() => false);
-      // setCookie(null, "Cart_State", JSON.stringify(false));
     }
   }, [updater]);
 
@@ -112,15 +129,10 @@ export default function CartBase({ children }) {
   };
 
   const clearCart = (submitted = false) => {
-    // setCookie("Cart", JSON.stringify([]));
-    // setCookie("Product", JSON.stringify([]));
-    // setCookie("Cart_State", JSON.stringify(false));
-
     deleteCookie("Cart", { path: "/" });
     deleteCookie("Product", { path: "/" });
     deleteCookie("Cart_State", { path: "/" });
 
-    // setUpdater((prev) => !prev);
     setCartList(() => []);
     submitted === false && toast("Cart cleared!");
 

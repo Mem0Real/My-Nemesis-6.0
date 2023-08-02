@@ -62,6 +62,7 @@ export default function SearchBase({ children }) {
   //   };
   // }, []);
 
+  // Open & Close search modal using keyboard shortcuts
   useEffect(() => {
     const ctrl = (e) => e.ctrlKey && e.key === "k";
     const esc = (e) => e.key === "Escape";
