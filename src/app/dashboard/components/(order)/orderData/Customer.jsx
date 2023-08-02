@@ -70,7 +70,6 @@ export default function Customer({ customer }) {
       }
     });
     let allPrice = userDebt.reduce((sum, i) => sum + i, 0);
-    // return allPrice.toFixed(2);
     return allPrice;
   };
 
@@ -84,7 +83,6 @@ export default function Customer({ customer }) {
     currency: "USD",
   });
 
-  // let totalPrice = subTotal();
   const totalPrice = formatter.format(invoiceTotal);
 
   return [
@@ -269,11 +267,11 @@ export default function Customer({ customer }) {
                             align="right"
                             className="pt-2 pb-3 font-semibold border-t border-neutral-900 dark:border-neutral-100"
                           >
-                            <div className="flex flex-col items-end justify-center gap-5 pr-3 lg:mr-10">
+                            <div className="flex flex-col items-end justify-center gap-3 md:gap-2 pr-3 lg:mr-10">
                               <div className="flex gap-4 justify-end items-center lg:pr-10 lg:py-2">
-                                <span>SubTotal: </span>
+                                <span className="font-normal">SubTotal: </span>
                                 <div className="flex items-center justify-center gap-1">
-                                  <span>
+                                  <span className="font-normal">
                                     {formatter.format(invoiceSubtotal)}
                                   </span>
                                   <span className="text-xs italic text-neutral-500 font-bold">
@@ -283,14 +281,16 @@ export default function Customer({ customer }) {
                               </div>
                               <div className="flex gap-4 justify-end items-center lg:pr-10 lg:py-2">
                                 <div>
-                                  <span>Tax</span>
+                                  <span className="font-normal">Tax</span>
                                   <span className="font-thin italic text-sm">
                                     ({parseInt(TAX_RATE * 100)}%)
                                   </span>
                                   :
                                 </div>
                                 <div className="flex gap-1 justify-center items-center">
-                                  <span>{formatter.format(invoiceTaxes)}</span>
+                                  <span className="font-normal">
+                                    {formatter.format(invoiceTaxes)}
+                                  </span>
                                   <span className="text-xs italic text-neutral-500 font-bold">
                                     ETB
                                   </span>
