@@ -126,6 +126,11 @@ export default function Item({ item }) {
     showAddToCartModal(() => false);
   };
 
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   const variants = {
     open: {
       opacity: 1,
@@ -208,7 +213,7 @@ export default function Item({ item }) {
               <h1 className="text-sm font-semibold">Price:</h1>
               {item.price && (
                 <h2 className="ms-3 text-sm flex gap-1 items-center">
-                  {item.price}
+                  {formatter.format(item.price)}
                   <span className="text-neutral-600 dark:text-neutral-400 py-0.5 text-sm font-medium  my-auto">
                     ETB
                   </span>

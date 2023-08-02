@@ -50,9 +50,14 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
     setUpdater((prev) => !prev);
   };
 
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   return (
     <section
-      className="max-h-screen min-h-fit my-auto w-[90%] sm:w-[75%] md:w-[60%] lg:w-[60%] mx-auto overflow-y-scroll rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
+      className="max-h-screen min-h-fit my-auto w-[90%] sm:w-[75%] md:w-[60%] lg:w-[60%] mx-auto rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
       ref={cartModalRef}
     >
       <header className="pb-4 relative">
@@ -85,8 +90,8 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
           List of Items
         </h1>
       </header>
-      <main className="py-5 bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
-        <table className="table-fixed drop-shadow-2xl shadow-sm w-[95%] mx-auto shadow-black/60 dark:shadow-white/60 rounded-2xl border-collapse">
+      <main className="py-5 bg-neutral-200 overflow-scroll dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
+        <table className="table-fixed drop-shadow-2xl shadow-sm mx-auto shadow-black/60 dark:shadow-white/60 rounded-2xl border-collapse">
           <thead>
             <tr className="border-b border-1 border-neutral-800 dark:border-neutral-200">
               <th className="text-center py-2 ps-2 w-36 md:w-40 lg:w-36">
@@ -108,7 +113,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                     className="border-b border-neutral-800 dark:border-neutral-200"
                   >
                     <td className="text-center py-3 ps-2">{item.name}</td>
-                    <td className="text-center py-3">
+                    <td className="text-center py-3 px-4">
                       <div className="flex items-center justify-center gap-2">
                         <button
                           onClick={() => handleMinus(item.id)}
@@ -122,7 +127,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                           type="number"
                           name="quantity"
                           id="quantity"
-                          className="text-center content-center py-1 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-800 dark:border-neutral-200"
+                          className="text-center content-center py-1 w-12 rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 border border-neutral-800 dark:border-neutral-200"
                           value={item.amount || ""}
                           onChange={(e) => handleChange(item.id, e)}
                           required
@@ -140,7 +145,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                       </div>
                     </td>
                     <td className="text-center py-3 pe-2">
-                      {item.totalPrice}
+                      {formatter.format(item.totalPrice)}
                       <span className="text-sm px-1 text-neutral-600 italic items-center">
                         ETB
                       </span>
@@ -159,7 +164,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                   <td rowSpan={3} />
                   <td className="text-center py-2">SubTotal</td>
                   <td className="text-center">
-                    {ccyFormat(invoiceSubtotal)}
+                    {formatter.format(ccyFormat(invoiceSubtotal))}
                     <span className="text-sm px-1 text-neutral-600 italic items-center">
                       ETB
                     </span>
@@ -175,7 +180,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                     </div>
                   </td>
                   <td className="text-center py-2">
-                    {ccyFormat(invoiceTaxes)}
+                    {formatter.format(ccyFormat(invoiceTaxes))}
                     <span className="text-sm px-1 text-neutral-600 italic items-center">
                       ETB
                     </span>
@@ -184,7 +189,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                 <tr className="border-t border-neutral-200">
                   <td className="text-center py-4">Total</td>
                   <td className="text-center py-4">
-                    {ccyFormat(invoiceTotal)}
+                    {formatter.format(ccyFormat(invoiceTotal))}
                     <span className="text-sm px-1 text-neutral-600 italic items-center">
                       ETB
                     </span>

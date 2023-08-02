@@ -75,6 +75,11 @@ export default function AddToCartModal({
     closeAddToCartModal();
   };
 
+  const formatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
+  });
+
   return (
     <section
       className="my-auto w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] mx-auto overflow-hidden rounded-lg bg-neutral-200 dark:bg-neutral-900"
@@ -148,7 +153,9 @@ export default function AddToCartModal({
           </div>
           <div className="flex gap-4 items-center md:self-center">
             <h1 className="m-auto">Total Price: </h1>
-            <p className="font-semibold">{item.price * amount} ETB</p>
+            <p className="font-semibold">
+              {formatter.format(item.price * amount)} ETB
+            </p>
           </div>
         </div>
         <motion.button
