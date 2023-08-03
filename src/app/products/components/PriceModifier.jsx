@@ -3,40 +3,51 @@ import { useProductListContext } from "../ProductList";
 import { useState, useEffect } from "react";
 import useCustomRouter from "@/hooks/useCustomRouter";
 
-export default function PriceModifier() {
-  const [text, setText] = useState({ price: 0 });
+import MultiSlide from "./MultiSlide";
 
+export default function PriceModifier() {
   const { pushQuery, query } = useCustomRouter();
 
   const { priceDrop, contentVariants, range } = useProductListContext();
-
-  useEffect(() => {
-    handlePrice(text);
-  }, [text]);
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    handlePrice(text);
-  };
-
-  const handleChange = (e) => {
-    e.preventDefault();
-
-    if (e.target.value) {
-      setText(() => ({ price: e.target.value }));
-    } else {
-      setText(() => ({ price: 0 }));
-    }
-  };
-  async function handlePrice(query) {
-    pushQuery(query);
-  }
 
   const { minPrice, maxPrice } = range;
 
   const min = minPrice._min.price;
   const max = maxPrice._max.price;
 
+  const [minValue, setMinValue] = useState(min);
+  const [maxValue, setMaxValue] = useState(max);
+
+  // useEffect(() => {
+  //   const pushData = () => {
+  //     minValue && pushQuery({ minPrice: minValue });
+  //     maxValue && pushQuery({ maxPrice: maxValue });
+  //   };
+  //   setTimeout(pushData, 1000);
+
+  //   return clearTimeout();
+  // }, [minValue, maxValue]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      minValue && pushQuery({ minPrice: minValue });
+      maxValue && pushQuery({ maxPrice: maxValue });
+    }, 500);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [minValue, maxValue]);
+
+  // const handleInput = (e) => {
+  //   setMinValue(e.minValue);
+  //   setMaxValue(e.maxValue);
+  // };
+
+  const handleChange = ({ min, max }) => {
+    setMinValue(min);
+    setMaxValue(max);
+  };
   return (
     <AnimatePresence>
       {priceDrop && (
@@ -45,23 +56,9 @@ export default function PriceModifier() {
           animate={priceDrop ? "opened" : "closed"}
           exit="closed"
           variants={contentVariants}
-          className="w-full flex flex-col items-center justify-end gap-2"
+          className="w-56 -ml-5"
         >
-          <p className="text-md italic py-5">{text.price}</p>
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-col lg:flex-row gap-2">
-              {min}
-              <input
-                type="range"
-                name="priceRange"
-                min={min}
-                max={max}
-                defaultValue={text.price || query.price || 0}
-                onChange={handleChange}
-              />
-              {max}
-            </div>
-          </form>
+          <MultiSlide min={min} max={max} onChange={handleChange} />
         </motion.div>
       )}
     </AnimatePresence>

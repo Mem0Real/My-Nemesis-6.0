@@ -10,7 +10,8 @@ const useCustomRouter = () => {
   let sort = searchParams.get("sort");
   let filter = searchParams.get("filter");
   let page = searchParams.get("page");
-  let price = searchParams.get("price");
+  let minPrice = searchParams.get("minPrice");
+  let maxPrice = searchParams.get("maxPrice");
 
   if (search) query.search = search;
 
@@ -23,9 +24,10 @@ const useCustomRouter = () => {
 
   if (page) query.page = parseInt(page);
 
-  if (price) query.price = parseInt(price);
+  if (minPrice) query.minPrice = parseInt(minPrice);
+  if (maxPrice) query.maxPrice = parseInt(maxPrice);
 
-  const pushQuery = ({ search, sort, filter, page, price }) => {
+  const pushQuery = ({ search, sort, filter, page, minPrice, maxPrice }) => {
     if (search !== undefined) {
       if (search === "") delete query.search;
       else {
@@ -50,11 +52,15 @@ const useCustomRouter = () => {
     }
 
     if (page !== undefined) {
-      page === 1 ? delete query.page : (query.page = page);
+      page === "1" || page === 1 ? delete query.page : (query.page = page);
     }
 
-    if (price !== undefined) {
-      price === 0 ? delete query.price : (query.price = price);
+    if (minPrice !== undefined) {
+      minPrice === 0 ? delete query.minPrice : (query.minPrice = minPrice);
+    }
+
+    if (maxPrice !== undefined) {
+      maxPrice === 0 ? delete query.maxPrice : (query.maxPrice = maxPrice);
     }
 
     const newQuery = new URLSearchParams(query).toString();

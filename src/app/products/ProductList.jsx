@@ -16,12 +16,8 @@ const ProductListContext = createContext({});
 
 export default function ProductList({ products, menu, totalPage, range }) {
   const [categoryDrop, showCategoryDrop] = useState(false);
-  const [parentDrop, setParentDrop] = useState(false);
-  const [childDrop, setChildDrop] = useState(false);
 
   const [filterCatData, setFilterCatData] = useState([]);
-  const [filterParData, setFilterParData] = useState([]);
-  const [filterChiData, setFilterChiData] = useState([]);
 
   const [priceDrop, showPriceDrop] = useState(false);
 

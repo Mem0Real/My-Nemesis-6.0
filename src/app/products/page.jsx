@@ -32,7 +32,8 @@ async function getProducts(searchParams) {
   const search = searchParams.search || undefined;
   const sort = searchParams.sort || "asc";
 
-  const price = searchParams.price || undefined;
+  const minPrice = searchParams.minPrice || undefined;
+  const maxPrice = searchParams.maxPrice || undefined;
 
   const filter = searchParams.filter || undefined;
   let decodedFilter = decodeURIComponent(filter);
@@ -41,17 +42,30 @@ async function getProducts(searchParams) {
   let check, range;
 
   // Filter price range
-  if (price)
+  if (minPrice && !maxPrice) {
     range = {
       price: {
-        lt: parseInt(price),
+        gte: parseInt(minPrice),
       },
     };
-  else range = undefined;
+  } else if (!minPrice && maxPrice) {
+    range = {
+      price: {
+        lte: parseInt(maxPrice),
+      },
+    };
+  } else if (minPrice && maxPrice) {
+    range = {
+      price: {
+        gte: parseInt(minPrice),
+        lte: parseInt(maxPrice),
+      },
+    };
+  } else range = undefined;
 
   // Conditions
   if (search && !filter) {
-    if (price) {
+    if (minPrice || maxPrice) {
       check = {
         AND: [
           range,
@@ -72,7 +86,7 @@ async function getProducts(searchParams) {
       };
     }
   } else if (!search && filter) {
-    if (price) {
+    if (minPrice || maxPrice) {
       check = {
         AND: [range, { CategoryId: { in: filterArray } }],
       };
@@ -80,7 +94,7 @@ async function getProducts(searchParams) {
       check = { CategoryId: { in: filterArray } };
     }
   } else if (search && filter) {
-    if (price) {
+    if (minPrice || maxPrice) {
       check = {
         AND: [
           range,
@@ -207,6 +221,7 @@ export default async function ProductsPage({ params, searchParams }) {
       />
     );
   } catch (error) {
-    throw new Error("Error fetching data! Please try again later.");
+    // throw new Error("Error fetching data! Please try again later. ");
+    throw new Error(error);
   }
 }

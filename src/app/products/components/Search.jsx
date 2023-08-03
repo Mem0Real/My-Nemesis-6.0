@@ -30,9 +30,9 @@ export default function SearchForm() {
       setText(() => ({ search: "" }));
     }
   };
-  async function handleSearch(query) {
+  const handleSearch = (query) => {
     pushQuery(query);
-  }
+  };
   return (
     <form
       className="flex justify-between relative border border-neutral-600 dark:border-neutral-400 rounded-md "
