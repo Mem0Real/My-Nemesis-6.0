@@ -1,5 +1,4 @@
 import prisma from "@/lib/prisma";
-import { toast } from "react-hot-toast";
 import ProductList from "./ProductList";
 
 async function getMenuData() {
@@ -33,10 +32,115 @@ async function getProducts(searchParams) {
   const search = searchParams.search || undefined;
   const sort = searchParams.sort || "asc";
 
+  const price = searchParams.price || undefined;
+
   const filter = searchParams.filter || undefined;
   let decodedFilter = decodeURIComponent(filter);
   let filterArray = decodedFilter.split(",");
 
+  let check, range;
+
+  // Filter price range
+  if (price)
+    range = {
+      price: {
+        lt: parseInt(price),
+      },
+    };
+  else range = undefined;
+
+  // Conditions
+  if (search && !filter) {
+    if (price) {
+      check = {
+        AND: [
+          range,
+          {
+            OR: [
+              { name: { contains: search, mode: "insensitive" } },
+              { id: { contains: search, mode: "insensitive" } },
+            ],
+          },
+        ],
+      };
+    } else {
+      check = {
+        OR: [
+          { name: { contains: search, mode: "insensitive" } },
+          { id: { contains: search, mode: "insensitive" } },
+        ],
+      };
+    }
+  } else if (!search && filter) {
+    if (price) {
+      check = {
+        AND: [range, { CategoryId: { in: filterArray } }],
+      };
+    } else {
+      check = { CategoryId: { in: filterArray } };
+    }
+  } else if (search && filter) {
+    if (price) {
+      check = {
+        AND: [
+          range,
+          { CategoryId: { in: filterArray } },
+          {
+            OR: [
+              { name: { contains: search, mode: "insensitive" } },
+              { id: { contains: search, mode: "insensitive" } },
+            ],
+          },
+        ],
+      };
+    } else {
+      check = {
+        AND: [
+          { CategoryId: { in: filterArray } },
+          {
+            OR: [
+              { name: { contains: search, mode: "insensitive" } },
+              { id: { contains: search, mode: "insensitive" } },
+            ],
+          },
+        ],
+      };
+    }
+  } else {
+    check = undefined;
+  }
+
+  // Pagination
+  let limit, page, skip, count, totalPage;
+  limit = searchParams.limit * 1 || 15;
+  page = searchParams.page * 1 || 1;
+  skip = searchParams.skip * 1 || limit * (page - 1);
+
+  // Count
+  count = await prisma.items.count({
+    where: check,
+  });
+  totalPage = Math.ceil(count / limit);
+
+  const ranger = await getRange(search, filter, filterArray);
+
+  // MainData
+  try {
+    const products = await prisma.items.findMany({
+      where: check,
+      orderBy: { name: sort },
+      take: limit,
+      skip: skip,
+    });
+    return { products, totalPage, ranger };
+  } catch (error) {
+    return {
+      error: error || "Error fetching data. \n Please try again later.",
+    };
+  }
+}
+
+async function getRange(search, filter, filterArray) {
   let check;
 
   // Conditions
@@ -65,39 +169,42 @@ async function getProducts(searchParams) {
     check = undefined;
   }
 
-  // Pagination
-  let limit, page, skip, count, totalPage;
-  limit = searchParams.limit * 1 || 15;
-  page = searchParams.page * 1 || 1;
-  skip = searchParams.skip * 1 || limit * (page - 1);
-
-  // Count
-  count = await prisma.items.count({
-    where: check,
-  });
-  totalPage = Math.ceil(count / limit);
-
-  // MainData
   try {
-    const products = await prisma.items.findMany({
+    // Min Price
+    const minPrice = await prisma.items.aggregate({
       where: check,
-      orderBy: { name: sort },
-      take: limit,
-      skip: skip,
+      _min: {
+        price: true,
+      },
     });
-    return { products, totalPage };
+
+    // Max Price
+    const maxPrice = await prisma.items.aggregate({
+      where: check,
+      _max: {
+        price: true,
+      },
+    });
+
+    return { minPrice, maxPrice };
   } catch (error) {
     return {
-      error: error || "Error fetching data. \n Please try again later.",
+      error: error || "Error getting range. \n Please try again later.",
     };
   }
 }
 export default async function ProductsPage({ params, searchParams }) {
   try {
     const menu = await getMenuData();
-    const { products, totalPage } = await getProducts(searchParams);
+
+    const { products, totalPage, ranger } = await getProducts(searchParams);
     return (
-      <ProductList menu={menu} products={products} totalPage={totalPage} />
+      <ProductList
+        menu={menu}
+        products={products}
+        totalPage={totalPage}
+        range={ranger}
+      />
     );
   } catch (error) {
     throw new Error("Error fetching data! Please try again later.");

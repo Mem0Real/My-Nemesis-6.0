@@ -10,6 +10,7 @@ const useCustomRouter = () => {
   let sort = searchParams.get("sort");
   let filter = searchParams.get("filter");
   let page = searchParams.get("page");
+  let price = searchParams.get("price");
 
   if (search) query.search = search;
 
@@ -22,7 +23,9 @@ const useCustomRouter = () => {
 
   if (page) query.page = parseInt(page);
 
-  const pushQuery = ({ search, sort, filter, page }) => {
+  if (price) query.price = parseInt(price);
+
+  const pushQuery = ({ search, sort, filter, page, price }) => {
     if (search !== undefined) {
       if (search === "") delete query.search;
       else {
@@ -48,6 +51,10 @@ const useCustomRouter = () => {
 
     if (page !== undefined) {
       page === 1 ? delete query.page : (query.page = page);
+    }
+
+    if (price !== undefined) {
+      price === 0 ? delete query.price : (query.price = price);
     }
 
     const newQuery = new URLSearchParams(query).toString();
