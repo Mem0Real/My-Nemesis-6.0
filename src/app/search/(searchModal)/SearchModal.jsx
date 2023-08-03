@@ -51,7 +51,7 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
   useEffect(() => {
     if (loading) {
       setContent(
-        <div className="flex flex-col h-36 items-center justify-center bg-neutral-800 dark:bg-neutral-200">
+        <div className="flex flex-col h-36 items-center justify-center bg-neutral-200 dark:bg-neutral-800">
           <h1 className="text-base text-neutral-800 dark:text-neutral-200">
             Loading...
           </h1>
@@ -88,7 +88,7 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
           );
         } else {
           setContent(
-            <div className="flex flex-col items-center justify-center gap-6 h-36 bg-neutral-300 dark:bg-neutral-800">
+            <div className="flex flex-col items-center justify-center gap-6 h-36 bg-neutral-100/60 dark:bg-neutral-900/60">
               <h1 className="text-base italic">No result</h1>
             </div>
           );
@@ -131,7 +131,7 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
         <button
           name="close-add-modal"
           type="button"
-          className="absolute top-3 md:top-0 right-5 text-neutral-800 dark:text-neutral-200 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center z-10"
+          className="absolute top-3 md:top-3 right-5 text-neutral-800 dark:text-neutral-200 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center z-10"
           data-modal-hide="authentication-modal"
           onClick={() => closeSearch()}
         >
@@ -152,12 +152,12 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
         </button>
         <div className="relative flex items-center w-[90%] mx-auto">
           <div
-            className="absolute left-0 top-0 bottom-0 grid place-content-center"
+            className="absolute left-0 top-0 bottom-0 grid place-content-center text-neutral-700 dark:text-neutral-300"
             onClick={handleSubmit}
           >
             {SearchIcon}
           </div>
-          <div className="w-full border-b border-neutral-600/60 dark:border-neutral-400/60">
+          <div className="w-full border-b border-neutral-600/60 dark:border-neutral-400/60 text-neutral-800 dark:text-neutral-200">
             <input
               type="text"
               value={searchQuery || ""}
@@ -174,7 +174,7 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
           {searchQuery && (
             <SearchDataContext.Provider value={{ data }}>
               <motion.div
-                className="mt-6 h-56 overflow-y-scroll overflow-x-hidden no-scrollbar text-start"
+                className="pt-4 mt-2 pb-6 h-56 overflow-y-scroll overflow-x-hidden no-scrollbar text-start text-neutral-800 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-800"
                 animate={searchQuery ? "searchData" : "noSearchData"}
                 initial={"noSearchData"}
                 exit={"noSearchData"}
