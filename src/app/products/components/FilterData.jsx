@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 
-import CategoryList from "../(categories)/CategoryList";
+import CategoryList from "../CategoryList";
 import PriceModifier from "./PriceModifier";
 
 import { useProductListContext } from "../ProductList";

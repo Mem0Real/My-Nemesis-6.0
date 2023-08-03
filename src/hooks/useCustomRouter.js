@@ -60,7 +60,7 @@ const useCustomRouter = () => {
     }
 
     if (maxPrice !== undefined) {
-      maxPrice === 0 ? delete query.maxPrice : (query.maxPrice = maxPrice);
+      maxPrice === 19000 ? delete query.maxPrice : (query.maxPrice = maxPrice);
     }
 
     const newQuery = new URLSearchParams(query).toString();
