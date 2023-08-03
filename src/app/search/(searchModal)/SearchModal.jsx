@@ -51,8 +51,10 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
   useEffect(() => {
     if (loading) {
       setContent(
-        <div className="flex flex-col h-36 items-center justify-center">
-          <h1 className="text-base text-neutral-200">Loading...</h1>
+        <div className="flex flex-col h-36 items-center justify-center bg-neutral-800 dark:bg-neutral-200">
+          <h1 className="text-base text-neutral-800 dark:text-neutral-200">
+            Loading...
+          </h1>
         </div>
       );
     } else {
@@ -86,7 +88,7 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
           );
         } else {
           setContent(
-            <div className="flex flex-col items-center justify-center gap-6 h-36">
+            <div className="flex flex-col items-center justify-center gap-6 h-36 bg-neutral-300 dark:bg-neutral-800">
               <h1 className="text-base italic">No result</h1>
             </div>
           );
@@ -122,14 +124,14 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
 
   return (
     <section
-      className="h-fit mt-12 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[60%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-900"
+      className="h-fit mt-12 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[60%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-100 dark:bg-neutral-900"
       ref={searchRef}
     >
       <header className="pb-4 relative">
         <button
           name="close-add-modal"
           type="button"
-          className="absolute top-3 md:top-0 right-5 text-white bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center z-10"
+          className="absolute top-3 md:top-0 right-5 text-neutral-800 dark:text-neutral-200 bg-transparent rounded-lg text-sm p-1.5 ml-auto inline-flex items-center z-10"
           data-modal-hide="authentication-modal"
           onClick={() => closeSearch()}
         >
@@ -155,7 +157,7 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
           >
             {SearchIcon}
           </div>
-          <div className="w-full border-b border-neutral-600/60">
+          <div className="w-full border-b border-neutral-600/60 dark:border-neutral-400/60">
             <input
               type="text"
               value={searchQuery || ""}
