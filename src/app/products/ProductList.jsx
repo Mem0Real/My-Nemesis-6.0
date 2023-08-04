@@ -25,8 +25,10 @@ export default function ProductList({ products, menu, totalPage, range }) {
 
   // Update category dropdown state based on cookie data
   useEffect(() => {
-    if (hasCookie("Product_CatDrop")) showCategoryDrop(true);
-    else showCategoryDrop(false);
+    if (hasCookie("Product_CatDrop")) {
+      const data = JSON.parse(getCookie("Product_CatDrop"));
+      data && showCategoryDrop(true);
+    } else showCategoryDrop(false);
 
     if (hasCookie("FilterCat")) {
       const filter = JSON.parse(getCookie("FilterCat"));
@@ -46,8 +48,10 @@ export default function ProductList({ products, menu, totalPage, range }) {
 
   // Update price dropdown state based on cookie data
   useEffect(() => {
-    if (hasCookie("Product_PriceDrop")) showPriceDrop(true);
-    else showPriceDrop(false);
+    if (hasCookie("Product_PriceDrop")) {
+      const data = JSON.parse(getCookie("Product_PriceDrop"));
+      data && showPriceDrop(true);
+    } else showPriceDrop(false);
   }, []);
 
   const toggleCategory = () => {
@@ -143,7 +147,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
             <Sort />
           </div>
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-evenly w-full">
-            <div className="w-full lg:basis-[13%] self-start lg:ml-3 ">
+            <div className="w-full lg:basis-[20%] self-start">
               <FilterData />
             </div>
             <div className="w-full lg:basis-4/5 mx-auto flex flex-col justify-between">

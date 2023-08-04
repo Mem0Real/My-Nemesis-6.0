@@ -42,8 +42,6 @@ async function getProducts(searchParams) {
 
   let check, range;
 
-  console.log("Min: ", minPrice);
-  console.log("Max: ", maxPrice);
   // Filter price range
   if (minPrice && !maxPrice) {
     range = {

@@ -18,35 +18,30 @@ export default function PriceModifier() {
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
 
-  // useEffect(() => {
-  //   const pushData = () => {
-  //     minValue && pushQuery({ minPrice: minValue });
-  //     maxValue && pushQuery({ maxPrice: maxValue });
-  //   };
-  //   setTimeout(pushData, 1000);
-
-  //   return clearTimeout();
-  // }, [minValue, maxValue]);
-
   useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      minValue && pushQuery({ minPrice: minValue });
-      maxValue && pushQuery({ maxPrice: maxValue });
-    }, 500);
-
-    return () => {
-      clearTimeout(timeoutId);
-    };
+    minValue >= 0 && pushQuery({ minPrice: minValue });
+    maxValue && pushQuery({ maxPrice: maxValue });
   }, [minValue, maxValue]);
 
-  // const handleInput = (e) => {
-  //   setMinValue(e.minValue);
-  //   setMaxValue(e.maxValue);
-  // };
+  // useEffect(() => {
+  //   const timeoutId = setTimeout(() => {
+  //     minValue && pushQuery({ minPrice: minValue });
+  //     maxValue && pushQuery({ maxPrice: maxValue });
+  //   }, 500);
+
+  //   return () => {
+  //     clearTimeout(timeoutId);
+  //   };
+  // }, [minValue, maxValue]);
 
   const handleChange = ({ min, max }) => {
     setMinValue(min);
     setMaxValue(max);
+  };
+
+  const priceVariants = {
+    opened: { y: 0, opacity: 1, transition: { duration: 0.4 } },
+    closed: { y: -35, opacity: 0, transition: { duration: 0.4 } },
   };
   return (
     <AnimatePresence>
@@ -55,7 +50,7 @@ export default function PriceModifier() {
           initial="closed"
           animate={priceDrop ? "opened" : "closed"}
           exit="closed"
-          variants={contentVariants}
+          variants={priceVariants}
           className="w-56 -ml-5"
         >
           <MultiSlide min={min} max={max} onChange={handleChange} />

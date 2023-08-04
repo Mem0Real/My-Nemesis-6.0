@@ -35,7 +35,8 @@ const MultiSlide = ({ min, max, onChange }) => {
     const maxPercent = getPercent(maxVal);
 
     if (range.current) {
-      range.current.style.width = `${maxPercent - minPercent}%`;
+      const percent = maxPercent - minPercent;
+      range.current.style.width = `${percent > 100 ? 100 : percent}%`;
     }
   }, [maxVal, getPercent]);
 
@@ -71,7 +72,7 @@ const MultiSlide = ({ min, max, onChange }) => {
         }}
         className={`${styles.thumb} ${styles.thumbRight} bg-neutral-800 dark:bg-neutral-200`}
       />
-      <div className={styles.slider}>
+      <div className={`${styles.slider} w-56`}>
         <div
           className={`${styles.sliderTrack} bg-neutral-500 dark:bg-neutral-400`}
         />
