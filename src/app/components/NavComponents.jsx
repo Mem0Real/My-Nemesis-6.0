@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState, useRef, createContext, useContext } from "react";
+import { usePathname } from "next/navigation";
+
 import { signOut } from "next-auth/react";
 
 import Link from "next/link";
@@ -38,6 +40,7 @@ export default function NavComponents({ session }) {
 
   const menuRef = useRef();
   const router = useRouter();
+  const path = usePathname();
 
   const { SearchIcon, CartIcon } = useIcons();
 
@@ -65,6 +68,14 @@ export default function NavComponents({ session }) {
     router.push("/");
   };
 
+  const links = [
+    { href: "/products", label: "Products" },
+    { href: "/catalogue", label: "Catalogue" },
+    { href: "/services", label: "Services" },
+    { href: "/about", label: "About" },
+    { href: "/dashboard", label: "Dashboard" },
+  ];
+
   return (
     <div ref={menuRef} className="w-full">
       {/* Buttons */}
@@ -85,31 +96,42 @@ export default function NavComponents({ session }) {
         <div className="flex justify-end items-center gap-2 md:gap-6 lg:gap-9 md:px-2">
           <ThemeSwitcher />
 
-          <Link href="/products">
-            <div className="underline underline-offset-8 hover:underline-offset-4">
+          {links.map(({ href, label }) => (
+            <Link key={label} href={href} className="relative">
+              {href === path && (
+                <motion.span
+                  layoutId="underline"
+                  className="absolute left-0 top-full block h-[1px] w-full bg-neutral-800 dark:bg-neutral-200 mt-0.5"
+                />
+              )}
+              {label}
+            </Link>
+          ))}
+          {/* <Link href="/products">
+            <div className="">
               Products
             </div>
           </Link>
           <Link href="/catalogue">
-            <div className="underline underline-offset-8 hover:underline-offset-4">
+            <div className="">
               Catalogue
             </div>
           </Link>
           <Link href="/services">
-            <div className="underline underline-offset-8 hover:underline-offset-4">
+            <div className="">
               Services
             </div>
           </Link>
           <Link href="/about">
-            <div className="underline underline-offset-8 hover:underline-offset-4">
+            <div className="">
               About
             </div>
           </Link>
           <Link href="/dashboard">
-            <div className="underline underline-offset-8 hover:underline-offset-4">
+            <div className="">
               Dashboard
             </div>
-          </Link>
+          </Link> */}
           <button
             className={`border-red-800 px-2 py-1 rounded-md cursor-pointer transition-all ease-in-out border-b shadow-sm shadow-red-800/70 hover:shadow-red-500/70 ${
               !session && "hidden"
@@ -184,7 +206,17 @@ export default function NavComponents({ session }) {
         }`}
       >
         <ul className="text-sm md:hidden block bg-neutral-100 dark:bg-neutral-900 py-5 mt-0 md:mt-9 list-none">
-          <li>
+          {links.map(({ href, label }) => (
+            <li key={href}>
+              <Link
+                href={href}
+                className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
+              >
+                {label}
+              </Link>
+            </li>
+          ))}
+          {/* <li>
             <Link
               href="/products"
               className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
@@ -223,7 +255,7 @@ export default function NavComponents({ session }) {
             >
               Dashboard
             </Link>
-          </li>
+          </li> */}
           {session && (
             <li className="relative py-6">
               <button

@@ -24,7 +24,7 @@ export default function ListData() {
       {products.map((product) => {
         let image = product.images[0];
         let price;
-        price = product.price ? product.price?.toLocaleString() : 0;
+        price = product.price && product.price?.toLocaleString();
         return (
           <Link
             key={product.id}
@@ -40,6 +40,21 @@ export default function ListData() {
                     ease: "easeInOut",
                   },
                 }}
+                initial={{
+                  opacity: 0,
+                  scale: 0.9,
+                  transition: { delay: 0.5, duration: 0.3 },
+                }}
+                animate={{
+                  opacity: 1,
+                  scale: 1,
+                  transition: { delay: 0.5, duration: 0.3 },
+                }}
+                exit={{
+                  opacity: 0,
+                  scale: 0.9,
+                  transition: { delay: 0.5, duration: 0.3 },
+                }}
               >
                 {product.images?.length > 0 && (
                   <Image
@@ -51,7 +66,12 @@ export default function ListData() {
                   />
                 )}
               </motion.div>
-              <motion.div className="flex flex-col items-center w-full pb-5 text-base justify-start">
+              <motion.div
+                className="flex flex-col items-center w-full pb-5 text-base justify-start"
+                initial={{ opacity: 0, x: 20, transition: { delay: 0.4 } }}
+                animate={{ opacity: 1, x: 0, transition: { delay: 0.4 } }}
+                exit={{ opacity: 0, x: 20, transition: { delay: 0.4 } }}
+              >
                 <motion.h1 className="text-justify px-2 lg:pl-5 w-full min-h-max self-center hover:underline underline-offset-2 font-semibold">
                   {product.name}
                 </motion.h1>

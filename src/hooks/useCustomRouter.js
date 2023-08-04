@@ -64,7 +64,7 @@ const useCustomRouter = () => {
     }
 
     const newQuery = new URLSearchParams(query).toString();
-    router.push(`?${newQuery}`);
+    router.push(`?${newQuery}`, { scroll: false });
   };
   return { pushQuery, query };
 };

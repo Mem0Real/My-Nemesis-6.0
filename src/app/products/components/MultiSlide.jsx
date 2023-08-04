@@ -1,11 +1,15 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import styles from "./styles.module.css";
+import useCustomRouter from "@/hooks/useCustomRouter";
 
 const MultiSlide = ({ min, max, onChange }) => {
-  const [minVal, setMinVal] = useState(min);
-  const [maxVal, setMaxVal] = useState(max);
-  const minValRef = useRef(min);
-  const maxValRef = useRef(max);
+  const { query } = useCustomRouter();
+  const [minVal, setMinVal] = useState(query.minPrice || min);
+  const [maxVal, setMaxVal] = useState(query.maxPrice || max);
+
+  const minValRef = useRef(query.minPrice || min);
+  const maxValRef = useRef(query.maxPrice || max);
+
   const range = useRef(null);
 
   // Convert to percentage

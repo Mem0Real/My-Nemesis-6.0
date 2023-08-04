@@ -1,5 +1,6 @@
 import prisma from "@/lib/prisma";
 import ProductList from "./ProductList";
+import PageWrapper from "../components/PageWrapper";
 
 async function getMenuData() {
   let menu;
@@ -41,6 +42,8 @@ async function getProducts(searchParams) {
 
   let check, range;
 
+  console.log("Min: ", minPrice);
+  console.log("Max: ", maxPrice);
   // Filter price range
   if (minPrice && !maxPrice) {
     range = {
@@ -121,7 +124,8 @@ async function getProducts(searchParams) {
       };
     }
   } else {
-    check = undefined;
+    if (minPrice || maxPrice) check = range;
+    else check = undefined;
   }
 
   // Pagination
@@ -213,12 +217,14 @@ export default async function ProductsPage({ params, searchParams }) {
 
     const { products, totalPage, ranger } = await getProducts(searchParams);
     return (
-      <ProductList
-        menu={menu}
-        products={products}
-        totalPage={totalPage}
-        range={ranger}
-      />
+      <PageWrapper>
+        <ProductList
+          menu={menu}
+          products={products}
+          totalPage={totalPage}
+          range={ranger}
+        />
+      </PageWrapper>
     );
   } catch (error) {
     // throw new Error("Error fetching data! Please try again later. ");

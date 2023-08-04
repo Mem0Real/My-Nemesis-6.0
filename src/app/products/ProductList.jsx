@@ -133,7 +133,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
         range,
       }}
     >
-      <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center text-sm">
+      <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center text-sm py-5">
         <div className="h-36 w-full flex flex-col items-center justify-center">
           <h1 className="text-4xl font-semibold">Products</h1>
         </div>

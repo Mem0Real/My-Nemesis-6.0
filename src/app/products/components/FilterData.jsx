@@ -18,7 +18,7 @@ export default function FilterData() {
   const { RightArrowIcon } = useIcons();
 
   return (
-    <div className="flex flex-row lg:flex-col items-start gap-1 lg:gap-3 w-[97%] mx-auto border-y border-neutral-600 dark:border-neutral-400 lg:border-none">
+    <div className="flex flex-row lg:flex-col items-start gap-1 lg:gap-3 w-[97%] mx-auto border-y border-neutral-600 dark:border-neutral-400 lg:border-none pb-12">
       <div className="basis-[20%] flex flex-col lg:flex-row lg:w-full">
         <h1 className="text-base lg:text-xl font-medium px-1 py-2 lg:px-0 lg:py-0 my-auto">
           Filter by
