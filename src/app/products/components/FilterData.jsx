@@ -26,10 +26,10 @@ export default function FilterData() {
     },
   };
   return (
-    <div className="flex flex-col items-start gap-1 lg:gap-3 w-[97%] mx-auto border-y border-neutral-600 dark:border-neutral-400 lg:border-none pb-12">
+    <div className="flex flex-col items-start gap-1 lg:gap-3 w-[97%] mx-auto border-y border-neutral-600 dark:border-neutral-400 lg:border-none lg:pb-12">
       <div className="basis-[20%] flex flex-col lg:flex-row lg:w-full">
-        <h1 className="text-base lg:text-xl font-medium px-1 py-2 lg:px-0 lg:py-0 my-auto">
-          Filter by
+        <h1 className="text-base lg:text-xl font-light tracking-wider px-1 py-2 lg:px-0 lg:py-0 my-auto underline italic">
+          Filter by:
         </h1>
       </div>
       <div className="basis-[40%] flex flex-col w-[80%] lg:w-full mx-auto lg:border-y border-neutral-400">

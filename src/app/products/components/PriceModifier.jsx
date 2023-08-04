@@ -18,21 +18,21 @@ export default function PriceModifier() {
   const [minValue, setMinValue] = useState(min);
   const [maxValue, setMaxValue] = useState(max);
 
-  useEffect(() => {
-    minValue >= 0 && pushQuery({ minPrice: minValue });
-    maxValue && pushQuery({ maxPrice: maxValue });
-  }, [minValue, maxValue]);
-
   // useEffect(() => {
-  //   const timeoutId = setTimeout(() => {
-  //     minValue && pushQuery({ minPrice: minValue });
-  //     maxValue && pushQuery({ maxPrice: maxValue });
-  //   }, 500);
-
-  //   return () => {
-  //     clearTimeout(timeoutId);
-  //   };
+  //   minValue >= 0 && pushQuery({ minPrice: minValue });
+  //   maxValue && pushQuery({ maxPrice: maxValue });
   // }, [minValue, maxValue]);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      minValue && pushQuery({ minPrice: minValue });
+      maxValue && pushQuery({ maxPrice: maxValue });
+    }, 500);
+
+    return () => {
+      clearTimeout(timeoutId);
+    };
+  }, [minValue, maxValue]);
 
   const handleChange = ({ min, max }) => {
     setMinValue(min);
@@ -51,7 +51,7 @@ export default function PriceModifier() {
           animate={priceDrop ? "opened" : "closed"}
           exit="closed"
           variants={priceVariants}
-          className="w-56 -ml-5"
+          className="w-56 -ml-2 lg:-ml-4"
         >
           <MultiSlide min={min} max={max} onChange={handleChange} />
         </motion.div>

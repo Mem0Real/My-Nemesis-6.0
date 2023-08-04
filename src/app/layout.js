@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
           <ThemeProvider attribute="class">
             <CustomIcons>
               <ToasterContext />
-              <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 relative transition-all ease-in-out duration-300">
+              <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 dark:bg-neutral-800 relative">
                 <CartBase>
                   <SearchBase>
                     <Navbar />

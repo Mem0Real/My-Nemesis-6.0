@@ -101,10 +101,12 @@ export default function NavComponents({ session }) {
               {href === path && (
                 <motion.span
                   layoutId="underline"
-                  className="absolute left-0 top-full block h-[1px] w-full bg-neutral-800 dark:bg-neutral-200 mt-0.5"
+                  className="absolute left-0 top-full block h-[1px] w-full bg-neutral-800 dark:bg-neutral-200 mt-1.5"
                 />
               )}
-              {label}
+              <span className="hover:bg-neutral-300/60 hover:dark:bg-neutral-800/50 p-2 rounded-md transition-all ease-in-out duration-600 backdrop-blur-md">
+                {label}
+              </span>
             </Link>
           ))}
           {/* <Link href="/products">

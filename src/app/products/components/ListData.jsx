@@ -4,11 +4,13 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { useProductListContext } from "../ProductList";
 import Image from "next/image";
+import { useState } from "react";
 
 // TODO add to cart functionality on the page itself. Should somehow join it with cart data
 
 export default function ListData() {
   const { products } = useProductListContext();
+  const [hover, setHover] = useState();
 
   if (products.length === 0) {
     return (
@@ -33,28 +35,34 @@ export default function ListData() {
             <div className="grid grid-cols-1 h-96 w-full border border-neutral-300/80 dark:border-neutral-700/90">
               <motion.div
                 className="row-span-6 relative w-full h-56 sm:w-60 sm:h-60 md:w-72 md:h-72 lg:w-56 lg:h-56 mx-auto self-center"
-                // whileHover={{
-                //   scale: 1.2,
-                //   transition: {
-                //     // duration: 0.2,
-                //     ease: "easeInOut",
-                //   },
-                // }}
+                whileHover={{
+                  scale: 1.2,
+                  transition: {
+                    // duration: 0.2,
+                    ease: "easeInOut",
+                    delay: 0.1,
+                  },
+                }}
                 initial={{
                   opacity: 0,
                   scale: 0.9,
-                  transition: { delay: 0.5, duration: 0.3 },
+                  transition: { duration: 0.8 },
                 }}
                 animate={{
                   opacity: 1,
                   scale: 1,
-                  transition: { delay: 0.5, duration: 0.3 },
+                  transition: {
+                    delay: hover ? 0 : 0.5,
+                    duration: hover ? 0.5 : 0.8,
+                  },
                 }}
                 exit={{
                   opacity: 0,
                   scale: 0.9,
-                  transition: { delay: 0.5, duration: 0.3 },
+                  transition: { duration: 0.8 },
                 }}
+                onHoverStart={() => setHover(true)}
+                onHoverEnd={() => setHover(false)}
               >
                 {product.images?.length > 0 && (
                   <Image
