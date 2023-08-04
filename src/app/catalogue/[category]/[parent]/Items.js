@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-import SlickCarousel from "@/app/collection/components/SlickCarousel";
-import NestedCarousel from "@/app/collection/components/NestedCarousel";
+import SlickCarousel from "@/app/catalogue/components/SlickCarousel";
+import NestedCarousel from "@/app/catalogue/components/NestedCarousel";
 
 export default function Items({ categoryId, parentId, childId, items }) {
   return (
@@ -39,7 +39,7 @@ export default function Items({ categoryId, parentId, childId, items }) {
               </div>
               <div className="border border-neutral-400 rounded-b-2xl text-center text-sm py-5 hover:underline underline-offset-2">
                 <Link
-                  href={`/collection/${categoryId}/${parentId}/${childId}/${item.id}`}
+                  href={`/catalogue/${categoryId}/${parentId}/${childId}/${item.id}`}
                 >
                   <h1>{item.name}</h1>
                 </Link>

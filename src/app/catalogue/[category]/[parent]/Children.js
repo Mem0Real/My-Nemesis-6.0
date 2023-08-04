@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Suspense } from "react";
 
-import { getCollectionData } from "@/app/collection/lib/fetchFunctions";
+import { getCollectionData } from "@/app/catalogue/lib/fetchFunctions";
 import Items from "./Items";
 
 export default async function Children({ categoryId, parentId }) {
@@ -28,7 +28,7 @@ export default async function Children({ categoryId, parentId }) {
           className="flex flex-col items-center md:items-start text-sm mb-1 w-full bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
         >
           <Link
-            href={`/collection/${categoryId}/${parentId}/${child.id}`}
+            href={`/catalogue/${categoryId}/${parentId}/${child.id}`}
             className="flex-none"
           >
             <h1 className="md:ml-12 text-lg my-5 sm:my-9 bg-neutral-100 dark:bg-neutral-900 ring ring-opacity-40 ring-neutral-600 ring-offset-2 dark:ring-neutral-800 hover:ring-offset-1 hover:ring-neutral-500 dark:hover:ring-neutral-700 shadow-lg shadow-neutral-800 hover:shadow-neutral-600 dark:shadow-neutral-900 dark:hover:shadow-neutral-950 px-5 rounded-sm">

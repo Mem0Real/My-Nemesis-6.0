@@ -14,14 +14,32 @@ export const ThemeSwitcher = () => {
     setMounted(true);
   }, []);
 
-  if (!mounted) {
-    return null;
-  }
+  // if (!mounted) {
+  //   return null;
+  // }
+
+  const variants = {
+    show: {
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+        ease: "linear",
+      },
+    },
+    hide: {
+      opacity: 0,
+      transition: {
+        duration: 0.4,
+        ease: "linear",
+      },
+    },
+  };
   return (
     <AnimatePresence>
       <motion.button
         onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-        animate={{ opacity: 1 }}
+        animate={mounted ? "show" : "hide"}
+        variants={variants}
         whileTap={{ scale: 2, opacity: 0 }}
         initial={{ opacity: 0 }}
       >

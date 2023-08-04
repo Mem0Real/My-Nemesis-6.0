@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import SlickCarousel from "@/app/collection/components/SlickCarousel";
+import SlickCarousel from "@/app/catalogue/components/SlickCarousel";
 
 export default function Images({
   categoryId,
@@ -17,7 +17,7 @@ export default function Images({
           return (
             <Link
               key={index}
-              href={`/collection/${categoryId}/${parentId}/${childId}/${itemId}`}
+              href={`/catalogue/${categoryId}/${parentId}/${childId}/${itemId}`}
               className="flex flex-col gap-3 items-center justify-between p-5"
             >
               <div className="border border-neutral-400 rounded-2xl drop-shadow-xl">

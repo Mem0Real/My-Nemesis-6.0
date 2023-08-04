@@ -12,7 +12,7 @@ export default function Categories({ children }) {
         {children[0].map((category) => {
           return (
             <div key={category.id} className="ps-5">
-              <Link href={`/collection/${category.id}`}>
+              <Link href={`/catalogue/${category.id}`}>
                 <p onClick={closeSearch}>{category.name}</p>
               </Link>
             </div>

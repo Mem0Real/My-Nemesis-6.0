@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { getDetail } from "@/app/collection/lib/fetchFunctions";
+import { getDetail } from "@/app/catalogue/lib/fetchFunctions";
 import Parents from "./Parents";
 
 export default async function Category({ categoryId }) {

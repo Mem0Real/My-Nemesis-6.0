@@ -23,9 +23,7 @@ export default function Children({ data, children }) {
             className="flex flex-col justify-center items-center"
           >
             <ul className="list-disc">
-              <Link
-                href={`/collection/${category.id}/${parent.id}/${child.id}`}
-              >
+              <Link href={`/catalogue/${category.id}/${parent.id}/${child.id}`}>
                 <li>{child.name}</li>
               </Link>
             </ul>

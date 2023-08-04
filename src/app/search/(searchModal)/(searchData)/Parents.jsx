@@ -13,7 +13,7 @@ export default function Parents({ children }) {
         {children.map((parent) => {
           return (
             <div key={parent.id} className="ps-5">
-              <Link href={`/collection/${parent.CategoryId}/${parent.id}`}>
+              <Link href={`/catalogue/${parent.CategoryId}/${parent.id}`}>
                 <p onClick={closeSearch}>{parent.name}</p>
               </Link>
             </div>

@@ -51,7 +51,7 @@ export default function Child({ categoryId, parentId, child }) {
               <motion.div whileHover={{ scale: 1.02 }}>
                 <Link
                   className="hover:underline underline-offset-4 z-10"
-                  href={`collection/${categoryId}/${parentId}/${child.id}`}
+                  href={`catalogue/${categoryId}/${parentId}/${child.id}`}
                   onClick={(e) => e.stopPropagation()}
                 >
                   {child.name}
@@ -164,7 +164,7 @@ export default function Child({ categoryId, parentId, child }) {
             <span className="w-full flex items-center justify-center py-3">
               <motion.button
                 id="addItemButton"
-                className="px-2 py-1 rounded-md bg-green-900 text-neutral-200"
+                className="px-2 py-1 rounded-md  bg-transparent text-neutral-800 dark:text-neutral-200 outline outline-1 outline-green-600 dark:outline-green-500"
                 onClick={() =>
                   handleAdd("items", categoryId, parentId, child.id)
                 }
@@ -172,7 +172,6 @@ export default function Child({ categoryId, parentId, child }) {
                   scale: 0.9,
                 }}
                 whileHover={{
-                  backgroundColor: "rgba(15 83 40 0.9)",
                   borderRadius: "10px",
                 }}
               >

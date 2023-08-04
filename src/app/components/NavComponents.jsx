@@ -71,18 +71,18 @@ export default function NavComponents({ session }) {
       <div className="hidden md:flex justify-between items-center">
         {/* <SearchInput /> */}
         <button
-          className="relative w-48 flex-initial flex items-center cursor-pointer justify-evenly py-1 rounded-md outline outline-1 hover:outline-2outline-neutral-800 text-zinc-800 bg-zinc-200 dark:outline-neutral-200 dark:text-zinc-200 dark:bg-zinc-800"
+          className="relative w-44 lg:w-48 flex-initial flex items-center cursor-pointer justify-evenly py-1 rounded-md outline outline-1 hover:outline-2outline-neutral-800 text-zinc-800 bg-zinc-200 dark:outline-neutral-200 dark:text-zinc-200 dark:bg-zinc-800"
           onClick={handleSearch}
         >
-          <p className="md:pr-2 lg:pr-4">Search Products...</p>
-          <div className="text-base absolute left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-800 dark:text-neutral-200">
+          <p className="pr-6 lg:pr-4">Search Products</p>
+          <div className="text-base absolute left-1 lg:left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-800 dark:text-neutral-200">
             {SearchIcon}
           </div>
-          <p className="absolute right-2 top-0 bottom-0 grid place-content-center text-sm">
+          <p className="absolute right-2 top-0 bottom-0 grid place-content-center text-sm text-neutral-600 dark:text-neutral-400 italic">
             Ctrl K
           </p>
         </button>
-        <div className="flex justify-end items-center gap-2 md:gap-7 lg:gap-10">
+        <div className="flex justify-end items-center gap-2 md:gap-6 lg:gap-9 md:px-2">
           <ThemeSwitcher />
 
           <Link href="/products">
@@ -90,7 +90,7 @@ export default function NavComponents({ session }) {
               Products
             </div>
           </Link>
-          <Link href="/collection">
+          <Link href="/catalogue">
             <div className="underline underline-offset-8 hover:underline-offset-4">
               Catalogue
             </div>
@@ -194,7 +194,7 @@ export default function NavComponents({ session }) {
           </li>
           <li>
             <Link
-              href="/collection"
+              href="/catalogue"
               className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
             >
               Catalogue

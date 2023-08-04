@@ -28,7 +28,7 @@ export default function ListData() {
         return (
           <Link
             key={product.id}
-            href={`/collection/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
+            href={`/catalogue/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
           >
             <div className="grid grid-cols-1 h-96 w-full border border-neutral-300/80 dark:border-neutral-700/90">
               <motion.div

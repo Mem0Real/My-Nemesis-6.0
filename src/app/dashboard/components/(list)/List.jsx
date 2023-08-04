@@ -197,15 +197,14 @@ export default function List({ data, create, update, deleteItem, url }) {
             <ListTable />
           </Suspense>
 
-          <div className="flex flex-col w-full justify-center items-center md:mt-3">
+          <div className="flex flex-col w-full justify-center items-center mt-5">
             <motion.button
               key="addCategory"
-              className="px-2 py-1 rounded-md bg-green-900 text-neutral-800 dark:text-neutral-200"
+              className="px-2 py-1 rounded-md  bg-transparent text-neutral-800 dark:text-neutral-200 outline outline-1 outline-green-600 dark:outline-green-500"
               whileTap={{
                 scale: 0.9,
               }}
               whileHover={{
-                backgroundColor: "rgba(18 58 18 0.9)",
                 borderRadius: "10px",
               }}
               onClick={() => handleAdd("categories")}

@@ -51,7 +51,7 @@ export default function Products({ category, parent, child }) {
                     className=" px-2 capitalize w-full"
                   >
                     <Link
-                      href={`/collection/${category}/${parent}/${child}/${id}`}
+                      href={`/catalogue/${category}/${parent}/${child}/${id}`}
                     >
                       {name}
                     </Link>

@@ -58,7 +58,7 @@ export default function Parent({ categoryId, parent }) {
             <motion.div whileHover={{ scale: 1.02 }}>
               <Link
                 className="hover:underline underline-offset-4 z-10"
-                href={`collection/${categoryId}/${parent.id}`}
+                href={`catalogue/${categoryId}/${parent.id}`}
                 onClick={(e) => e.stopPropagation()}
               >
                 {parent.name}

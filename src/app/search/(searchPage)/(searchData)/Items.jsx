@@ -29,7 +29,7 @@ export default function Items({ data, children }) {
           >
             <ul className="list-disc">
               <Link
-                href={`/collection/${category.id}/${parent.id}/${child.id}/${item.id}`}
+                href={`/catalogue/${category.id}/${parent.id}/${child.id}/${item.id}`}
               >
                 <li>{item.name}</li>
               </Link>

@@ -29,7 +29,7 @@ export default function Item({ categoryId, parentId, childId, item }) {
           <td className="border border-black dark:border-white py-5 max-w-md">
             <Link
               className="flex items-center gap-2 text-center hover:underline underline-offset-4"
-              href={`/collection/${categoryId}/${parentId}/${childId}/${item.id}`}
+              href={`/catalogue/${categoryId}/${parentId}/${childId}/${item.id}`}
             >
               {BagIcon}
               {item.name}

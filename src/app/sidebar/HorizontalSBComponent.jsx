@@ -195,7 +195,7 @@ export default function SideBarComponent({ data }) {
                 className="mt-3 self-center"
                 variants={itemVariants}
               >
-                <Link href="/collection">Browse all</Link>
+                <Link href="/catalogue">Browse all</Link>
               </motion.div>
               {categories.map(({ id }) => (
                 <motion.div
@@ -205,7 +205,7 @@ export default function SideBarComponent({ data }) {
                   className=" ps-2 capitalize"
                   onHoverStart={() => setOpenParent(id)}
                 >
-                  <Link href={`/collection/${id}`}>{id}</Link>
+                  <Link href={`/catalogue/${id}`}>{id}</Link>
                 </motion.div>
               ))}
             </motion.div>
@@ -261,7 +261,7 @@ export default function SideBarComponent({ data }) {
                       className=" ps-2 capitalize"
                       onHoverStart={() => setOpenChild(id)}
                     >
-                      <Link href={`/collection/${CategoryId}/${id}`}>{id}</Link>
+                      <Link href={`/catalogue/${CategoryId}/${id}`}>{id}</Link>
                     </motion.div>
                   )
               )}
@@ -320,9 +320,7 @@ export default function SideBarComponent({ data }) {
                       className=" ps-2 capitalize"
                       onHoverStart={() => setOpenProduct(id)}
                     >
-                      <Link
-                        href={`/collection/${openParent}/${ParentId}/${id}`}
-                      >
+                      <Link href={`/catalogue/${openParent}/${ParentId}/${id}`}>
                         {id}
                       </Link>
                     </motion.div>
@@ -370,7 +368,7 @@ export default function SideBarComponent({ data }) {
                       className=" ps-2 capitalize"
                     >
                       <Link
-                        href={`/collection/${openParent}/${openChild}/${ChildId}/${id}`}
+                        href={`/catalogue/${openParent}/${openChild}/${ChildId}/${id}`}
                       >
                         {name}
                       </Link>

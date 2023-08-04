@@ -58,7 +58,7 @@ export default function Children({ category, parent }) {
                     className=" px-2 capitalize w-full"
                   >
                     <motion.div className="flex items-center justify-between">
-                      <Link href={`/collection/${category}/${parent}/${id}`}>
+                      <Link href={`/catalogue/${category}/${parent}/${id}`}>
                         {id}
                       </Link>
                       <motion.button

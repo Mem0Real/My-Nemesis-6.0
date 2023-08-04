@@ -32,7 +32,7 @@ export default function Items({ children }) {
           return (
             <div key={item.id} className="ps-5">
               <Link
-                href={`/collection/${category.id}/${parent.id}/${child.id}/${item.id}`}
+                href={`/catalogue/${category.id}/${parent.id}/${child.id}/${item.id}`}
               >
                 <p onClick={closeSearch} className="capitalize">
                   {item.name}

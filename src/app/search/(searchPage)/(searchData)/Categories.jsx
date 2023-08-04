@@ -11,7 +11,7 @@ export default function Categories({ children }) {
             className="flex flex-col justify-center items-center"
           >
             <ul className="list-disc">
-              <Link href={`/collection/${category.id}`}>
+              <Link href={`/catalogue/${category.id}`}>
                 <li>{category.name}</li>
               </Link>
             </ul>

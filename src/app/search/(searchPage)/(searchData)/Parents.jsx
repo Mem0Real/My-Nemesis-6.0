@@ -12,7 +12,7 @@ export default async function Parents({ children }) {
             className="flex flex-col justify-center items-center"
           >
             <ul className="list-disc">
-              <Link href={`/collection/${parent.CategoryId}/${parent.id}`}>
+              <Link href={`/catalogue/${parent.CategoryId}/${parent.id}`}>
                 <li>{parent.name}</li>
               </Link>
             </ul>

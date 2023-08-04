@@ -26,9 +26,7 @@ export default function Children({ children }) {
           });
           return (
             <div key={child.id} className="ps-5">
-              <Link
-                href={`/collection/${category.id}/${parent.id}/${child.id}`}
-              >
+              <Link href={`/catalogue/${category.id}/${parent.id}/${child.id}`}>
                 <p onClick={closeSearch}>{child.name}</p>
               </Link>
             </div>

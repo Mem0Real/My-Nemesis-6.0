@@ -337,9 +337,8 @@ export default function EditModal({
           disabled={loading}
           name="submit"
           type="submit"
-          className="px-2 py-1 text-neutral-200 rounded-md bg-blue-700"
+          className="px-2 py-1 rounded-md bg-transparent text-neutral-800 dark:text-neutral-200 outline outline-1 outline-blue-600 dark:outline-blue-500"
           whileHover={{
-            backgroundColor: "#2563eb",
             borderRadius: "10px",
           }}
           whileTap={{

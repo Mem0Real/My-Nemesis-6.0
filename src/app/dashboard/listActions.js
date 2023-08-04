@@ -106,7 +106,7 @@ export async function create(formData) {
     if (query?.error)
       return { error: `Error creating item: \n ${query.error}` };
     else {
-      revalidatePath("/collection");
+      revalidatePath("/catalogue");
       revalidatePath("/dashboard");
       revalidateTag("search");
       return { success: `Created Successfully!` };
@@ -152,7 +152,7 @@ export async function create(formData) {
       if (query?.error)
         return { error: `Error creating item \n ${query.error}` };
       else {
-        revalidatePath("/collection");
+        revalidatePath("/catalogue");
         revalidatePath("/dashboard");
         revalidateTag("search");
         return { success: `Created Successfully!` };
@@ -176,7 +176,7 @@ export async function create(formData) {
         console.log(query.error);
         return { error: `Error creating item ` };
       } else {
-        revalidatePath("/collection");
+        revalidatePath("/catalogue");
         revalidatePath("/dashboard");
         revalidateTag("search");
         return { success: `Created Successfully!` };
@@ -278,7 +278,7 @@ export async function update(formData) {
     const query = await writeToDb();
     if (query?.error) return { error: `Error Updating Item: \n ${error}` };
     else {
-      revalidatePath("/collection");
+      revalidatePath("/catalogue");
       revalidatePath("/dashboard");
       revalidateTag("search");
       return { success: `Updated Successfully!` };
@@ -288,7 +288,7 @@ export async function update(formData) {
     if (query?.error)
       return { error: `Error Updating Item: \n ${query.error}` };
     else {
-      revalidatePath("/collection");
+      revalidatePath("/catalogue");
       revalidatePath("/dashboard");
       revalidateTag("search");
       return { success: `Updated Successfully!` };
@@ -344,7 +344,7 @@ export async function update(formData) {
         const query = await writeToDb(imageUrl);
         if (query?.error) return { error: `Error Updating Item \n ${error}` };
         else {
-          revalidatePath("/collection");
+          revalidatePath("/catalogue");
           revalidatePath("/dashboard");
           revalidateTag("search");
           return { success: `Updated Successfully!` };
@@ -372,7 +372,7 @@ export async function update(formData) {
         const query = await writeToDb(imageUrl);
         if (query?.error) return { error: `Error Updating Item \n ${error}` };
         else {
-          revalidatePath("/collection");
+          revalidatePath("/catalogue");
           revalidatePath("/dashboard");
           revalidateTag("search");
           return { success: `Updated Successfully!` };
@@ -414,7 +414,7 @@ export async function deleteItem(entry, data) {
         return { error: query.error };
       } else {
         revalidateTag("search");
-        revalidatePath("/collection");
+        revalidatePath("/catalogue");
         revalidatePath("/dashboard");
         return { success: query.success };
       }
@@ -424,7 +424,7 @@ export async function deleteItem(entry, data) {
         return { error: query.error };
       } else {
         revalidateTag("search");
-        revalidatePath("/collection");
+        revalidatePath("/catalogue");
         revalidatePath("/dashboard");
         return { success: query.success };
       }
@@ -452,7 +452,7 @@ export async function deleteItem(entry, data) {
           return { error: `Error Removing Item. \n Please try again later.` };
         else {
           revalidateTag("search");
-          revalidatePath("/collection");
+          revalidatePath("/catalogue");
           revalidatePath("/dashboard");
           return { success: "Item Removed!" };
         }
@@ -465,7 +465,7 @@ export async function deleteItem(entry, data) {
           };
         } else {
           revalidateTag("search");
-          revalidatePath("/collection");
+          revalidatePath("/catalogue");
           revalidatePath("/dashboard");
           return {
             success: "Item Removed!",
@@ -479,7 +479,7 @@ export async function deleteItem(entry, data) {
         return { error: `Error Removing Item. \n Please try again later.` };
       else {
         revalidateTag("search");
-        revalidatePath("/collection");
+        revalidatePath("/catalogue");
         revalidatePath("/dashboard");
         return { success: "Item Removed!" };
       }

@@ -43,7 +43,7 @@ export default function Categories() {
               className="mt-3 self-center"
               variants={itemVariants}
             >
-              <Link href="/collection">Browse all</Link>
+              <Link href="/catalogue">Browse all</Link>
             </motion.div>
             {categories.map(({ id }) => (
               <motion.div
@@ -52,7 +52,7 @@ export default function Categories() {
                 className="capitalize w-full"
               >
                 <motion.div className="flex items-center justify-between gap-12 px-2">
-                  <Link href={`/collection/${id}`}>{id}</Link>
+                  <Link href={`/catalogue/${id}`}>{id}</Link>
                   <motion.button
                     onClick={() => toggleParent(id)}
                     animate={

@@ -1,24 +1,25 @@
 import Link from "next/link";
 import Image from "next/image";
-import SlickCarousel from "@/app/collection/components/SlickCarousel";
 
-export default function Children({ categoryId, parentId, childrenData }) {
+import SlickCarousel from "./components/SlickCarousel";
+
+export default async function Parents({ categoryId, parents }) {
   return (
     <SlickCarousel>
-      {childrenData.map((child) => {
+      {parents.map((parent) => {
         return (
-          child.ParentId === parentId && (
+          parent.CategoryId === categoryId && (
             <div
-              key={child.id}
+              key={parent.id}
               className="flex flex-col gap-3 items-center justify-between p-5"
             >
               <div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
                 <div className="relative w-56 h-56 mx-auto">
-                  {child.image ? (
+                  {parent.image ? (
                     <Image
-                      src={child.image}
-                      srcSet={child.id}
-                      alt={child.id}
+                      src={parent.image}
+                      srcSet={parent.id}
+                      alt={parent.id}
                       fill={true}
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       className="absolute object-contain"
@@ -33,9 +34,10 @@ export default function Children({ categoryId, parentId, childrenData }) {
               </div>
               <div className="border border-neutral-400 rounded-b-2xl text-center text-sm py-5 hover:underline underline-offset-2">
                 <Link
-                  href={`/collection/${categoryId}/${parentId}/${child.id}`}
+                  key={parent.id}
+                  href={`/catalogue/${categoryId}/${parent.id}`}
                 >
-                  <h1>{child.name}</h1>
+                  <h1>{parent.name}</h1>
                 </Link>
               </div>
             </div>

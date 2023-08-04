@@ -51,7 +51,7 @@ export default function Category({ category }) {
           >
             <Link
               className="hover:underline underline-offset-4 z-10"
-              href={`collection/${category.id}`}
+              href={`catalogue/${category.id}`}
             >
               {category.name}
             </Link>

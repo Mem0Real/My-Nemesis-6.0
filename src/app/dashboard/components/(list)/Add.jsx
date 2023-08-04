@@ -117,7 +117,7 @@ export default function AddModal({
       </header>
       <form
         onSubmit={handleSubmit}
-        className="flex-1 flex flex-col justify-center items-center gap-4"
+        className="flex-1 flex flex-col justify-center items-center gap-4 py-3"
       >
         <div className="relative z-0 w-2/3 mb-9 group">
           <input
@@ -310,9 +310,8 @@ export default function AddModal({
           disabled={loading}
           name="submit"
           type="submit"
-          className="px-2 py-1 text-neutral-200 rounded-md bg-blue-700"
+          className="px-2 py-1 rounded-md bg-transparent text-neutral-800 dark:text-neutral-200 outline outline-1 outline-blue-600 dark:outline-blue-500"
           whileHover={{
-            backgroundColor: "#2563eb",
             borderRadius: "10px",
           }}
           whileTap={{
