@@ -14,6 +14,8 @@ import SearchBase from "./search/SearchBase";
 import CustomIcons from "./utils/CustomIcons";
 import SideBarBase from "./sidebar/SideBarBase";
 
+import NextTopLoader from "nextjs-toploader";
+
 export const metadata = {
   title: "My Nemesis 6.0",
   description:
@@ -33,6 +35,7 @@ export default function RootLayout({ children }) {
                   <SearchBase>
                     <Navbar />
                   </SearchBase>
+                  <NextTopLoader />
                 </CartBase>
                 <div className="relative text-sm text-neutral-800 dark:text-neutral-200 z-10">
                   <Suspense>

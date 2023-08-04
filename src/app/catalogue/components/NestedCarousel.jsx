@@ -19,7 +19,7 @@ export default function NestedCarousel({ children }) {
     init: true,
     draggable: false,
     swipe: false,
-    lazyLoad: "progressive",
+    lazyLoad: "ondemand",
     infinite: false,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
