@@ -57,7 +57,7 @@ const MultiSlide = ({ min, max, onChange }) => {
           setMinVal(value);
           minValRef.current = value;
         }}
-        className={`${styles.thumb} ${styles.thumbLeft} bg-neutral-800 dark:bg-neutral-200`}
+        className={`${styles.thumb} ${styles.thumbLeft}`}
         style={{ zIndex: minVal > max - 100 && "5" }}
       />
       <input
@@ -70,7 +70,7 @@ const MultiSlide = ({ min, max, onChange }) => {
           setMaxVal(value);
           maxValRef.current = value;
         }}
-        className={`${styles.thumb} ${styles.thumbRight} bg-neutral-800 dark:bg-neutral-200`}
+        className={`${styles.thumb} ${styles.thumbRight}`}
       />
       <div className={`${styles.slider} w-56`}>
         <div

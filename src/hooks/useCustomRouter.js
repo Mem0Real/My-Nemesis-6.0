@@ -28,7 +28,6 @@ const useCustomRouter = () => {
   if (minPrice) query.minPrice = parseInt(minPrice);
   if (maxPrice) query.maxPrice = parseInt(maxPrice);
 
-  console.log(minPrice);
   const pushQuery = ({ search, sort, filter, page, minPrice, maxPrice }) => {
     if (search !== undefined) {
       if (search === "") delete query.search;
