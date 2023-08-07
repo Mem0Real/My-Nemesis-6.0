@@ -93,7 +93,7 @@ export default function NavComponents({ session }) {
             Ctrl K
           </p>
         </button>
-        <div className="flex justify-end items-center gap-2 md:gap-6 lg:gap-9 md:px-2">
+        <div className="flex justify-end items-center gap-2 md:gap-6 lg:gap-7 md:px-2">
           <ThemeSwitcher />
 
           {links.map(({ href, label }) => (
@@ -104,7 +104,10 @@ export default function NavComponents({ session }) {
                   className="absolute left-0 top-full block h-[1px] w-full bg-neutral-800 dark:bg-neutral-200 mt-1.5"
                 />
               )}
-              <span className="hover:bg-neutral-300/60 hover:dark:bg-neutral-800/50 p-2 rounded-md transition-all ease-in-out duration-600 backdrop-blur-md">
+              <span
+                key={href}
+                className="text-neutral-700 dark:text-neutral-300 p-2 rounded-md backdrop-blur-md transition-all duration-200 ease-in-out hover:text-neutral-900 dark:hover:text-neutral-100 "
+              >
                 {label}
               </span>
             </Link>

@@ -1,19 +1,5 @@
 import Link from "next/link";
 
-async function categoryList() {
-  const categories = prisma.categories.findMany({ orderBy: { id: "asc" } });
-
-  const parents = prisma.parents.findMany({ orderBy: { id: "asc" } });
-
-  const children = prisma.children.findMany({ orderBy: { id: "asc" } });
-
-  const items = prisma.items.findMany({ orderBy: { name: "asc" } });
-
-  const data = await Promise.all([categories, parents, children, items]);
-
-  return data;
-}
-
 export default async function Home() {
   return (
     <main className="min-h-screen h-fit min-w-screen bg-neutral-200 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200 pt-6">
