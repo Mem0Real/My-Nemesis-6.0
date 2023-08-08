@@ -346,6 +346,7 @@ export default function CustomIcons({ children }) {
       <path d="M16 12l-4-4-4 4M12 16V9" />
     </svg>
   );
+
   return (
     <IconsContext.Provider
       value={{

@@ -16,6 +16,7 @@ import SideBarBase from "./sidebar/SideBarBase";
 
 import NextTopLoader from "nextjs-toploader";
 import ScrollToTopButton from "./components/ScrollToTop";
+import CustomCursor from "./products/components/CustomCursor";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -30,26 +31,28 @@ export default function RootLayout({ children }) {
         <ProductDataContext>
           <ThemeProvider attribute="class">
             <CustomIcons>
-              <ToasterContext />
-              <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 dark:bg-neutral-800 relative">
-                <CartBase>
-                  <SearchBase>
-                    <Navbar />
-                  </SearchBase>
-                  <NextTopLoader showSpinner={false} />
-                </CartBase>
-                <div className="relative text-sm text-neutral-800 dark:text-neutral-200 z-10">
-                  <Suspense>
-                    <SideBarBase />
-                  </Suspense>
+              <CustomCursor>
+                <ToasterContext />
+                <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 dark:bg-neutral-800 relative">
+                  <CartBase>
+                    <SearchBase>
+                      <Navbar />
+                    </SearchBase>
+                    <NextTopLoader showSpinner={false} />
+                  </CartBase>
+                  <div className="relative text-sm text-neutral-800 dark:text-neutral-200 z-10">
+                    <Suspense>
+                      <SideBarBase />
+                    </Suspense>
+                  </div>
+                  <ScrollToTopButton>
+                    <div className={`min-h-screen`}>{children}</div>
+                  </ScrollToTopButton>
+                  <div className="w-full">
+                    <Footer />
+                  </div>
                 </div>
-                <ScrollToTopButton>
-                  <div className={`min-h-screen`}>{children}</div>
-                </ScrollToTopButton>
-                <div className="w-full">
-                  <Footer />
-                </div>
-              </div>
+              </CustomCursor>
             </CustomIcons>
           </ThemeProvider>
         </ProductDataContext>
