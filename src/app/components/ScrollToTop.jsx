@@ -60,7 +60,7 @@ export default function ScrollToTopButton({ children }) {
         <motion.button
           className={`fixed ${
             lift ? "bottom-12" : "bottom-0"
-          } right-0 p-5 text-blue-700 dark:text-blue-400 text-5xl`}
+          } right-0 p-5 text-blue-700 dark:text-blue-500 text-5xl transition-all ease-in-out duration-200`}
           variants={scrollVariants}
           initial="hide"
           animate={controls}

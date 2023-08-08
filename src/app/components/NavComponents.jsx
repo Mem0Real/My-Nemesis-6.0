@@ -97,16 +97,16 @@ export default function NavComponents({ session }) {
           <ThemeSwitcher />
 
           {links.map(({ href, label }) => (
-            <Link key={label} href={href} className="relative">
+            <Link key={label} href={href} className="relative group">
               {href === path && (
                 <motion.span
-                  layoutId="underline"
-                  className="absolute left-0 top-full block h-[1px] w-full bg-neutral-800 dark:bg-neutral-200 mt-1.5"
+                  layoutId="active-underline"
+                  className="absolute left-0 top-full block h-[2px] w-full bg-neutral-800 dark:bg-neutral-200 mt-0.5"
                 />
               )}
               <span
                 key={href}
-                className="text-neutral-700 dark:text-neutral-300 p-2 rounded-md backdrop-blur-md transition-all duration-200 ease-in-out hover:text-neutral-900 dark:hover:text-neutral-100 "
+                className=" text-neutral-700 p-1 dark:text-neutral-300 rounded-md backdrop-blur-md transition-all duration-200 ease-in-out hover:text-neutral-900 dark:hover:text-neutral-100 "
               >
                 {label}
               </span>
