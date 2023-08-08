@@ -15,6 +15,7 @@ import CustomIcons from "./utils/CustomIcons";
 import SideBarBase from "./sidebar/SideBarBase";
 
 import NextTopLoader from "nextjs-toploader";
+import ScrollToTopButton from "./components/ScrollToTop";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -42,7 +43,9 @@ export default function RootLayout({ children }) {
                     <SideBarBase />
                   </Suspense>
                 </div>
-                <div className={`min-h-screen`}>{children}</div>
+                <ScrollToTopButton>
+                  <div className={`min-h-screen`}>{children}</div>
+                </ScrollToTopButton>
                 <div className="w-full">
                   <Footer />
                 </div>
