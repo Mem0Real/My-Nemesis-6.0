@@ -16,35 +16,35 @@ export default function ScrollToTopButton({ children }) {
   const { scrollYProgress } = useScroll();
   const controls = useAnimationControls();
 
-  //   useEffect(() => {
-  //     return scrollYProgress.on("change", (latestValue) => {
-  //       if (latestValue > 0.2) {
-  //         controls.start("show");
-  //         if (latestValue > 0.9) {
-  //           setLift(true);
-  //         }
-  //       } else {
-  //         controls.start("hide");
-  //       }
-  //     });
-  //   });
-
   useEffect(() => {
-    if (!isBrowser) return;
-    const handleScroll = () => {
-      if (scrollY > 500) {
+    return scrollYProgress.on("change", (latestValue) => {
+      if (latestValue > 0.2) {
         controls.start("show");
-      } else controls.start("hide");
-    };
-    const watchScroll = () => {
-      window.addEventListener("scroll", handleScroll);
-    };
-
-    watchScroll();
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
+        if (latestValue === 1) {
+          setLift(true);
+        } else setLift(false);
+      } else {
+        controls.start("hide");
+      }
+    });
   });
+
+  //   useEffect(() => {
+  //     if (!isBrowser) return;
+  //     const handleScroll = () => {
+  //       if (scrollY > 500) {
+  //         controls.start("show");
+  //       } else controls.start("hide");
+  //     };
+  //     const watchScroll = () => {
+  //       window.addEventListener("scroll", handleScroll);
+  //     };
+
+  //     watchScroll();
+  //     return () => {
+  //       window.removeEventListener("scroll", handleScroll);
+  //     };
+  //   });
 
   const { TopArrowIcon } = useIcons();
 
@@ -59,7 +59,7 @@ export default function ScrollToTopButton({ children }) {
       <div className="relative">
         <motion.button
           className={`fixed ${
-            lift ? "bottom-6" : "bottom-0"
+            lift ? "bottom-12" : "bottom-0"
           } right-0 p-5 text-blue-700 dark:text-blue-400 text-5xl`}
           variants={scrollVariants}
           initial="hide"
