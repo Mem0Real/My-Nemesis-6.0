@@ -19,10 +19,10 @@ export default function MultiLayerParallax() {
   return (
     <div className="w-full h-screen overflow-hidden relative grid place-items-center">
       <motion.h1
-        className="font-bold text-black dark:text-white text-7xl md:text-8xl relative z-10"
+        className="font-bold text-black dark:text-white text-7xl md:text-6xl relative z-10"
         style={{ y: textY }}
       >
-        My Nemesis
+        Ethio Machineries
       </motion.h1>
 
       {theme === "light" ? (
