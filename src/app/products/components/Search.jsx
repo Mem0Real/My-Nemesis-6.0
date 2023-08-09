@@ -12,10 +12,6 @@ export default function SearchForm() {
 
   const { pushQuery, query } = useCustomRouter();
 
-  useEffect(() => {
-    handleSearch(text);
-  }, [text]);
-
   const { SearchIcon } = useIcons();
 
   const handleSubmit = (e) => {
@@ -33,6 +29,11 @@ export default function SearchForm() {
   const handleSearch = (query) => {
     pushQuery(query);
   };
+
+  useEffect(() => {
+    handleSearch(text);
+  }, [text, handleSearch]);
+
   return (
     <form
       className="flex justify-between relative border border-neutral-600 dark:border-neutral-400 rounded-md "

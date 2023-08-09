@@ -32,7 +32,7 @@ export default function PriceModifier() {
     return () => {
       clearTimeout(timeoutId);
     };
-  }, [minValue, maxValue]);
+  }, [minValue, maxValue, pushQuery]);
 
   const handleChange = ({ min, max }) => {
     setMinValue(min);

@@ -63,6 +63,11 @@ export default function CartBase({ children }) {
     };
   }, [cartModal, infoModal]);
 
+  const closeCartModal = () => {
+    showCartModal(() => false);
+    setUpdater((prev) => !prev);
+  };
+
   // Close modals on click outside
   useEffect(() => {
     let handler = (e) => {
@@ -77,7 +82,7 @@ export default function CartBase({ children }) {
     document.addEventListener("mousedown", handler);
 
     return () => document.removeEventListener("mousedown", handler);
-  }, [cartModal, infoModal]);
+  }, [cartModal, infoModal, closeCartModal]);
 
   // Close Modals on key press "Esc"
   useEffect(() => {
@@ -95,7 +100,7 @@ export default function CartBase({ children }) {
     return () => {
       window.removeEventListener("keyup", handler);
     };
-  }, []);
+  }, [closeCartModal]);
 
   // Update Cart Data
   useEffect(() => {
@@ -113,11 +118,6 @@ export default function CartBase({ children }) {
 
   const openCartModal = () => {
     showCartModal(() => true);
-  };
-
-  const closeCartModal = () => {
-    showCartModal(() => false);
-    setUpdater((prev) => !prev);
   };
 
   const handleOrder = () => {

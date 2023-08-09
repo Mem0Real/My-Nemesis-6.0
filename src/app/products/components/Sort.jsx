@@ -8,12 +8,12 @@ export default function Sort() {
   const [sort, setSort] = useState({ sort: "" });
 
   useEffect(() => {
+    async function handleSort(query) {
+      pushQuery(query);
+    }
     handleSort(sort);
-  }, [sort, handleSort]);
+  }, [sort]);
 
-  async function handleSort(query) {
-    pushQuery(query);
-  }
   return (
     <motion.select
       defaultValue="asc"

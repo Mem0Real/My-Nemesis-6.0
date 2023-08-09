@@ -44,7 +44,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
       deleteCookie("FilterCat");
       pushQuery({ filter: "" });
     }
-  }, [filterCatData]);
+  }, [filterCatData, pushQuery]);
 
   // Update price dropdown state based on cookie data
   useEffect(() => {

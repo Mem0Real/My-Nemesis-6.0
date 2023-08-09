@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import Header from "./components/Header";
 import Lenis from "@studio-freight/lenis";
 
-export default async function Home() {
+export default function Home() {
   useEffect(() => {
     const lenis = new Lenis();
 
