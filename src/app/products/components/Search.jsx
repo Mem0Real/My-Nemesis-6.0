@@ -49,7 +49,7 @@ export default function SearchForm() {
         type="search"
         name="search"
         placeholder="Search"
-        className="ps-7 pe-2 w-44 py-2 rounded-md"
+        className="ps-7 pe-2 w-36 lg:w-44 py-2 rounded-md"
         defaultValue={text.search || query.search || ""}
         onChange={handleChange}
       />

@@ -19,13 +19,8 @@ export default function PriceModifier() {
   const [maxValue, setMaxValue] = useState(max);
 
   // useEffect(() => {
-  //   const pushData = () => {
-  //     minValue && pushQuery({ minPrice: minValue });
-  //     maxValue && pushQuery({ maxPrice: maxValue });
-  //   };
-  //   setTimeout(pushData, 1000);
-
-  //   return clearTimeout();
+  //   minValue >= 0 && pushQuery({ minPrice: minValue });
+  //   maxValue && pushQuery({ maxPrice: maxValue });
   // }, [minValue, maxValue]);
 
   useEffect(() => {
@@ -39,14 +34,14 @@ export default function PriceModifier() {
     };
   }, [minValue, maxValue]);
 
-  // const handleInput = (e) => {
-  //   setMinValue(e.minValue);
-  //   setMaxValue(e.maxValue);
-  // };
-
   const handleChange = ({ min, max }) => {
     setMinValue(min);
     setMaxValue(max);
+  };
+
+  const priceVariants = {
+    opened: { y: 0, opacity: 1, transition: { duration: 0.4 } },
+    closed: { y: -35, opacity: 0, transition: { duration: 0.4 } },
   };
   return (
     <AnimatePresence>
@@ -55,8 +50,8 @@ export default function PriceModifier() {
           initial="closed"
           animate={priceDrop ? "opened" : "closed"}
           exit="closed"
-          variants={contentVariants}
-          className="w-56 -ml-5"
+          variants={priceVariants}
+          className="w-56 -ml-2 lg:-ml-4"
         >
           <MultiSlide min={min} max={max} onChange={handleChange} />
         </motion.div>

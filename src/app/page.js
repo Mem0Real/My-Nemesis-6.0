@@ -1,30 +1,24 @@
-import Link from "next/link";
+"use client";
+import { useEffect } from "react";
 
-async function categoryList() {
-  const categories = prisma.categories.findMany({ orderBy: { id: "asc" } });
-
-  const parents = prisma.parents.findMany({ orderBy: { id: "asc" } });
-
-  const children = prisma.children.findMany({ orderBy: { id: "asc" } });
-
-  const items = prisma.items.findMany({ orderBy: { name: "asc" } });
-
-  const data = await Promise.all([categories, parents, children, items]);
-
-  return data;
-}
+import Header from "./components/Header";
+import Lenis from "@studio-freight/lenis";
 
 export default async function Home() {
+  useEffect(() => {
+    const lenis = new Lenis();
+
+    const raf = (time) => {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    };
+
+    requestAnimationFrame(raf);
+  }, []);
+
   return (
-    <main className="min-h-screen h-fit min-w-screen bg-neutral-200 text-neutral-800 dark:bg-neutral-800 dark:text-neutral-200 pt-6">
-      <div className="flex flex-col items-center md:mt-12 gap-12">
-        <h1 className="text-3xl font-bold underline underline-offset-8">
-          My Nemesis
-        </h1>
-        <p>
-          <Link href="/categories">Categories</Link>
-        </p>
-      </div>
-    </main>
+    <div className="relative ">
+      <Header />
+    </div>
   );
 }

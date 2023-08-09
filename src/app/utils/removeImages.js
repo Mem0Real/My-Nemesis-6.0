@@ -12,6 +12,5 @@ async function removeImages() {
   const res2 = await prisma.children.findMany({
     select: { id: true, image: true },
   });
-  console.log(res2);
 }
 removeImages();

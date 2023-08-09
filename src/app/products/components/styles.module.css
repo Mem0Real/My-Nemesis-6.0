@@ -71,15 +71,15 @@
 
 /* For Chrome browsers */
 .thumb::-webkit-slider-thumb {
-  border: none;
+  border: 1px solid #535151;
   border-radius: 25%;
   box-shadow: 0 0 4px 4px #007ffd;
   cursor: pointer;
   height: 18px;
   width: 1px;
-  filter: blur(2px);
-  backdrop-filter: blur(10px);
-  padding: 0 10px;
+  /* backdrop-filter: blur(25px); */
+  background-color: gray;
+  padding: 0 5px;
   margin-top: 4px;
   pointer-events: all;
   position: relative;
@@ -87,15 +87,15 @@
 
 /* For Firefox browsers */
 .thumb::-moz-range-thumb {
-  border: none;
+  border: 1px solid #535151;
   border-radius: 25%;
   box-shadow: 0 0 4px 4px #007ffd;
   cursor: pointer;
   height: 18px;
   width: 1px;
-  filter: blur(2px);
-  backdrop-filter: blur(10px);
-  padding: 0 10px;
+  /* backdrop-filter: blur(25px); */
+  background-color: gray;
+  padding: 0 5px;
   margin-top: 4px;
   pointer-events: all;
   position: relative;

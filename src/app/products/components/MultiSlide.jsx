@@ -1,11 +1,15 @@
 import React, { useCallback, useEffect, useState, useRef } from "react";
 import styles from "./styles.module.css";
+import useCustomRouter from "@/hooks/useCustomRouter";
 
 const MultiSlide = ({ min, max, onChange }) => {
-  const [minVal, setMinVal] = useState(min);
-  const [maxVal, setMaxVal] = useState(max);
-  const minValRef = useRef(min);
-  const maxValRef = useRef(max);
+  const { query } = useCustomRouter();
+  const [minVal, setMinVal] = useState(query.minPrice || min);
+  const [maxVal, setMaxVal] = useState(query.maxPrice || max);
+
+  const minValRef = useRef(query.minPrice || min);
+  const maxValRef = useRef(query.maxPrice || max);
+
   const range = useRef(null);
 
   // Convert to percentage
@@ -31,7 +35,8 @@ const MultiSlide = ({ min, max, onChange }) => {
     const maxPercent = getPercent(maxVal);
 
     if (range.current) {
-      range.current.style.width = `${maxPercent - minPercent}%`;
+      const percent = maxPercent - minPercent;
+      range.current.style.width = `${percent > 100 ? 100 : percent}%`;
     }
   }, [maxVal, getPercent]);
 
@@ -52,7 +57,7 @@ const MultiSlide = ({ min, max, onChange }) => {
           setMinVal(value);
           minValRef.current = value;
         }}
-        className={`${styles.thumb} ${styles.thumbLeft} bg-neutral-800 dark:bg-neutral-200`}
+        className={`${styles.thumb} ${styles.thumbLeft}`}
         style={{ zIndex: minVal > max - 100 && "5" }}
       />
       <input
@@ -65,9 +70,9 @@ const MultiSlide = ({ min, max, onChange }) => {
           setMaxVal(value);
           maxValRef.current = value;
         }}
-        className={`${styles.thumb} ${styles.thumbRight} bg-neutral-800 dark:bg-neutral-200`}
+        className={`${styles.thumb} ${styles.thumbRight}`}
       />
-      <div className={styles.slider}>
+      <div className={`${styles.slider} w-56`}>
         <div
           className={`${styles.sliderTrack} bg-neutral-500 dark:bg-neutral-400`}
         />

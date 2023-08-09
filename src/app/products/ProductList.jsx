@@ -25,8 +25,10 @@ export default function ProductList({ products, menu, totalPage, range }) {
 
   // Update category dropdown state based on cookie data
   useEffect(() => {
-    if (hasCookie("Product_CatDrop")) showCategoryDrop(true);
-    else showCategoryDrop(false);
+    if (hasCookie("Product_CatDrop")) {
+      const data = JSON.parse(getCookie("Product_CatDrop"));
+      data && showCategoryDrop(true);
+    } else showCategoryDrop(false);
 
     if (hasCookie("FilterCat")) {
       const filter = JSON.parse(getCookie("FilterCat"));
@@ -46,8 +48,10 @@ export default function ProductList({ products, menu, totalPage, range }) {
 
   // Update price dropdown state based on cookie data
   useEffect(() => {
-    if (hasCookie("Product_PriceDrop")) showPriceDrop(true);
-    else showPriceDrop(false);
+    if (hasCookie("Product_PriceDrop")) {
+      const data = JSON.parse(getCookie("Product_PriceDrop"));
+      data && showPriceDrop(true);
+    } else showPriceDrop(false);
   }, []);
 
   const toggleCategory = () => {
@@ -133,7 +137,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
         range,
       }}
     >
-      <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center text-sm">
+      <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center text-sm py-5">
         <div className="h-36 w-full flex flex-col items-center justify-center">
           <h1 className="text-4xl font-semibold">Products</h1>
         </div>
@@ -143,7 +147,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
             <Sort />
           </div>
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-evenly w-full">
-            <div className="w-full lg:basis-[13%] self-start lg:ml-3 ">
+            <div className="w-full lg:basis-[20%] self-start">
               <FilterData />
             </div>
             <div className="w-full lg:basis-4/5 mx-auto flex flex-col justify-between">

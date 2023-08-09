@@ -10,6 +10,7 @@ const useCustomRouter = () => {
   let sort = searchParams.get("sort");
   let filter = searchParams.get("filter");
   let page = searchParams.get("page");
+
   let minPrice = searchParams.get("minPrice");
   let maxPrice = searchParams.get("maxPrice");
 
@@ -56,15 +57,15 @@ const useCustomRouter = () => {
     }
 
     if (minPrice !== undefined) {
-      minPrice === 0 ? delete query.minPrice : (query.minPrice = minPrice);
+      query.minPrice = minPrice;
     }
 
     if (maxPrice !== undefined) {
-      maxPrice === 19000 ? delete query.maxPrice : (query.maxPrice = maxPrice);
+      query.maxPrice = maxPrice;
     }
 
     const newQuery = new URLSearchParams(query).toString();
-    router.push(`?${newQuery}`);
+    router.push(`?${newQuery}`, { scroll: false });
   };
   return { pushQuery, query };
 };
