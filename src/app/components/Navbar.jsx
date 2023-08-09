@@ -12,7 +12,7 @@ export const Navbar = async () => {
   return (
     <nav
       className="w-full md:h-16 h-fit navbar bg-neutral-100
-    text-neutral-800 dark:bg-neutral-900 dark:text-neutral-200 border-b border-neutral-400/60 dark:border-neutral-950 backdrop-blur-md shadow-md shadow-neutral-300 dark:shadow-blue-950/80 relative z-10"
+    text-neutral-800 dark:bg-neutral-950 dark:text-neutral-200 border-b border-neutral-400/60 dark:border-neutral-950 backdrop-blur-md shadow-md shadow-neutral-300 dark:shadow-blue-950/80 relative z-10"
     >
       <div className="md:flex justify-between md:justify-normal items-center w-full h-full px-4 md:px-2 lg:px-8 py-4 text-sm">
         <div className="absolute md:static z-10 -mt-[8px] md:mt-0">

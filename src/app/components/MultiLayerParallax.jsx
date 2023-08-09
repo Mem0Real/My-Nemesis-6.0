@@ -7,17 +7,20 @@ import { useTheme } from "next-themes";
 export default function MultiLayerParallax() {
   const { theme } = useTheme();
 
-  const ref = useRef();
+  const container = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: ref,
+    target: container,
     offset: ["start start", "end start"],
   });
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "1000%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "500%"]);
 
   return (
-    <div className="w-full h-screen overflow-hidden relative grid place-items-center">
+    <div
+      ref={container}
+      className="w-full h-screen overflow-hidden relative grid place-items-center"
+    >
       <motion.h1
         className="font-bold text-black dark:text-white text-4xl sm:text-6xl relative z-10"
         style={{ y: textY }}

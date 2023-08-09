@@ -1,8 +1,7 @@
 "use client";
 import styles from "./styles.module.scss";
-import React, { useState, useRef, useEffect } from "react";
-import { motion, useScroll } from "framer-motion";
-import { useIcons } from "@/app/utils/CustomIcons";
+import React, { useState, useRef } from "react";
+import { motion } from "framer-motion";
 
 export default function CustomCursor({ children }) {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });

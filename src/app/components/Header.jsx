@@ -4,6 +4,7 @@ import Image from "next/image";
 
 import { motion } from "framer-motion";
 import MultiLayerParallax from "./MultiLayerParallax";
+import SmoothScroll from "./SmoothScroll";
 
 const Header = () => {
   const introHeaderVariants = {
@@ -50,6 +51,8 @@ const Header = () => {
     // </main>
     <main>
       <MultiLayerParallax />
+
+      <SmoothScroll />
       <div className="w-full bg-neutral-300 dark:bg-neutral-800">
         <div className="flex flex-col gap-12 items-center justify-center">
           <p>
