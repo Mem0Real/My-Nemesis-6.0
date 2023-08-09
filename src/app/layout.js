@@ -16,7 +16,7 @@ import SideBarBase from "./sidebar/SideBarBase";
 
 import NextTopLoader from "nextjs-toploader";
 import ScrollToTopButton from "./components/ScrollToTop";
-import CustomCursor from "./products/components/CustomCursor";
+import CustomCursor from "./components/CustomCursor";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -40,7 +40,7 @@ export default function RootLayout({ children }) {
                     </SearchBase>
                     <NextTopLoader showSpinner={false} />
                   </CartBase>
-                  <div className="relative text-sm text-neutral-800 dark:text-neutral-200 z-10">
+                  <div className="relative text-sm text-neutral-800 dark:text-neutral-200 z-50">
                     <Suspense>
                       <SideBarBase />
                     </Suspense>

@@ -14,12 +14,12 @@ export default function MultiLayerParallax() {
   });
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "500%"]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "1000%"]);
 
   return (
     <div className="w-full h-screen overflow-hidden relative grid place-items-center">
       <motion.h1
-        className="font-bold text-black dark:text-white text-7xl md:text-6xl relative z-10"
+        className="font-bold text-black dark:text-white text-4xl sm:text-6xl relative z-10"
         style={{ y: textY }}
       >
         Ethio Machineries
