@@ -4,6 +4,7 @@ import { useTheme } from "next-themes";
 import { useIcons } from "../utils/CustomIcons";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { setCookie } from "cookies-next";
 
 export const ThemeSwitcher = () => {
   const [mounted, setMounted] = useState(false);
@@ -34,10 +35,16 @@ export const ThemeSwitcher = () => {
       },
     },
   };
+
+  const handleThemeToggle = () => {
+    const pref = theme === "dark" ? "light" : "dark";
+    setTheme(pref);
+    setCookie("Theme", pref);
+  };
   return (
     <AnimatePresence>
       <motion.button
-        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+        onClick={handleThemeToggle}
         animate={mounted ? "show" : "hide"}
         variants={variants}
         whileTap={{ scale: 2, opacity: 0 }}

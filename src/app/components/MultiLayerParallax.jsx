@@ -1,11 +1,19 @@
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
-import React, { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useTheme } from "next-themes";
+import { getCookie, hasCookie } from "cookies-next";
+import Image from "next/image";
 
 export default function MultiLayerParallax() {
   const { theme } = useTheme();
+  const [currentTheme, setCurrentTheme] = useState(theme);
+
+  useEffect(() => {
+    setCurrentTheme(hasCookie("Theme") ? getCookie("Theme") : "light");
+    console.log(currentTheme);
+  }, [theme]);
 
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -28,26 +36,49 @@ export default function MultiLayerParallax() {
         Ethio Machineries
       </motion.h1>
 
-      {theme === "light" ? (
+      {currentTheme === "light" && (
         <motion.div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url(/images/Day.png)`,
-            backgroundPosition: "bottom",
-            backgroundSize: "cover",
+            // backgroundImage: `url(/images/Day.png)`,
+            // backgroundPosition: "bottom",
+            // backgroundSize: "cover",
             y: backgroundY,
           }}
-        ></motion.div>
-      ) : (
+          initial={{ opacity: 0 }}
+          exit={{ opacity: 0 }}
+          animate={currentTheme === "light" ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <Image
+            fill
+            alt="light"
+            className="object-contain object-bottom"
+            src="/images/Day.png"
+          />
+        </motion.div>
+      )}
+      {currentTheme === "dark" && (
         <motion.div
           className="absolute inset-0 z-0"
           style={{
-            backgroundImage: `url(/images/Night.png)`,
-            backgroundPosition: "bottom",
-            backgroundSize: "cover",
+            // backgroundImage: `url(/images/Night.png)`,
+            // backgroundPosition: "bottom",
+            // backgroundSize: "cover",
             y: backgroundY,
           }}
-        ></motion.div>
+          initial={{ opacity: 0 }}
+          exit={{ opacity: 0 }}
+          animate={currentTheme === "dark" ? { opacity: 1 } : { opacity: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <Image
+            fill
+            alt="dark"
+            className="object-contain object-bottom"
+            src="/images/Night.png"
+          />
+        </motion.div>
       )}
 
       <div

@@ -17,6 +17,7 @@ import SideBarBase from "./sidebar/SideBarBase";
 import NextTopLoader from "nextjs-toploader";
 import ScrollToTopButton from "./components/ScrollToTop";
 import CustomCursor from "./components/CustomCursor";
+import { getCookie, hasCookie } from "cookies-next";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -25,15 +26,16 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const theme = hasCookie("Theme") ? getCookie("Theme") : "light";
   return (
-    <html lang="en" style={{ colorScheme: "dark" }} className="dark">
+    <html lang="en" style={{ colorScheme: theme }} className={theme}>
       <body>
         <ProductDataContext>
           <ThemeProvider attribute="class">
             <CustomIcons>
               <CustomCursor>
                 <ToasterContext />
-                <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none bg-neutral-100 dark:bg-neutral-800 relative">
+                <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none relative transition-all ease-in-out duration-1000">
                   <CartBase>
                     <SearchBase>
                       <Navbar />
