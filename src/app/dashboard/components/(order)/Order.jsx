@@ -178,7 +178,7 @@ export default function Order({
             animate={removeAllModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-10 bg-neutral-200/30 dark:bg-neutral-900/30 backdrop-blur-sm  flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-40 bg-neutral-200/30 dark:bg-neutral-900/30 backdrop-blur-sm  flex ${
               removeAllModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >

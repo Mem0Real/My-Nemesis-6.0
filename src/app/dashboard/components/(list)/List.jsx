@@ -224,7 +224,7 @@ export default function List({ data, create, update, deleteItem, url }) {
             animate={addModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-30 bg-white/20 dark:bg-black/20 backdrop-blur-sm flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-40 bg-white/20 dark:bg-black/20 backdrop-blur-sm flex ${
               addModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
@@ -247,7 +247,7 @@ export default function List({ data, create, update, deleteItem, url }) {
             animate={editModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-30 bg-white/70 dark:bg-black/70 backdrop-blur-sm flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-40 bg-white/70 dark:bg-black/70 backdrop-blur-sm flex ${
               editModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
@@ -270,7 +270,7 @@ export default function List({ data, create, update, deleteItem, url }) {
             animate={deleteModal ? "open" : "close"}
             variants={variants}
             exit={"close"}
-            className={`fixed top-0 bottom-0 right-0 left-0 z-30 bg-white/70 dark:bg-black/70 backdrop-blur-sm flex ${
+            className={`fixed top-0 bottom-0 right-0 left-0 z-40 bg-white/70 dark:bg-black/70 backdrop-blur-sm flex ${
               deleteModal ? "pointer-events-auto" : "pointer-events-none"
             }`}
           >
