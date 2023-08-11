@@ -4,6 +4,11 @@ import prisma from "@/lib/prisma";
 
 export async function fetchProducts() {
   const products = await prisma.items.findMany({
+    where: {
+      images: {
+        isEmpty: false,
+      },
+    },
     select: {
       id: true,
       CategoryId: true,

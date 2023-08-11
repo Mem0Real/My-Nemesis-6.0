@@ -60,6 +60,7 @@ export default function MultiLayerParallax() {
               alt="light"
               className="object-cover object-bottom"
               src="/images/Day.png"
+              priority
             />
           </motion.div>
         </AnimatePresence>
@@ -84,6 +85,7 @@ export default function MultiLayerParallax() {
               alt="dark"
               className="object-cover object-bottom"
               src="/images/Night.png"
+              priority
             />
           </motion.div>
         </AnimatePresence>

@@ -23,14 +23,16 @@ export default function Child({ categoryId, parentId, child }) {
 
   return [
     <AnimatePresence key={child.id}>
-      {par.id === parentId && par.open === true && (
+      {par?.id === parentId && par?.open === true && (
         <motion.tr
           key={child.id}
           className={`cursor-pointer bg-neutral-400 dark:bg-neutral-600 hover:bg-neutral-500 dark:hover:bg-neutral-500 ${
             chi.id === child.id && chi.open === true && "font-semibold"
           }`}
           initial="close"
-          animate={par.id === parentId && par.open === true ? "open" : "close"}
+          animate={
+            par?.id === parentId && par?.open === true ? "open" : "close"
+          }
           exit="close"
           variants={contentVariants}
           onClick={() => toggleChiDrop(child.id)}
@@ -41,7 +43,7 @@ export default function Child({ categoryId, parentId, child }) {
                 className={`text-sm text-neutral-800 dark:text-neutral-200 hover:text-neutral-950 hover:dark:text-neutral-400`}
                 initial="close"
                 animate={
-                  chi.id === child.id && chi.open === true ? "open" : "close"
+                  chi?.id === child.id && chi?.open === true ? "open" : "close"
                 }
                 exit="close"
                 variants={buttonVariants}

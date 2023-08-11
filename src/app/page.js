@@ -6,7 +6,7 @@ export default async function Home() {
   const products = await fetchProducts();
 
   return (
-    <div className="relative ">
+    <div className="relative bg-neutral-200 dark:bg-neutral-800">
       <Header />
       <BestSellers products={products} />
       <div className="w-full">

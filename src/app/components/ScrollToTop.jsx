@@ -7,6 +7,7 @@ import { useIcons } from "../utils/CustomIcons";
 
 export default function ScrollToTopButton({ children }) {
   const [lift, setLift] = useState(false);
+
   const isBrowser = () => typeof window !== "undefined";
 
   function scrollToTop() {
