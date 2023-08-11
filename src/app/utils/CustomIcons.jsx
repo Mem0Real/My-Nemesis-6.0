@@ -347,6 +347,96 @@ export default function CustomIcons({ children }) {
     </svg>
   );
 
+  const DeliveryTruckIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-truck-delivery"
+      width={128}
+      height={96}
+      viewBox="0 0 24 24"
+      strokeWidth="1"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M7 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+      <path d="M17 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+      <path d="M5 17h-2v-4m-1 -8h11v12m-4 0h6m4 0h2v-6h-8m0 -5h5l3 5"></path>
+      <path d="M3 9l4 0"></path>
+    </svg>
+  );
+
+  const HourIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-24-hours"
+      width={128}
+      height={96}
+      viewBox="0 0 24 24"
+      strokeWidth="1"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"></path>
+      <path d="M4 13a8.094 8.094 0 0 0 3 5.24"></path>
+      <path d="M11 15h2a1 1 0 0 1 1 1v1a1 1 0 0 1 -1 1h-1a1 1 0 0 0 -1 1v1a1 1 0 0 0 1 1h2"></path>
+      <path d="M17 15v2a1 1 0 0 0 1 1h1"></path>
+      <path d="M20 15v6"></path>
+    </svg>
+  );
+
+  const DiscountIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-discount-check-filled"
+      width={128}
+      height={96}
+      viewBox="0 0 24 24"
+      strokeWidth="1"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path
+        d="M12.01 2.011a3.2 3.2 0 0 1 2.113 .797l.154 .145l.698 .698a1.2 1.2 0 0 0 .71 .341l.135 .008h1a3.2 3.2 0 0 1 3.195 3.018l.005 .182v1c0 .27 .092 .533 .258 .743l.09 .1l.697 .698a3.2 3.2 0 0 1 .147 4.382l-.145 .154l-.698 .698a1.2 1.2 0 0 0 -.341 .71l-.008 .135v1a3.2 3.2 0 0 1 -3.018 3.195l-.182 .005h-1a1.2 1.2 0 0 0 -.743 .258l-.1 .09l-.698 .697a3.2 3.2 0 0 1 -4.382 .147l-.154 -.145l-.698 -.698a1.2 1.2 0 0 0 -.71 -.341l-.135 -.008h-1a3.2 3.2 0 0 1 -3.195 -3.018l-.005 -.182v-1a1.2 1.2 0 0 0 -.258 -.743l-.09 -.1l-.697 -.698a3.2 3.2 0 0 1 -.147 -4.382l.145 -.154l.698 -.698a1.2 1.2 0 0 0 .341 -.71l.008 -.135v-1l.005 -.182a3.2 3.2 0 0 1 3.013 -3.013l.182 -.005h1a1.2 1.2 0 0 0 .743 -.258l.1 -.09l.698 -.697a3.2 3.2 0 0 1 2.269 -.944zm3.697 7.282a1 1 0 0 0 -1.414 0l-3.293 3.292l-1.293 -1.292l-.094 -.083a1 1 0 0 0 -1.32 1.497l2 2l.094 .083a1 1 0 0 0 1.32 -.083l4 -4l.083 -.094a1 1 0 0 0 -.083 -1.32z"
+        strokeWidth={0}
+        fill="currentColor"
+      ></path>
+    </svg>
+  );
+
+  const MaintainanceIcon = (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="icon icon-tabler icon-tabler-user-cog"
+      width={96}
+      height={96}
+      viewBox="0 0 24 24"
+      strokeWidth="1"
+      stroke="currentColor"
+      fill="none"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+      <path d="M8 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"></path>
+      <path d="M6 21v-2a4 4 0 0 1 4 -4h2.5"></path>
+      <path d="M19.001 19m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"></path>
+      <path d="M19.001 15.5v1.5"></path>
+      <path d="M19.001 21v1.5"></path>
+      <path d="M22.032 17.25l-1.299 .75"></path>
+      <path d="M17.27 20l-1.3 .75"></path>
+      <path d="M15.97 17.25l1.3 .75"></path>
+      <path d="M20.733 20l1.3 .75"></path>
+    </svg>
+  );
   return (
     <IconsContext.Provider
       value={{
@@ -371,6 +461,10 @@ export default function CustomIcons({ children }) {
         SearchIcon,
         CartIcon,
         TopArrowIcon,
+        MaintainanceIcon,
+        DiscountIcon,
+        HourIcon,
+        DeliveryTruckIcon,
       }}
     >
       {children}
