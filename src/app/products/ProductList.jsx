@@ -138,8 +138,10 @@ export default function ProductList({ products, menu, totalPage, range }) {
       }}
     >
       <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center text-sm py-5">
-        <div className="h-36 w-full flex flex-col items-center justify-center">
-          <h1 className="text-4xl font-semibold">Products</h1>
+        <div className="w-full flex flex-col items-center justify-center py-16 md:py-20 lg:py-24">
+          <h1 className="text-4xl md:text-5xl lg:text-7xl font-semibold">
+            Products
+          </h1>
         </div>
         <div className="flex flex-col gap-6 w-[95%]">
           <div className="flex items-center justify-evenly md:justify-between gap-4 px-2 lg:px-5">

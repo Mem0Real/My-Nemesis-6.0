@@ -181,11 +181,11 @@ export default function NavComponents({ session }) {
 
       {/* Hamburger Menu */}
       <div
-        className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-20 ${
+        className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-40 bg-neutral-100/20 dark:bg-neutral-800/20 backdrop-blur-lg   ${
           isOpen ? "block" : "hidden"
         }`}
       >
-        <ul className="text-sm md:hidden block bg-neutral-50 dark:bg-neutral-950 py-5 mt-0 md:mt-9 list-none">
+        <ul className="text-sm md:hidden block py-5 mt-0 md:mt-9 list-none">
           {links.map(({ href, label }) => (
             <li key={href}>
               <Link
