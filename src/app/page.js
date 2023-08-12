@@ -3,6 +3,7 @@ import Header from "./(landing)/Header";
 import ProductDataProvider from "./(landing)/(dataProviders)/ProductDataProvider";
 import { Suspense } from "react";
 import CategoryDataProvider from "./(landing)/(dataProviders)/CategoryDataProvider";
+import ServiceShow from "./(landing)/ServiceShow";
 
 export default async function Home() {
   return (
@@ -17,7 +18,8 @@ export default async function Home() {
         <CategoryDataProvider />
       </Suspense>
 
-      <div className="w-full">
+      <ServiceShow />
+      {/* <div className="w-full">
         <div className="flex flex-col gap-12 items-center justify-center">
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -84,7 +86,7 @@ export default async function Home() {
             convallis aenean et tortor at risus viverra adipiscing.{" "}
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
