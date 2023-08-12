@@ -6,18 +6,12 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { useTheme } from "next-themes";
-import { getCookie, hasCookie } from "cookies-next";
 import Image from "next/image";
 
 export default function MultiLayerParallax() {
   const { theme } = useTheme();
-  const [currentTheme, setCurrentTheme] = useState(theme);
-
-  useEffect(() => {
-    setCurrentTheme(hasCookie("Theme") ? getCookie("Theme") : "light");
-  }, [theme]);
 
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
