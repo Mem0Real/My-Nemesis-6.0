@@ -34,6 +34,7 @@ export default async function Footer() {
             {categories.map(({ id }) => {
               return (
                 <Link
+                  key={id}
                   href={`/catalogue/${id}`}
                   className="capitalize font-medium"
                 >
