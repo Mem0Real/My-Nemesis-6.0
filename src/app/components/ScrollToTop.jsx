@@ -21,7 +21,7 @@ export default function ScrollToTopButton({ children }) {
     return scrollYProgress.on("change", (latestValue) => {
       if (latestValue > 0.2) {
         controls.start("show");
-        if (latestValue >= 0.9) {
+        if (latestValue >= 0.99) {
           setLift(true);
         } else setLift(false);
       } else {

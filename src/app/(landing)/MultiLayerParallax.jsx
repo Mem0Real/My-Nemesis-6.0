@@ -32,13 +32,16 @@ export default function MultiLayerParallax() {
   if (isMobile) {
     bgSpeed = "100%";
     textSpeed = "700%";
+    console.log("Mobile: ", bgSpeed, textSpeed);
   } else {
     bgSpeed = "500%";
     textSpeed = "500%";
+    console.log(bgSpeed, textSpeed);
   }
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", bgSpeed]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", textSpeed]);
+
   return (
     <div
       ref={container}
