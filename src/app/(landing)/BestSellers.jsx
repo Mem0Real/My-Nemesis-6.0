@@ -39,7 +39,10 @@ export default function BestSellers({ products }) {
               key={product.id}
               className="flex flex-col gap-5 items-center w-full md:w-80 lg:w-60 mx-auto border border-neutral-300 dark:border-neutral-700 my-2"
             >
-              <div className="relative w-full mb-12">
+              <Link
+                className="relative w-full mb-12"
+                href={`/catalogue/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
+              >
                 <h2 className="absolute right-2 top-2 z-10 rounded-xl bg-red-500 px-3 py-1 text-xs">
                   SALE
                 </h2>
@@ -58,10 +61,13 @@ export default function BestSellers({ products }) {
                     alt={product.id}
                   />
                 </motion.div>
-              </div>
-              <h1 className="basis-1/5 self-start text-lg font-medium px-3">
-                {product.name}
-              </h1>
+              </Link>
+              <Link
+                className="basis-1/5 self-start"
+                href={`/catalogue/${product.CategoryId}/${product.ParentId}/${product.ChildId}/${product.id}`}
+              >
+                <h1 className="text-lg font-medium px-3">{product.name}</h1>
+              </Link>
               <h1 className="basis-1/5 self-start flex items-center gap-1.5 text-base text-green-600 dark:text-green-400 px-3 pb-3">
                 {formatter.format(product.price)}
                 <span className="text-sm text-green-500 dark:text-green-300 tracking-wider">
