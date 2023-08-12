@@ -31,15 +31,15 @@ export default function BodySection({ products, categories }) {
 
   const scale = useTransform(scrollYProgress, [0, 1], [1, 12]);
 
-  // const imageX = useTransform(scrollYProgressSpring, [0, 1], [50, 0]);
-  // const imageXCalc = useMotionTemplate`max(0px, calc(${imageX}% + calc(${imageX}vw - 300px)))`;
+  const imageX = useTransform(scrollYProgress, [0, 1], [50, 0]);
+  const imageXCalc = useMotionTemplate`max(0px, calc(${imageX}% + calc(${imageX}vw - 300px)))`;
 
   return (
     <main>
       <div ref={ref} className="relative z-10 h-[200vh] overflow-clip">
         <motion.div
           style={{ scale }}
-          className={`${styles.heroBackground} sticky left-0 top-0 grid h-screen origin-[50%_70%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr] md:origin-[93%_38%] md:pt-20`}
+          className={`${styles.heroBackground} sticky left-0 top-0 grid h-screen origin-[50%_80%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr] md:origin-[93%_38%] md:pt-20`}
         >
           <div
             className={`${styles.windowMask} flex flex-col rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12 md:flex-row`}
@@ -57,12 +57,12 @@ export default function BodySection({ products, categories }) {
           </div>
         </motion.div>
       </div>
-      {/* <div className="mt-[-200vh] h-[200vh] bg-neutral-200 dark:bg-neutral-800 pb-20">
+      <div className="mt-[-200vh] h-[200vh] bg-neutral-200 dark:bg-neutral-800 pb-20">
         <motion.span
           style={{ x: imageXCalc }}
           className="sticky top-1/2 mx-auto block aspect-video w-[1600px] max-w-[90%] rounded-[60px] bg-gray-300 shadow-2xl md:top-1/4"
         />
-      </div> */}
+      </div>
 
       <Company />
       <BestSellers products={products} />
