@@ -28,7 +28,7 @@ export default function ServiceShow() {
           style={{ clipPath: "polygon(0 0, 100% 0, 100% 100%, 10% 100%)" }}
         >
           <Image
-            src={"/images/uc4.png"}
+            src={"/images/uc.png"}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
             alt="Help"

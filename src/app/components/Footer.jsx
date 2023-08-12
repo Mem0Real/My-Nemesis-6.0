@@ -7,7 +7,7 @@ export default async function Footer() {
 
   return (
     <div className="flex flex-col bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
-      <div className="min-h-screen flex flex-wrap items-center md:items-start justify-around gap-12 lg:mt-16 mt-8 w-[95%] mx-auto">
+      <div className="pb-8 md:pb-12 flex flex-wrap items-start sm:items-center md:items-start justify-around gap-12 lg:mt-16 mt-8 w-[95%] mx-auto">
         <div className="flex flex-col items-center gap-4 justify-evenly">
           <h1 className="text-xl font-bold text-black dark:text-white pb-6 w-full text-center md:text-start">
             Store Location
@@ -24,10 +24,10 @@ export default async function Footer() {
         </div>
 
         <div className="hidden md:flex flex-col items-center gap-4 justify-evenly">
-          <h1 className="text-xl font-bold text-black dark:text-white pb-4 w-full text-center md:text-start">
+          <h1 className="text-xl font-bold text-black dark:text-white pb-4 w-full text-center">
             Shop
           </h1>
-          <div className="flex flex-col gap-3 justify-center items-center md:items-start text-base w-full">
+          <div className="flex flex-col gap-3 justify-center items-center text-base w-full">
             <Link href="/products" className="pb-3">
               Shop All
             </Link>
@@ -57,7 +57,7 @@ export default async function Footer() {
       </div>
       <div
         className="h-16 text-xl flex justify-between items-center shadow-inner 
-    shadow-neutral-500 bg-neutral-50"
+    shadow-neutral-500 bg-neutral-50 dark:bg-neutral-950 text-neutral-800 dark:text-neutral-200"
       >
         <div className="ms-4">
           <p>Nemesis</p>

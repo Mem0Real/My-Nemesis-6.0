@@ -10,15 +10,17 @@ export default async function Home() {
     <div className="relative bg-neutral-200 dark:bg-neutral-800">
       <Header />
       {/* <BestSellers products={products} /> */}
-      <Suspense fallback={<h1>Loading...</h1>}>
-        <ProductDataProvider />
-      </Suspense>
+      <div className="flex flex-col gap-12">
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <ProductDataProvider />
+        </Suspense>
 
-      <Suspense fallback={<h1>Loading...</h1>}>
-        <CategoryDataProvider />
-      </Suspense>
+        <Suspense fallback={<h1>Loading...</h1>}>
+          <CategoryDataProvider />
+        </Suspense>
 
-      <ServiceShow />
+        <ServiceShow />
+      </div>
       {/* <div className="w-full">
         <div className="flex flex-col gap-12 items-center justify-center">
           <p>
