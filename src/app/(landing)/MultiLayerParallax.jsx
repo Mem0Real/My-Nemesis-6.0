@@ -45,9 +45,9 @@ export default function MultiLayerParallax() {
           <motion.div
             className="absolute inset-0 z-0"
             style={{
-              // backgroundImage: `url(/images/Day.png)`,
-              // backgroundPosition: "bottom",
-              // backgroundSize: "cover",
+              backgroundImage: `url(/images/Day.png)`,
+              backgroundPosition: "bottom",
+              backgroundSize: "cover",
               y: backgroundY,
             }}
             initial={{ opacity: 0 }}
@@ -55,13 +55,13 @@ export default function MultiLayerParallax() {
             animate={theme === "light" ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 1 }}
           >
-            <Image
+            {/* <Image
               fill
               alt="light"
               className="object-cover object-bottom"
               src="/images/Day.png"
               priority
-            />
+            /> */}
           </motion.div>
         </AnimatePresence>
       )}
@@ -70,9 +70,9 @@ export default function MultiLayerParallax() {
           <motion.div
             className="absolute inset-0 z-0"
             style={{
-              // backgroundImage: `url(/images/Night.png)`,
-              // backgroundPosition: "bottom",
-              // backgroundSize: "cover",
+              backgroundImage: `url(/images/Night.png)`,
+              backgroundPosition: "bottom",
+              backgroundSize: "cover",
               y: backgroundY,
             }}
             initial={{ opacity: 0 }}
@@ -80,13 +80,13 @@ export default function MultiLayerParallax() {
             animate={theme === "dark" ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 1 }}
           >
-            <Image
+            {/* <Image
               fill
               alt="dark"
               className="object-cover object-bottom"
               src="/images/Night.png"
               priority
-            />
+            /> */}
           </motion.div>
         </AnimatePresence>
       )}

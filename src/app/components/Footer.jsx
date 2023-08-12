@@ -13,7 +13,7 @@ export default async function Footer() {
             Store Location
           </h1>
           <div className="flex flex-col gap-5 justify-center items-center md:items-start text-base">
-            <p>HabteGiorgis Dildiy</p>
+            <p>HabteGiorgis Square</p>
             <p>Addis Ababa, Ethiopia</p>
             <p>MyNemesis@gmail.com</p>
             <p>011-1-12-34-56</p>
