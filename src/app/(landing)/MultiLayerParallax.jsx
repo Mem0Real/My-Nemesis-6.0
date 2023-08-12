@@ -25,9 +25,16 @@ export default function MultiLayerParallax() {
     offset: ["start start", "end start"],
   });
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-  const textY = useTransform(scrollYProgress, [0, 1], ["0%", "500%"]);
+  const isMobile = window.innerWidth < 768;
+  let backgroundY, textY;
 
+  if (isMobile) {
+    backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
+    textY = useTransform(scrollYProgress, [0, 1], ["0%", "700%"]);
+  } else {
+    backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "500%"]);
+    textY = useTransform(scrollYProgress, [0, 1], ["0%", "500%"]);
+  }
   return (
     <div
       ref={container}
@@ -45,9 +52,9 @@ export default function MultiLayerParallax() {
           <motion.div
             className="absolute inset-0 z-0"
             style={{
-              backgroundImage: `url(/images/Day.png)`,
-              backgroundPosition: "bottom",
-              backgroundSize: "cover",
+              // backgroundImage: `url(/images/Day.png)`,
+              // backgroundPosition: "bottom",
+              // backgroundSize: "cover",
               y: backgroundY,
             }}
             initial={{ opacity: 0 }}
@@ -55,13 +62,15 @@ export default function MultiLayerParallax() {
             animate={theme === "light" ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 1 }}
           >
-            {/* <Image
+            <Image
               fill
               alt="light"
               className="object-cover object-bottom"
               src="/images/Day.png"
               priority
-            /> */}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+              quality={100}
+            />
           </motion.div>
         </AnimatePresence>
       )}
@@ -70,9 +79,9 @@ export default function MultiLayerParallax() {
           <motion.div
             className="absolute inset-0 z-0"
             style={{
-              backgroundImage: `url(/images/Night.png)`,
-              backgroundPosition: "bottom",
-              backgroundSize: "cover",
+              // backgroundImage: `url(/images/Night.png)`,
+              // backgroundPosition: "bottom",
+              // backgroundSize: "cover",
               y: backgroundY,
             }}
             initial={{ opacity: 0 }}
@@ -80,13 +89,15 @@ export default function MultiLayerParallax() {
             animate={theme === "dark" ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 1 }}
           >
-            {/* <Image
+            <Image
               fill
               alt="dark"
               className="object-cover object-bottom"
               src="/images/Night.png"
               priority
-            /> */}
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+              quality={100}
+            />
           </motion.div>
         </AnimatePresence>
       )}
