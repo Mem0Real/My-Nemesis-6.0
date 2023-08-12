@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 import Lenis from "@studio-freight/lenis";
 import { motion } from "framer-motion";
@@ -24,7 +25,7 @@ export default function BestSellers({ products }) {
   });
 
   return (
-    <div className="w-[90%] min-h-screen flex flex-col mx-auto items-center justify-start py-6 md:py-12 gap-6 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200">
+    <div className="w-[95%] min-h-screen flex flex-col mx-auto items-center justify-start py-6 md:py-12 gap-6 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200">
       <h1 className="text-3xl font-semibold my-5 pb-5">Best Sellers</h1>
       <div className="w-full mx-auto flex flex-wrap items-center h-full">
         {products.map((product) => {
@@ -71,6 +72,12 @@ export default function BestSellers({ products }) {
           );
         })}
       </div>
+      <Link
+        href="/products"
+        className="bg-purple-700 rounded-lg px-6 py-2 text-neutral-300 dark:text-neutral-900 hover:bg-neutral-900 dark:hover:bg-neutral-100 transition-all ease-in-out duration-200"
+      >
+        Browse Products
+      </Link>
     </div>
   );
 }

@@ -90,7 +90,7 @@ const Header = () => {
         </h1>
       </motion.div>
 
-      <div className="bg-neutral-100 dark:bg-neutral-900 min-h-64 px-6 lg:px-12 py-12 flex flex-col md:flex-row flex-wrap items-center justify-center w-[90%] mx-auto gap-12 lg:my-6">
+      <div className="bg-neutral-100 dark:bg-neutral-900 min-h-64 px-6 lg:px-12 py-12 flex flex-col md:flex-row flex-wrap items-center justify-center w-[95%] mx-auto gap-12 lg:my-6">
         <motion.div
           className="flex items-center justify-between w-full md:w-fit text-neutral-800 dark:text-neutral-200"
           initial={{ x: -50 }}

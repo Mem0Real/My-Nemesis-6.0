@@ -53,8 +53,12 @@ export default function EditModal({
       setImageSrc(onLoadEvent.target.result);
     };
 
-    reader.readAsDataURL(changeEvent.target.files[0]);
-    setEditData({ ...editData, newImage: changeEvent.target.files[0] });
+    if (changeEvent.target.files[0]) {
+      reader.readAsDataURL(changeEvent.target.files[0]);
+      setEditData({ ...editData, newImage: changeEvent.target.files[0] });
+    } else {
+      setImageSrc(null);
+    }
   };
 
   const handleMultipleSelect = (e) => {

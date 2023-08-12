@@ -1,14 +1,22 @@
 import Header from "./(landing)/Header";
-import BestSellers from "./(landing)/BestSellers";
-import { fetchProducts } from "./(landing)/getData";
+// import BestSellers from "./(landing)/BestSellers";
+import ProductDataProvider from "./(landing)/(dataProviders)/ProductDataProvider";
+import { Suspense } from "react";
+import CategoryDataProvider from "./(landing)/(dataProviders)/CategoryDataProvider";
 
 export default async function Home() {
-  const products = await fetchProducts();
-
   return (
     <div className="relative bg-neutral-200 dark:bg-neutral-800">
       <Header />
-      <BestSellers products={products} />
+      {/* <BestSellers products={products} /> */}
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <ProductDataProvider />
+      </Suspense>
+
+      <Suspense fallback={<h1>Loading...</h1>}>
+        <CategoryDataProvider />
+      </Suspense>
+
       <div className="w-full">
         <div className="flex flex-col gap-12 items-center justify-center">
           <p>

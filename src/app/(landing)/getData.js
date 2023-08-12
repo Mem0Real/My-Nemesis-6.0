@@ -23,3 +23,16 @@ export async function fetchProducts() {
 
   return products;
 }
+
+export async function fetchCategories() {
+  const categories = prisma.categories.findMany({
+    select: {
+      id: true,
+      name: true,
+      image: true,
+    },
+    orderBy: { id: "asc" },
+  });
+
+  return categories;
+}
