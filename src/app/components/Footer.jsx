@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { fetchCategories } from "../(landing)/getData";
+import { fetchCategories } from "../(landing)/util/getData";
 import FooterComponents from "./FooterComponents";
 
 export default async function Footer() {
   const categories = await fetchCategories();
 
   return (
-    <div className="flex flex-col bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-300">
+    <div className="flex flex-col bg-neutral-100 text-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 border-t border-neutral-950/80 dark:border-neutral-50/80">
       <div className="pb-8 md:pb-12 flex flex-wrap items-start sm:items-center md:items-start justify-around gap-12 lg:mt-16 mt-8 w-[95%] mx-auto">
         <div className="flex flex-col items-center gap-4 justify-evenly">
           <h1 className="text-xl font-bold text-black dark:text-white pb-6 w-full text-center md:text-start">

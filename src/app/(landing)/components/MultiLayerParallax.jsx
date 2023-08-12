@@ -23,7 +23,6 @@ export default function MultiLayerParallax() {
 
   const size = useWindowSize();
 
-  console.log("S: ", size);
   const isMobile = size.width < 768;
 
   let bgSpeed, textSpeed;
@@ -129,14 +128,17 @@ export default function MultiLayerParallax() {
         </AnimatePresence>
       )}
 
-      <div
-        className="absolute inset-0 z-20"
-        style={{
-          backgroundImage: `url(/images/Building.png)`,
-          backgroundPosition: "bottom",
-          backgroundSize: "cover",
-        }}
-      ></div>
+      <div className="absolute inset-0 z-20">
+        <Image
+          fill
+          alt="dark"
+          className="object-cover object-bottom"
+          src="/images/Building.png"
+          priority
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+          quality={100}
+        />
+      </div>
     </div>
   );
 }

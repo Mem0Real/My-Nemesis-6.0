@@ -1,5 +1,5 @@
 import ShopCategory from "../ShopCategory";
-import { fetchCategories } from "../getData";
+import { fetchCategories } from "../util/getData";
 
 export default async function CategoryDataProvider() {
   const categories = await fetchCategories();

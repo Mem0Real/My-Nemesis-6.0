@@ -1,5 +1,5 @@
-import BestSellers from "../BestSellers";
-import { fetchProducts } from "../getData";
+import BestSellers from "../components/BestSellers";
+import { fetchProducts } from "../util/getData";
 
 export default async function ProductDataProvider() {
   const products = await fetchProducts();
