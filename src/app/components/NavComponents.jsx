@@ -112,31 +112,6 @@ export default function NavComponents({ session }) {
               </span>
             </Link>
           ))}
-          {/* <Link href="/products">
-            <div className="">
-              Products
-            </div>
-          </Link>
-          <Link href="/catalogue">
-            <div className="">
-              Catalogue
-            </div>
-          </Link>
-          <Link href="/services">
-            <div className="">
-              Services
-            </div>
-          </Link>
-          <Link href="/about">
-            <div className="">
-              About
-            </div>
-          </Link>
-          <Link href="/dashboard">
-            <div className="">
-              Dashboard
-            </div>
-          </Link> */}
           <button
             className={`border-red-800 px-2 py-1 rounded-md cursor-pointer transition-all ease-in-out border-b shadow-sm shadow-red-800/70 hover:shadow-red-500/70 ${
               !session && "hidden"
@@ -210,7 +185,7 @@ export default function NavComponents({ session }) {
           isOpen ? "block" : "hidden"
         }`}
       >
-        <ul className="text-sm md:hidden block bg-neutral-100 dark:bg-neutral-900 py-5 mt-0 md:mt-9 list-none">
+        <ul className="text-sm md:hidden block bg-neutral-50 dark:bg-neutral-950 py-5 mt-0 md:mt-9 list-none">
           {links.map(({ href, label }) => (
             <li key={href}>
               <Link
@@ -221,46 +196,6 @@ export default function NavComponents({ session }) {
               </Link>
             </li>
           ))}
-          {/* <li>
-            <Link
-              href="/products"
-              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
-            >
-              Products
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/catalogue"
-              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
-            >
-              Catalogue
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/services"
-              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
-            >
-              Services
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/about"
-              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
-            >
-              About
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/dashboard"
-              className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
-            >
-              Dashboard
-            </Link>
-          </li> */}
           {session && (
             <li className="relative py-6">
               <button

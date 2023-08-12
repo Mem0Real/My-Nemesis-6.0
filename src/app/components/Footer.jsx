@@ -47,10 +47,10 @@ export default async function Footer() {
 
         <div className="flex flex-col items-center gap-4 justify-evenly">
           <h1 className="text-xl font-bold text-black dark:text-white pb-6 w-full text-center md:text-start">
-            Customer Support
+            Company
           </h1>
           <div className="flex flex-col gap-5 justify-center items-center md:items-center text-base">
-            <Link href="/about">About Us</Link>
+            <Link href="/services">Services</Link>
             <Link href="/contact">Contact Us</Link>
           </div>
         </div>

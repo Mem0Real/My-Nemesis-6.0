@@ -20,7 +20,7 @@ export default async function SideBarBase() {
   const data = await getData();
 
   return (
-    <div className="absolute left-0 top-0">
+    <div className="absolute left-0 top-16">
       <SideBarComponent data={data} />
     </div>
   );

@@ -29,7 +29,7 @@ export default function Categories() {
             width: 0,
             transition: { delay: 0.5, duration: 0.3 },
           }}
-          className="bg-neutral-100 dark:bg-neutral-900 border border-x-0 border-neutral-700 dark:border-neutral-500 rounded-lg rounded-l-none min-h-72 h-fit"
+          className="bg-transparent backdrop-blur-lg border-b border-purple-700 dark:border-purple-500 rounded-lg rounded-l-none min-h-72 h-fit"
         >
           <motion.div
             className="flex flex-col items-start justify-center gap-4"

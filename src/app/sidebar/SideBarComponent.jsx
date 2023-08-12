@@ -267,7 +267,7 @@ export default function SideBarComponent({ data }) {
         ref={sideBarRef}
       >
         <motion.div
-          className="btn-container absolute top-0 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 rounded-md border border-neutral-500 pt-1.5 px-1"
+          className="btn-container absolute top-0 bg-transparent z-10 text-neutral-800 dark:text-neutral-200 rounded-md border border-neutral-500 pt-1.5 px-1"
           animate={openCategory ? "open" : "close"}
           initial="close"
           variants={buttonVariants}
