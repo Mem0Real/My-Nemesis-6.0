@@ -5,10 +5,11 @@ import Categories from "./Categories";
 export default function CollectionPage() {
   return (
     <PageWrapper>
-      <div className="flex flex-col items-center gap-20 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 pt-6 min-h-screen">
-        <div className="flex flex-col items-center gap-7">
-          <h1 className="text-4xl underline underline-offset-2">Welcome!</h1>
-          <p className="md:ps-5">Take a look at the products we offer</p>
+      <div className="flex flex-col items-center gap-20 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen">
+        <div className="w-full flex flex-col items-center justify-center py-16 md:py-20 lg:py-24">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold">
+            Catalogue
+          </h1>
         </div>
         <Suspense
           fallback={

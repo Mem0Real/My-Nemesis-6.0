@@ -140,7 +140,7 @@ export default function Item({ item }) {
     },
   };
   return (
-    <div className="flex gap-7 flex-wrap lg:flex-nowrap w-full justify-center sm:justify-normal mx-auto mb-12">
+    <div className="flex gap-7 flex-wrap lg:flex-nowrap w-full justify-center sm:justify-normal mx-auto mb-12 py-20 md:py-24 lg:py-28">
       <div className="flex sm:items-center flex-col flex-wrap sm:flex-row w-full gap-12">
         <div className="flex-initial flex-wrap flex sm:flex-col gap-6 sm:gap-12 justify-center sm:justify-normal w-fit mx-auto border-b-4 sm:border-l-4 border-1 shadow-inner shadow-black order-2 sm:order-1">
           {item.images &&

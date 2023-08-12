@@ -73,6 +73,7 @@ export default function NavComponents({ session }) {
     { href: "/catalogue", label: "Catalogue" },
     { href: "/services", label: "Services" },
     { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
     { href: "/dashboard", label: "Dashboard" },
   ];
 
@@ -138,7 +139,7 @@ export default function NavComponents({ session }) {
       </div>
 
       {/* Hamburger */}
-      <div className="relative flex gap-7 justify-end items-center md:hidden text-neutral-800 dark:text-neutral-200 ">
+      <div className="relative flex gap-7 justify-end items-center md:hidden text-neutral-800 dark:text-neutral-200  px-4 md:px-2 lg:px-8 pt-4">
         <ThemeSwitcher />
         <button
           name="search-small"
@@ -181,7 +182,7 @@ export default function NavComponents({ session }) {
 
       {/* Hamburger Menu */}
       <div
-        className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-40 bg-neutral-100/20 dark:bg-neutral-800/20 backdrop-blur-lg   ${
+        className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-50 bg-neutral-100 dark:bg-neutral-800 ${
           isOpen ? "block" : "hidden"
         }`}
       >
@@ -190,7 +191,7 @@ export default function NavComponents({ session }) {
             <li key={href}>
               <Link
                 href={href}
-                className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium"
+                className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium antialiased text-black dark:text-white"
               >
                 {label}
               </Link>

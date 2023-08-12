@@ -14,8 +14,8 @@ export const Navbar = async () => {
       className="w-full md:h-16 h-fit navbar bg-transparent
     text-neutral-800 dark:text-neutral-200 border-b border-neutral-400/60 dark:border-neutral-950 backdrop-blur-md shadow-md shadow-neutral-300 dark:shadow-blue-950/80 absolute z-30 transition-all ease-in-out duration-300"
     >
-      <div className="relative md:flex justify-between md:justify-normal items-center w-full h-full px-4 md:px-2 lg:px-8 py-4 text-sm">
-        <div className="absolute md:static z-10 -mt-[8px] md:mt-0">
+      <div className="relative md:flex justify-between md:justify-normal items-center w-full text-sm pb-4">
+        <div className="absolute md:static z-10 -mt-[8px] md:mt-0 px-4 md:px-2 lg:px-8 py-4">
           <Link href="/">
             <div className="flex justify-evenly items-center">
               <div className="relative h-10 w-10 mx-2 lg:mx-0">
