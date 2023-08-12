@@ -26,15 +26,19 @@ export default function MultiLayerParallax() {
   });
 
   const isMobile = window.innerWidth < 768;
-  let backgroundY, textY;
+
+  let bgSpeed, textSpeed;
 
   if (isMobile) {
-    backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
-    textY = useTransform(scrollYProgress, [0, 1], ["0%", "700%"]);
+    bgSpeed = "100%";
+    textSpeed = "700%";
   } else {
-    backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "500%"]);
-    textY = useTransform(scrollYProgress, [0, 1], ["0%", "500%"]);
+    bgSpeed = "500%";
+    textSpeed = "500%";
   }
+
+  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", bgSpeed]);
+  const textY = useTransform(scrollYProgress, [0, 1], ["0%", textSpeed]);
   return (
     <div
       ref={container}
