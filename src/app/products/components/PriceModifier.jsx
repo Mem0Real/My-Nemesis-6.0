@@ -51,7 +51,7 @@ export default function PriceModifier() {
           animate={priceDrop ? "opened" : "closed"}
           exit="closed"
           variants={priceVariants}
-          className="w-56 -ml-2 lg:-ml-4"
+          className="w-56 -ml-2 lg:-ml-4 grid place-items-center self-center"
         >
           <MultiSlide min={min} max={max} onChange={handleChange} />
         </motion.div>

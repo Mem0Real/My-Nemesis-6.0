@@ -43,8 +43,8 @@ export default async function ItemPage({
         <Suspense
           fallback={
             <div className="w-full flex flex-col items-center justify-center py-16 md:py-20 lg:py-24">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold">
-                <h1 className="text-xl mx-auto">Loading Item</h1>
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold mx-auto">
+                Loading Item
               </h1>
             </div>
           }

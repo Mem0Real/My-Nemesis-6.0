@@ -191,7 +191,7 @@ export default function NavComponents({ session }) {
             <li key={href}>
               <Link
                 href={href}
-                className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium antialiased text-black dark:text-white"
+                className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium text-black dark:text-white"
               >
                 {label}
               </Link>

@@ -1,7 +1,9 @@
-export default function loading() {
+export default function Loading() {
   return (
-    <div className="h-screen w-full flex flex-col items-center text-neutral-800 dark:text-neutral-200 bg-neutral-200 dark:bg-neutral-800">
-      <h1 className="text-xl">Loading...</h1>
+    <div className="flex flex-col w-full justify-center items-center min-h-screen bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 py-16 md:py-20 lg:py-24">
+      <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold mx-auto">
+        Loading ...
+      </h1>
     </div>
   );
 }
