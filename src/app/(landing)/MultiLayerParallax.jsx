@@ -1,5 +1,7 @@
 "use client";
 
+import { useState, useEffect } from "react";
+
 import {
   AnimatePresence,
   motion,
@@ -19,18 +21,42 @@ export default function MultiLayerParallax() {
     offset: ["start start", "end start"],
   });
 
-  const isMobile = window.innerWidth < 768;
+  const size = useWindowSize();
+
+  console.log("S: ", size);
+  const isMobile = size.width < 768;
 
   let bgSpeed, textSpeed;
 
   if (isMobile) {
-    bgSpeed = "100%";
-    textSpeed = "700%";
-    console.log("Mobile: ", bgSpeed, textSpeed);
+    bgSpeed = "80%";
+    textSpeed = "1000%";
   } else {
-    bgSpeed = "500%";
+    bgSpeed = "100%";
     textSpeed = "500%";
-    console.log(bgSpeed, textSpeed);
+  }
+
+  function useWindowSize() {
+    const [windowSize, setWindowSize] = useState({
+      width: undefined,
+      height: undefined,
+    });
+
+    useEffect(() => {
+      function handleResize() {
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+
+      window.addEventListener("resize", handleResize);
+
+      handleResize();
+
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+    return windowSize;
   }
 
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", bgSpeed]);
