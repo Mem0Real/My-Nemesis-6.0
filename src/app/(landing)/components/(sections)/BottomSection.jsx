@@ -32,7 +32,7 @@ export default function BottomSection() {
           className={`${styles.heroBackground} sticky left-0 top-0 grid h-screen origin-[50%_15%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr] md:origin-[8%_38%] md:pt-20`}
         >
           <div
-            className={`${styles.exitMask} flex flex-col md:flex-row rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12`}
+            className={`flex flex-col md:flex-row rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12`}
           >
             <div className="mx-auto mb-7 mt-4 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border-[2px] border-gray-800 dark:border-gray-300 md:my-auto md:-ml-1 md:mr-auto md:w-[150px] md:min-w-[150px]" />
             <div className="flex h-full flex-col py-12 -mt-12 gap-12">
@@ -44,12 +44,12 @@ export default function BottomSection() {
           </div>
         </motion.div>
       </div>
-      <div className="mt-[-200vh] h-[200vh] bg-neutral-100 dark:bg-neutral-900 pb-20">
+      {/* <div className="mt-[-200vh] h-[200vh] bg-neutral-100 dark:bg-neutral-900 pb-20">
         <motion.span
           style={{ x: imageXCalc }}
           className="sticky bottom-1/2 mx-auto block aspect-video w-[1600px] max-w-[90%] rounded-[60px] bg-neutral-300 dark:bg-neutral-700 shadow-2xl md:bottom-1/4"
         />
-      </div>
+      </div> */}
     </main>
   );
 }
