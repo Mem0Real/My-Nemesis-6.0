@@ -4,21 +4,9 @@ import { useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
-import Lenis from "@studio-freight/lenis";
 import { motion } from "framer-motion";
 
 export default function ShopCategory({ categories }) {
-  useEffect(() => {
-    const lenis = new Lenis();
-
-    const raf = (time) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-
-    requestAnimationFrame(raf);
-  }, []);
-
   return (
     <div className="min-h-screen flex flex-col items-center justify-start py-6 md:py-12 gap-6 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200">
       <h1 className="text-3xl font-semibold my-5 pb-5">Shop by Category</h1>

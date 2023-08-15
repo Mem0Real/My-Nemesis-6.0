@@ -7,20 +7,7 @@ import { motion, useInView } from "framer-motion";
 import MultiLayerParallax from "../MultiLayerParallax";
 // import ScrollingImages from "./ScrollingImages";
 
-import Lenis from "@studio-freight/lenis";
-
 export default function HeaderSection() {
-  useEffect(() => {
-    const lenis = new Lenis();
-
-    const raf = (time) => {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    };
-
-    requestAnimationFrame(raf);
-  }, []);
-
   const header = useRef(null);
 
   const isInview = useInView(header);

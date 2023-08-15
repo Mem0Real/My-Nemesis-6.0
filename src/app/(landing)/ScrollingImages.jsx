@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import styles from "./smooth.module.scss";
 
 import Image from "next/image";
-import Lenis from "@studio-freight/lenis";
 import { motion, useInView, useScroll, useTransform } from "framer-motion";
 import useDimensionHook from "../utils/useDimensionHook";
 

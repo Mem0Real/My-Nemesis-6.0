@@ -18,6 +18,7 @@ import NextTopLoader from "nextjs-toploader";
 import ScrollToTopButton from "./components/ScrollToTop";
 import CustomCursor from "./components/CustomCursor";
 import { getCookie, hasCookie } from "cookies-next";
+import SmoothScroller from "./components/SmoothScroller";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -30,6 +31,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en" style={{ colorScheme: theme }} className={theme}>
       <body>
+        <SmoothScroller />
         <ProductDataContext>
           <ThemeProvider attribute="class">
             <CustomIcons>
