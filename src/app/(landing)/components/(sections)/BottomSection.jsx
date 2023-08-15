@@ -19,14 +19,17 @@ export default function BottomSection() {
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 12]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 20]);
 
   const imageX = useTransform(scrollYProgress, [0, 1], [50, 0]);
   const imageXCalc = useMotionTemplate`max(0px, calc(${imageX}% + calc(${imageX}vw - 300px)))`;
 
   return (
     <main>
-      <div ref={ref} className="relative z-10 h-[200vh] overflow-clip">
+      <div
+        ref={ref}
+        className="hidden lg:block relative z-10 h-[200vh] overflow-clip"
+      >
         <motion.div
           style={{ scale }}
           className={`${styles.heroBackground} sticky left-0 top-0 grid h-screen origin-[50%_15%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr] md:origin-[8%_38%] md:pt-20`}

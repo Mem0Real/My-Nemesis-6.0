@@ -120,6 +120,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
     }
   };
 
+  // TODO Show the product list more
   return (
     <ProductListContext.Provider
       value={{
@@ -138,7 +139,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
       }}
     >
       <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center text-sm py-5">
-        <div className="w-full flex flex-col items-center justify-center py-16 md:py-20 lg:py-24">
+        <div className="w-full flex flex-col items-center justify-center py-4 md:py-20 lg:py-24">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold">
             Products
           </h1>

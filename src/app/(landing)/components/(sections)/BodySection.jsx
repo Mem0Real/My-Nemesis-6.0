@@ -29,17 +29,20 @@ export default function BodySection({ products, categories }) {
     damping: 40,
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 12]);
+  const scale = useTransform(scrollYProgress, [0, 1], [1, 20]);
 
   const imageX = useTransform(scrollYProgress, [0, 1], [50, 0]);
   const imageXCalc = useMotionTemplate`max(0px, calc(${imageX}% + calc(${imageX}vw - 300px)))`;
 
   return (
     <main>
-      <div ref={ref} className="relative z-10 h-[200vh] overflow-clip">
+      <div
+        ref={ref}
+        className="hidden lg:block relative z-10 h-[200vh] overflow-clip"
+      >
         <motion.div
           style={{ scale }}
-          className={`${styles.heroBackground} sticky left-0 top-0 grid h-screen sm:origin-[50%_80%] origin-[50%_60%] md:origin-[87%_33%] lg:origin-[93%_35%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr]  md:pt-20`}
+          className={`${styles.heroBackground} absolute left-0 top-0 grid h-screen origin-[50vw_85vh] md:origin-[87%_33%] lg:origin-[93%_40%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr]  md:pt-20`}
         >
           <div
             className={`flex flex-col rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12 md:flex-row`}
@@ -53,16 +56,16 @@ export default function BodySection({ products, categories }) {
                 guarantee that you will find what you are looking for.
               </p>
             </div>
-            <div className="mx-auto -mb-7 mt-4 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border-[2px] border-gray-800 dark:border-gray-300 md:my-auto md:-mr-1 md:ml-auto md:w-[150px] md:min-w-[150px]" />
+            <div className="mx-auto -mb-7 mt-4 box-content aspect-[5/8] w-[100px] min-w-[100px] origin-[inherit] rounded-full border border-gray-800 dark:border-gray-300 md:my-auto md:-mr-1 md:ml-auto md:w-[150px] md:min-w-[150px]" />
           </div>
         </motion.div>
       </div>
-      {/* <div className="mt-[-200vh] h-[200vh] bg-neutral-200 dark:bg-neutral-800 pb-20">
+      <div className="mt-[-200vh] h-[200vh] bg-neutral-200 dark:bg-neutral-800 pb-20">
         <motion.span
           style={{ x: imageXCalc }}
           className="sticky top-1/2 mx-auto block aspect-video w-[1600px] max-w-[90%] rounded-[60px] bg-gray-300 shadow-2xl md:top-1/4"
         />
-      </div> */}
+      </div>
 
       <Company />
       <BestSellers products={products} />
