@@ -26,7 +26,10 @@ export default function BottomSection() {
 
   return (
     <main>
-      <div ref={ref} className="relative z-10 h-[200vh] overflow-clip">
+      <div
+        ref={ref}
+        className="hidden lg:block relative z-10 h-[200vh] overflow-clip"
+      >
         <motion.div
           style={{ scale }}
           className={`${styles.heroBackground} sticky left-0 top-0 grid h-screen origin-[50%_15%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr] md:origin-[8%_38%] md:pt-20`}
