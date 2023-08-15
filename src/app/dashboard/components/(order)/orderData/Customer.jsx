@@ -11,6 +11,7 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { useIcons } from "@/app/utils/CustomIcons";
 import { toast } from "react-hot-toast";
+import formatCurrency from "@/app/utils/formatCurrency";
 
 export default function Customer({ customer }) {
   const [hovering, setHovering] = useState(false);
@@ -78,12 +79,7 @@ export default function Customer({ customer }) {
   let invoiceTotal = invoiceTaxes + invoiceSubtotal;
   invoiceTotal = ccyFormat(invoiceTotal);
 
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
-
-  const totalPrice = formatter.format(invoiceTotal);
+  const totalPrice = formatCurrency(invoiceTotal);
 
   return [
     <motion.tr
@@ -272,10 +268,7 @@ export default function Customer({ customer }) {
                                 <span className="font-normal">SubTotal: </span>
                                 <div className="flex items-center justify-center gap-1">
                                   <span className="font-normal">
-                                    {formatter.format(invoiceSubtotal)}
-                                  </span>
-                                  <span className="text-xs italic text-neutral-500 font-bold">
-                                    ETB
+                                    {formatCurrency(invoiceSubtotal)}
                                   </span>
                                 </div>
                               </div>
@@ -287,23 +280,13 @@ export default function Customer({ customer }) {
                                   </span>
                                   :
                                 </div>
-                                <div className="flex gap-1 justify-center items-center">
-                                  <span className="font-normal">
-                                    {formatter.format(invoiceTaxes)}
-                                  </span>
-                                  <span className="text-xs italic text-neutral-500 font-bold">
-                                    ETB
-                                  </span>
+                                <div className="flex gap-1 justify-center items-center font-normal">
+                                  {formatCurrency(invoiceTaxes)}
                                 </div>
                               </div>
                               <div className="flex gap-4 justify-end items-center lg:pr-10 py-2 w-full border-t border-neutral-900 dark:border-neutral-100">
                                 <span>Total Price:</span>
-                                <div className="flex gap-1 items-center">
-                                  <span>{totalPrice}</span>
-                                  <span className="text-xs italic text-neutral-500 font-bold">
-                                    ETB
-                                  </span>
-                                </div>
+                                {totalPrice}
                               </div>
                             </div>
                           </td>

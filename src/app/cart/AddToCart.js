@@ -6,6 +6,7 @@ import { useIcons } from "../utils/CustomIcons";
 import { setCookie, getCookie, hasCookie } from "cookies-next";
 
 import { motion } from "framer-motion";
+import formatCurrency from "../utils/formatCurrency";
 
 export default function AddToCartModal({
   item,
@@ -74,11 +75,6 @@ export default function AddToCartModal({
     setUpdater((prev) => !prev);
     closeAddToCartModal();
   };
-
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
 
   return (
     <section
@@ -154,7 +150,7 @@ export default function AddToCartModal({
           <div className="flex gap-4 items-center md:self-center">
             <h1 className="m-auto">Total Price: </h1>
             <p className="font-semibold">
-              {formatter.format(item.price * amount)} ETB
+              {formatCurrency(item.price * amount)}
             </p>
           </div>
         </div>

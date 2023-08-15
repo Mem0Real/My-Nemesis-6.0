@@ -103,19 +103,19 @@ export default function MultiLayerParallax() {
       {theme === "dark" && (
         <AnimatePresence>
           <motion.div
-            className="absolute bg-fixed inset-0 z-0"
+            className="absolute inset-0 z-0"
             style={{
-              backgroundImage: `url(/images/Night.png)`,
-              backgroundPosition: "bottom",
-              backgroundSize: "cover",
-              // y: backgroundY,
+              // backgroundImage: `url(/images/Night.png)`,
+              // backgroundPosition: "bottom",
+              // backgroundSize: "cover",
+              y: backgroundY,
             }}
             initial={{ opacity: 0 }}
             exit={{ opacity: 0 }}
             animate={theme === "dark" ? { opacity: 1 } : { opacity: 0 }}
             transition={{ duration: 1 }}
           >
-            {/* <Image
+            <Image
               fill
               alt="dark"
               className="object-cover object-bottom"
@@ -123,7 +123,7 @@ export default function MultiLayerParallax() {
               priority
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
               quality={100}
-            /> */}
+            />
           </motion.div>
         </AnimatePresence>
       )}

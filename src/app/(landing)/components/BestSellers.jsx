@@ -6,6 +6,7 @@ import Link from "next/link";
 
 import Lenis from "@studio-freight/lenis";
 import { motion } from "framer-motion";
+import formatCurrency from "@/app/utils/formatCurrency";
 
 export default function BestSellers({ products }) {
   useEffect(() => {
@@ -18,11 +19,6 @@ export default function BestSellers({ products }) {
 
     requestAnimationFrame(raf);
   }, []);
-
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-start py-6 md:py-12 gap-6 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200">
@@ -69,10 +65,7 @@ export default function BestSellers({ products }) {
                 <h1 className="text-lg font-medium px-3">{product.name}</h1>
               </Link>
               <h1 className="basis-1/5 self-start flex items-center gap-1.5 text-base text-green-600 dark:text-green-400 px-3 pb-3">
-                {formatter.format(product.price)}
-                <span className="text-sm text-green-500 dark:text-green-300 tracking-wider">
-                  ETB
-                </span>
+                {formatCurrency(product.price)}
               </h1>
             </motion.div>
           );

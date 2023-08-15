@@ -6,6 +6,7 @@ import { useCartContext } from "./CartBase";
 
 import { motion } from "framer-motion";
 import { useIcons } from "../utils/CustomIcons";
+import formatCurrency from "../utils/formatCurrency";
 
 export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
   const {
@@ -49,11 +50,6 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
     removeItem(id);
     setUpdater((prev) => !prev);
   };
-
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
 
   return (
     <section
@@ -143,10 +139,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                       </div>
                     </td>
                     <td className="text-center py-3 pe-2">
-                      {formatter.format(item.totalPrice)}
-                      <span className="text-sm px-1 text-neutral-600 italic items-center">
-                        ETB
-                      </span>
+                      {formatCurrency(item.totalPrice)}
                     </td>
                     <td align="center" className="text-center">
                       <button
@@ -162,10 +155,7 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                   <td rowSpan={3} />
                   <td className="text-center py-2">SubTotal</td>
                   <td className="text-center">
-                    {formatter.format(ccyFormat(invoiceSubtotal))}
-                    <span className="text-sm px-1 text-neutral-600 italic items-center">
-                      ETB
-                    </span>
+                    {formatCurrency(ccyFormat(invoiceSubtotal))}
                   </td>
                 </tr>
                 <tr>
@@ -178,19 +168,13 @@ export default function Cart({ closeCartModal, cartModal, cartModalRef }) {
                     </div>
                   </td>
                   <td className="text-center py-2">
-                    {formatter.format(ccyFormat(invoiceTaxes))}
-                    <span className="text-sm px-1 text-neutral-600 italic items-center">
-                      ETB
-                    </span>
+                    {formatCurrency(ccyFormat(invoiceTaxes))}
                   </td>
                 </tr>
                 <tr className="border-t border-neutral-200">
                   <td className="text-center py-4">Total</td>
                   <td className="text-center py-4">
-                    {formatter.format(ccyFormat(invoiceTotal))}
-                    <span className="text-sm px-1 text-neutral-600 italic items-center">
-                      ETB
-                    </span>
+                    {formatCurrency(ccyFormat(invoiceTotal))}
                   </td>
                 </tr>
               </>

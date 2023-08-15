@@ -4,6 +4,7 @@ import React from "react";
 import { useOrderContext } from "../OrderTable";
 import { AnimatePresence, motion } from "framer-motion";
 import { useIcons } from "@/app/utils/CustomIcons";
+import formatCurrency from "@/app/utils/formatCurrency";
 
 export default function Order({ customerId, currentOrder }) {
   const { cus } = useOrderContext();
@@ -19,11 +20,6 @@ export default function Order({ customerId, currentOrder }) {
       opacity: 0,
     },
   };
-
-  const formatter = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-  });
 
   return [
     <AnimatePresence key={currentOrder.id}>
@@ -51,9 +47,7 @@ export default function Order({ customerId, currentOrder }) {
           </td>
           <td className="py-2 max-w-md text-center">
             <div className="flex gap-2 items-center justify-center">
-              {formatter.format(
-                parseFloat(currentOrder.productPrice).toFixed(2)
-              )}
+              {formatCurrency(parseFloat(currentOrder.productPrice).toFixed(2))}
               <span className="text-xs italic text-neutral-500">ETB</span>
             </div>
           </td>

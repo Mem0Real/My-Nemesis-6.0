@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useProductListContext } from "../ProductList";
 import Image from "next/image";
 import { useState } from "react";
+import formatCurrency from "@/app/utils/formatCurrency";
 
 // TODO add to cart functionality on the page itself. Should somehow join it with cart data
 
@@ -84,10 +85,7 @@ export default function ListData() {
                   {product.name}
                 </motion.h1>
                 <motion.h1 className="text-start font-thin text-neutral-800 dark:text-neutral-200 px-2 lg:pl-5 w-full hover:animate-pulse">
-                  ${price}.00
-                  <span className="px-2 text-[14px] italic font-light text-neutra-600 dark:text-neutral-400">
-                    ETB
-                  </span>
+                  {formatCurrency(price)}
                 </motion.h1>
               </motion.div>
             </div>
