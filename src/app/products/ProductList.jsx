@@ -20,6 +20,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
   const [filterCatData, setFilterCatData] = useState([]);
 
   const [priceDrop, showPriceDrop] = useState(false);
+  const [filterDrop, showFilterDrop] = useState(false);
 
   const { pushQuery } = useCustomRouter();
 
@@ -54,6 +55,10 @@ export default function ProductList({ products, menu, totalPage, range }) {
     } else showPriceDrop(false);
   }, []);
 
+  const toggleFilter = () => {
+    showFilterDrop((prev) => !prev);
+    setCookie("Filter_Drop", !filterDrop);
+  };
   const toggleCategory = () => {
     showCategoryDrop((prev) => !prev);
     setCookie("Product_CatDrop", !categoryDrop);
@@ -126,11 +131,13 @@ export default function ProductList({ products, menu, totalPage, range }) {
       value={{
         menu,
         products,
-        priceDrop,
+        filterDrop,
         categoryDrop,
+        priceDrop,
         btnVariants,
         contentVariants,
         filterCatData,
+        toggleFilter,
         toggleCategory,
         togglePrice,
         handleSelection,
@@ -139,8 +146,8 @@ export default function ProductList({ products, menu, totalPage, range }) {
       }}
     >
       <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center text-sm py-5">
-        <div className="w-full flex flex-col items-center justify-center py-4 md:py-20 lg:py-24">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold">
+        <div className="w-full flex flex-col items-center justify-center py-8 md:py-10 lg:py-12 mb-2 shadow-xl shadow-blue-600/20 dark:shadow-blue-400/10 text-neutral-800 dark:text-neutral-200">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extralight italic">
             Products
           </h1>
         </div>
