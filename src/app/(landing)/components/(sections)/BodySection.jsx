@@ -30,7 +30,7 @@ export default function BodySection({ products, categories }) {
       >
         <motion.div
           style={{ scale }}
-          className={`${styles.heroBackground} absolute left-0 top-0 grid h-screen origin-[50vw_85vh] md:origin-[87%_33%] lg:origin-[93%_40%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr]  md:pt-20`}
+          className={`${styles.heroBackground} absolute left-0 top-0 grid origin-[50vw_85vh] md:origin-[87%_33%] lg:origin-[93%_40%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr]  md:pt-20`}
         >
           <div
             className={`flex flex-col rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12 md:flex-row`}

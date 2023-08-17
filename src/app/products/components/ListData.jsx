@@ -26,8 +26,6 @@ export default function ListData() {
     <div className="grid w-[98%] lg:w-full mx-auto gap-0 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 place-content-between">
       {products.map((product) => {
         let image = product.images[0];
-        let price;
-        price = product.price && product.price?.toLocaleString();
         return (
           <Link
             key={product.id}
@@ -85,7 +83,7 @@ export default function ListData() {
                   {product.name}
                 </motion.h1>
                 <motion.h1 className="text-start font-thin text-neutral-800 dark:text-neutral-200 px-2 lg:pl-5 w-full hover:animate-pulse">
-                  {formatCurrency(price)}
+                  {formatCurrency(product.price)}
                 </motion.h1>
               </motion.div>
             </div>

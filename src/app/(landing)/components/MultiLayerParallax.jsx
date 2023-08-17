@@ -132,7 +132,7 @@ export default function MultiLayerParallax() {
         <Image
           fill
           alt="dark"
-          className="object-cover object-bottom"
+          className="object-contain object-bottom"
           src="/images/Building.png"
           priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
