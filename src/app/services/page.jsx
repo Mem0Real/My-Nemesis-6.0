@@ -13,29 +13,29 @@ const description = [
   {
     heading: "Installation & Maintainance",
     subText: "On site installation and maintainance of all our products",
-    image: "1.png",
+    image: "installation.png",
   },
   {
     heading: "Exceptional Customer Service",
     subText: "The customer is king indeed here in our work environment",
-    image: "2.png",
+    image: "customer.png",
   },
   {
     heading: "1 Year Warranty",
     subText: "We offer a one year warranty for all products to our customers.",
-    image: "3.png",
+    image: "warranty.png",
   },
   {
     heading: "Accountability",
     subText:
       "Incase of faulty or misconfigured products, we will immediately replace them free of charge.",
-    image: "4.png",
+    image: "accountable.png",
   },
   {
     heading: "Training",
     subText:
       "We offer supplementary training of use of some of our bigger products.",
-    image: "5.png",
+    image: "training.png",
   },
 ];
 
