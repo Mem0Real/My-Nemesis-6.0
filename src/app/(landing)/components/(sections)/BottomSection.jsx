@@ -3,13 +3,7 @@
 import styles from "../../styles/body.module.scss";
 import { useRef } from "react";
 
-import {
-  motion,
-  useMotionTemplate,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 
 export default function BottomSection() {
   const ref = useRef(null);
@@ -20,9 +14,6 @@ export default function BottomSection() {
   });
 
   const scale = useTransform(scrollYProgress, [0, 1], [1, 20]);
-
-  const imageX = useTransform(scrollYProgress, [0, 1], [50, 0]);
-  const imageXCalc = useMotionTemplate`max(0px, calc(${imageX}% + calc(${imageX}vw - 300px)))`;
 
   return (
     <main>
@@ -47,12 +38,6 @@ export default function BottomSection() {
           </div>
         </motion.div>
       </div>
-      {/* <div className="mt-[-200vh] h-[200vh] bg-neutral-100 dark:bg-neutral-900 pb-20">
-        <motion.span
-          style={{ x: imageXCalc }}
-          className="sticky bottom-1/2 mx-auto block aspect-video w-[1600px] max-w-[90%] rounded-[60px] bg-neutral-300 dark:bg-neutral-700 shadow-2xl md:bottom-1/4"
-        />
-      </div> */}
     </main>
   );
 }

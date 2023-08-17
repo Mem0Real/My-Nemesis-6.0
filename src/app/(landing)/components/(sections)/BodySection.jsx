@@ -7,13 +7,7 @@ import ShopCategory from "../ShopCategory";
 import BestSellers from "../BestSellers";
 import Company from "../Company";
 
-import {
-  motion,
-  useMotionTemplate,
-  useScroll,
-  useSpring,
-  useTransform,
-} from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import ServiceShow from "../ServiceShow";
 
 export default function BodySection({ products, categories }) {
@@ -24,15 +18,9 @@ export default function BodySection({ products, categories }) {
     offset: ["start start", "end end"],
   });
 
-  const scrollYProgressSpring = useSpring(scrollYProgress, {
-    stiffness: 300,
-    damping: 40,
-  });
-
   const scale = useTransform(scrollYProgress, [0, 1], [1, 20]);
 
   const imageX = useTransform(scrollYProgress, [0, 1], [50, 0]);
-  const imageXCalc = useMotionTemplate`max(0px, calc(${imageX}% + calc(${imageX}vw - 300px)))`;
 
   return (
     <main>
@@ -59,12 +47,6 @@ export default function BodySection({ products, categories }) {
             <div className="mx-auto -mb-7 mt-4 box-content aspect-[5/8] w-[100px] min-w-[100px] origin-[inherit] rounded-full border border-gray-800 dark:border-gray-300 md:my-auto md:-mr-1 md:ml-auto md:w-[150px] md:min-w-[150px]" />
           </div>
         </motion.div>
-      </div>
-      <div className="mt-[-200vh] h-[200vh] bg-neutral-200 dark:bg-neutral-800 pb-20">
-        <motion.span
-          style={{ x: imageXCalc }}
-          className="sticky top-1/2 mx-auto block aspect-video w-[1600px] max-w-[90%] rounded-[60px] bg-gray-300 shadow-2xl md:top-1/4"
-        />
       </div>
 
       <Company />

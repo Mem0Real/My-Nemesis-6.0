@@ -1,13 +1,11 @@
 "use client";
 
-import styles from "./styles/page.module.scss";
-
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 
 import PageWrapper from "../components/PageWrapper";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion } from "framer-motion";
 
 const description = [
   {
@@ -55,17 +53,7 @@ const Services = () => {
     };
   }, []);
 
-  const container = useRef(null);
-
-  // const { scrollYProgress } = useScroll({
-  //   target: container,
-  //   offset: ["start end", "end start"],
-  // });
-
   const { width, height } = dimension;
-
-  // const left = useTransform(scrollYProgress, [0, 1], [0, height * 2]);
-  // const right = useTransform(scrollYProgress, [0, 1], [height * 2, 0]);
 
   return (
     <PageWrapper>
@@ -74,8 +62,7 @@ const Services = () => {
           Services
         </h1>
       </div>
-      {/* Container */}
-      <motion.div ref={container} className="w-[97%] lg:w-[95%] mx-auto">
+      <motion.div className="w-[97%] lg:w-[95%] mx-auto">
         {description.map(({ heading, subText, image }, index) => {
           return (
             <motion.div

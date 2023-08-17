@@ -27,9 +27,14 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const theme = hasCookie("Theme") ? getCookie("Theme") : "light";
+  const theme = hasCookie("Theme") && getCookie("Theme");
+  const currentTheme = theme && theme !== undefined ? theme : "light";
   return (
-    <html lang="en" style={{ colorScheme: theme }} className={theme}>
+    <html
+      lang="en"
+      style={{ colorScheme: currentTheme }}
+      className={currentTheme}
+    >
       <body>
         <SmoothScroller />
         <ProductDataContext>

@@ -72,7 +72,6 @@ export default function NavComponents({ session }) {
     { href: "/products", label: "Products" },
     { href: "/catalogue", label: "Catalogue" },
     { href: "/services", label: "Services" },
-    { href: "/about", label: "About" },
     { href: "/contact", label: "Contact" },
     { href: "/dashboard", label: "Dashboard" },
   ];
