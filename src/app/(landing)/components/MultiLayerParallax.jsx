@@ -73,7 +73,7 @@ export default function MultiLayerParallax() {
         Ethio Machineries
       </motion.h1>
 
-      {theme === "light" && (
+      {theme === "light" ? (
         <AnimatePresence>
           <motion.div
             className="absolute inset-0 z-0"
@@ -99,8 +99,7 @@ export default function MultiLayerParallax() {
             />
           </motion.div>
         </AnimatePresence>
-      )}
-      {theme === "dark" && (
+      ) : (
         <AnimatePresence>
           <motion.div
             className="absolute inset-0 z-0"
