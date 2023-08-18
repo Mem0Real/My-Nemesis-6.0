@@ -7,18 +7,34 @@ import Image from "next/image";
 import Icons from "./components/Icons";
 
 import { motion } from "framer-motion";
+import { sendMessage } from "./utils/contactActions";
+import { toast } from "react-hot-toast";
 
 const Contact = () => {
-  const [data, setData] = useState({ name: "", email: "", message: "" });
+  const [data, setData] = useState({ fullName: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const name = e.target.name;
     const value = e.target.value;
 
-    setData(() => ({ [e.target.name]: e.target.value }));
+    setData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
+  const handleSend = async () => {
+    setLoading(() => true);
+    const toastId = toast.loading("Sending Message...");
+
+    const request = await sendMessage(data);
+    setLoading(() => false);
+    toast.remove(toastId);
+    if (request?.error) toast.error(request.error, { duration: 10000 });
+    else {
+      toast.remove(toastId);
+      toast.success(request.success);
+      setData({ fullName: "", email: "", message: "" });
+    }
+  };
   return (
     <PageWrapper>
       <div className="w-full flex flex-col items-center justify-center py-8 md:py-10 lg:py-12 shadow-xl shadow-blue-600/20 dark:shadow-blue-400/10 text-neutral-800 dark:text-neutral-200">
@@ -26,9 +42,9 @@ const Contact = () => {
           Contact Us
         </h1>
       </div>
-      <div className="h-screen flex flex-col md:flex-row w-[70%] mx-auto box-border mt-6">
+      <div className="min-h-screen flex flex-col md:flex-row w-[95%] md:w-[70%] mx-auto box-border mt-6">
         <div className="flex-1 h-full rounded-xl">
-          <div className="relative z-0 w-full h-full flex flex-col items-center justify-center gap-5">
+          <div className="relative z-0 w-full h-full flex flex-col items-center justify-center gap-5 py-12 md:py-0">
             <Image
               fill
               src="/images/contact-page.jpg"
@@ -40,11 +56,11 @@ const Contact = () => {
             <Icons />
           </div>
         </div>
-        <div className="flex-1 h-full bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 box-content rounded-xl rounded-l-none">
+        <div className="flex-1 h-full bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 box-content rounded-xl rounded-l-none py-12 md:py-0">
           <div className="flex flex-col gap-4 items-center justify-center">
             <h1 className="py-5 text-4xl font-semiBold">Send Us A Message</h1>
             <form
-              action=""
+              action={handleSend}
               className="w-[90%] mx-auto flex flex-col justify-center items-center gap-12 mt-6"
             >
               <div className="relative z-0 group w-3/4 mx-auto">
