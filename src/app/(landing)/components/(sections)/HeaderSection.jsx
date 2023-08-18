@@ -25,14 +25,14 @@ export default function HeaderSection() {
   };
 
   return (
-    <main className=" bg-neutral-200 dark:bg-neutral-800">
+    <main className="bg-neutral-100 dark:bg-neutral-900">
       <div className="overflow-clip">
         <MultiLayerParallax />
       </div>
 
       <motion.div
         ref={header}
-        className="flex flex-col items-center justify-center w-full h-80 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500"
+        className="flex flex-col items-center justify-center w-full h-80 text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-blue-500 shadow-lg shadow-neutral-800/50 dark:shadow-neutral-200/50"
         initial="hide"
         animate={isInview ? "show" : "hide"}
         exit="hide"

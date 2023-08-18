@@ -72,7 +72,7 @@ export default function MultiLayerParallax() {
       >
         My Nemesis
       </motion.h1>
-
+      {/* 
       <motion.div
         className="absolute inset-0 z-0"
         style={
@@ -101,7 +101,7 @@ export default function MultiLayerParallax() {
           transition: { duration: 1, ease: "linear" },
         }}
       >
-        {/* <Image
+        <Image
               fill
               alt="light"
               className="object-cover object-bottom"
@@ -109,27 +109,63 @@ export default function MultiLayerParallax() {
               priority
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
               quality={100}
-            /> */}
-      </motion.div>
+            />
+      </motion.div> */}
 
-      <div
+      <AnimatePresence>
+        {theme === "light" ? (
+          <motion.div
+            className="absolute inset-0 z-0"
+            style={{ y: backgroundY }}
+          >
+            <Image
+              fill
+              alt="light"
+              className="object-cover object-bottom"
+              src="/images/Day.png"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+              priority
+              unoptimized
+            />
+          </motion.div>
+        ) : (
+          <motion.div
+            className="absolute inset-0 z-0"
+            style={{ y: backgroundY }}
+          >
+            <Image
+              fill
+              alt="dark"
+              className="object-cover object-bottom"
+              src="/images/Night.png"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+              priority
+              unoptimized
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+      {/* <div
         className="absolute inset-0 z-20"
         style={{
           backgroundImage: `url(/images/Building.png)`,
           backgroundPosition: "bottom",
           backgroundSize: "cover",
         }}
-      ></div>
-      {/* <Image
+      ></div> */}
+
+      <div className="absolute inset-0 z-10">
+        <Image
           fill
           alt="dark"
           className="object-bottom object-cover "
           src="/images/Building.png"
-          priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
           quality={100}
+          priority
+          unoptimized
         />
-      </div> */}
+      </div>
     </div>
   );
 }
