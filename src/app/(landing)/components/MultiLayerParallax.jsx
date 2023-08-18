@@ -73,22 +73,35 @@ export default function MultiLayerParallax() {
         My Nemesis
       </motion.h1>
 
-      {theme === "light" ? (
-        <AnimatePresence>
-          <motion.div
-            className="absolute inset-0 z-0"
-            style={{
-              // backgroundImage: `url(/images/Day.png)`,
-              // backgroundPosition: "bottom",
-              // backgroundSize: "cover",
-              y: backgroundY,
-            }}
-            initial={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-            animate={theme === "light" ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <Image
+      <motion.div
+        className="absolute inset-0 z-0"
+        style={
+          theme === "light"
+            ? {
+                backgroundImage: `url(/images/Day.png)`,
+                backgroundPosition: "bottom",
+                backgroundSize: "cover",
+                y: backgroundY,
+              }
+            : {
+                backgroundImage: `url(/images/Night.png)`,
+                backgroundPosition: "bottom",
+                backgroundSize: "cover",
+                y: backgroundY,
+              }
+        }
+        initial={{ opacity: 0 }}
+        exit={{ opacity: 0 }}
+        animate={{
+          opacity: 1,
+          backgroundImage:
+            theme === "light"
+              ? "url(/images/Day.png)"
+              : "url(/images/Night.png)",
+          transition: { duration: 1, ease: "linear" },
+        }}
+      >
+        {/* <Image
               fill
               alt="light"
               className="object-cover object-bottom"
@@ -96,48 +109,27 @@ export default function MultiLayerParallax() {
               priority
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
               quality={100}
-            />
-          </motion.div>
-        </AnimatePresence>
-      ) : (
-        <AnimatePresence>
-          <motion.div
-            className="absolute inset-0 z-0"
-            style={{
-              // backgroundImage: `url(/images/Night.png)`,
-              // backgroundPosition: "bottom",
-              // backgroundSize: "cover",
-              y: backgroundY,
-            }}
-            initial={{ opacity: 0 }}
-            exit={{ opacity: 0 }}
-            animate={theme === "dark" ? { opacity: 1 } : { opacity: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <Image
-              fill
-              alt="dark"
-              className="object-cover object-bottom"
-              src="/images/Night.png"
-              priority
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
-              quality={100}
-            />
-          </motion.div>
-        </AnimatePresence>
-      )}
+            /> */}
+      </motion.div>
 
-      <div className="absolute inset-0 z-20">
-        <Image
+      <div
+        className="absolute inset-0 z-20"
+        style={{
+          backgroundImage: `url(/images/Building.png)`,
+          backgroundPosition: "bottom",
+          backgroundSize: "cover",
+        }}
+      ></div>
+      {/* <Image
           fill
           alt="dark"
-          className="object-cover lg:object-contain object-bottom"
+          className="object-bottom object-cover "
           src="/images/Building.png"
           priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
           quality={100}
         />
-      </div>
+      </div> */}
     </div>
   );
 }

@@ -45,7 +45,6 @@ const MultiSlide = ({ min, max, onChange }) => {
     onChange({ min: minVal, max: maxVal });
   }, [minVal, maxVal, onChange]);
 
-  console.log(max, maxVal);
   return (
     <div className="h-fit flex items-center justify-center mt-5">
       {max > 0 ? (

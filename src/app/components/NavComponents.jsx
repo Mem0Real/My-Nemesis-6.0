@@ -76,6 +76,26 @@ export default function NavComponents({ session }) {
     { href: "/dashboard", label: "Dashboard" },
   ];
 
+  const menuVariants = {
+    open: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.1,
+        staggerDirection: 1,
+      },
+    },
+    close: {
+      y: "-15px",
+      opacity: 0,
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.1,
+        staggerDirection: -1,
+      },
+    },
+  };
   return (
     <div ref={menuRef} className="w-full">
       {/* Buttons */}
@@ -180,34 +200,41 @@ export default function NavComponents({ session }) {
       </div>
 
       {/* Hamburger Menu */}
-      <div
-        className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-50 bg-neutral-100 dark:bg-neutral-800 ${
-          isOpen ? "block" : "hidden"
-        }`}
-      >
-        <ul className="text-sm md:hidden block py-5 mt-0 md:mt-9 list-none">
-          {links.map(({ href, label }) => (
-            <li key={href}>
-              <Link
-                href={href}
-                className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium text-black dark:text-white"
-              >
-                {label}
-              </Link>
-            </li>
-          ))}
-          {session && (
-            <li className="relative py-6">
-              <button
-                onClick={handleSignOut}
-                className="block absolute right-4 top-2 z-10 mt-4 border rounded-xl lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-red-700 border-spacing-y-2 py-2 px-3 font-medium"
-              >
-                Logout
-              </button>
-            </li>
-          )}
-        </ul>
-      </div>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-50 bg-neutral-100 dark:bg-neutral-800`}
+            initial="close"
+            animate={isOpen ? "open" : "close"}
+            exit="close"
+            variants={menuVariants}
+          >
+            <motion.ul className="text-sm md:hidden block py-5 mt-0 md:mt-9 list-none">
+              {links.map(({ href, label }) => (
+                <motion.li key={href}>
+                  <Link
+                    href={href}
+                    className="block mt-4 border-b lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-neutral-800 dark:border-neutral-200 border-spacing-y-2 py-3 font-medium text-black dark:text-white"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    {label}
+                  </Link>
+                </motion.li>
+              ))}
+              {session && (
+                <motion.li className="relative py-6">
+                  <button
+                    onClick={handleSignOut}
+                    className="block absolute right-4 top-2 z-10 mt-4 border rounded-xl lg:inline-block lg:mt-0 text-white-200 mr-4 ml-10 hover:border-b border-red-700 border-spacing-y-2 py-2 px-3 font-medium"
+                  >
+                    Logout
+                  </button>
+                </motion.li>
+              )}
+            </motion.ul>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
