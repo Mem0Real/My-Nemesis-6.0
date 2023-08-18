@@ -44,7 +44,7 @@ export default function FilterData() {
   };
 
   return (
-    <div className="flex flex-col items-start gap-1 lg:gap-3 w-[97%] mx-auto border-y border-neutral-600 dark:border-neutral-400 lg:border-none lg:pb-12">
+    <div className="flex flex-col items-start gap-1 lg:gap-3 w-[97%] mx-auto border-y border-neutral-600 dark:border-neutral-400 lg:border-none lg:pb-12 z-10">
       <div className="basis-[20%] flex lg:w-full items-center justify-center gap-4">
         <h1 className="text-base lg:text-xl px-1 py-2 lg:px-0 lg:py-0 my-auto">
           Filter Products

@@ -104,7 +104,8 @@ export default function MultiLayerParallax() {
         <Image
               fill
               alt="light"
-              className="object-cover object-bottom"
+              className="
+              object-bottom"
               src="/images/Day.png"
               priority
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
@@ -122,10 +123,9 @@ export default function MultiLayerParallax() {
               fill
               alt="light"
               className="object-cover object-bottom"
-              src="/images/Day.png"
+              src="/images/Day2.png"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
-              priority
-              unoptimized
+              priority={true}
             />
           </motion.div>
         ) : (
@@ -136,11 +136,10 @@ export default function MultiLayerParallax() {
             <Image
               fill
               alt="dark"
-              className="object-cover object-bottom"
-              src="/images/Night.png"
+              className="object-cover object-top"
+              src="/images/NightBg.png"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
-              priority
-              unoptimized
+              priority={true}
             />
           </motion.div>
         )}
@@ -158,12 +157,11 @@ export default function MultiLayerParallax() {
         <Image
           fill
           alt="dark"
-          className="object-bottom object-cover "
+          className="object-cover object-bottom"
           src="/images/Building.png"
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
           quality={100}
           priority
-          unoptimized
         />
       </div>
     </div>

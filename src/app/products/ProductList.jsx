@@ -165,8 +165,9 @@ export default function ProductList({ products, menu, totalPage, range }) {
             <Search />
             <Sort />
           </div>
+
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-evenly w-full">
-            <div className="w-full lg:basis-[20%] self-start">
+            <div className="relative w-full lg:basis-[20%] self-start">
               <FilterData />
             </div>
             <div className="w-full lg:basis-4/5 mx-auto flex flex-col justify-between">
