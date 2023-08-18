@@ -70,7 +70,7 @@ export default function MultiLayerParallax() {
         className="font-bold text-neutral-800 dark:text-neutral-200 text-4xl sm:text-6xl relative z-10"
         style={{ y: textY }}
       >
-        Ethio Machineries
+        My Nemesis
       </motion.h1>
 
       {theme === "light" ? (
@@ -131,7 +131,7 @@ export default function MultiLayerParallax() {
         <Image
           fill
           alt="dark"
-          className="object-contain object-bottom"
+          className="object-cover lg:object-contain object-bottom"
           src="/images/Building.png"
           priority
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
