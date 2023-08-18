@@ -5,7 +5,7 @@ import useCustomRouter from "@/hooks/useCustomRouter";
 
 import MultiSlide from "./MultiSlide";
 
-export default function PriceModifier() {
+export default function PriceModifier({ maxStat }) {
   const { pushQuery, query } = useCustomRouter();
 
   const { priceDrop, contentVariants, range } = useProductListContext();
@@ -51,7 +51,9 @@ export default function PriceModifier() {
           animate={priceDrop ? "opened" : "closed"}
           exit="closed"
           variants={priceVariants}
-          className="w-56 -ml-2 lg:-ml-4 grid place-items-center self-center"
+          className={`${
+            !maxStat && "grayscale pointer-events-none"
+          } w-56 -ml-2 lg:-ml-4 grid place-items-center self-center`}
         >
           <MultiSlide min={min} max={max} onChange={handleChange} />
         </motion.div>

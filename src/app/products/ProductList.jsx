@@ -24,6 +24,15 @@ export default function ProductList({ products, menu, totalPage, range }) {
 
   const { pushQuery } = useCustomRouter();
 
+  // Update filter dropdown state based on cookie data
+
+  useEffect(() => {
+    if (hasCookie("Filter_Drop")) {
+      const filter = JSON.parse(getCookie("Filter_Drop"));
+      filter && showFilterDrop(filter);
+    } else showFilterDrop(false);
+  }, []);
+
   // Update category dropdown state based on cookie data
   useEffect(() => {
     if (hasCookie("Product_CatDrop")) {

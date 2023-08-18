@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 import { motion, AnimatePresence } from "framer-motion";
 
 import CategoryList from "../CategoryList";
@@ -7,6 +11,8 @@ import { useProductListContext } from "../ProductList";
 import { useIcons } from "../../utils/CustomIcons";
 
 export default function FilterData() {
+  const [price, setPrice] = useState({ min: null, max: null });
+
   const {
     toggleFilter,
     toggleCategory,
@@ -16,7 +22,16 @@ export default function FilterData() {
     filterDrop,
     categoryDrop,
     priceDrop,
+    range,
   } = useProductListContext();
+
+  useEffect(() => {
+    setPrice(() => ({
+      min: range.minPrice._min.price,
+      max: range.maxPrice._max.price,
+    }));
+  }, [range]);
+
   const { RightArrowIcon } = useIcons();
 
   const paddingVariants = {
@@ -27,6 +42,7 @@ export default function FilterData() {
       transition: { delay: 0.3 },
     },
   };
+
   return (
     <div className="flex flex-col items-start gap-1 lg:gap-3 w-[97%] mx-auto border-y border-neutral-600 dark:border-neutral-400 lg:border-none lg:pb-12">
       <div className="basis-[20%] flex lg:w-full items-center justify-center gap-4">
@@ -70,6 +86,7 @@ export default function FilterData() {
 
               <CategoryList />
             </div>
+
             <motion.div
               className="basis-[40%] flex flex-col w-[80%] lg:w-full mx-auto lg:border-y border-neutral-400"
               initial="closed"
@@ -90,7 +107,7 @@ export default function FilterData() {
                 </motion.button>
               </div>
 
-              <PriceModifier />
+              <PriceModifier maxStat={price.max} />
             </motion.div>
           </motion.div>
         )}

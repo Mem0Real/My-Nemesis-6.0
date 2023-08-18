@@ -45,33 +45,69 @@ const MultiSlide = ({ min, max, onChange }) => {
     onChange({ min: minVal, max: maxVal });
   }, [minVal, maxVal, onChange]);
 
+  console.log(max, maxVal);
   return (
     <div className="h-fit flex items-center justify-center mt-5">
-      <input
-        type="range"
-        min={min}
-        max={max}
-        value={minVal}
-        onChange={(event) => {
-          const value = Math.min(Number(event.target.value), maxVal - 1);
-          setMinVal(value);
-          minValRef.current = value;
-        }}
-        className={`${styles.thumb} ${styles.thumbLeft}`}
-        style={{ zIndex: minVal > max - 100 && "5" }}
-      />
-      <input
-        type="range"
-        min={min}
-        max={max}
-        value={maxVal}
-        onChange={(event) => {
-          const value = Math.max(Number(event.target.value), minVal + 1);
-          setMaxVal(value);
-          maxValRef.current = value;
-        }}
-        className={`${styles.thumb} ${styles.thumbRight}`}
-      />
+      {max > 0 ? (
+        <>
+          <input
+            type="range"
+            min={min}
+            max={max}
+            value={minVal}
+            onChange={(event) => {
+              const value = Math.min(Number(event.target.value), maxVal - 1);
+              setMinVal(value);
+              minValRef.current = value;
+            }}
+            className={`${styles.thumb} ${styles.thumbLeft} cursor-pointer`}
+            style={{ zIndex: minVal > max - 100 && "5" }}
+          />
+          <input
+            type="range"
+            min={min}
+            max={max}
+            value={maxVal}
+            onChange={(event) => {
+              const value = Math.max(Number(event.target.value), minVal + 1);
+              setMaxVal(value);
+              maxValRef.current = value;
+            }}
+            className={`${styles.thumb} ${styles.thumbRight} cursor-pointer`}
+          />
+        </>
+      ) : (
+        <>
+          <input
+            disabled
+            type="range"
+            min={min}
+            max={max}
+            value={minVal}
+            onChange={(event) => {
+              const value = Math.min(Number(event.target.value), maxVal - 1);
+              setMinVal(value);
+              minValRef.current = value;
+            }}
+            className={`${styles.thumb} ${styles.thumbLeft} invert pointer-events-none cursor-not-allowed `}
+            style={{ zIndex: minVal > max - 100 && "5" }}
+          />
+
+          <input
+            disabled
+            type="range"
+            min={min}
+            max={max}
+            value={maxVal}
+            onChange={(event) => {
+              const value = Math.max(Number(event.target.value), minVal + 1);
+              setMaxVal(value);
+              maxValRef.current = 19000;
+            }}
+            className={`${styles.thumb} ${styles.thumbRight} invert  pointer-events-none cursor-not-allowed `}
+          />
+        </>
+      )}
       <div className={`${styles.slider} w-56`}>
         <div
           className={`${styles.sliderTrack} bg-neutral-500 dark:bg-neutral-400`}

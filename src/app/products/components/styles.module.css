@@ -74,7 +74,7 @@
   border: 1px solid #535151;
   border-radius: 25%;
   box-shadow: 0 0 4px 4px #007ffd;
-  cursor: pointer;
+  /* cursor: pointer; */
   height: 18px;
   width: 1px;
   /* backdrop-filter: blur(25px); */
@@ -90,7 +90,7 @@
   border: 1px solid #535151;
   border-radius: 25%;
   box-shadow: 0 0 4px 4px #007ffd;
-  cursor: pointer;
+  /* cursor: pointer; */
   height: 18px;
   width: 1px;
   /* backdrop-filter: blur(25px); */
