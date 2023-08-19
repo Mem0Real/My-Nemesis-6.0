@@ -22,9 +22,9 @@ export default async function ParentData({ params: { parent, category } }) {
       <Suspense
         fallback={
           <div className="w-full flex flex-col items-center justify-center py-16 md:py-20 lg:py-24">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold">
+            <div className="text-4xl md:text-5xl lg:text-6xl font-semibold">
               <h1 className="text-3xl mx-auto">Loading current parent...</h1>
-            </h1>
+            </div>
           </div>
         }
       >

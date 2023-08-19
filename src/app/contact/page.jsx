@@ -42,12 +42,13 @@ const Contact = () => {
           Contact Us
         </h1>
       </div>
-      <div className="min-h-screen flex flex-col md:flex-row w-[95%] md:w-[70%] mx-auto box-border mt-6">
-        <div className="flex-1 h-full rounded-xl">
+      <div className="flex flex-col md:flex-row w-[95%] md:w-[70%] mx-auto box-border mt-6">
+        <div className="flex-1 rounded-xl">
           <div className="relative z-0 w-full h-full flex flex-col items-center justify-center gap-5 py-12 md:py-0">
             <Image
-              fill
               src="/images/contact-page.jpg"
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
               alt="Contact"
               className="object-cover object-center brightness-[.2]"
               priority

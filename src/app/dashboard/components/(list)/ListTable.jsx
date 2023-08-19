@@ -28,17 +28,17 @@ export default function MyTable() {
     if (hasCookie("Category_Drop")) {
       category = JSON.parse(getCookie("Category_Drop"));
       setCat(category);
-    } else setCat();
+    } else setCat({ id: false, open: false });
 
     if (hasCookie("Parent_Drop")) {
       parent = JSON.parse(getCookie("Parent_Drop"));
       setPar(parent);
-    } else setPar();
+    } else setPar({ id: false, open: false });
 
     if (hasCookie("Child_Drop")) {
       child = JSON.parse(getCookie("Child_Drop"));
       setChi(child);
-    } else setChi();
+    } else setChi({ id: false, open: false });
   }, []);
 
   useEffect(() => {

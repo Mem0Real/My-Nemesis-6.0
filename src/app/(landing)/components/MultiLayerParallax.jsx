@@ -123,7 +123,7 @@ export default function MultiLayerParallax() {
               fill
               alt="light"
               className="object-cover object-bottom"
-              src="/images/Day2.png"
+              src="/images/Day.png"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
               priority={true}
             />
@@ -137,7 +137,7 @@ export default function MultiLayerParallax() {
               fill
               alt="dark"
               className="object-cover object-top"
-              src="/images/NightBg.png"
+              src="/images/Night.png"
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
               priority={true}
             />

@@ -118,7 +118,7 @@ export default function NavComponents({ session }) {
 
           {links.map(({ href, label }) => (
             <Link key={label} href={href} className="relative group">
-              {href === path && (
+              {path.includes(href) && (
                 <motion.span
                   layoutId="active-underline"
                   className="absolute left-0 top-full block h-[2px] w-full bg-neutral-800 dark:bg-neutral-200 mt-0.5"
