@@ -27,13 +27,13 @@ export default function MultiLayerParallax() {
 
   let bgSpeed, textSpeed;
 
-  if (isMobile) {
-    bgSpeed = "80%";
-    textSpeed = "1000%";
-  } else {
-    bgSpeed = "100%";
-    textSpeed = "500%";
-  }
+  // if (isMobile) {
+  //   bgSpeed = "80%";
+  //   textSpeed = "1000%";
+  // } else {
+  bgSpeed = "100%";
+  textSpeed = "500%";
+  // }
 
   function useWindowSize() {
     const [windowSize, setWindowSize] = useState({
