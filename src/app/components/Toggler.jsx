@@ -13,8 +13,8 @@ export default function Toggler() {
 
   useEffect(() => {
     const theme = localStorage.getItem("isDarkTheme");
-    if (theme === "true") setCurrentTheme("dark");
-    else setCurrentTheme("light");
+    if (theme === "false") setCurrentTheme("light");
+    else setCurrentTheme("dark");
   }, [themeCtx.update]);
 
   function toggleThemeHandler() {

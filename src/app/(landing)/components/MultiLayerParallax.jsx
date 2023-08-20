@@ -21,8 +21,8 @@ export default function MultiLayerParallax() {
 
   useEffect(() => {
     const theme = localStorage.getItem("isDarkTheme");
-    if (theme === "true") setCurrentTheme("dark");
-    else setCurrentTheme("light");
+    if (theme === "false") setCurrentTheme("light");
+    else setCurrentTheme("dark");
   }, [update]);
 
   const container = useRef(null);
