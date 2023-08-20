@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import {
   AnimatePresence,
@@ -8,7 +8,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import React, { useRef } from "react";
+
 import Image from "next/image";
 import { useThemeContext } from "@/context/ThemeProvider";
 
@@ -120,27 +120,27 @@ export default function MultiLayerParallax() {
             />
       </motion.div> */}
 
-      {currentTheme === "light" ? (
-        <div className="fixed h-screen w-screen z-0 bg-neutral-100/60 dark:bg-neutral-800/60">
-          <Image
-            src="/images/Day.png"
-            fill
-            sizes="(max-width: 768px) 100vw"
-            alt="catalogue"
-            className="object-cover object-center"
-          />
-        </div>
-      ) : (
-        <div className="fixed h-screen w-screen z-0 bg-neutral-100/60 dark:bg-neutral-800/60">
-          <Image
-            src="/images/Night.png"
-            fill
-            sizes="(max-width: 768px) 100vw"
-            alt="catalogue"
-            className="object-cover object-center"
-          />
-        </div>
-      )}
+      {/* {currentTheme === "light" ? (
+          <div className="fixed h-screen w-screen z-0 bg-neutral-100/60 dark:bg-neutral-800/60">
+            <Image
+              src="/images/Day.png"
+              fill
+              sizes="(max-width: 768px) 100vw"
+              alt="catalogue"
+              className="object-cover object-center"
+            />
+          </div>
+        ) : (
+          <div className="fixed h-screen w-screen z-0 bg-neutral-100/60 dark:bg-neutral-800/60">
+            <Image
+              src="/images/Night.png"
+              fill
+              sizes="(max-width: 768px) 100vw"
+              alt="catalogue"
+              className="object-cover object-center"
+            />
+          </div>
+        )} */}
 
       {/* <AnimatePresence>
         {currentTheme === "light" ? (

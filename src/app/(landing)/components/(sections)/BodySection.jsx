@@ -23,7 +23,7 @@ export default function BodySection({ products, categories }) {
   const imageX = useTransform(scrollYProgress, [0, 1], [50, 0]);
 
   return (
-    <main>
+    <main className=" bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg">
       <div
         ref={ref}
         className="hidden lg:block relative z-10 h-[200vh] overflow-clip"

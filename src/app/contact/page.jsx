@@ -42,7 +42,7 @@ const Contact = () => {
           Contact Us
         </h1>
       </div>
-      <div className="flex flex-col md:flex-row w-[95%] md:w-[70%] mx-auto box-border mt-6">
+      <div className="flex flex-col md:flex-row w-[95%] md:w-[70%] mx-auto box-border py-6">
         <div className="flex-1 rounded-xl">
           <div className="relative z-0 w-full h-full flex flex-col items-center justify-center gap-5 py-12 md:py-0">
             <Image

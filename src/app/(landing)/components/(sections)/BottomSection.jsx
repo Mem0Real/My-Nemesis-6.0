@@ -16,7 +16,7 @@ export default function BottomSection() {
   const scale = useTransform(scrollYProgress, [0, 1], [10, 1]);
 
   return (
-    <main>
+    <main className="py-12">
       <div
         ref={ref}
         className="hidden lg:block relative z-10 h-[200vh] overflow-clip"

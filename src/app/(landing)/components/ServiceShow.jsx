@@ -5,7 +5,7 @@ import Link from "next/link";
 
 export default function ServiceShow() {
   return (
-    <div className="h-[80%] my-12 w-full">
+    <div className="h-[80%] py-12 w-full bg-neutral-100 dark:bg-neutral-900">
       <div className="flex items-center justify-center w-full gap-1/2 bg-neutral-950">
         <div className="px-3 lg:ps-24 basis-1/3 bg-neutral-950 h-[75vh]">
           <div className="w-full h-full flex flex-col items-start justify-center gap-10 text-neutral-50 ps-6">

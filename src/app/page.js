@@ -3,26 +3,26 @@ import { Suspense } from "react";
 import ServiceShow from "./(landing)/components/ServiceShow";
 import MainSection from "./(landing)/components/(sections)/MainSection";
 import BottomSection from "./(landing)/components/(sections)/BottomSection";
+import Background from "./(landing)/components/Background";
+import Motto from "./(landing)/components/Motto";
 
 export default async function Home() {
   return (
-    <div className="relative bg-neutral-100 dark:bg-neutral-900 backdrop-blur-3xl">
-      <HeaderSection />
-      {/* <div className="flex flex-col gap-12"> */}
-      {/* <Suspense fallback={<h1>Loading...</h1>}>
-          <ProductDataProvider />
-        </Suspense>
+    <>
+      <div className="relative ">
+        <Background />
+        <HeaderSection />
+
+        <Motto />
 
         <Suspense fallback={<h1>Loading...</h1>}>
-          <CategoryDataProvider />
-        </Suspense> */}
+          <MainSection />
+        </Suspense>
 
-      <Suspense fallback={<h1>Loading...</h1>}>
-        <MainSection />
-      </Suspense>
-
-      <BottomSection />
-      {/* </div> */}
-    </div>
+        <div className="bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg w-screen min-h-screen z-10">
+          <BottomSection />
+        </div>
+      </div>
+    </>
   );
 }
