@@ -9,12 +9,10 @@ import {
   useTransform,
 } from "framer-motion";
 import React, { useRef } from "react";
-// import { useTheme } from "next-themes";
 import Image from "next/image";
 import { useThemeContext } from "@/context/ThemeProvider";
 
 export default function MultiLayerParallax() {
-  // const { theme } = useTheme();
   const { update } = useThemeContext();
 
   const [currentTheme, setCurrentTheme] = useState("");
@@ -122,7 +120,29 @@ export default function MultiLayerParallax() {
             />
       </motion.div> */}
 
-      <AnimatePresence>
+      {currentTheme === "light" ? (
+        <div className="fixed h-screen w-screen z-0 bg-neutral-100/60 dark:bg-neutral-800/60">
+          <Image
+            src="/images/Day.png"
+            fill
+            sizes="(max-width: 768px) 100vw"
+            alt="catalogue"
+            className="object-cover object-center"
+          />
+        </div>
+      ) : (
+        <div className="fixed h-screen w-screen z-0 bg-neutral-100/60 dark:bg-neutral-800/60">
+          <Image
+            src="/images/Night.png"
+            fill
+            sizes="(max-width: 768px) 100vw"
+            alt="catalogue"
+            className="object-cover object-center"
+          />
+        </div>
+      )}
+
+      {/* <AnimatePresence>
         {currentTheme === "light" ? (
           <motion.div
             className="absolute inset-0 z-0"
@@ -152,7 +172,7 @@ export default function MultiLayerParallax() {
             />
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       {/* <div
         className="absolute inset-0 z-20"

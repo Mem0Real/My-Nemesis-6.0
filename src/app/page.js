@@ -6,7 +6,7 @@ import BottomSection from "./(landing)/components/(sections)/BottomSection";
 
 export default async function Home() {
   return (
-    <div className="relative bg-neutral-100 dark:bg-neutral-900">
+    <div className="relative bg-neutral-100 dark:bg-neutral-900 backdrop-blur-3xl">
       <HeaderSection />
       {/* <div className="flex flex-col gap-12"> */}
       {/* <Suspense fallback={<h1>Loading...</h1>}>

@@ -5,7 +5,6 @@ import { useEffect, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 
 import MultiLayerParallax from "../MultiLayerParallax";
-// import ScrollingImages from "./ScrollingImages";
 
 export default function HeaderSection() {
   const header = useRef(null);

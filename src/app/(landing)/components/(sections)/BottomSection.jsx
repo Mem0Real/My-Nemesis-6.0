@@ -13,7 +13,7 @@ export default function BottomSection() {
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 20]);
+  const scale = useTransform(scrollYProgress, [0, 1], [10, 1]);
 
   return (
     <main>
@@ -22,8 +22,8 @@ export default function BottomSection() {
         className="hidden lg:block relative z-10 h-[200vh] overflow-clip"
       >
         <motion.div
-          style={{ scale }}
-          className={`${styles.heroBackground} sticky left-0 top-0 grid h-screen origin-[50%_15%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr] md:origin-[8%_38%] md:pt-20`}
+          // style={{ scale }}
+          className={`${styles.heroBackground} sticky left-0 bottom-0 grid h-screen origin-[50%_15%] gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr] md:origin-[8%_28%]`}
         >
           <div
             className={`flex flex-col md:flex-row rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12`}

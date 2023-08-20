@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from "react";
 
 import { toast, ToastBar, Toaster, resolveValue } from "react-hot-toast";
-// import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 import { useIcons } from "@/app/utils/CustomIcons";
 import { useThemeContext } from "./ThemeProvider";
