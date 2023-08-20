@@ -11,7 +11,7 @@ export default async function Parents({ categoryId, parents }) {
           parent.CategoryId === categoryId && (
             <div
               key={parent.id}
-              className="flex flex-col gap-3 items-center justify-between p-5"
+              className="flex flex-col gap-3 items-center justify-between p-5 my-12"
             >
               <div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
                 <div className="relative w-56 h-56 mx-auto">

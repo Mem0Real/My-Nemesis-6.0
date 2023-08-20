@@ -10,6 +10,8 @@ import Sort from "./components/Sort";
 import ListData from "./components/ListData";
 import Pagination from "./components/Pagination";
 
+import { motion } from "framer-motion";
+
 import useCustomRouter from "@/hooks/useCustomRouter";
 
 const ProductListContext = createContext({});
@@ -68,6 +70,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
     showFilterDrop((prev) => !prev);
     setCookie("Filter_Drop", !filterDrop);
   };
+
   const toggleCategory = () => {
     showCategoryDrop((prev) => !prev);
     setCookie("Product_CatDrop", !categoryDrop);
@@ -156,9 +159,14 @@ export default function ProductList({ products, menu, totalPage, range }) {
     >
       <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center text-sm py-5">
         <div className="w-full flex flex-col items-center justify-center py-8 md:py-10 lg:py-12 mb-2 shadow-xl shadow-blue-600/20 dark:shadow-blue-400/10 text-neutral-800 dark:text-neutral-200">
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-extralight italic">
+          <motion.h1
+            className="text-3xl md:text-4xl lg:text-5xl font-extralight italic"
+            initial={{ y: -100 }}
+            animate={{ y: 0 }}
+            transition={{ delay: 0.4, type: "spring", stiffness: 170 }}
+          >
             Products
-          </h1>
+          </motion.h1>
         </div>
         <div className="flex flex-col gap-6 w-[95%]">
           <div className="flex items-center justify-evenly md:justify-between gap-4 px-2 lg:px-5">
