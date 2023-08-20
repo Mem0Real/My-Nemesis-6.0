@@ -8,17 +8,15 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 
 import { useCartContext } from "../cart/CartBase";
-// import { ThemeSwitcher } from "./ThemeSwitcher";
-// import { DarkToggle } from "./DarkToggle";
+import ThemeSwitcher from "./ThemeSwitcher";
 
 import { useRouter } from "next/navigation";
-import { setCookie, getCookie, hasCookie, deleteCookie } from "cookies-next";
+import { deleteCookie } from "cookies-next";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { Poppins, Raleway } from "next/font/google";
 import { useSearchContext } from "../search/SearchBase";
 import { useIcons } from "../utils/CustomIcons";
-import Toggler from "./Toggler";
 
 const FunctionsContext = createContext({});
 
@@ -116,9 +114,7 @@ export default function NavComponents({ session }) {
           </p>
         </button>
         <div className="flex justify-end items-center gap-2 md:gap-5 lg:gap-6 md:px-2">
-          {/* <ThemeSwitcher /> */}
-          {/* <DarkToggle /> */}
-          <Toggler />
+          <ThemeSwitcher />
           {links.map(({ href, label }) => (
             <Link key={label} href={href} className="relative group">
               {path.includes(href) && (
@@ -162,9 +158,7 @@ export default function NavComponents({ session }) {
 
       {/* Hamburger */}
       <div className="relative flex gap-7 justify-end items-center md:hidden text-neutral-800 dark:text-neutral-200  px-4 md:px-2 lg:px-8 pt-4">
-        {/* <ThemeSwitcher /> */}
-        {/* <DarkToggle /> */}
-        <Toggler />
+        <ThemeSwitcher />
         <button
           name="search-small"
           onClick={handleSearch}

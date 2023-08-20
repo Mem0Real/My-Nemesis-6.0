@@ -1,15 +1,27 @@
 "use client";
 
+import React, { useState, useEffect } from "react";
+
 import { toast, ToastBar, Toaster, resolveValue } from "react-hot-toast";
-import { useTheme } from "next-themes";
+// import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 import { useIcons } from "@/app/utils/CustomIcons";
+import { useThemeContext } from "./ThemeProvider";
 
 const ToasterContext = () => {
-  const { resolvedTheme } = useTheme();
+  const [currentTheme, setCurrentTheme] = useState("");
+
+  const { update } = useThemeContext();
+
   let theme;
 
-  if (resolvedTheme === "light") {
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("isDarkTheme");
+    if (storedTheme === "false") setCurrentTheme("light");
+    else setCurrentTheme("dark");
+  }, [update]);
+
+  if (currentTheme === "light") {
     theme = {
       // opacity: t.visible ? 1 : 0,
       background: "#bbb",

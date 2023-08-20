@@ -1,56 +1,37 @@
 "use client";
-import { useTheme } from "next-themes";
 
-import { useIcons } from "../utils/CustomIcons";
-import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
-import { setCookie } from "cookies-next";
+import { useThemeContext } from "@/context/ThemeProvider";
+import { useIcons } from "../utils/CustomIcons";
 
-export const ThemeSwitcher = () => {
-  const [mounted, setMounted] = useState(false);
-  const { theme, setTheme } = useTheme();
-  const { DarkIcon, LightIcon } = useIcons();
+import { AnimatePresence, motion } from "framer-motion";
+
+export default function ThemeSwitcher() {
+  const [currentTheme, setCurrentTheme] = useState();
+
+  const themeCtx = useThemeContext();
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
+    const theme = localStorage.getItem("isDarkTheme");
+    if (theme === "false") setCurrentTheme("light");
+    else setCurrentTheme("dark");
+  }, [themeCtx.update]);
 
-  // if (!mounted) {
-  //   return null;
-  // }
+  function toggleThemeHandler() {
+    themeCtx.toggleThemeHandler();
+  }
 
-  const variants = {
-    show: {
-      opacity: 1,
-      transition: {
-        duration: 0.4,
-        ease: "linear",
-      },
-    },
-    hide: {
-      opacity: 0,
-      transition: {
-        duration: 0.4,
-        ease: "linear",
-      },
-    },
-  };
+  const { LightIcon, DarkIcon } = useIcons();
 
-  const handleThemeToggle = () => {
-    const pref = theme === "dark" ? "light" : "dark";
-    setTheme(pref);
-    setCookie("Theme", pref);
-  };
   return (
     <AnimatePresence>
       <motion.button
-        onClick={handleThemeToggle}
-        animate={mounted ? "show" : "hide"}
-        variants={variants}
+        onClick={toggleThemeHandler}
         whileTap={{ scale: 2, opacity: 0 }}
         initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
       >
-        {theme === "light" ? (
+        {currentTheme === "light" ? (
           <span className="text-blue-950">{DarkIcon}</span>
         ) : (
           <span className="text-yellow-500">{LightIcon}</span>
@@ -58,4 +39,4 @@ export const ThemeSwitcher = () => {
       </motion.button>
     </AnimatePresence>
   );
-};
+}

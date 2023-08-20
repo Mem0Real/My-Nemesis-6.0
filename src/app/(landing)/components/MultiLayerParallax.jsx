@@ -11,11 +11,11 @@ import {
 import React, { useRef } from "react";
 // import { useTheme } from "next-themes";
 import Image from "next/image";
-import MyThemeContext from "@/store/MyThemeContextProvider";
+import { useThemeContext } from "@/context/ThemeProvider";
 
 export default function MultiLayerParallax() {
   // const { theme } = useTheme();
-  const { update } = useContext(MyThemeContext);
+  const { update } = useThemeContext();
 
   const [currentTheme, setCurrentTheme] = useState("");
 
