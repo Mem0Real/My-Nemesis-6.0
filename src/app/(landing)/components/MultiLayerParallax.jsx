@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 
 import {
   AnimatePresence,
@@ -9,11 +9,21 @@ import {
   useTransform,
 } from "framer-motion";
 import React, { useRef } from "react";
-import { useTheme } from "next-themes";
+// import { useTheme } from "next-themes";
 import Image from "next/image";
+import MyThemeContext from "@/store/MyThemeContextProvider";
 
 export default function MultiLayerParallax() {
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
+  const { update } = useContext(MyThemeContext);
+
+  const [currentTheme, setCurrentTheme] = useState("");
+
+  useEffect(() => {
+    const theme = localStorage.getItem("isDarkTheme");
+    if (theme === "true") setCurrentTheme("dark");
+    else setCurrentTheme("light");
+  }, [update]);
 
   const container = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -72,8 +82,7 @@ export default function MultiLayerParallax() {
       >
         My Nemesis
       </motion.h1>
-      {/* 
-      <motion.div
+      {/* <motion.div
         className="absolute inset-0 z-0"
         style={
           theme === "light"
@@ -114,7 +123,7 @@ export default function MultiLayerParallax() {
       </motion.div> */}
 
       <AnimatePresence>
-        {theme === "light" ? (
+        {currentTheme === "light" ? (
           <motion.div
             className="absolute inset-0 z-0"
             style={{ y: backgroundY }}
@@ -144,6 +153,7 @@ export default function MultiLayerParallax() {
           </motion.div>
         )}
       </AnimatePresence>
+
       {/* <div
         className="absolute inset-0 z-20"
         style={{

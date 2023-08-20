@@ -28,7 +28,7 @@ export default function CarouselHolder({ children }) {
             background: useMotionTemplate`
                 radial-gradient(
                 750px circle at ${mouseX}px ${mouseY}px,
-                rgba(218, 165, 32, 0.25),
+                rgba(218, 165, 32, 0.1),
                 transparent 90%
                 )
             `,

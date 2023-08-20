@@ -7,7 +7,7 @@ import Footer from "./components/Footer";
 
 import ProductDataContext from "@/context/ProductContext";
 import ToasterContext from "@/context/ToasterContext";
-import { ThemeProvider } from "@/context/ThemeProvider";
+// import { ThemeProvider } from "@/context/ThemeProvider";
 
 import CartBase from "./cart/CartBase";
 import SearchBase from "./search/SearchBase";
@@ -17,8 +17,9 @@ import SideBarBase from "./sidebar/SideBarBase";
 import NextTopLoader from "nextjs-toploader";
 import ScrollToTopButton from "./components/ScrollToTop";
 import CustomCursor from "./components/CustomCursor";
-import { getCookie, hasCookie } from "cookies-next";
 import SmoothScroller from "./components/SmoothScroller";
+import { MyThemeContextProvider } from "@/store/MyThemeContextProvider";
+// import Providers from "./providers";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -27,18 +28,16 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const theme = hasCookie("Theme") && getCookie("Theme");
-  const currentTheme = theme && theme !== undefined ? theme : "light";
+  // const theme = hasCookie("Theme") && getCookie("Theme");
+  // const currentTheme = theme && theme !== undefined ? theme : "light";
   return (
-    <html
-      lang="en"
-      style={{ colorScheme: currentTheme }}
-      className={currentTheme}
-    >
+    <html lang="en" suppressHydrationWarning>
       <body>
-        <SmoothScroller />
-        <ProductDataContext>
-          <ThemeProvider attribute="class">
+        {/* <Providers> */}
+        <MyThemeContextProvider>
+          <SmoothScroller />
+          <ProductDataContext>
+            {/* <ThemeProvider attribute="class"> */}
             <CustomIcons>
               <CustomCursor>
                 <ToasterContext />
@@ -63,8 +62,10 @@ export default function RootLayout({ children }) {
                 </div>
               </CustomCursor>
             </CustomIcons>
-          </ThemeProvider>
-        </ProductDataContext>
+            {/* </ThemeProvider> */}
+          </ProductDataContext>
+        </MyThemeContextProvider>
+        {/* </Providers> */}
       </body>
     </html>
   );

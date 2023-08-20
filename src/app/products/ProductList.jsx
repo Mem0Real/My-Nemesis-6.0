@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, createContext, useContext, useEffect } from "react";
+import Image from "next/image";
 
 import { setCookie, getCookie, hasCookie, deleteCookie } from "cookies-next";
 
@@ -13,6 +14,7 @@ import Pagination from "./components/Pagination";
 import { motion } from "framer-motion";
 
 import useCustomRouter from "@/hooks/useCustomRouter";
+import CarouselHolder from "../catalogue/components/CarouselHolder";
 
 const ProductListContext = createContext({});
 
@@ -157,8 +159,8 @@ export default function ProductList({ products, menu, totalPage, range }) {
         range,
       }}
     >
-      <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center text-sm py-5">
-        <div className="w-full flex flex-col items-center justify-center py-8 md:py-10 lg:py-12 mb-2 shadow-xl shadow-blue-600/20 dark:shadow-blue-400/10 text-neutral-800 dark:text-neutral-200">
+      <div className="bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen flex flex-col items-center text-sm pt-5">
+        <div className="w-full flex flex-col items-center justify-center py-8 md:py-10 lg:py-12 shadow-xl shadow-blue-600/20 dark:shadow-blue-400/10 text-neutral-800 dark:text-neutral-200 bg-neutral-100/40 dark:bg-neutral-800/40 backdrop-blur-sm ">
           <motion.h1
             className="text-3xl md:text-4xl lg:text-5xl font-extralight italic"
             initial={{ y: -100 }}
@@ -168,7 +170,8 @@ export default function ProductList({ products, menu, totalPage, range }) {
             Products
           </motion.h1>
         </div>
-        <div className="flex flex-col gap-6 w-[95%]">
+
+        <div className="flex flex-col gap-6 w-screen z-10 backdrop-blur-md bg-neutral-200/60 dark:bg-neutral-800/60">
           <div className="flex items-center justify-evenly md:justify-between gap-4 px-2 lg:px-5">
             <Search />
             <Sort />
