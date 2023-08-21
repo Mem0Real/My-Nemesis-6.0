@@ -27,7 +27,7 @@ export default function BodySection({ products, categories }) {
       <div ref={ref} className="relative z-10 h-[200vh] overflow-clip">
         <motion.div
           style={{ scale }}
-          className={`${styles.heroBackground} absolute left-0 top-0 grid gap-2 p-3 pt-6 [grid-template-rows:4fr_1fr] origin-[50%_62%] md:origin-[94%_32%] lg:origin-[96%_32%]`}
+          className={`${styles.heroBackground} absolute left-0 top-0 grid gap-2 p-3 pt-6 [grid-template-rows:4fr_1fr] origin-[50%_62%] md:origin-[94%_32%] lg:origin-[96%_32%] mt-24`}
         >
           <div
             className={`relative flex flex-col md:flex-row justify-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-5 pt-3 md:pb-12`}
