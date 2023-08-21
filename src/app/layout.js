@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ThemeProvider>
-          <SmoothScroller />
+          {/* <SmoothScroller /> */}
           <ProductDataContext>
             <CustomIcons>
               <CustomCursor>
