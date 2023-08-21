@@ -30,7 +30,7 @@ export default function BodySection({ products, categories }) {
           className={`${styles.heroBackground} absolute left-0 top-0 grid gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr] md:pt-20 origin-[50%_65%] md:origin-[89.2%_40%] lg:origin-[93%_40%]`}
         >
           <div
-            className={`flex flex-col md:flex-row justify-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12`}
+            className={`relative flex flex-col md:flex-row justify-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12`}
           >
             <div className="flex h-full flex-col py-12 -mt-12 gap-12">
               <h1 className="mb-5 max-w-[12ch] font-bold leading-[0.85] md:my-auto text-4xl md:text-6xl xl:text-7xl">
