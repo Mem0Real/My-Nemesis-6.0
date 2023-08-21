@@ -82,42 +82,36 @@ export default function Land() {
   let windowX, windowY, windowScale, bodyX, bodyY, bodyScale;
 
   if (size.width < 768) {
-    windowX = useMove(size.width / 2 - 80);
-    windowY = useMove(-150);
-    windowScale = useScale(20);
+    windowX = useMove(size.width / 2);
+    windowY = useMove(-250);
+    windowScale = useScale(8);
   } else if (size.width < 1024) {
-    windowX = useMove(size.width - 280);
-    windowY = useMove(-150);
-    windowScale = useScale(30);
+    windowX = useMove(size.width / 2);
+    windowY = useMove(-350);
+    windowScale = useScale(12);
   } else {
     windowX = useMove(size.width - 280);
     windowY = useMove(-150);
     windowScale = useScale(30);
   }
 
-  bodyScale = useScale(24);
+  bodyScale = useScale(12);
   return (
     <div className="">
       <div className="h-[25vh] md:h-[50vh] lg:h-[100vh]"></div>
       <motion.div
         ref={ref}
-        className="w-[150px] h-60 bg-neutral-200 dark:bg-neutral-800 border-[2px] border-gray-800 dark:border-gray-300  rounded-full sticky top-0 float-right my-24 z-10"
+        className="w-56 h-56 border bg-neutral-100 rounded-xl sticky top-0 float-right my-24"
         initial={{ x: 0 }}
         style={{ x: windowX, y: windowY, scale: windowScale }}
       ></motion.div>
-      <div className="md:hidden h-[50vh]"></div>
       <motion.div
-        className="flex justify-end items-center pt-12 z-0"
-        style={{ scale: bodyScale, y: "8em", x: size.width / 6 }}
+        className="flex justify-end items-center"
+        style={{ scale: bodyScale }}
       >
-        <div className="flex h-full flex-col py-12 -mt-12 gap-12">
-          <h1 className="mb-5 max-w-[12ch] font-bold leading-[0.85] md:my-auto text-6xl xl:text-7xl">
-            For all your purchase needs
-          </h1>
-          <p className="text-3xl">We are here for you!</p>
-        </div>
+        <div className="w-96 h-96 rounded-3xl border border-orange-500"></div>
       </motion.div>
-      <div className="h-[100vh]"></div>
+      <div className="h-[50vh] md:h-screen lg:h-[200vh]"></div>
     </div>
   );
 }

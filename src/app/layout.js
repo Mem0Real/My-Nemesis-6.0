@@ -32,7 +32,6 @@ export default function RootLayout({ children }) {
         <ThemeProvider>
           <SmoothScroller />
           <ProductDataContext>
-            {/* <ThemeProvider attribute="class"> */}
             <CustomIcons>
               <CustomCursor>
                 <ToasterContext />
@@ -57,7 +56,6 @@ export default function RootLayout({ children }) {
                 </div>
               </CustomCursor>
             </CustomIcons>
-            {/* </ThemeProvider> */}
           </ProductDataContext>
         </ThemeProvider>
       </body>

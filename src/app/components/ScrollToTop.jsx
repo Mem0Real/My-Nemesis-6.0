@@ -55,7 +55,7 @@ export default function ScrollToTopButton({ children }) {
   };
 
   return (
-    <div className="">
+    <>
       {children}
       <div className="relative">
         <motion.button
@@ -70,6 +70,6 @@ export default function ScrollToTopButton({ children }) {
           {TopArrowIcon}
         </motion.button>
       </div>
-    </div>
+    </>
   );
 }

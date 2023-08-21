@@ -82,12 +82,14 @@ export default function SideBarComponent({ data }) {
       transition: {
         staggerChildren: 0.05,
         staggerDirection: -1,
+        when: "afterChildren",
       },
     },
     open: {
       transition: {
         staggerChildren: 0.05,
         staggerDirection: 1,
+        when: "afterChildren",
       },
     },
   };
@@ -103,12 +105,14 @@ export default function SideBarComponent({ data }) {
       transition: {
         staggerChildren: 0.1,
         staggerDirection: -1,
+        when: "afterChildren",
       },
     },
     openParent: {
       transition: {
         staggerChildren: 0.1,
         staggerDirection: 1,
+        when: "afterChildren",
       },
     },
   };
@@ -143,12 +147,14 @@ export default function SideBarComponent({ data }) {
       transition: {
         staggerChildren: 0.1,
         staggerDirection: -1,
+        when: "afterChildren",
       },
     },
     openProduct: {
       transition: {
         staggerChildren: 0.1,
         staggerDirection: 1,
+        when: "afterChildren",
       },
     },
   };

@@ -1,6 +1,5 @@
 import HeaderSection from "./(landing)/components/(sections)/HeaderSection";
 import { Suspense } from "react";
-import ServiceShow from "./(landing)/components/ServiceShow";
 import MainSection from "./(landing)/components/(sections)/MainSection";
 import BottomSection from "./(landing)/components/(sections)/BottomSection";
 import Background from "./(landing)/components/Background";
@@ -19,7 +18,7 @@ export default async function Home() {
           <MainSection />
         </Suspense>
 
-        <div className="bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg w-screen min-h-screen z-10">
+        <div className="bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg">
           <BottomSection />
         </div>
       </div>

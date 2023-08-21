@@ -1,50 +1,16 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
-import Image from "next/image";
-
-import { useThemeContext } from "@/context/ThemeProvider";
 
 import { motion, useScroll, useTransform } from "framer-motion";
 
-export default function Land() {
+export default function BottomMask() {
   const ref = useRef(null);
-
-  const { update } = useThemeContext();
-
-  const [currentTheme, setCurrentTheme] = useState("");
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["end end", "start start"],
   });
-
-  useEffect(() => {
-    const theme = localStorage.getItem("isDarkTheme");
-    if (theme === "false") setCurrentTheme("light");
-    else setCurrentTheme("dark");
-  }, [update]);
-  {
-    /* <div className="fixed h-screen w-screen z-0 bg-neutral-100/60 dark:bg-neutral-800/60">
-      {currentTheme === "light" ? (
-        <Image
-          src="/images/Day.png"
-          fill
-          sizes="(max-width: 768px) 100vw"
-          alt="catalogue"
-          className="object-cover object-center"
-        />
-      ) : (
-        <Image
-          src="/images/Night.png"
-          fill
-          sizes="(max-width: 768px) 100vw"
-          alt="catalogue"
-          className="object-cover object-center"
-        />
-      )}
-    </div> */
-  }
 
   function useWindowSize() {
     const [windowSize, setWindowSize] = useState({
@@ -79,7 +45,7 @@ export default function Land() {
     return useTransform(scrollYProgress, [0, 1], [scale, 1]);
   };
 
-  let windowX, windowY, windowScale, bodyX, bodyY, bodyScale;
+  let windowX, windowY, windowScale, bodyX, bodyY, bodyScale, opacity;
 
   if (size.width < 768) {
     windowX = useMove(size.width / 2 - 80);
@@ -104,6 +70,8 @@ export default function Land() {
         className="w-[150px] h-60 bg-neutral-200 dark:bg-neutral-800 border-[2px] border-gray-800 dark:border-gray-300  rounded-full sticky top-0 float-right my-24 z-10"
         initial={{ x: 0 }}
         style={{ x: windowX, y: windowY, scale: windowScale }}
+        onViewportEnter={() => console.log("Enter")}
+        onViewportLeave={() => console.log("Left")}
       ></motion.div>
       <div className="md:hidden h-[50vh]"></div>
       <motion.div
