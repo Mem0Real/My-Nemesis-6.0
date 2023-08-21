@@ -27,12 +27,12 @@ export default function BodySection({ products, categories }) {
       <div ref={ref} className="relative z-10 h-[200vh] overflow-clip">
         <motion.div
           style={{ scale }}
-          className={`${styles.heroBackground} absolute left-0 top-0 grid gap-2 p-6 pt-12 [grid-template-rows:4fr_1fr] md:pt-20 origin-[50%_65%] md:origin-[89.2%_40%] lg:origin-[93%_40%]`}
+          className={`${styles.heroBackground} absolute left-0 top-0 grid gap-2 p-3 pt-6 [grid-template-rows:4fr_1fr] origin-[50%_62%] md:origin-[94%_32%] lg:origin-[96%_32%]`}
         >
           <div
-            className={`relative flex flex-col md:flex-row justify-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12`}
+            className={`relative flex flex-col md:flex-row justify-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-5 pt-3 md:pb-12`}
           >
-            <div className="flex h-full flex-col py-12 -mt-12 gap-12">
+            <div className="flex h-72 md:h-full flex-col py-6 mt-6 gap-6">
               <h1 className="mb-5 max-w-[12ch] font-bold leading-[0.85] md:my-auto text-4xl md:text-6xl xl:text-7xl">
                 Browse to your heart&apos;s desire!
               </h1>
