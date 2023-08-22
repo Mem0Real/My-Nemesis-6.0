@@ -7,5 +7,9 @@ export default async function MainSection() {
 
   const [categories, products] = await Promise.all([categoryData, productData]);
 
-  return <BodySection categories={categories} products={products} />;
+  return (
+    <>
+      <BodySection categories={categories} products={products} />
+    </>
+  );
 }
