@@ -5,9 +5,8 @@ import Link from "next/link";
 
 import { motion } from "framer-motion";
 import formatCurrency from "@/app/utils/formatCurrency";
-import PlaceHolder from "./PlaceHolder";
 
-export default function BestSellers({ products, children }) {
+export default function BestSellers({ products }) {
   return (
     <div className="min-h-screen flex flex-col items-center justify-start py-3 md:py-12 gap-6 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200">
       <h1 className="text-3xl font-semibold my-5 pb-5">Best Sellers</h1>
@@ -37,14 +36,13 @@ export default function BestSellers({ products, children }) {
                     transition: { duration: 0.2, ease: "easeInOut" },
                   }}
                 >
-                  {/* <Image
+                  <Image
                     className="object-contain object-center"
                     src={product.images[0]}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
                     alt={product.id}
-                  /> */}
-                  {children}
+                  />
                 </motion.div>
               </Link>
               <Link
