@@ -9,7 +9,7 @@ import formatCurrency from "@/app/utils/formatCurrency";
 
 export default function BestSellers({ products }) {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-start py-6 md:py-12 gap-6 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200">
+    <div className="min-h-screen flex flex-col items-center justify-start py-3 md:py-12 gap-6 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200">
       <h1 className="text-3xl font-semibold my-5 pb-5">Best Sellers</h1>
       <div className="w-full mx-auto flex flex-wrap items-center h-full">
         {products.map((product) => {
@@ -21,7 +21,7 @@ export default function BestSellers({ products }) {
               transition={{ duration: 0.5, ease: "easeInOut" }}
               // viewport={{ once: true }}
               key={product.id}
-              className="flex flex-col gap-5 items-center w-full md:w-80 lg:w-60 mx-auto border border-neutral-300 dark:border-neutral-700 my-2"
+              className="flex flex-col gap-3 items-center w-full md:w-80 lg:w-72 mx-auto border border-neutral-300 dark:border-neutral-700 my-2"
             >
               <Link
                 className="relative w-full mb-12"
@@ -34,7 +34,7 @@ export default function BestSellers({ products }) {
                   className="mt-4 basis-3/5 cursor-pointer relative h-72 md:h-56 lg:h-44 w-[90%] mx-auto"
                   whileHover={{
                     scale: 1.1,
-                    transition: { duration: 0.2 },
+                    transition: { duration: 0.2, ease: "easeInOut" },
                   }}
                 >
                   <Image

@@ -13,7 +13,7 @@ export default function Company() {
         initial={{ x: -50 }}
         exit={{ x: -50 }}
         whileInView={{ x: 0 }}
-        transition={{ duration: 0.3 }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         {DeliveryTruckIcon}
         <p>Shipping</p>
