@@ -1,27 +1,23 @@
 import HeaderSection from "./(landing)/components/(sections)/HeaderSection";
 import { Suspense } from "react";
-import MainSection from "./(landing)/components/(sections)/MainSection";
-import BottomSection from "./(landing)/components/(sections)/BottomSection";
-import Background from "./(landing)/components/Background";
-import Motto from "./(landing)/components/Motto";
+// import MainSection from "./(landing)/components/(sections)/MainSection";
+// import BottomSection from "./(landing)/components/BottomMask";
+import TopMask from "./(landing)/components/TopMask";
+import BottomMask from "./(landing)/components/BottomMask";
+import BodySection from "./(landing)/components/(sections)/BodySection";
 
-export default async function Home() {
+export default function Home() {
   return (
-    <>
-      <div className="relative ">
-        <Background />
-        <HeaderSection />
+    <div className="relative ">
+      <HeaderSection />
 
-        <Motto />
-
+      <div className="bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg">
+        <TopMask />
         <Suspense fallback={<h1>Loading...</h1>}>
-          <MainSection />
+          <BodySection />
         </Suspense>
-
-        <div className="bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg">
-          <BottomSection />
-        </div>
+        <BottomMask />
       </div>
-    </>
+    </div>
   );
 }

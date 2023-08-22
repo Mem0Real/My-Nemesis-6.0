@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "../../styles/body.module.scss";
+import styles from "../styles/mask.module.scss";
 import { useRef } from "react";
 
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -16,7 +16,7 @@ function useScale(value, size) {
 function useMove(value, distance) {
   return useTransform(value, [0, 1], [distance, -distance]);
 }
-export default function BottomSection() {
+export default function BottomMask() {
   const ref = useRef(null);
 
   const { scrollYProgress } = useScroll({
