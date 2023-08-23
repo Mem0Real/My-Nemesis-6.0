@@ -1,10 +1,10 @@
-import Skeleton from "./Skeleton";
+import Skeleton from "@/app/load/component/Skeleton";
 
 export default function Loading() {
   return (
     <div className="space-y-6">
       <div className="space-y-2">
-        <Skeleton className="w-[30ch] h-[1.25rem]" />
+        <Skeleton className="w-[30ch] h-[5.25rem]" />
         <Skeleton className="w-[45ch] h-[1rem]" />
       </div>
       <div className="space-y-2">
@@ -13,7 +13,7 @@ export default function Loading() {
       </div>
       <div className="space-y-2">
         <Skeleton className="w-[30ch] h-[1.25rem]" />
-        <Skeleton className="w-[45ch] h-[1rem] rounded-full" />
+        <Skeleton className="w-[45ch] h-[1rem]" />
       </div>
     </div>
   );

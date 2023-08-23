@@ -2,7 +2,7 @@ import { Suspense } from "react";
 import PageWrapper from "../components/PageWrapper";
 import Categories from "./Categories";
 import { getCollectionData } from "./lib/fetchFunctions";
-import Loading from "../components/Loading";
+import Loading from "./components/Loading";
 import Image from "next/image";
 
 export default async function CollectionPage() {
@@ -17,9 +17,10 @@ export default async function CollectionPage() {
           <Image
             src="/images/CatalogueBg.png"
             fill
-            sizes="(max-width: 768px) 100vw"
+            sizes="(max-width: 1366px) 100vw"
             alt="catalogue"
             className="object-cover object-center"
+            priority
           />
         </div>
         <Suspense fallback={<Loading />}>
