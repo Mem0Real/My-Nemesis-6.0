@@ -3,6 +3,7 @@ import Link from "next/link";
 
 import { getDetail } from "@/app/catalogue/lib/fetchFunctions";
 import Item from "./Item";
+import ItemDetailLoader from "@/app/catalogue/components/(loader)/ItemDetailLoader.jsx";
 
 export async function generateMetadata({ params: { item } }) {
   let firstLetter = item[0];
@@ -40,15 +41,7 @@ export default async function ItemPage({
   } else {
     content = (
       <div className="flex flex-col items-center w-screen min-h-screen bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 pt-6 relative">
-        <Suspense
-          fallback={
-            <div className="w-full flex flex-col items-center justify-center py-16 md:py-20 lg:py-24">
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold mx-auto">
-                Loading Item
-              </h1>
-            </div>
-          }
-        >
+        <Suspense fallback={<ItemDetailLoader />}>
           <Item item={itemData} />
         </Suspense>
         <Link
