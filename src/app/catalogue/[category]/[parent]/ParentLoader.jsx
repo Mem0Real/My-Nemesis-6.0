@@ -1,6 +1,6 @@
 import Skeleton from "@/app/components/Skeleton";
 
-export default function CategoryLoader() {
+export default function ParentLoader() {
   return (
     <div className="flex flex-col items-center gap-8 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen z-10 pt-24">
       <div className="w-full bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 my-12 ">

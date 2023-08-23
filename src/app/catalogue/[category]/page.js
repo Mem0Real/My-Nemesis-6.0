@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import Category from "./Category";
+import CategoryLoader from "./CategoryLoader";
 
 export async function generateMetadata({ params: { category } }) {
   let firstLetter = category[0];
@@ -16,15 +17,7 @@ export async function generateMetadata({ params: { category } }) {
 export default async function CategoryPage({ params: { category } }) {
   const content = (
     <div className="flex flex-col justify-between items-center text-sm bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 pt-6 w-screen min-h-screen relative">
-      <Suspense
-        fallback={
-          <div className="w-full flex flex-col items-center justify-center py-16 md:py-20 lg:py-24">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold">
-              Loading current category
-            </h1>
-          </div>
-        }
-      >
+      <Suspense fallback={<CategoryLoader />}>
         <Category categoryId={category} />
       </Suspense>
       <Link
