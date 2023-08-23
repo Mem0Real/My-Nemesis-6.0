@@ -15,6 +15,7 @@ export default async function PlaceHolder() {
 
     return (
       <Image
+        key={image.id}
         src={image.src}
         fill
         alt="1"
