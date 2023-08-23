@@ -1,9 +1,88 @@
+"use client";
+
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
+import { useThemeContext } from "@/context/ThemeProvider";
+
+const loaderVariants = {
+  animationTwo: {
+    padding: [0, 15, 0],
+    transition: {
+      duration: 3,
+      ease: "easeInOut",
+      repeat: Infinity,
+    },
+  },
+  animationThree: {
+    padding: [0, 20, 0],
+    transition: {
+      duration: 3,
+      ease: "easeInOut",
+      repeat: Infinity,
+    },
+  },
+  animationFour: {
+    padding: [0, 25, 0],
+    transition: {
+      duration: 3,
+      ease: "easeInOut",
+      repeat: Infinity,
+    },
+  },
+};
+
 export default function Loading() {
+  const [currentTheme, setCurrentTheme] = useState();
+
+  const themeCtx = useThemeContext();
+
+  useEffect(() => {
+    const theme = localStorage.getItem("isDarkTheme");
+    if (theme === "false") setCurrentTheme("light");
+    else setCurrentTheme("dark");
+  }, [themeCtx.update]);
+
   return (
-    <div className="flex flex-col w-full justify-center items-center min-h-screen bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 py-16 md:py-20 lg:py-24">
-      <h1 className="text-2xl md:text-3xl lg:text-4xl font-semibold mx-auto">
-        Loading ...
-      </h1>
+    <div className="bg-neutral-200 dark:bg-neutral-900 h-screen w-screen flex flex-col justify-center items-center">
+      <motion.div className="relative h-screen w-screen flex flex-col justify-center items-center">
+        <motion.div
+          variants={loaderVariants}
+          initial={{ padding: 0 }}
+          animate="animationTwo"
+          className="bg-neutral-800 dark:bg-neutral-800"
+        >
+          <motion.div
+            variants={loaderVariants}
+            initial={{ padding: 0 }}
+            animate="animationThree"
+            className="bg-neutral-600 dark:bg-neutral-900"
+          >
+            <motion.div
+              variants={loaderVariants}
+              initial={{ padding: 0 }}
+              animate="animationFour"
+              className="bg-neutral-400 dark:bg-neutral-950"
+            >
+              <motion.h1
+                animate={{
+                  rotate: [0, 0, 360, 360, 0],
+                  borderRadius: ["0%", "0%", "50%", "50%", "0%"],
+                }}
+                transition={{
+                  duration: 2,
+                  ease: "easeInOut",
+                  times: [0, 0.2, 0.5, 0.8, 1],
+                  repeat: Infinity,
+                  repeatDelay: 1,
+                }}
+                className="w-fit h-fit text-3xl px-4 py-2 bg-black dark:bg-white font-extrabold text-neutral-200 dark:text-neutral-800"
+              >
+                N
+              </motion.h1>
+            </motion.div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 }
