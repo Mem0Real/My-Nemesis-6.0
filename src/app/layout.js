@@ -30,7 +30,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body>
         <ThemeProvider>
-          <SmoothScroller />
+          {/* <SmoothScroller /> */}
           <ProductDataContext>
             <CustomIcons>
               <CustomCursor>
@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
                     </Suspense>
                   </div>
                   <ScrollToTopButton>
-                    <div className={`min-h-screen relative`}>{children}</div>
+                    <div className={`min-h-screen`}>{children}</div>
                   </ScrollToTopButton>
                   <div className="w-full">
                     <Footer />
