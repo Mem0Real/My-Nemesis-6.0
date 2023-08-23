@@ -18,7 +18,7 @@ export default function Sort() {
     <motion.select
       defaultValue="asc"
       onChange={(e) => setSort({ sort: e.target.value })}
-      className="px-2 py-1 rounded-md border-b border-neutral-800 dark:border-neutral-200 text-neutral-800 dark:text-neutral-200 disabled:text-neutral-800 disabled:bg-neutral-500 cursor-pointer outline-none"
+      className="px-2 py-1 rounded-md border-b border-neutral-800 dark:border-neutral-200 text-neutral-800 dark:text-neutral-200 bg-neutral-100 dark:bg-neutral-800 disabled:text-neutral-800 dark:disabled:text-neutral-800 disabled:bg-neutral-800 cursor-pointer outline-none"
     >
       <option value="asc" disabled>
         Sort By

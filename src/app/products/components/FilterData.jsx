@@ -71,18 +71,17 @@ export default function FilterData() {
             exit="closed"
             variants={contentVariants}
           >
-            <div
-              className="basis-[40%] flex flex-col w-[80%] lg:w-full mx-auto lg:border-y border-neutral-400 px-4"
-              onClick={toggleCategory}
-            >
+            <div className="basis-[40%] flex flex-col w-[80%] lg:w-full mx-auto lg:border-y border-neutral-400 px-4">
               <div className="flex items-center justify-between w-full px-2 h-12  cursor-pointer text-sm">
-                <h1>Category</h1>
+                <h1 onClick={toggleCategory}>Category</h1>
+
                 <motion.button
                   className="text-neutral-800 dark:text-neutral-200 hover:text-neutral-800 dark:hover:text-neutral-400"
                   initail="close"
                   animate={categoryDrop ? "open" : "close"}
                   exit="close"
                   variants={btnVariants}
+                  onClick={toggleCategory}
                 >
                   {RightArrowIcon}
                 </motion.button>
@@ -96,16 +95,16 @@ export default function FilterData() {
               initial="closed"
               animate={priceDrop ? "opened" : "closed"}
               variants={paddingVariants}
-              onClick={togglePrice}
             >
               <div className="flex items-center justify-between w-full px-2 h-12 cursor-pointer text-sm">
-                <h1>Price</h1>
+                <h1 onClick={togglePrice}>Price</h1>
                 <motion.button
                   className="text-neutral-800 dark:text-neutral-200 hover:text-neutral-600 dark:hover:text-neutral-400"
                   initail="close"
                   animate={priceDrop ? "open" : "close"}
                   exit="close"
                   variants={btnVariants}
+                  onClick={togglePrice}
                 >
                   {RightArrowIcon}
                 </motion.button>

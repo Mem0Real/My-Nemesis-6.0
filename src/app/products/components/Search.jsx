@@ -36,11 +36,11 @@ export default function SearchForm() {
 
   return (
     <form
-      className="flex justify-between relative border border-neutral-600 dark:border-neutral-400 rounded-md "
+      className="flex justify-between relative border border-neutral-600 dark:border-neutral-400 rounded-md text-neutral-800 dark:text-neutral-200 bg-neutral-100 dark:bg-neutral-800"
       onSubmit={handleSubmit}
     >
       <motion.button
-        className="absolute left-1 top-0 bottom-0 grid place-content-center cursor-pointer"
+        className="absolute left-1 top-0 bottom-0 grid place-content-center cursor-pointer text-neutral-800 dark:text-neutral-200"
         whileHover={{ scale: 1.05 }}
         type="submit"
       >
@@ -50,7 +50,7 @@ export default function SearchForm() {
         type="search"
         name="search"
         placeholder="Search"
-        className="ps-7 pe-2 w-36 lg:w-44 py-2 rounded-md"
+        className="ps-7 pe-2 w-36 lg:w-44 py-2 rounded-md  text-neutral-800 dark:text-neutral-200 bg-neutral-100 dark:bg-neutral-800"
         defaultValue={text.search || query.search || ""}
         onChange={handleChange}
       />
