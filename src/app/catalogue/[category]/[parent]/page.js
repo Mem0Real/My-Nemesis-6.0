@@ -2,7 +2,8 @@ import { Suspense } from "react";
 import Link from "next/link";
 
 import Parent from "./Parent";
-import ParentLoader from "./ParentLoader";
+
+import ParentLoader from "../../components/(loader)/ParentLoader";
 
 export async function generateMetadata({ params: { parent } }) {
   let firstLetter = parent[0];

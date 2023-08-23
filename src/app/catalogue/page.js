@@ -3,7 +3,8 @@ import PageWrapper from "../components/PageWrapper";
 import Categories from "./Categories";
 import { getCollectionData } from "./lib/fetchFunctions";
 import Image from "next/image";
-import CatalogueLoader from "./CatalogueLoader";
+
+import CatalogueLoader from "./components/(loader)/CatalogueLoader";
 
 export default async function CollectionPage() {
   // TODO no need to fetch prev parent id because all children have consecutive parents ids

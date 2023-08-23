@@ -2,6 +2,7 @@ import { Suspense } from "react";
 
 import Items from "./Items";
 import { getDetail } from "@/app/catalogue/lib/fetchFunctions";
+import ItemLoader from "@/app/catalogue/components/(loader)/ItemLoader";
 
 export default async function Child({ categoryId, parentId, childId }) {
   const childData = await getDetail("children", childId);
@@ -17,7 +18,7 @@ export default async function Child({ categoryId, parentId, childId }) {
         </p>
       </div>
       <div className="flex-initial min-h-screen w-full flex flex-col items-center">
-        <Suspense fallback={<h1>Loading Items...</h1>}>
+        <Suspense fallback={<ItemLoader />}>
           <Items
             categoryId={categoryId}
             parentId={parentId}

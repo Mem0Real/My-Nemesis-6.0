@@ -4,6 +4,8 @@ import { Suspense } from "react";
 
 import { getCollectionData } from "../lib/fetchFunctions";
 
+import ChildLoader from "../components/(loader)/ChildLoader";
+
 export default async function Parents({ categoryId }) {
   let content;
   function isObjEmpty(obj) {
@@ -35,13 +37,7 @@ export default async function Parents({ categoryId }) {
             </h1>
           </Link>
           <div className="w-full">
-            <Suspense
-              fallback={
-                <h1 className="text-md text-center mx-auto">
-                  Loading children data...
-                </h1>
-              }
-            >
+            <Suspense fallback={<ChildLoader />}>
               <div className="group mx-auto w-[95%] border border-neutral-300 rounded-3xl shadow-neutral-400 hover:shadow-neutral-600 dark:shadow-neutral-900 dark:hover:shadow-black dark:border-neutral-700">
                 <Children
                   categoryId={categoryId}

@@ -3,6 +3,7 @@ import { Suspense } from "react";
 
 import { getCollectionData } from "@/app/catalogue/lib/fetchFunctions";
 import Items from "./Items";
+import ItemLoader from "../../components/(loader)/ItemLoader";
 
 export default async function Children({ categoryId, parentId }) {
   let content;
@@ -36,13 +37,7 @@ export default async function Children({ categoryId, parentId }) {
             </h1>
           </Link>
           <div className="w-full">
-            <Suspense
-              fallback={
-                <h1 className="text-md text-center mx-auto">
-                  Loading items data...
-                </h1>
-              }
-            >
+            <Suspense fallback={<ItemLoader />}>
               <div className="group mx-auto w-[95%] border border-neutral-300 rounded-3xl shadow-neutral-400 hover:shadow-neutral-600 dark:shadow-neutral-900 dark:hover:shadow-black dark:border-neutral-700">
                 <Items
                   categoryId={categoryId}

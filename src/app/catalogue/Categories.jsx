@@ -3,7 +3,8 @@ import { Suspense } from "react";
 import Parents from "./Parents";
 import Titles from "./components/Titles";
 import CarouselHolder from "./components/CarouselHolder";
-import CategoryLoader from "./[category]/CategoryLoader";
+
+import CategoryLoader from "./components/(loader)/CategoryLoader";
 
 export default function Categories({ categories }) {
   const oldText = (

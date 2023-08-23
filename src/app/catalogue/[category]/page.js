@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 
 import Category from "./Category";
-import CategoryLoader from "./CategoryLoader";
+import CategoryLoader from "../components/(loader)/CategoryLoader";
 
 export async function generateMetadata({ params: { category } }) {
   let firstLetter = category[0];
