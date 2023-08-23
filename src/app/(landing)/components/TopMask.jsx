@@ -1,20 +1,58 @@
 "use client";
 
-import { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 import styles from "../styles/mask.module.scss";
 
 export default function TopMask() {
+  const [isMobile, setIsMobile] = useState(false);
+
+  const [windowSize, setWindowSize] = useState({
+    width: undefined,
+    height: undefined,
+  });
+
   const ref = useRef(null);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    }
+
+    window.addEventListener("resize", handleResize);
+
+    handleResize();
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    if (windowSize.width && windowSize.width <= 768) {
+      setIsMobile(true);
+    } else setIsMobile(false);
+  }, [windowSize]);
+
+  let scale, imageX;
 
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [1, 20]);
-  const imageX = useTransform(scrollYProgress, [0, 1], [50, 0]);
+  const scaleTransform = useTransform(scrollYProgress, [0, 1], [1, 20]);
+  const imageTransform = useTransform(scrollYProgress, [0, 1], [50, 0]);
+
+  if (isMobile) {
+    scale = 1;
+    imageX = 1;
+  } else {
+    scale = scaleTransform;
+    imageX = imageTransform;
+  }
 
   return (
     <div ref={ref} className="relative z-10 h-[200vh] overflow-clip">

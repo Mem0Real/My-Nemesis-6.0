@@ -9,6 +9,7 @@ import "slick-carousel/slick/slick-theme.css";
 
 import { useIcons } from "@/app/utils/CustomIcons";
 import { AnimatePresence, motion } from "framer-motion";
+import CarouselLoader from "./(loader)/CarouselLoader";
 
 const SwiperContext = createContext({});
 
@@ -18,12 +19,11 @@ export default function SlickCarousel({ children }) {
   const [nextSlide, setNextSlide] = useState();
 
   const { RightIcon, LeftIcon } = useIcons();
-  const [parentSwipe, setParentSwipe] = useState(true);
 
   const settings = {
     init: true,
     draggable: true,
-    lazyLoad: "anticipated",
+    // lazyLoad: "anticipated",
     infinite: false,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />,
@@ -120,7 +120,7 @@ export default function SlickCarousel({ children }) {
 
   return (
     <div className="w-full">
-      <Suspense fallback={<h1>Loading...</h1>}>
+      <Suspense fallback={<CarouselLoader />}>
         <Slider {...settings}>{children}</Slider>
       </Suspense>
     </div>

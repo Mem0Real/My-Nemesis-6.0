@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "../styles/mask.module.scss";
-import { useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 import { motion, useScroll, useTransform } from "framer-motion";
 
@@ -19,14 +19,50 @@ function useMove(value, distance) {
 export default function BottomMask() {
   const ref = useRef(null);
 
+  const size = useWindowSize();
+
+  const isMobile = size.width <= 768;
+
+  function useWindowSize() {
+    const [windowSize, setWindowSize] = useState({
+      width: undefined,
+      height: undefined,
+    });
+
+    useEffect(() => {
+      function handleResize() {
+        setWindowSize({
+          width: window.innerWidth,
+          height: window.innerHeight,
+        });
+      }
+
+      window.addEventListener("resize", handleResize);
+
+      handleResize();
+
+      return () => window.removeEventListener("resize", handleResize);
+    }, []);
+    return windowSize;
+  }
+
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start start", "end end"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [20, 1]);
+  let scale, imageX;
 
-  const imageX = useTransform(scrollYProgress, [0, 1], [100, 0]);
+  const scaleTransform = useTransform(scrollYProgress, [0, 1], [20, 1]);
+  const imageTransform = useTransform(scrollYProgress, [0, 1], [100, 0]);
+
+  if (isMobile) {
+    scale = -50;
+    imageX = 1;
+  } else {
+    scale = scaleTransform;
+    imageX = imageTransform;
+  }
 
   return (
     <main className=" bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg">

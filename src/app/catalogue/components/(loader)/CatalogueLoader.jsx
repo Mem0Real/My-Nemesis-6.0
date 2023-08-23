@@ -13,32 +13,32 @@ export default function CatalogueLoader() {
           <Skeleton className="w-[15ch] h-[2rem]" />
           <div className="flex gap-6 justify-evenly w-full">
             <div className="flex flex-col justify-center items-center">
-              <div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
-                <Skeleton className="w-72 h-56 mx-auto" />
+              <div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl overflow-hidden">
+                <Skeleton className="w-[286px] h-56 mx-auto" />
               </div>
               <div className="w-72 border border-neutral-400 rounded-b-2xl text-center text-sm py-5 hover:underline underline-offset-2">
                 <Skeleton className="w-48 h-8 mx-auto" />
               </div>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
-                <Skeleton className="w-72 h-56 mx-auto" />
+              <div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl overflow-hidden">
+                <Skeleton className="w-[286px] h-56 mx-auto" />
               </div>
               <div className="w-72 border border-neutral-400 rounded-b-2xl text-center text-sm py-5 hover:underline underline-offset-2">
                 <Skeleton className="w-48 h-8 mx-auto" />
               </div>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
-                <Skeleton className="w-72 h-56 mx-auto" />
+              <div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl overflow-hidden">
+                <Skeleton className="w-[286px] h-56 mx-auto" />
               </div>
               <div className="w-72 border border-neutral-400 rounded-b-2xl text-center text-sm py-5 hover:underline underline-offset-2">
                 <Skeleton className="w-48 h-8 mx-auto" />
               </div>
             </div>
             <div className="flex flex-col justify-center items-center">
-              <div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
-                <Skeleton className="w-72 h-56 mx-auto" />
+              <div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl overflow-hidden">
+                <Skeleton className="w-[286px] h-56 mx-auto" />
               </div>
               <div className="w-72 border border-neutral-400 rounded-b-2xl text-center text-sm py-5 hover:underline underline-offset-2">
                 <Skeleton className="w-48 h-8 mx-auto" />
