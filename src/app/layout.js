@@ -48,7 +48,7 @@ export default function RootLayout({ children }) {
                     </Suspense>
                   </div>
                   <ScrollToTopButton>
-                    <div className={`min-h-screen`}>{children}</div>
+                    <div className={`min-h-screen relative`}>{children}</div>
                   </ScrollToTopButton>
                   <div className="w-full">
                     <Footer />
