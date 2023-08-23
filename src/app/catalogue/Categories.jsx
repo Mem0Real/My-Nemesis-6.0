@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import Parents from "./Parents";
 import Titles from "./components/Titles";
 import CarouselHolder from "./components/CarouselHolder";
+import CategoryLoader from "./[category]/CategoryLoader";
 
 export default function Categories({ categories }) {
   const oldText = (
@@ -24,16 +25,7 @@ export default function Categories({ categories }) {
             />
           </Link>
           <div className="w-full">
-            <Suspense
-              fallback={
-                <h1 className="text-md text-center mx-auto">
-                  Loading parents...
-                </h1>
-              }
-            >
-              {/* <div className="group mx-auto w-[95%] border border-neutral-300 rounded-3xl shadow-neutral-400 hover:shadow-neutral-600 dark:shadow-neutral-900 dark:hover:shadow-black dark:border-neutral-700">
-              <Parents categoryId={category.id} parents={category.parents} />
-            </div> */}
+            <Suspense fallback={<CategoryLoader />}>
               <Parents categoryId={category.id} parents={category.parents} />
             </Suspense>
           </div>

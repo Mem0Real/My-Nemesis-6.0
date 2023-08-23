@@ -2,8 +2,8 @@ import { Suspense } from "react";
 import PageWrapper from "../components/PageWrapper";
 import Categories from "./Categories";
 import { getCollectionData } from "./lib/fetchFunctions";
-import Loading from "./components/Loading";
 import Image from "next/image";
+import CatalogueLoader from "./components/CatalogueLoader";
 
 export default async function CollectionPage() {
   // TODO no need to fetch prev parent id because all children have consecutive parents ids
@@ -23,7 +23,7 @@ export default async function CollectionPage() {
             priority
           />
         </div>
-        <Suspense fallback={<Loading />}>
+        <Suspense fallback={<CatalogueLoader />}>
           <Categories categories={categories} />
         </Suspense>
       </div>

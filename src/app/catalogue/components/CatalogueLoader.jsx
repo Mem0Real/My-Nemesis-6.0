@@ -1,6 +1,6 @@
 import Skeleton from "@/app/components/Skeleton";
 
-export default function Loading() {
+export default function CatalogueLoader() {
   return (
     <div className="flex flex-col items-center gap-8 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen z-10 pt-24">
       <div className="w-full flex flex-col items-center justify-center pb-12 mb-2 shadow-xl shadow-blue-600/20 dark:shadow-blue-400/10 text-neutral-800 dark:text-neutral-200 backdrop-blur-sm bg-neutral-200/40 dark:bg-neutral-800/40">
@@ -45,18 +45,6 @@ export default function Loading() {
               </div>
             </div>
           </div>
-          {/* <div className="space-y-2">
-          <Skeleton className="w-[30ch] h-[5.25rem]" />
-          <Skeleton className="w-[45ch] h-[1rem]" />
-        </div>
-        <div className="space-y-2">
-          <Skeleton className="w-[30ch] h-[1.25rem]" />
-          <Skeleton className="w-[45ch] h-[1rem]" />
-        </div>
-        <div className="space-y-2">
-          <Skeleton className="w-[30ch] h-[1.25rem]" />
-          <Skeleton className="w-[45ch] h-[1rem]" />
-        </div> */}
         </div>
       </div>
     </div>
