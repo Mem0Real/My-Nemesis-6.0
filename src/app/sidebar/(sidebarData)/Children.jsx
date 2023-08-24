@@ -39,7 +39,7 @@ export default function Children({ category, parent }) {
               duration: 0.3,
             },
           }}
-          className="bg-neutral-100 dark:bg-neutral-900 border border-x-0 border-neutral-700 dark:border-neutral-500 rounded-lg h-fit z-20"
+          className="border border-x-0 border-neutral-700 dark:border-neutral-500 rounded-lg h-fit z-20"
         >
           <motion.div
             key="childContainer"

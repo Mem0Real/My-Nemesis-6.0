@@ -202,13 +202,13 @@ export default function NavComponents({ session }) {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-50 bg-neutral-100 dark:bg-neutral-800`}
+            className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-40 bg-neutral-100/70 dark:bg-neutral-900/70 backdrop-blur-3xl pb-5`}
             initial="close"
             animate={isOpen ? "open" : "close"}
             exit="close"
             variants={menuVariants}
           >
-            <motion.ul className="text-sm md:hidden block py-5 mt-0 md:mt-9 list-none">
+            <motion.ul className="text-sm md:hidden block py-5 mt-5 list-none">
               {links.map(({ href, label }) => (
                 <motion.li key={href}>
                   <Link

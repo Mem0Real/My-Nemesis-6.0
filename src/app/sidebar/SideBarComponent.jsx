@@ -9,7 +9,6 @@ import Categories from "./(sidebarData)/Categories";
 const SidebarContext = createContext({});
 
 export default function SideBarComponent({ data }) {
-  // const [open, cycleOpen] = useCycle(false, true);
   const [openCategory, setOpenCategory] = useState(false);
 
   const sideBarRef = useRef();

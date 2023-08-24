@@ -36,7 +36,7 @@ export default function Parents({ category }) {
           exit={{
             transition: { delay: 0.5, duration: 0.3 },
           }}
-          className="bg-transparent border border-x-0 border-neutral-700 dark:border-neutral-500 rounded-lg h-fit"
+          className="border border-x-0 border-neutral-700 dark:border-neutral-500 rounded-lg h-fit"
         >
           <motion.div
             key="parentContainer"

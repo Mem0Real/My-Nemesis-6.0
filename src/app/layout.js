@@ -42,7 +42,7 @@ export default function RootLayout({ children }) {
                     </SearchBase>
                     <NextTopLoader showSpinner={false} color="#DC143C" />
                   </CartBase>
-                  <div className="text-sm text-neutral-800 dark:text-neutral-200 z-30">
+                  <div className="text-sm text-neutral-800 dark:text-neutral-200 z-20">
                     <Suspense>
                       <SideBarBase />
                     </Suspense>

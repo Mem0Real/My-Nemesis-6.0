@@ -32,7 +32,7 @@ export default function Products({ category, parent, child }) {
               duration: 0.3,
             },
           }}
-          className="z-10 bg-neutral-100 dark:bg-neutral-900 border border-x-0 border-neutral-700 dark:border-neutral-500 rounded-lg py-5 h-max"
+          className="border border-x-0 border-neutral-700 dark:border-neutral-500 rounded-lg py-5 h-max"
         >
           <motion.div
             key="productContainer"
