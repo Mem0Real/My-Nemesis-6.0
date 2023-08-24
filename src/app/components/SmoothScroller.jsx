@@ -5,7 +5,10 @@ import { useEffect } from "react";
 
 const SmoothScroller = () => {
   useEffect(() => {
-    const lenis = new Lenis();
+    const lenis = new Lenis({
+      smoothTouch: true,
+      touchMultiplier: 1,
+    });
 
     function raf(time) {
       lenis.raf(time);

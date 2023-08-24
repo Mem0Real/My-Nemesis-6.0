@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 
 const SearchModal = dynamic(() => import("./(searchModal)/SearchModal"));
 import { motion, AnimatePresence } from "framer-motion";
+import { useScrollContext } from "@/context/ScrollBlock";
 
 const SearchContext = createContext({});
 export default function SearchBase({ children }) {
