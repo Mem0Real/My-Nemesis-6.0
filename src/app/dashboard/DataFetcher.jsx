@@ -21,9 +21,7 @@ async function categoryList() {
 }
 
 async function orderList() {
-  const customers = prisma.customers.findMany({
-    // orderBy: { createdAt: "asc" },
-  });
+  const customers = prisma.customers.findMany({});
 
   const orders = prisma.orders.findMany({
     orderBy: { productName: "asc" },
