@@ -8,6 +8,7 @@ const SmoothScroller = () => {
     const lenis = new Lenis({
       smoothTouch: true,
       touchMultiplier: 1,
+      direction: "vertical",
     });
 
     function raf(time) {
