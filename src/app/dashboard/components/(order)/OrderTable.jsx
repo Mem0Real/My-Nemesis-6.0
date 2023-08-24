@@ -18,6 +18,7 @@ const OrderContext = createContext({});
 
 export default function OrderTable() {
   const [cus, setCus] = useState({ id: null, open: false });
+
   const [removeLoading, setRemoveLoading] = useState({
     id: null,
     loading: false,
@@ -26,9 +27,10 @@ export default function OrderTable() {
   const [removeData, setRemoveData] = useState();
 
   const { order, delivered } = useOrderDataContext();
-  const customers = order[0];
 
   const removeRef = useRef();
+
+  const [sortedData, setSortedData] = useState(order[0]);
 
   // Disable scrollbar on modal open
   useEffect(() => {
@@ -74,6 +76,7 @@ export default function OrderTable() {
     };
   }, []);
 
+  // Update Customer Cookie
   useEffect(() => {
     if (hasCookie("Customer")) setCus(JSON.parse(getCookie("Customer")));
   }, []);
@@ -81,6 +84,11 @@ export default function OrderTable() {
   useEffect(() => {
     setCookie("Customer", cus);
   }, [cus]);
+
+  // Sort by date on initial
+  useEffect(() => {
+    handleSort("updatedAt");
+  }, []);
 
   const customerDropDown = (customerId) => {
     if (!cus.id) {
@@ -168,6 +176,26 @@ export default function OrderTable() {
       },
     },
   };
+
+  const handleSort = (colName) => {
+    let sorted;
+    if (colName === "name") {
+      sorted = [...sortedData].sort((a, b) => {
+        if (a.id < b.id) return -1;
+        if (a.id > b.id) return 1;
+        return 0;
+      });
+    } else {
+      sorted = [...sortedData].sort((a, b) => {
+        if (a[colName] < b[colName]) return 1;
+        if (a[colName] > b[colName]) return -1;
+        return 0;
+      });
+    }
+
+    setSortedData(sorted);
+  };
+
   return (
     <OrderContext.Provider
       value={{
@@ -186,11 +214,21 @@ export default function OrderTable() {
           <table className="table-fixed w-full text-sm">
             <thead className="border-b border-black">
               <tr className="">
-                <th className="text-center md:text-start py-5 w-24">Name</th>
+                <th
+                  className="text-center md:text-start py-5 w-24"
+                  onClick={() => handleSort("name")}
+                >
+                  Name
+                </th>
                 <th className="text-center md:text-start py-5 w-24">
                   Phone No.
                 </th>
-                <th className="text-center py-5 w-24">Order Date</th>
+                <th
+                  className="text-center py-5 w-24"
+                  onClick={() => handleSort("updatedAt")}
+                >
+                  Order Date
+                </th>
                 <th className="w-16" />
               </tr>
             </thead>
@@ -206,7 +244,7 @@ export default function OrderTable() {
                 }
               >
                 <AnimatePresence key="customerRow">
-                  {customers.map((customer) =>
+                  {sortedData.map((customer) =>
                     delivered ? (
                       <React.Fragment key={customer.id}>
                         <Customer customer={customer} />

@@ -22,7 +22,7 @@ async function categoryList() {
 
 async function orderList() {
   const customers = prisma.customers.findMany({
-    orderBy: { createdAt: "asc" },
+    // orderBy: { createdAt: "asc" },
   });
 
   const orders = prisma.orders.findMany({
@@ -38,7 +38,10 @@ export default async function DataFetcher() {
   const listData = categoryList();
   const orderData = orderList();
 
-  const [list, order] = await Promise.all([listData, orderData]);
+  const data = await Promise.all([listData, orderData]);
+
+  const list = data[0];
+  const order = data[1];
 
   return (
     <AdminActions

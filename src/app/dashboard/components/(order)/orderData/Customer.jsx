@@ -87,7 +87,7 @@ export default function Customer({ customer }) {
 
   const totalPrice = formatCurrency(invoiceTotal);
 
-  const orderDate = customer.createdAt;
+  const orderDate = customer.updatedAt;
 
   return [
     <motion.tr
