@@ -10,7 +10,7 @@ export default function BestSellers({ products }) {
       <div className="w-full mx-auto flex flex-wrap items-center h-full">
         {products.map((product) => {
           return (
-            <SellerAnimator product={product}>
+            <SellerAnimator product={product} key={product.id}>
               <Image
                 className="object-contain object-center"
                 src={product.images[0]}

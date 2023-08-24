@@ -9,7 +9,7 @@ export default function ShopCategory({ categories }) {
       <div className="w-full mx-auto flex flex-wrap items-center h-full">
         {categories?.map((category) => {
           return (
-            <ShopAnimator category={category}>
+            <ShopAnimator category={category} key={category.id}>
               <Image
                 className="object-contain object-center"
                 src={category.image}

@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
-export default function ShopAnimator({ category, children }) {
+export default function ShopAnimator({ category, children, key }) {
   return (
     <motion.div
       initial={{ scale: 0.7, y: 50, opacity: 0 }}
