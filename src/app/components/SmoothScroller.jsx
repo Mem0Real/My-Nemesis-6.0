@@ -8,8 +8,8 @@ const SmoothScroller = () => {
     const lenis = new Lenis({
       smooth: true,
       smoothTouch: true,
-      touchMultiplier: 1.5,
-      touchInertiaMultiplier: 10,
+      touchMultiplier: 2,
+      touchInertiaMultiplier: 13,
       syncTouch: true,
       smoothWheel: true,
     });
