@@ -25,10 +25,53 @@ export default function ParticleGenerator() {
     <Particles
       id="tsparticles"
       init={particlesInit}
-      loaded={particlesLoaded}
       options={{
         background: "trasparent",
         fpsLimit: 120,
+        particles: {
+          number: {
+            density: {
+              enable: true,
+              area: 800,
+            },
+            value: 80,
+          },
+          color: {
+            value: currentTheme === "dark" ? "#ffffff" : "#000",
+          },
+          shape: {
+            type: "circle",
+          },
+          size: {
+            value: 3,
+            random: true,
+          },
+          opacity: {
+            value: 0.5,
+          },
+          links: {
+            enable: true,
+            distance: 150,
+            color: currentTheme === "dark" ? "#ffffff" : "#343434",
+            opacity: 0.4,
+            width: 1,
+          },
+          move: {
+            enable: true,
+            random: false,
+            straight: false,
+            direction: "none",
+            outModes: {
+              default: "out",
+            },
+            speed: 2,
+            // attract: {
+            //   enable: true,
+            //   rotateX: 600,
+            //   rotateY: 1200,
+            // },
+          },
+        },
         interactivity: {
           events: {
             onClick: {
@@ -42,66 +85,19 @@ export default function ParticleGenerator() {
             resize: true,
           },
           modes: {
-            bubble: {
-              distance: 300,
-              size: 5,
-              opacity: 0.3,
-              duration: 2,
-            },
             repulse: {
               distance: 100,
-              duration: 3,
+            },
+            bubble: {
+              distance: 200,
+              size: 5,
+              opacity: 0.5,
+              duration: 0.5,
             },
           },
         },
-        particles: {
-          color: {
-            value: currentTheme === "dark" ? "#ffffff" : "#343434",
-          },
-          links: {
-            color: currentTheme === "dark" ? "#ffffff" : "#343434",
-            distance: 150,
-            enable: true,
-            opacity: 0.5,
-            width: 2,
-          },
-          move: {
-            direction: "none",
-            enable: true,
-            outModes: {
-              default: "out",
-            },
-            random: false,
-            speed: 2,
-            straight: false,
-            attract: {
-              enable: true,
-              rotateX: 600,
-              rotateY: 1200,
-            },
-          },
-          number: {
-            density: {
-              enable: true,
-              area: 400,
-            },
-            value: 40,
-          },
-          opacity: {
-            value: 0.5,
-          },
-          shape: {
-            type: "circle",
-          },
-          size: {
-            value: { min: 1, max: 2 },
-          },
-        },
-        size: {
-          value: 3,
-          random: true,
-        },
-        detectRetina: false,
+
+        detectRetina: true,
       }}
     />
   );
