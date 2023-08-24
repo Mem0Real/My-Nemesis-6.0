@@ -261,6 +261,7 @@ export default function SideBarComponent({ data }) {
         childItemVariants,
         productSideVariants,
         productItemVariants,
+        toggleCategory,
         toggleParent,
         toggleChild,
         toggleProduct,

@@ -21,10 +21,6 @@ export default function ParticleGenerator() {
     await loadSlim(engine);
   }, []);
 
-  const particlesLoaded = useCallback(async (container) => {
-    await console.log(container);
-  }, []);
-
   return (
     <Particles
       id="tsparticles"

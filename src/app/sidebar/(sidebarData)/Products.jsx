@@ -3,7 +3,6 @@ import Link from "next/link";
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useSidebarContext } from "../SideBarComponent";
-import { useIcons } from "@/app/utils/CustomIcons";
 
 export default function Products({ category, parent, child }) {
   const {
@@ -12,7 +11,7 @@ export default function Products({ category, parent, child }) {
     openProduct,
     productSideVariants,
     productItemVariants,
-    closeSidebars,
+    toggleCategory,
   } = useSidebarContext();
   return (
     <AnimatePresence>
@@ -52,6 +51,7 @@ export default function Products({ category, parent, child }) {
                   >
                     <Link
                       href={`/catalogue/${category}/${parent}/${child}/${id}`}
+                      onClick={toggleCategory}
                     >
                       {name}
                     </Link>

@@ -219,7 +219,7 @@ export default function OrderTable() {
             <thead className="border-b border-black">
               <tr className="">
                 <th
-                  className="text-center md:text-start py-5 w-24"
+                  className="text-center md:text-start py-5 w-44"
                   onClick={() => handleSort("name")}
                 >
                   <motion.div className="mr-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
@@ -236,7 +236,7 @@ export default function OrderTable() {
                     </motion.span>
                   </motion.div>
                 </th>
-                <th className="text-center md:text-start py-5 w-24">
+                <th className="text-center md:text-start py-5 w-32">
                   <div className="mr-auto w-fit border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl ">
                     Phone No.
                   </div>
@@ -260,7 +260,7 @@ export default function OrderTable() {
                   </motion.div>
                 </th>
                 <th
-                  className="text-center py-5 w-16"
+                  className="text-center py-5 w-24"
                   onClick={() => handleSort("delivered")}
                 >
                   <motion.div className="mx-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">

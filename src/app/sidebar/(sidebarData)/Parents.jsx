@@ -15,6 +15,7 @@ export default function Parents({ category }) {
     buttonVariants,
     parentSideVariants,
     parentItemVariants,
+    toggleCategory,
     toggleChild,
   } = useSidebarContext();
   const { RightArrowIcon } = useIcons();
@@ -55,7 +56,12 @@ export default function Parents({ category }) {
                     className="px-4 capitalize w-full"
                   >
                     <motion.div className="flex items-center justify-between">
-                      <Link href={`/catalogue/${category}/${id}`}>{id}</Link>
+                      <Link
+                        href={`/catalogue/${category}/${id}`}
+                        onClick={toggleCategory}
+                      >
+                        {id}
+                      </Link>
                       <motion.button
                         onClick={() => toggleChild(id)}
                         animate={
