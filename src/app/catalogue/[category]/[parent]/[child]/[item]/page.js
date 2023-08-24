@@ -28,7 +28,7 @@ export default async function ItemPage({
     return Object.keys(obj).length === 0;
   }
 
-  const itemData = await getDetail("items", currentItem);
+  const itemData = await getDetail("Items", currentItem);
 
   if (itemData && isObjEmpty(itemData)) {
     content = (
