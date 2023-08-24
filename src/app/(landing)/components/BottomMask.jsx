@@ -65,7 +65,7 @@ export default function BottomMask() {
   }
 
   return (
-    <main className=" bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg">
+    <main className=" bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg pb-24">
       <div ref={ref} className="relative z-10 h-[200vh] overflow-clip">
         <motion.div
           style={{ scale }}

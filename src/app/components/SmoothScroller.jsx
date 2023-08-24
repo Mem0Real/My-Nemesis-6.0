@@ -9,7 +9,7 @@ const SmoothScroller = () => {
       smooth: true,
       smoothTouch: true,
       touchMultiplier: 1,
-      touchInertiaMultiplier: 15,
+      touchInertiaMultiplier: 20,
       syncTouch: true,
       smoothWheel: true,
     });
