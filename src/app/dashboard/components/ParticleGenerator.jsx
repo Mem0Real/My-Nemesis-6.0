@@ -37,7 +37,7 @@ export default function ParticleGenerator() {
           events: {
             onClick: {
               enable: true,
-              mode: "push",
+              mode: "bubble",
             },
             onHover: {
               enable: true,
@@ -46,35 +46,43 @@ export default function ParticleGenerator() {
             resize: true,
           },
           modes: {
-            push: {
-              quantity: 4,
+            bubble: {
+              distance: 300,
+              size: 5,
+              opacity: 0.3,
+              duration: 2,
             },
             repulse: {
-              distance: 200,
-              duration: 0.4,
+              distance: 100,
+              duration: 3,
             },
           },
         },
         particles: {
           color: {
-            value: currentTheme === "dark" ? "#ffffff" : "#000",
+            value: currentTheme === "dark" ? "#ffffff" : "#343434",
           },
           links: {
-            color: currentTheme === "dark" ? "#ffffff" : "#000",
+            color: currentTheme === "dark" ? "#ffffff" : "#343434",
             distance: 150,
             enable: true,
             opacity: 0.5,
-            width: 1,
+            width: 2,
           },
           move: {
             direction: "none",
             enable: true,
             outModes: {
-              default: "bounce",
+              default: "out",
             },
-            random: true,
-            speed: 1,
+            random: false,
+            speed: 2,
             straight: false,
+            attract: {
+              enable: true,
+              rotateX: 600,
+              rotateY: 1200,
+            },
           },
           number: {
             density: {
@@ -90,10 +98,14 @@ export default function ParticleGenerator() {
             type: "circle",
           },
           size: {
-            value: { min: 1, max: 5 },
+            value: { min: 1, max: 2 },
           },
         },
-        detectRetina: true,
+        size: {
+          value: 3,
+          random: true,
+        },
+        detectRetina: false,
       }}
     />
   );

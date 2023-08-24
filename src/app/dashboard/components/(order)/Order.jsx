@@ -106,14 +106,14 @@ export default function Order({
         removeAllRef,
       }}
     >
-      <div className="flex-flex-col w-full items-center justify-center relative min-h-screen bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 md:mt-6">
+      <div className="flex-flex-col w-full items-center justify-center relative min-h-screen bg-transparent text-neutral-800 dark:text-neutral-200 md:mt-6">
         <h1 className="text-2xl font-mono font-thin mt-2 underline underline-offset-4 text-center">
           Order list
         </h1>
-        <div className="md:mt-6 md:pb-5 min-h-screen bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
+        <div className="md:mt-6 md:pb-5 min-h-screen text-neutral-800 dark:text-neutral-200">
           <Suspense
             fallback={
-              <h1 className="text-3xl w-full flex flex-col items-center bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
+              <h1 className="text-3xl w-full flex flex-col items-center text-neutral-800 dark:text-neutral-200">
                 Loading...
               </h1>
             }
