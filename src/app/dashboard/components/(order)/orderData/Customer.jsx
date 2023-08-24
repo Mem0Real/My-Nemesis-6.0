@@ -11,10 +11,16 @@ import { AnimatePresence, motion } from "framer-motion";
 
 import { useIcons } from "@/app/utils/CustomIcons";
 import { toast } from "react-hot-toast";
+
 import formatCurrency from "@/app/utils/formatCurrency";
 
+import TimeAgo from "react-timeago";
+import englishStrings from "react-timeago/lib/language-strings/en";
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
+
+const formatter = buildFormatter(englishStrings);
+
 export default function Customer({ customer }) {
-  const [hovering, setHovering] = useState(false);
   const [deliverLoading, setDeliverLoading] = useState(false);
 
   const { order, markDelivered } = useOrderDataContext();
@@ -81,6 +87,8 @@ export default function Customer({ customer }) {
 
   const totalPrice = formatCurrency(invoiceTotal);
 
+  const orderDate = customer.createdAt;
+
   return [
     <motion.tr
       key={customer.id}
@@ -108,6 +116,9 @@ export default function Customer({ customer }) {
       </motion.td>
       <motion.td className="py-4 max-w-36 text-center md:text-start">
         +251 {customer.phone}
+      </motion.td>
+      <motion.td className="py-4 max-w-36 text-center">
+        {<TimeAgo date={orderDate} formatter={formatter} />}
       </motion.td>
       <td>
         <div className="flex items-center justify-center gap-2 md:gap-3 lg:gap-5">

@@ -1,6 +1,6 @@
 import * as bcrypt from "bcryptjs";
 
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import RegisterForm from "./Form";
 
 export default function RegisterPage() {

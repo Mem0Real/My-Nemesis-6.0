@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 export default async function setPriceToZero() {
   const items = await prisma.items.findMany({

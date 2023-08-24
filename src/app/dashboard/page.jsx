@@ -20,7 +20,7 @@ export default async function DashboardPage() {
         >
           <DataFetcher />
         </Suspense>
-      </div>{" "}
+      </div>
     </PageWrapper>
   );
 }

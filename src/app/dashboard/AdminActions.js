@@ -23,7 +23,6 @@ export default function AdminActions({
 }) {
   const [showList, setShowList] = useState();
   const [showOrder, setShowOrder] = useState();
-  // const cookies = parseCookies();
 
   const toggleList = () => {
     setShowList((prev) => !prev);

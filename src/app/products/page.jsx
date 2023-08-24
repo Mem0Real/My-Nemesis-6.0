@@ -1,4 +1,4 @@
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import ProductList from "./ProductList";
 import PageWrapper from "../components/PageWrapper";
 import Image from "next/image";

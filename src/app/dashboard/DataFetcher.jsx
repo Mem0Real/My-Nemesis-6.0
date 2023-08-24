@@ -1,5 +1,5 @@
 import React from "react";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 
 import { create, update, deleteItem } from "./listActions";
 import { removeOne, removeAll, markDelivered } from "./orderActions";
@@ -38,10 +38,7 @@ export default async function DataFetcher() {
   const listData = categoryList();
   const orderData = orderList();
 
-  const data = await Promise.all([listData, orderData]);
-
-  const list = data[0];
-  const order = data[1];
+  const [list, order] = await Promise.all([listData, orderData]);
 
   return (
     <AdminActions

@@ -190,6 +190,7 @@ export default function OrderTable() {
                 <th className="text-center md:text-start py-5 w-24">
                   Phone No.
                 </th>
+                <th className="text-center py-5 w-24">Order Date</th>
                 <th className="w-16" />
               </tr>
             </thead>
