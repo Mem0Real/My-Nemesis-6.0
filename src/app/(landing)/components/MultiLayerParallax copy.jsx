@@ -37,7 +37,7 @@ export default function MultiLayerParallax() {
 
   if (isMobile) {
     bgSpeed = "80%";
-    textSpeed = "500%";
+    textSpeed = "1000%";
   } else {
     bgSpeed = "100%";
     textSpeed = "500%";
@@ -76,7 +76,6 @@ export default function MultiLayerParallax() {
     >
       <motion.h1
         className="font-bold text-neutral-800 dark:text-neutral-200 text-4xl sm:text-6xl relative z-10"
-        // animate={{ transform: `translateY(0)` }}
         style={{ y: textY }}
       >
         My Nemesis

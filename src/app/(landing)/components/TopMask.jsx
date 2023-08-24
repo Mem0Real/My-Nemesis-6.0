@@ -47,7 +47,7 @@ export default function TopMask() {
   const imageTransform = useTransform(scrollYProgress, [0, 1], [50, 0]);
 
   if (isMobile) {
-    scale = 1;
+    scale = scaleTransform;
     imageX = 1;
   } else {
     scale = scaleTransform;
