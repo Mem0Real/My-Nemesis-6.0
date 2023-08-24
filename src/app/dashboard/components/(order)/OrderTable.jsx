@@ -13,6 +13,7 @@ import RemoveModal from "./Remove";
 import { useOrderDataContext } from "./Order";
 import { setCookie, getCookie, hasCookie } from "cookies-next";
 import { motion, AnimatePresence } from "framer-motion";
+import { useIcons } from "@/app/utils/CustomIcons";
 
 const OrderContext = createContext({});
 
@@ -27,10 +28,12 @@ export default function OrderTable() {
   const [removeData, setRemoveData] = useState();
 
   const { order, delivered } = useOrderDataContext();
+  const { RightArrowIcon } = useIcons();
 
   const removeRef = useRef();
 
   const [sortedData, setSortedData] = useState(order[0]);
+  const [sort, setSort] = useState("");
 
   // Disable scrollbar on modal open
   useEffect(() => {
@@ -181,18 +184,19 @@ export default function OrderTable() {
     let sorted;
     if (colName === "name") {
       sorted = [...sortedData].sort((a, b) => {
-        if (a.id < b.id) return -1;
-        if (a.id > b.id) return 1;
+        if (a.id < b.id) return sort === colName ? 1 : -1;
+        if (a.id > b.id) return sort === colName ? -1 : 1;
         return 0;
       });
     } else {
       sorted = [...sortedData].sort((a, b) => {
-        if (a[colName] < b[colName]) return 1;
-        if (a[colName] > b[colName]) return -1;
+        if (a[colName] < b[colName]) return sort === colName ? -1 : 1;
+        if (a[colName] > b[colName]) return sort === colName ? 1 : -1;
         return 0;
       });
     }
 
+    sort !== colName ? setSort(colName) : setSort("");
     setSortedData(sorted);
   };
 
@@ -218,7 +222,19 @@ export default function OrderTable() {
                   className="text-center md:text-start py-5 w-24"
                   onClick={() => handleSort("name")}
                 >
-                  Name
+                  <motion.div className="mr-auto w-fit cursor-pointer border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
+                    <motion.span>Name</motion.span>
+                    <motion.span
+                      className="text-neutral-800 dark:text-neutral-200"
+                      initial={{ rotate: -90 }}
+                      animate={
+                        sort === "name" ? { rotate: 90 } : { rotate: -90 }
+                      }
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                      {RightArrowIcon}
+                    </motion.span>
+                  </motion.div>
                 </th>
                 <th className="text-center md:text-start py-5 w-24">
                   Phone No.
@@ -227,7 +243,19 @@ export default function OrderTable() {
                   className="text-center py-5 w-24"
                   onClick={() => handleSort("updatedAt")}
                 >
-                  Order Date
+                  <motion.div className="mx-auto w-fit cursor-pointer border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
+                    <motion.span>Order Date</motion.span>
+                    <motion.span
+                      className="text-neutral-800 dark:text-neutral-200"
+                      initial={{ rotate: -90 }}
+                      animate={
+                        sort === "updatedAt" ? { rotate: 90 } : { rotate: -90 }
+                      }
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                      {RightArrowIcon}
+                    </motion.span>
+                  </motion.div>
                 </th>
                 <th className="w-16" />
               </tr>
