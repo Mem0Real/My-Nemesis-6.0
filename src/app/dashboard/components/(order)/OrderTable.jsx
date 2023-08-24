@@ -28,7 +28,7 @@ export default function OrderTable() {
   const [removeData, setRemoveData] = useState();
 
   const { order, delivered } = useOrderDataContext();
-  const { RightArrowIcon } = useIcons();
+  const { RightArrowIcon, NotDeliveredIcon } = useIcons();
 
   const removeRef = useRef();
 
@@ -222,7 +222,7 @@ export default function OrderTable() {
                   className="text-center md:text-start py-5 w-24"
                   onClick={() => handleSort("name")}
                 >
-                  <motion.div className="mr-auto w-fit cursor-pointer border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
+                  <motion.div className="mr-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
                     <motion.span>Name</motion.span>
                     <motion.span
                       className="text-neutral-800 dark:text-neutral-200"
@@ -237,13 +237,15 @@ export default function OrderTable() {
                   </motion.div>
                 </th>
                 <th className="text-center md:text-start py-5 w-24">
-                  Phone No.
+                  <div className="mr-auto w-fit border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl ">
+                    Phone No.
+                  </div>
                 </th>
                 <th
-                  className="text-center py-5 w-24"
+                  className="text-center py-5 w-36"
                   onClick={() => handleSort("updatedAt")}
                 >
-                  <motion.div className="mx-auto w-fit cursor-pointer border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
+                  <motion.div className="mx-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
                     <motion.span>Order Date</motion.span>
                     <motion.span
                       className="text-neutral-800 dark:text-neutral-200"
@@ -257,7 +259,26 @@ export default function OrderTable() {
                     </motion.span>
                   </motion.div>
                 </th>
-                <th className="w-16" />
+                <th
+                  className="text-center py-5 w-16"
+                  onClick={() => handleSort("delivered")}
+                >
+                  <motion.div className="mx-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
+                    <motion.span className="text-neutral-400 dark:text-neutral-600 px-2 py-1 rounded-full">
+                      {NotDeliveredIcon}
+                    </motion.span>
+                    <motion.span
+                      className="text-neutral-800 dark:text-neutral-200"
+                      initial={{ rotate: -90 }}
+                      animate={
+                        sort === "delivered" ? { rotate: 90 } : { rotate: -90 }
+                      }
+                      transition={{ duration: 0.3, ease: "easeInOut" }}
+                    >
+                      {RightArrowIcon}
+                    </motion.span>
+                  </motion.div>
+                </th>
               </tr>
             </thead>
             <motion.tbody
