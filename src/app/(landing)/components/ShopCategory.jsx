@@ -17,6 +17,7 @@ export default function ShopCategory({ categories }) {
               initial={{ scale: 0.7, y: 50, opacity: 0 }}
               exit={{ scale: 0.7, y: 50, opacity: 0 }}
               whileInView={{ scale: [1.2, 1], y: 0, opacity: 1 }}
+              viewport={{ once: true }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
               key={category.id}
               className="flex flex-col gap-6 items-center justify-center w-full md:w-80 lg:w-60 mx-auto mb-12"

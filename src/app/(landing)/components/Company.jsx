@@ -13,6 +13,7 @@ export default function Company() {
         initial={{ x: -50 }}
         exit={{ x: -50 }}
         whileInView={{ x: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.3, ease: "easeInOut" }}
       >
         {DeliveryTruckIcon}
@@ -23,6 +24,7 @@ export default function Company() {
         initial={{ x: -150 }}
         exit={{ x: -150 }}
         whileInView={{ x: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
         {HourIcon}
@@ -33,6 +35,7 @@ export default function Company() {
         initial={{ x: -250 }}
         exit={{ x: -250 }}
         whileInView={{ x: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 0.7 }}
       >
         {DiscountIcon}
@@ -43,6 +46,7 @@ export default function Company() {
         initial={{ x: -350 }}
         exit={{ x: -350 }}
         whileInView={{ x: 0 }}
+        viewport={{ once: true }}
         transition={{ duration: 1 }}
       >
         {MaintainanceIcon}

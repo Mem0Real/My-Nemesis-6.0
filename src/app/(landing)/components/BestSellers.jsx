@@ -18,7 +18,7 @@ export default function BestSellers({ products }) {
               exit={{ scale: 0.7, opacity: 0 }}
               whileInView={{ scale: 1, opacity: 1 }}
               transition={{ duration: 0.5, ease: "easeInOut" }}
-              // viewport={{ once: true }}
+              viewport={{ once: true }}
               key={product.id}
               className="flex flex-col gap-3 items-center w-full md:w-80 lg:w-72 mx-auto border border-neutral-300 dark:border-neutral-700 my-2"
             >
