@@ -48,7 +48,7 @@ export default function TopMask() {
 
   if (isMobile) {
     scale = scaleTransform;
-    imageX = 1;
+    imageX = imageTransform;
   } else {
     scale = scaleTransform;
     imageX = imageTransform;

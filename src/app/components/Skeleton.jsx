@@ -31,9 +31,10 @@ export default function Skeleton({ className }) {
       background: [gradient.initial, gradient.final, gradient.initial],
 
       transition: {
-        duration: 6,
+        duration: 4,
         ease: "easeInOut",
         repeat: Infinity,
+        repeatDelay: 1,
       },
     },
   };

@@ -57,8 +57,8 @@ export default function BottomMask() {
   const imageTransform = useTransform(scrollYProgress, [0, 1], [100, 0]);
 
   if (isMobile) {
-    scale = -50;
-    imageX = 1;
+    scale = scaleTransform;
+    imageX = imageTransform;
   } else {
     scale = scaleTransform;
     imageX = imageTransform;

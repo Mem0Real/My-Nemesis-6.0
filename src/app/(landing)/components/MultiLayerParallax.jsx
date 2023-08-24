@@ -37,7 +37,7 @@ export default function MultiLayerParallax() {
 
   if (isMobile) {
     bgSpeed = "80%";
-    textSpeed = "500%";
+    textSpeed = "1000%";
   } else {
     bgSpeed = "100%";
     textSpeed = "500%";
