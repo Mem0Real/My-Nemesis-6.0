@@ -6,6 +6,7 @@ import { useEffect } from "react";
 const SmoothScroller = () => {
   useEffect(() => {
     const lenis = new Lenis({
+      smooth: true,
       smoothTouch: true,
     });
 
