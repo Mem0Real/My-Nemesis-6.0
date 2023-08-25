@@ -18,7 +18,6 @@ import NextTopLoader from "nextjs-toploader";
 import ScrollToTopButton from "./components/ScrollToTop";
 import CustomCursor from "./components/CustomCursor";
 import SmoothScroller from "./components/SmoothScroller";
-import GsapScroll from "./components/GsapScroll";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -36,27 +35,25 @@ export default function RootLayout({ children }) {
             <CustomIcons>
               <CustomCursor>
                 <ToasterContext />
-                <GsapScroll>
-                  <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none relative">
-                    <CartBase>
-                      <SearchBase>
-                        <Navbar />
-                      </SearchBase>
-                      <NextTopLoader showSpinner={false} color="#DC143C" />
-                    </CartBase>
-                    <div className="text-sm text-neutral-800 dark:text-neutral-200 z-20">
-                      <Suspense>
-                        <SideBarBase />
-                      </Suspense>
-                    </div>
-                    <ScrollToTopButton>
-                      <div className={`min-h-screen`}>{children}</div>
-                    </ScrollToTopButton>
-                    <div className="w-full">
-                      <Footer />
-                    </div>
+                <div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none relative">
+                  <CartBase>
+                    <SearchBase>
+                      <Navbar />
+                    </SearchBase>
+                    <NextTopLoader showSpinner={false} color="#DC143C" />
+                  </CartBase>
+                  <div className="text-sm text-neutral-800 dark:text-neutral-200 z-20">
+                    <Suspense>
+                      <SideBarBase />
+                    </Suspense>
                   </div>
-                </GsapScroll>
+                  <ScrollToTopButton>
+                    <div className={`min-h-screen`}>{children}</div>
+                  </ScrollToTopButton>
+                  <div className="w-full">
+                    <Footer />
+                  </div>
+                </div>
               </CustomCursor>
             </CustomIcons>
           </ProductDataContext>
