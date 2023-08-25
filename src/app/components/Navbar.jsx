@@ -11,7 +11,7 @@ export const Navbar = async () => {
 
   return (
     <nav
-      className="w-full h-16 navbar bg-transparent
+      className="navbar w-full h-16 navbar bg-transparent
     text-neutral-800 dark:text-neutral-200 border-b border-neutral-400/60 dark:border-neutral-950 backdrop-blur-md shadow-md shadow-neutral-300 dark:shadow-blue-950/80 absolute z-30 transition-all ease-in-out duration-300"
     >
       <div className="relative md:flex justify-between md:justify-normal items-center w-full text-sm ">
