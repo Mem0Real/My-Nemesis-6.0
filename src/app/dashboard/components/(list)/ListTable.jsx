@@ -81,7 +81,7 @@ export default function MyTable() {
   };
 
   const handleFilter = (searchTerm) => {
-    const [categoryResults, parentResults, childResults, itemResults] =
+    const [categoryResults, parentResults, childResults, productResults] =
       searchData(searchTerm);
 
     // console.info("C");
@@ -91,7 +91,7 @@ export default function MyTable() {
     // console.info("Ch");
     // console.table(childResults);
     // console.info("I");
-    // console.table(itemResults);
+    // console.table(productResults);
 
     let categoryTree, parentTree, childTree, itemTree;
 
@@ -99,6 +99,10 @@ export default function MyTable() {
       categoryTree = getTree("category", categoryResults);
     } else if (parentResults.length > 0) {
       parentTree = getTree("parent", parentResults);
+    } else if (childResults.length > 0) {
+      childTree = getTree("child", childResults);
+    } else if (productResults.length > 0) {
+      itemTree = getTree("item", productResults);
     }
   };
 
@@ -196,6 +200,76 @@ export default function MyTable() {
 
       // console.info("product");
       // console.table(productArray);
+
+      setCategoryData(categoryArray);
+      setParentData(parentArray);
+      setChildData(childArray);
+      setProductData(productArray);
+    } else if (entry === "child") {
+      results.map(({ item }) => {
+        childArray.push(item);
+
+        let filter0 = data[0].filter(
+          (category) => category.id === item.CategoryId
+        );
+
+        filter0.map((fil) => {
+          if (!categoryArray.some((category) => category.id === fil.id)) {
+            categoryArray.push(fil);
+          }
+        });
+
+        let filter1 = data[1].filter((parent) => parent.id === item.ParentId);
+
+        filter1.map((fil) => {
+          if (!parentArray.some((parent) => parent.id === fil.id)) {
+            parentArray.push(fil);
+          }
+        });
+
+        let filter3 = data[3].filter((product) => product.ChildId === item.id);
+
+        filter3.map((fil) => {
+          if (!productArray.some((product) => product.id === fil.id)) {
+            productArray.push(fil);
+          }
+        });
+      });
+
+      setCategoryData(categoryArray);
+      setParentData(parentArray);
+      setChildData(childArray);
+      setProductData(productArray);
+    } else if (entry === "item") {
+      results.map(({ item }) => {
+        productArray.push(item);
+
+        let filter0 = data[0].filter(
+          (category) => category.id === item.CategoryId
+        );
+
+        filter0.map((fil) => {
+          if (!categoryArray.some((category) => category.id === fil.id)) {
+            categoryArray.push(fil);
+          }
+        });
+
+        let filter1 = data[1].filter((parent) => parent.id === item.ParentId);
+
+        filter1.map((fil) => {
+          if (!parentArray.some((parent) => parent.id === fil.id)) {
+            parentArray.push(fil);
+          }
+        });
+
+        let filter2 = data[2].filter((child) => child.id === item.ChildId);
+
+        filter2.map((fil) => {
+          if (!childArray.some((child) => child.id === fil.id)) {
+            childArray.push(fil);
+          }
+        });
+      });
 
       setCategoryData(categoryArray);
       setParentData(parentArray);
