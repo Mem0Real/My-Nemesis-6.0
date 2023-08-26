@@ -240,7 +240,22 @@ export default function MyTable() {
       arr3 = searchData("items", searchText);
 
       // Category filters
-      let existingArray = [...arr0];
+      let baseCatData = [...arr0];
+      let baseParData = [...arr1];
+      let baseChiData = [...arr2];
+      let baseItemData = [...arr3];
+
+      console.info("Categories");
+      console.table(baseCatData);
+
+      console.info("Parents");
+      console.table(baseParData);
+
+      console.info("Children");
+      console.table(baseChiData);
+
+      console.info("Items");
+      console.table(baseItemData);
 
       // If category is found
       if (arr0?.length > 0) {
@@ -287,7 +302,7 @@ export default function MyTable() {
 
       // If product is found
       if (arr3?.length > 0) {
-        setItemData((prev) => [...prev, arr3]);
+        // setItemData((prev) => [...prev, arr3]);
 
         arr3.map((item) => {
           arr2 = data[2].filter((child) => child.id === item.ChildId);
@@ -308,34 +323,44 @@ export default function MyTable() {
         });
       }
 
-      // setChildData(newChild);
-      // setParentData(newParent);
-      // setCategoryData(newCategory);
-
-      console.clear();
-      // console.info("MainCategory: ");
-      // console.table(Category);
-      // console.info("Parent-Category: ");
-      // console.table(parentCategory);
-      // console.info("Child-Category: ");
-      // console.table(childCategory);
-      // console.info("Item-Category: ");
-      // console.table(itemCategory);
-
-      itemCategory.map((obj) => {
-        const exist = Category.find((category) => category.id === obj.id);
-        if (!exist) existingArray.push(obj);
+      // Push collected category data to existing array
+      itemCategory.map((item) => {
+        const exist = Category.find((category) => category.id === item.id);
+        if (!exist) baseCatData.push(item);
       });
-      childCategory.map((obj) => {
-        const exist = existingArray.find((category) => category.id === obj.id);
-        if (!exist) existingArray.push(obj);
+      childCategory.map((child) => {
+        const exist = baseCatData.find((category) => category.id === child.id);
+        if (!exist) baseCatData.push(child);
       });
-      parentCategory.map((obj) => {
-        const exist = existingArray.find((category) => category.id === obj.id);
-        if (!exist) existingArray.push(obj);
+      parentCategory.map((parent) => {
+        const exist = baseCatData.find((category) => category.id === parent.id);
+        if (!exist) baseCatData.push(parent);
       });
 
-      setCategoryData(existingArray);
+      setCategoryData(baseCatData);
+
+      // Push collected parent data to existing array
+      itemParent.map((item) => {
+        const exist = baseParData.find((parent) => parent.id === item.id);
+        if (!exist) baseParData.push(item);
+      });
+
+      childParent.map((child) => {
+        const exist = baseParData.find((parent) => parent.id === child.id);
+        if (!exist) baseParData.push(child);
+      });
+
+      setParentData(baseParData);
+
+      // Push collected child data to existing array
+      itemChild.map((item) => {
+        const exist = baseChiData.find((child) => child.id === item.id);
+        if (!exist) baseChiData.push(item);
+      });
+
+      setChildData(baseChiData);
+
+      // Push collected item data to existing array
     } else {
       initialize();
     }
