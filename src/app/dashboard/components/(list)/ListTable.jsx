@@ -10,6 +10,9 @@ import { useDataContext } from "./List";
 import Category from "./listData/Category";
 
 import { setCookie, getCookie, hasCookie } from "cookies-next";
+
+import Fuse from "fuse.js";
+
 import { useIcons } from "@/app/utils/CustomIcons";
 
 const TableContext = createContext({});
@@ -21,7 +24,7 @@ export default function MyTable() {
   const [categoryData, setCategoryData] = useState(data[0]);
   const [parentData, setParentData] = useState(data[1]);
   const [childData, setChildData] = useState(data[2]);
-  const [itemData, setItemData] = useState(data[3]);
+  const [productData, setProductData] = useState(data[3]);
 
   const [mainCategory, setMainCategory] = useState([]);
   const [mainParent, setMainParent] = useState([]);
@@ -40,8 +43,12 @@ export default function MyTable() {
     setCategoryData(data[0]);
     setParentData(data[1]);
     setChildData(data[2]);
-    setItemData(data[3]);
+    setProductData(data[3]);
   };
+
+  // useEffect(() => {
+  //   console.log(parentData);
+  // }, [parentData]);
 
   useEffect(() => {
     let category, parent, child;
@@ -67,392 +74,133 @@ export default function MyTable() {
     setCookie("Child_Drop", chi);
   }, [cat, par, chi]);
 
-  let content;
-
   const handleChange = (e, entry) => {
     const text = e.target.value;
 
     handleFilter(text);
   };
 
-  // const handleFilter = (entry, searchText) => {
-  //   let arr0, arr1, arr2, arr3, name;
-  //   if (searchText !== "") {
-  //     // switch (entry) {
-  //     //   case "categories":
-  //     //     arr1 = data[0].filter((category) =>
-  //     //       category.name.toLowerCase().includes(searchText.toLowerCase())
-  //     //     );
-  //     //     setCategoryData(arr1);
-  //     //   case "parents":
-  //     //     arr2 = data[1].filter((parent) =>
-  //     //       parent.name.toLowerCase().includes(searchText.toLowerCase())
-  //     //     );
-  //     //     setParentData(arr2);
-  //     //   case "children":
-  //     //     arr3 = data[2].filter((child) =>
-  //     //       child.name.toLowerCase().includes(searchText.toLowerCase())
-  //     //     );
-  //     //     setChildData(arr3);
-  //     //   case "items":
-  //     //     arr4 = data[3].filter((item) =>
-  //     //       item.name.toLowerCase().includes(searchText.toLowerCase())
-  //     //     );
-  //     //     setItemData(arr4);
-  //     //   default:
-  //     //     break;
-  //     // }
-  //     searchText = searchText.toLowerCase();
+  const handleFilter = (searchTerm) => {
+    const [categoryResults, parentResults, childResults, itemResults] =
+      searchData(searchTerm);
 
-  //     switch (entry) {
-  //       case "categories":
-  //         arr0 = data[0].filter((category) => {
-  //           name = category.name.toLowerCase();
-  //           if (name.includes(searchText)) {
-  //             return name;
-  //           }
-  //         });
-  //         setCategoryData(arr0);
-  //       case "parents":
-  //         arr1 = data[1].filter((parent) => {
-  //           name = parent.name.toLowerCase();
-  //           if (name.includes(searchText)) {
-  //             predecessor("parents", parent.CategoryId);
-  //             return name;
-  //           }
-  //         });
-  //         setParentData(arr1);
-  //       case "children":
-  //         arr2 = data[2].filter((child) => {
-  //           name = child.name.toLowerCase();
-  //           if (name.includes(searchText)) {
-  //             predecessor("children", child.CategoryId, child.ParentId);
-  //             return name;
-  //           }
-  //         });
-  //         setChildData(arr2);
+    // console.info("C");
+    // console.table(categoryResults);
+    // console.info("P");
+    // console.table(parentResults);
+    // console.info("Ch");
+    // console.table(childResults);
+    // console.info("I");
+    // console.table(itemResults);
 
-  //       case "items":
-  //         arr3 = data[3].filter((item) => {
-  //           name = item.name.toLowerCase();
-  //           if (name.includes(searchText)) {
-  //             predecessor(
-  //               "items",
-  //               item.CategoryId,
-  //               item.ParentId,
-  //               item.ChildId
-  //             );
-  //             return name;
-  //           }
-  //         });
-  //         setItemData(arr3);
-  //         break;
+    let categoryTree, parentTree, childTree, itemTree;
 
-  //       default:
-  //         break;
-  //     }
-
-  //     // console.log(categoryData);
-  //   } else {
-  //     initialize();
-  //   }
-  // };
-
-  // Trying to show tree if child component is filtered from search
-  // const predecessor = (entry, id0, id1 = null, id2 = null) => {
-  //   let arr0, arr1, arr2;
-
-  //   switch (entry) {
-  //     case "items":
-  //       arr0 = data[0].filter((category) => category.id === id0);
-  //       arr1 = data[1].filter((parent) => parent.id === id1);
-  //       arr2 = data[2].filter((child) => child.id === id2);
-  //       break;
-  //     case "children":
-  //       arr0 = data[0].filter((category) => category.id === id0);
-  //       arr1 = data[1].filter((parent) => parent.id === id1);
-  //       break;
-  //     case "parents":
-  //       arr0 = data[0].filter((category) => category.id === id0);
-  //       break;
-  //   }
-
-  //   if (arr0?.length > 0) {
-  //     const foundCategory = arr0[0];
-  //     const filteredCategory, setFilteredCategory = categoryData.find( = useS
-  //       (category) => category.id === foundCategory.id
-  //     );
-
-  //     categoryData.map((category) =>
-  //       console.log(category.id, "== ? ", foundCategory.id)
-  //     );
-
-  //     if (!filteredCategory, setFilteredCategory) { = useS
-  //       setCategoryData((prev) => [...prev, foundCategory]);
-  //     }  else {
-  //       categoryData.map(category => category.id !==foundCategory.id)
-  //     }
-  //   }
-  //   if (arr1?.length > 0) {
-  //     const foundParent = arr1[0];
-  //     const filteredParent = parentData.find(
-  //       (parent) => parent.id === foundParent.id
-  //     );
-  //     if (!filteredParent) {
-  //       setParentData((prev) => [...prev, foundParent]);
-  //     } else {
-  //       // foundParent = parentData.map(parent => parent.id !==foundParent.id)
-  //     }
-  //   }
-  //   if (arr2?.length > 0) {
-  //     const foundChild = arr2[0];
-  //     const filteredChild = childData.find(
-  //       (child) => child.id === foundChild.id
-  //     );
-  //     if (!filteredChild) {
-  //       setChildData((prev) => [...prev, foundChild]);
-  //     } else {
-  //       categoryData.map(category => category.id !==foundCategory.id)
-  //     }
-  //   }
-  // };
-
-  const handleFilter = (searchText) => {
-    // Search filter holders
-    let arr0, arr1, arr2, arr3;
-
-    // Predecessor holders
-    let itemChild = [];
-    let itemParent = [];
-    let itemCategory = [];
-    let childParent = [];
-    let childCategory = [];
-    let parentCategory = [];
-    let Category = [];
-
-    if (searchText !== "") {
-      searchText = searchText.toLowerCase();
-
-      // Search inside products array
-      arr0 = searchData("categories", searchText);
-      arr1 = searchData("parents", searchText);
-      arr2 = searchData("children", searchText);
-      arr3 = searchData("items", searchText);
-
-      // Category filters
-      let baseCatData = [...arr0];
-      let baseParData = [...arr1];
-      let baseChiData = [...arr2];
-      let baseItemData = [...arr3];
-
-      console.info("Categories");
-      console.table(baseCatData);
-
-      console.info("Parents");
-      console.table(baseParData);
-
-      console.info("Children");
-      console.table(baseChiData);
-
-      console.info("Items");
-      console.table(baseItemData);
-
-      // If category is found
-      if (arr0?.length > 0) {
-        Category = [...arr0];
-      }
-
-      // If parent is found
-      if (arr1?.length > 0) {
-        // setParentData((prev) => [...prev, arr1]);
-
-        arr1.map((parent) => {
-          arr0 = data[0].filter(
-            (category) => category.id === parent.CategoryId
-          );
-
-          if (
-            !parentCategory.find(
-              (category) => category.id === parent.CategoryId
-            )
-          ) {
-            parentCategory.push(arr0[0]);
-          }
-        });
-      }
-
-      // If child is found
-      if (arr2?.length > 0) {
-        // setChildData((prev) => [...prev, arr2]);
-
-        arr2.map((child) => {
-          arr1 = data[1].filter((parent) => parent.id === child.ParentId);
-          arr0 = data[0].filter((category) => category.id === child.CategoryId);
-
-          if (!childParent.find((parent) => parent.id === child.ParentId)) {
-            childParent.push(arr1[0]);
-          }
-          if (
-            !childCategory.find((category) => category.id === child.CategoryId)
-          ) {
-            childCategory.push(arr0[0]);
-          }
-        });
-      }
-
-      // If product is found
-      if (arr3?.length > 0) {
-        // setItemData((prev) => [...prev, arr3]);
-
-        arr3.map((item) => {
-          arr2 = data[2].filter((child) => child.id === item.ChildId);
-          arr1 = data[1].filter((parent) => parent.id === item.ParentId);
-          arr0 = data[0].filter((category) => category.id === item.CategoryId);
-
-          if (!itemChild.find((child) => child.id === item.ChildId)) {
-            itemChild.push(arr2[0]);
-          }
-          if (!itemParent.find((parent) => parent.id === item.ParentId)) {
-            itemParent.push(arr1[0]);
-          }
-          if (
-            !itemCategory.find((category) => category.id === item.CategoryId)
-          ) {
-            itemCategory.push(arr0[0]);
-          }
-        });
-      }
-
-      // Push collected category data to existing array
-      itemCategory.map((item) => {
-        const exist = Category.find((category) => category.id === item.id);
-        if (!exist) baseCatData.push(item);
-      });
-      childCategory.map((child) => {
-        const exist = baseCatData.find((category) => category.id === child.id);
-        if (!exist) baseCatData.push(child);
-      });
-      parentCategory.map((parent) => {
-        const exist = baseCatData.find((category) => category.id === parent.id);
-        if (!exist) baseCatData.push(parent);
-      });
-
-      setCategoryData(baseCatData);
-
-      // Push collected parent data to existing array
-      itemParent.map((item) => {
-        const exist = baseParData.find((parent) => parent.id === item.id);
-        if (!exist) baseParData.push(item);
-      });
-
-      childParent.map((child) => {
-        const exist = baseParData.find((parent) => parent.id === child.id);
-        if (!exist) baseParData.push(child);
-      });
-
-      setParentData(baseParData);
-
-      // Push collected child data to existing array
-      itemChild.map((item) => {
-        const exist = baseChiData.find((child) => child.id === item.id);
-        if (!exist) baseChiData.push(item);
-      });
-
-      setChildData(baseChiData);
-
-      // Push collected item data to existing array
-    } else {
-      initialize();
+    if (categoryResults.length > 0) {
+      categoryTree = getTree("category", categoryResults);
+    } else if (parentResults.length > 0) {
+      parentTree = getTree("parent", parentResults);
     }
   };
 
-  const searchData = (entry, searchText) => {
-    if (entry === "categories") {
-      return data[0].filter((category) => {
-        const name = category.name.toLowerCase();
-        if (name.includes(searchText)) {
-          return category;
-        }
-      });
-    } else if (entry === "parents") {
-      return data[1].filter((parent) => {
-        const name = parent.name.toLowerCase();
-        if (name.includes(searchText)) {
-          return parent;
-        }
-      });
-    } else if (entry === "children") {
-      return data[2].filter((child) => {
-        const name = child.name.toLowerCase();
-        if (name.includes(searchText)) {
-          return child;
-        }
-      });
-    } else if (entry === "items") {
-      return data[3].filter((item) => {
-        const name = item.name.toLowerCase();
-        if (name.includes(searchText)) {
-          return item;
-        }
-      });
-    }
+  const searchData = (searchTerm) => {
+    let categoryFuse, parentFuse, childFuse, itemFuse;
+
+    const options = {
+      keys: ["name"],
+      threshold: 0.2,
+    };
+
+    categoryFuse = new Fuse(data[0], options);
+    parentFuse = new Fuse(data[1], options);
+    childFuse = new Fuse(data[2], options);
+    itemFuse = new Fuse(data[3], options);
+
+    const res1 = categoryFuse.search(searchTerm);
+    const res2 = parentFuse.search(searchTerm);
+    const res3 = childFuse.search(searchTerm);
+    const res4 = itemFuse.search(searchTerm);
+
+    return [res1, res2, res3, res4];
   };
 
-  const predecessor = (entry, id0, id1 = null, id2 = null) => {
-    let arr0, arr1, arr2;
+  const getTree = (entry, results) => {
+    let categoryArray = [];
+    let parentArray = [];
+    let childArray = [];
+    let productArray = [];
 
-    switch (entry) {
-      case "items":
-        arr0 = data[0].filter((category) => category.id === id0);
-        arr1 = data[1].filter((parent) => parent.id === id1);
-        arr2 = data[2].filter((child) => child.id === id2);
-        break;
-      case "children":
-        arr0 = data[0].filter((category) => category.id === id0);
-        arr1 = data[1].filter((parent) => parent.id === id1);
-        break;
-      case "parents":
-        arr0 = data[0].filter((category) => category.id === id0);
-        break;
-    }
+    if (entry === "category") {
+      results.map(({ item }) => {
+        categoryArray.push(item);
 
-    if (arr0?.length > 0) {
-      const foundCategory = arr0[0];
-      const filteredCategory = categoryData.find(
-        (category) => category.id === foundCategory.id
-      );
+        let filter1 = data[1].filter((parent) => parent.CategoryId === item.id);
+        parentArray.push(filter1);
 
-      // categoryData.map((category) =>
-      // console.log(category.id, "== ? ", foundCategory.id)
-      // );
+        let filter2 = data[2].filter((child) => child.CategoryId === item.id);
+        childArray.push(filter2);
 
-      if (!filteredCategory) {
-        setCategoryData((prev) => [...prev, foundCategory]);
-      } else {
-        categoryData.map((category) => category.id !== foundCategory.id);
-      }
-    }
-    if (arr1?.length > 0) {
-      const foundParent = arr1[0];
-      const filteredParent = parentData.find(
-        (parent) => parent.id === foundParent.id
-      );
-      if (!filteredParent) {
-        setParentData((prev) => [...prev, foundParent]);
-      } else {
-        // foundParent = parentData.map(parent => parent.id !==foundParent.id)
-      }
-    }
-    if (arr2?.length > 0) {
-      const foundChild = arr2[0];
-      const filteredChild = childData.find(
-        (child) => child.id === foundChild.id
-      );
-      if (!filteredChild) {
-        setChildData((prev) => [...prev, foundChild]);
-      } else {
-        categoryData.map((category) => category.id !== foundCategory.id);
-      }
+        let filter3 = data[3].filter(
+          (product) => product.CategoryId === item.id
+        );
+        productArray.push(filter3);
+      });
+
+      // Merge the array of arrays
+      parentArray = [].concat(...parentArray);
+      childArray = [].concat(...childArray);
+      productArray = [].concat(...productArray);
+
+      setCategoryData(categoryArray);
+      setParentData(parentArray);
+      setChildData(childArray);
+      setProductData(productArray);
+    } else if (entry === "parent") {
+      results.map(({ item }) => {
+        parentArray.push(item);
+
+        let filter0 = data[0].filter(
+          (category) => category.id === item.CategoryId
+        );
+
+        filter0.map((fil) => {
+          if (!categoryArray.some((category) => category.id === fil.id)) {
+            categoryArray.push(fil);
+          }
+        });
+
+        let filter2 = data[2].filter((child) => child.ParentId === item.id);
+
+        filter2.map((fil) => {
+          if (!childArray.some((child) => child.id === fil.id)) {
+            childArray.push(fil);
+          }
+        });
+
+        let filter3 = data[3].filter((product) => product.ParentId === item.id);
+
+        filter3.map((fil) => {
+          if (!productArray.some((product) => product.id === fil.id)) {
+            productArray.push(fil);
+          }
+        });
+      });
+
+      // console.info("Category");
+      // console.table(categoryArray);
+
+      // console.info("Parent");
+      // console.table(parentArray);
+
+      // console.info("child");
+      // console.table(childArray);
+
+      // console.info("product");
+      // console.table(productArray);
+
+      setCategoryData(categoryArray);
+      setParentData(parentArray);
+      setChildData(childArray);
+      setProductData(productArray);
     }
   };
 
@@ -589,7 +337,7 @@ export default function MyTable() {
         contentVariants,
         parentData,
         childData,
-        itemData,
+        productData,
       }}
     >
       <div className="table-container">
@@ -599,9 +347,9 @@ export default function MyTable() {
               type="search"
               onChange={(e) => handleChange(e, "categories")}
               placeholder="Search..."
-              className="w-44 lg:w-48 flex-initial flex items-center cursor-pointer justify-evenly py-1 rounded-md outline outline-1 hover:outline-2outline-neutral-800 text-zinc-800 bg-zinc-200 dark:outline-neutral-200 dark:text-zinc-200 dark:bg-zinc-800"
+              className="ps-7 w-36 flex-initial flex items-center justify-evenly py-1 rounded-md outline outline-1 hover:outline-2outline-neutral-800 text-zinc-800 bg-zinc-200 dark:outline-neutral-200 dark:text-zinc-200 dark:bg-zinc-800"
             />
-            <div className="text-base absolute left-1 lg:left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-800 dark:text-neutral-200">
+            <div className="text-base absolute left-1.5 lg:left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-800 dark:text-neutral-200">
               {SearchIcon}
             </div>
           </div>

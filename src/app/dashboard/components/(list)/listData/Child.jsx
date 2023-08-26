@@ -13,11 +13,15 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useIcons } from "@/app/utils/CustomIcons";
 
 export default function Child({ categoryId, parentId, child }) {
-  const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
-  const { par, chi, buttonVariants, contentVariants, toggleChiDrop } =
-    useTableContext();
-
-  const items = data[3];
+  const { handleAdd, handleEdit, handleDelete } = useDataContext();
+  const {
+    productData,
+    par,
+    chi,
+    buttonVariants,
+    contentVariants,
+    toggleChiDrop,
+  } = useTableContext();
 
   const { RightArrowIcon, PlusIcon, EditIcon, DeleteIcon } = useIcons();
 
@@ -147,7 +151,7 @@ export default function Child({ categoryId, parentId, child }) {
                   </tr>
                 </thead>
                 <tbody>
-                  {items.map(
+                  {productData.map(
                     (item) =>
                       item.ChildId === child.id && (
                         <React.Fragment key={item.id}>
