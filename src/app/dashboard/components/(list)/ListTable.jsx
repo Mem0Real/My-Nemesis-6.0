@@ -37,7 +37,7 @@ export default function MyTable() {
   const [par, setPar] = useState({});
   const [chi, setChi] = useState({});
 
-  const { SearchIcon } = useIcons();
+  const { SearchIcon, CloseIcon } = useIcons();
 
   const initialize = () => {
     setCategoryData(data[0]);
@@ -74,24 +74,17 @@ export default function MyTable() {
     setCookie("Child_Drop", chi);
   }, [cat, par, chi]);
 
-  const handleChange = (e, entry) => {
-    const text = e.target.value;
+  const handleChange = (e = null) => {
+    if (e) {
+      const text = e.target.value;
 
-    handleFilter(text);
+      handleFilter(text);
+    }
   };
 
   const handleFilter = (searchTerm) => {
     const [categoryResults, parentResults, childResults, productResults] =
       searchData(searchTerm);
-
-    // console.info("C");
-    // console.table(categoryResults);
-    // console.info("P");
-    // console.table(parentResults);
-    // console.info("Ch");
-    // console.table(childResults);
-    // console.info("I");
-    // console.table(productResults);
 
     let categoryTree, parentTree, childTree, itemTree;
 
@@ -416,15 +409,23 @@ export default function MyTable() {
     >
       <div className="table-container">
         <div className="mx-auto w-[98%] overflow-auto">
-          <div className="relative">
+          <div className="flex flex-col items-center md:items-start w-full">
             <input
-              type="search"
-              onChange={(e) => handleChange(e, "categories")}
+              type="text"
+              onChange={(e) => handleChange(e)}
               placeholder="Search..."
-              className="ps-7 w-36 flex-initial flex items-center justify-evenly py-1 rounded-md outline outline-1 hover:outline-2outline-neutral-800 text-zinc-800 bg-zinc-200 dark:outline-neutral-200 dark:text-zinc-200 dark:bg-zinc-800"
+              className="ms-5 ps-7 w-52 flex-initial flex items-center justify-evenly py-2 rounded-sm border-b hover:border-2 border-neutral-800 text-neutral-900  dark:border-neutral-200 dark:text-neutral-100 bg-neutral-100/20 dark:bg-neutral-800/20 backdrop-blur-sm border-offset-4 rounded-t-md placeholder:text-neutral-800 dark:placeholder:text-neutral-200"
             />
-            <div className="text-base absolute left-1.5 lg:left-3 top-0 bottom-0 grid place-content-center z-10 text-neutral-800 dark:text-neutral-200">
-              {SearchIcon}
+            <div className="relative w-52 py-4">
+              <div className="text-base absolute left-4 md:left-6 -top-7 grid place-content-start z-10 text-neutral-600 dark:text-neutral-400">
+                {SearchIcon}
+              </div>
+              <div
+                className="absolute right-0 md:-right-[17px] -top-8 grid place-content-start z-10 text-neutral-600 dark:text-neutral-400 cursor-pointer"
+                onClick={(e) => handleChange()}
+              >
+                {CloseIcon}
+              </div>
             </div>
           </div>
           <table className="table-fixed w-full text-sm">
