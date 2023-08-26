@@ -23,6 +23,11 @@ export default function MyTable() {
   const [childData, setChildData] = useState(data[2]);
   const [itemData, setItemData] = useState(data[3]);
 
+  const [mainCategory, setMainCategory] = useState([]);
+  const [mainParent, setMainParent] = useState([]);
+  const [mainChild, setMainChild] = useState([]);
+  const [mainItem, setMainItem] = useState([]);
+
   const [empty, setEmpty] = useState(false);
 
   const [cat, setCat] = useState({});
@@ -67,38 +72,362 @@ export default function MyTable() {
   const handleChange = (e, entry) => {
     const text = e.target.value;
 
-    handleFilter(entry, text);
+    handleFilter(text);
   };
 
-  const handleFilter = (entry, searchText) => {
-    let arr1, arr2, arr3, arr4;
+  // const handleFilter = (entry, searchText) => {
+  //   let arr0, arr1, arr2, arr3, name;
+  //   if (searchText !== "") {
+  //     // switch (entry) {
+  //     //   case "categories":
+  //     //     arr1 = data[0].filter((category) =>
+  //     //       category.name.toLowerCase().includes(searchText.toLowerCase())
+  //     //     );
+  //     //     setCategoryData(arr1);
+  //     //   case "parents":
+  //     //     arr2 = data[1].filter((parent) =>
+  //     //       parent.name.toLowerCase().includes(searchText.toLowerCase())
+  //     //     );
+  //     //     setParentData(arr2);
+  //     //   case "children":
+  //     //     arr3 = data[2].filter((child) =>
+  //     //       child.name.toLowerCase().includes(searchText.toLowerCase())
+  //     //     );
+  //     //     setChildData(arr3);
+  //     //   case "items":
+  //     //     arr4 = data[3].filter((item) =>
+  //     //       item.name.toLowerCase().includes(searchText.toLowerCase())
+  //     //     );
+  //     //     setItemData(arr4);
+  //     //   default:
+  //     //     break;
+  //     // }
+  //     searchText = searchText.toLowerCase();
+
+  //     switch (entry) {
+  //       case "categories":
+  //         arr0 = data[0].filter((category) => {
+  //           name = category.name.toLowerCase();
+  //           if (name.includes(searchText)) {
+  //             return name;
+  //           }
+  //         });
+  //         setCategoryData(arr0);
+  //       case "parents":
+  //         arr1 = data[1].filter((parent) => {
+  //           name = parent.name.toLowerCase();
+  //           if (name.includes(searchText)) {
+  //             predecessor("parents", parent.CategoryId);
+  //             return name;
+  //           }
+  //         });
+  //         setParentData(arr1);
+  //       case "children":
+  //         arr2 = data[2].filter((child) => {
+  //           name = child.name.toLowerCase();
+  //           if (name.includes(searchText)) {
+  //             predecessor("children", child.CategoryId, child.ParentId);
+  //             return name;
+  //           }
+  //         });
+  //         setChildData(arr2);
+
+  //       case "items":
+  //         arr3 = data[3].filter((item) => {
+  //           name = item.name.toLowerCase();
+  //           if (name.includes(searchText)) {
+  //             predecessor(
+  //               "items",
+  //               item.CategoryId,
+  //               item.ParentId,
+  //               item.ChildId
+  //             );
+  //             return name;
+  //           }
+  //         });
+  //         setItemData(arr3);
+  //         break;
+
+  //       default:
+  //         break;
+  //     }
+
+  //     // console.log(categoryData);
+  //   } else {
+  //     initialize();
+  //   }
+  // };
+
+  // Trying to show tree if child component is filtered from search
+  // const predecessor = (entry, id0, id1 = null, id2 = null) => {
+  //   let arr0, arr1, arr2;
+
+  //   switch (entry) {
+  //     case "items":
+  //       arr0 = data[0].filter((category) => category.id === id0);
+  //       arr1 = data[1].filter((parent) => parent.id === id1);
+  //       arr2 = data[2].filter((child) => child.id === id2);
+  //       break;
+  //     case "children":
+  //       arr0 = data[0].filter((category) => category.id === id0);
+  //       arr1 = data[1].filter((parent) => parent.id === id1);
+  //       break;
+  //     case "parents":
+  //       arr0 = data[0].filter((category) => category.id === id0);
+  //       break;
+  //   }
+
+  //   if (arr0?.length > 0) {
+  //     const foundCategory = arr0[0];
+  //     const filteredCategory, setFilteredCategory = categoryData.find( = useS
+  //       (category) => category.id === foundCategory.id
+  //     );
+
+  //     categoryData.map((category) =>
+  //       console.log(category.id, "== ? ", foundCategory.id)
+  //     );
+
+  //     if (!filteredCategory, setFilteredCategory) { = useS
+  //       setCategoryData((prev) => [...prev, foundCategory]);
+  //     }  else {
+  //       categoryData.map(category => category.id !==foundCategory.id)
+  //     }
+  //   }
+  //   if (arr1?.length > 0) {
+  //     const foundParent = arr1[0];
+  //     const filteredParent = parentData.find(
+  //       (parent) => parent.id === foundParent.id
+  //     );
+  //     if (!filteredParent) {
+  //       setParentData((prev) => [...prev, foundParent]);
+  //     } else {
+  //       // foundParent = parentData.map(parent => parent.id !==foundParent.id)
+  //     }
+  //   }
+  //   if (arr2?.length > 0) {
+  //     const foundChild = arr2[0];
+  //     const filteredChild = childData.find(
+  //       (child) => child.id === foundChild.id
+  //     );
+  //     if (!filteredChild) {
+  //       setChildData((prev) => [...prev, foundChild]);
+  //     } else {
+  //       categoryData.map(category => category.id !==foundCategory.id)
+  //     }
+  //   }
+  // };
+
+  const handleFilter = (searchText) => {
+    // Search filter holders
+    let arr0, arr1, arr2, arr3;
+
+    // Predecessor holders
+    let itemChild = [];
+    let itemParent = [];
+    let itemCategory = [];
+    let childParent = [];
+    let childCategory = [];
+    let parentCategory = [];
+    let Category = [];
+
     if (searchText !== "") {
-      switch (entry) {
-        case "categories":
-          arr1 = data[0].filter((category) =>
-            category.name.toLowerCase().includes(searchText.toLowerCase())
-          );
-          setCategoryData(arr1);
-        case "parents":
-          arr2 = data[1].filter((parent) =>
-            parent.name.toLowerCase().includes(searchText.toLowerCase())
-          );
-          setParentData(arr2);
-        case "children":
-          arr3 = data[2].filter((child) =>
-            child.name.toLowerCase().includes(searchText.toLowerCase())
-          );
-          setChildData(arr3);
-        case "items":
-          arr4 = data[3].filter((item) =>
-            item.name.toLowerCase().includes(searchText.toLowerCase())
-          );
-          setItemData(arr4);
-        default:
-          break;
+      searchText = searchText.toLowerCase();
+
+      // Search inside products array
+      arr0 = searchData("categories", searchText);
+      arr1 = searchData("parents", searchText);
+      arr2 = searchData("children", searchText);
+      arr3 = searchData("items", searchText);
+
+      // Category filters
+      let existingArray = [...arr0];
+
+      // If category is found
+      if (arr0?.length > 0) {
+        Category = [...arr0];
       }
+
+      // If parent is found
+      if (arr1?.length > 0) {
+        // setParentData((prev) => [...prev, arr1]);
+
+        arr1.map((parent) => {
+          arr0 = data[0].filter(
+            (category) => category.id === parent.CategoryId
+          );
+
+          if (
+            !parentCategory.find(
+              (category) => category.id === parent.CategoryId
+            )
+          ) {
+            parentCategory.push(arr0[0]);
+          }
+        });
+      }
+
+      // If child is found
+      if (arr2?.length > 0) {
+        // setChildData((prev) => [...prev, arr2]);
+
+        arr2.map((child) => {
+          arr1 = data[1].filter((parent) => parent.id === child.ParentId);
+          arr0 = data[0].filter((category) => category.id === child.CategoryId);
+
+          if (!childParent.find((parent) => parent.id === child.ParentId)) {
+            childParent.push(arr1[0]);
+          }
+          if (
+            !childCategory.find((category) => category.id === child.CategoryId)
+          ) {
+            childCategory.push(arr0[0]);
+          }
+        });
+      }
+
+      // If product is found
+      if (arr3?.length > 0) {
+        setItemData((prev) => [...prev, arr3]);
+
+        arr3.map((item) => {
+          arr2 = data[2].filter((child) => child.id === item.ChildId);
+          arr1 = data[1].filter((parent) => parent.id === item.ParentId);
+          arr0 = data[0].filter((category) => category.id === item.CategoryId);
+
+          if (!itemChild.find((child) => child.id === item.ChildId)) {
+            itemChild.push(arr2[0]);
+          }
+          if (!itemParent.find((parent) => parent.id === item.ParentId)) {
+            itemParent.push(arr1[0]);
+          }
+          if (
+            !itemCategory.find((category) => category.id === item.CategoryId)
+          ) {
+            itemCategory.push(arr0[0]);
+          }
+        });
+      }
+
+      // setChildData(newChild);
+      // setParentData(newParent);
+      // setCategoryData(newCategory);
+
+      console.clear();
+      // console.info("MainCategory: ");
+      // console.table(Category);
+      // console.info("Parent-Category: ");
+      // console.table(parentCategory);
+      // console.info("Child-Category: ");
+      // console.table(childCategory);
+      // console.info("Item-Category: ");
+      // console.table(itemCategory);
+
+      itemCategory.map((obj) => {
+        const exist = Category.find((category) => category.id === obj.id);
+        if (!exist) existingArray.push(obj);
+      });
+      childCategory.map((obj) => {
+        const exist = existingArray.find((category) => category.id === obj.id);
+        if (!exist) existingArray.push(obj);
+      });
+      parentCategory.map((obj) => {
+        const exist = existingArray.find((category) => category.id === obj.id);
+        if (!exist) existingArray.push(obj);
+      });
+
+      setCategoryData(existingArray);
     } else {
       initialize();
+    }
+  };
+
+  const searchData = (entry, searchText) => {
+    if (entry === "categories") {
+      return data[0].filter((category) => {
+        const name = category.name.toLowerCase();
+        if (name.includes(searchText)) {
+          return category;
+        }
+      });
+    } else if (entry === "parents") {
+      return data[1].filter((parent) => {
+        const name = parent.name.toLowerCase();
+        if (name.includes(searchText)) {
+          return parent;
+        }
+      });
+    } else if (entry === "children") {
+      return data[2].filter((child) => {
+        const name = child.name.toLowerCase();
+        if (name.includes(searchText)) {
+          return child;
+        }
+      });
+    } else if (entry === "items") {
+      return data[3].filter((item) => {
+        const name = item.name.toLowerCase();
+        if (name.includes(searchText)) {
+          return item;
+        }
+      });
+    }
+  };
+
+  const predecessor = (entry, id0, id1 = null, id2 = null) => {
+    let arr0, arr1, arr2;
+
+    switch (entry) {
+      case "items":
+        arr0 = data[0].filter((category) => category.id === id0);
+        arr1 = data[1].filter((parent) => parent.id === id1);
+        arr2 = data[2].filter((child) => child.id === id2);
+        break;
+      case "children":
+        arr0 = data[0].filter((category) => category.id === id0);
+        arr1 = data[1].filter((parent) => parent.id === id1);
+        break;
+      case "parents":
+        arr0 = data[0].filter((category) => category.id === id0);
+        break;
+    }
+
+    if (arr0?.length > 0) {
+      const foundCategory = arr0[0];
+      const filteredCategory = categoryData.find(
+        (category) => category.id === foundCategory.id
+      );
+
+      // categoryData.map((category) =>
+      // console.log(category.id, "== ? ", foundCategory.id)
+      // );
+
+      if (!filteredCategory) {
+        setCategoryData((prev) => [...prev, foundCategory]);
+      } else {
+        categoryData.map((category) => category.id !== foundCategory.id);
+      }
+    }
+    if (arr1?.length > 0) {
+      const foundParent = arr1[0];
+      const filteredParent = parentData.find(
+        (parent) => parent.id === foundParent.id
+      );
+      if (!filteredParent) {
+        setParentData((prev) => [...prev, foundParent]);
+      } else {
+        // foundParent = parentData.map(parent => parent.id !==foundParent.id)
+      }
+    }
+    if (arr2?.length > 0) {
+      const foundChild = arr2[0];
+      const filteredChild = childData.find(
+        (child) => child.id === foundChild.id
+      );
+      if (!filteredChild) {
+        setChildData((prev) => [...prev, foundChild]);
+      } else {
+        categoryData.map((category) => category.id !== foundCategory.id);
+      }
     }
   };
 
@@ -272,7 +601,7 @@ export default function MyTable() {
                 }
               >
                 {categoryData.length > 0 ? (
-                  categoryData?.map((category, index) => (
+                  categoryData.map((category, index) => (
                     <React.Fragment key={category.id}>
                       <Category category={category} index={index} />
                     </React.Fragment>
