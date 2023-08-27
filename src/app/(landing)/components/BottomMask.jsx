@@ -69,7 +69,7 @@ export default function BottomMask() {
       <div ref={ref} className="relative z-10 h-[180vh] overflow-clip">
         <motion.div
           style={{ scale }}
-          className={`${styles.heroBackground} absolute right-0 bottom-0 grid w-screen h-screen gap-2 p-6 pt-20 [grid-template-rows:4fr_1fr] origin-[50%_40%] md:origin-[16%_48%] lg:origin-[8%_48%]`}
+          className={`${styles.heroBackground} absolute right-0 bottom-0 grid w-screen h-screen gap-2 p-6 pt-20 [grid-template-rows:4fr_1fr] origin-[50%_30%] md:origin-[16%_48%] lg:origin-[8%_48%]`}
         >
           <div
             className={`relative flex flex-col md:flex-row justify-end rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12`}
