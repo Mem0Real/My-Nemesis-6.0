@@ -63,6 +63,14 @@ export default function OrderTable() {
     };
   }, [removeModal]);
 
+  // Disable lenis scroll on modal open
+  useEffect(() => {
+    const html = document.querySelector("html");
+    removeModal
+      ? (html.dataset.lenisPrevent = "")
+      : delete html.dataset.lenisPrevent;
+  }, [removeModal]);
+
   // Close "Remove" modal on click outside
   useEffect(() => {
     let handler = (e) => {

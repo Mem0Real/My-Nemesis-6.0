@@ -38,6 +38,14 @@ export default function Item({ item }) {
     };
   }, [addToCartModal]);
 
+  // Disable lenis scroll on modal open
+  useEffect(() => {
+    const html = document.querySelector("html");
+    addToCartModal
+      ? (html.dataset.lenisPrevent = "")
+      : delete html.dataset.lenisPrevent;
+  }, [addToCartModal]);
+
   // Close addToCartModal
   useEffect(() => {
     let handler = (e) => {

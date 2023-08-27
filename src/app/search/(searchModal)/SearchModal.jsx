@@ -28,6 +28,7 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
   const { SearchIcon } = useIcons();
 
   const inputRef = useRef();
+
   // Focus on load
   useEffect(() => {
     if (inputRef.current) {

@@ -47,6 +47,14 @@ export default function List({ data, create, update, deleteItem, url }) {
     };
   }, [addModal, editModal, deleteModal]);
 
+  // Disable lenis scroll on modal open
+  useEffect(() => {
+    const html = document.querySelector("html");
+    addModal || editModal || deleteModal
+      ? (html.dataset.lenisPrevent = "")
+      : delete html.dataset.lenisPrevent;
+  }, [addModal, editModal, deleteModal]);
+
   // Close modal on click outside
   useEffect(() => {
     let handler = (e) => {

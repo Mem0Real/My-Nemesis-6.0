@@ -63,6 +63,14 @@ export default function CartBase({ children }) {
     };
   }, [cartModal, infoModal]);
 
+  // Disable lenis scroll on modal open
+  useEffect(() => {
+    const html = document.querySelector("html");
+    cartModal || infoModal
+      ? (html.dataset.lenisPrevent = "")
+      : delete html.dataset.lenisPrevent;
+  }, [cartModal, infoModal]);
+
   const closeCartModal = () => {
     showCartModal(() => false);
     setUpdater((prev) => !prev);

@@ -19,11 +19,19 @@ export default function SearchBase({ children }) {
       }
     };
 
-    window.addEventListener("wheel", handleWindowWheel, { passive: false });
+    window.addEventListener("wheel", handleWindowWheel, { passive: true });
 
     return () => {
       window.removeEventListener("wheel", handleWindowWheel);
     };
+  }, [searchModal]);
+
+  // Disable lenis scroll on modal open
+  useEffect(() => {
+    const html = document.querySelector("html");
+    searchModal
+      ? (html.dataset.lenisPrevent = "")
+      : delete html.dataset.lenisPrevent;
   }, [searchModal]);
 
   // Close Search Modal on click outside
