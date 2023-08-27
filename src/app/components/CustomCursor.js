@@ -34,10 +34,10 @@ export default function CustomCursor({ children }) {
       {children}
 
       <motion.div
-        className={`hidden lg:block ${styles.cursor} shadow-inner shadow-red-800 border border-neutral-800 dark:border-neutral-200 opacity-60 w-5 h-5 backdrop-blur-sm z-50`}
+        className={`hidden lg:block ${styles.cursor} border shadow-inner shadow-red-500 border-neutral-800 dark:border-neutral-200 opacity-60 w-6 h-6 backdrop-blur-sm z-50`}
         animate={{
-          translateX: -10,
-          translateY: -10,
+          translateX: -12,
+          translateY: -12,
           rotateX,
           rotateY,
           scaleX,

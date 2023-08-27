@@ -28,6 +28,12 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
   const { SearchIcon } = useIcons();
 
   const inputRef = useRef();
+
+  useEffect(() => {
+    const html = document.querySelector("html");
+    html.dataset.lenisPrevent = "";
+  }, []);
+
   // Focus on load
   useEffect(() => {
     if (inputRef.current) {

@@ -1,107 +1,111 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-gsap.registerPlugin(ScrollTrigger);
-
 export default function Green() {
-  const main = useRef();
-  const text = useRef();
-  const mask = useRef();
-  const container = useRef();
+  const [showModal, setShowModal] = useState(false);
+
+  const root = useRef();
+  const header = useRef();
+  const tl = useRef();
+  const modal = useRef();
 
   useLayoutEffect(() => {
-    const ctx = gsap.context((self) => {
-      const boxes = self.selector(".box");
-      boxes.forEach((box) => {
-        gsap.to(box, {
-          x: 150,
-          scrollTrigger: {
-            trigger: box,
-            start: "bottom bottom",
-            end: "top 20%",
-            scrub: true,
+    const ctx = gsap.context(() => {
+      tl.current && tl.current.progress(0).kill();
+      tl.current = gsap
+        .timeline({
+          repeat: -1,
+          repeatDelay: 2,
+          yoyo: true,
+          defaults: { x: 800 },
+        })
+        .to(
+          ".green",
+          {
+            rotate: 360,
+            borderRadius: "50%",
+            force3D: true,
+            duration: 3,
           },
-        });
-      });
+          0.5
+        )
+        .to(
+          ".yellow",
+          {
+            rotate: 360,
+            borderRadius: "50%",
+            force3D: true,
+            duration: 2,
+          },
+          "<0.4"
+        )
+        .to(
+          ".red",
+          {
+            rotate: 360,
+            duration: 1,
+            borderRadius: "50%",
+            force3D: true,
+            duration: 1,
+          },
+          "<0.6"
+        );
+    }, root);
 
-      gsap.to(text.current, {
-        y: "15em",
-        scrollTrigger: {
-          trigger: text.current,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: true,
-          // markers: true,
-        },
-      });
-
-      gsap.to(mask.current, {
-        x: "-5em",
-        scrollTrigger: {
-          trigger: mask.current,
-          start: "top top",
-          end: "+=50vh 100",
-          scrub: true,
-          markers: true,
-          pin: true,
-        },
-      });
-    }, main);
     return () => ctx.revert();
   }, []);
 
-  // gsap.to(".hello", {
-  //   yPercent: 50,
-  //   scrollTrigger: {
-  //     trigger: ".hello",
-  //     start: "top center",
-  //     end: "bottom top",
-  //     scrub: true,
-  //     markers: true,
-  //   },
-  // });
+  const hoverIn = ({ currentTarget }) => {
+    gsap.to(currentTarget, { scale: 1.15 });
+  };
 
-  // gsap.to(".c", {
-  //   scrollTrigger: {
-  //     trigger: ".c",
-  //     toggleActions: "restart none none none",
-  //   },
-  //   rotation: 360,
-  //   duration: 3,
-  //   scale: 2,
-  //   transformOrigin: "50% 50%",
-  //   ease: "out",
-  // });
+  const hoverOut = ({ currentTarget }) => {
+    gsap.to(currentTarget, { scale: 1 });
+  };
+
+  const toggleModal = () => {
+    setShowModal(!showModal);
+    !showModal
+      ? gsap.to(modal.current, { x: 500, ease: "power.inOut", duration: 0.5 })
+      : gsap.to(modal.current, { x: 0, ease: "power.inOut", duration: 0.5 });
+  };
 
   return (
-    <div className="flex flex-col justify-center items-center pt-44 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
-      <section className={` flex flex-col justify-center items-center`}>
-        <h1>Basic ScrollTrigger with React</h1>
-        <h2>Scroll down to see the magic happen!!</h2>
-      </section>
-      <div ref={text} className="px-8 py-4 bg-purple-500 rounded">
-        Nemesis
-      </div>
-
+    <div
+      ref={root}
+      className="relative bg-neutral-100 dark:bg-neutral-800 text-neutral-900 dark:text-neutral-100 min-h-screen w-screen flex flex-col justify-start items-center pt-24"
+    >
       <div
-        className={` flex flex-col justify-center items-center gap-24 `}
-        ref={main}
+        className="w-full ms-12 bg-neutral-400 rounded-xl"
+        onClick={toggleModal}
       >
-        <div className="box px-8 py-4 bg-green-500 rounded ">box</div>
-        <div className="box px-8 py-4 bg-green-500 rounded ">box</div>
-        <div className="box px-8 py-4 bg-green-500 rounded ">box</div>
+        <h1 className="text-4xl">Modal</h1>
       </div>
-      <section ref={container} className="h-[300vh]">
+      <div
+        ref={modal}
+        className="absolute top-36 -left-[30vw] h-[80vh] w-[30vw] bg-neutral-500 border border-neutral-800 dark:border-neutral-200 rounded-lg"
+      />
+      <h1 ref={header} className="text-3xl">
+        Hello Gsap World!
+      </h1>
+      <div className="mt-16 self-start px-24 w-full flex flex-col justify-center gap-3">
+        <div className="green bg-green-500 w-6 h-6"></div>
+        <div className="yellow bg-yellow-500 w-6 h-6"></div>
+        <div className="red bg-red-500 w-6 h-6"></div>
+      </div>
+      <div className="mt-4 w-full grid place-content-center">
         <div
-          ref={mask}
-          className="px-24 py-36 absolute bg-transparent border-2 border-neutral-900 dark:border-neutral-200 rounded-full"
-        />
-      </section>
-      <section className="h-[300vh]"></section>
+          className="w-12 h-10 box text-center"
+          onMouseEnter={hoverIn}
+          onMouseLeave={hoverOut}
+        >
+          Hover Me
+        </div>
+      </div>
     </div>
   );
 }

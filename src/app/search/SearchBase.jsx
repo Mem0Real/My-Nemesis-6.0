@@ -11,7 +11,7 @@ export default function SearchBase({ children }) {
   const [searchModal, showSearchModal] = useState(false);
   const searchRef = useRef();
 
-  // Disable scrollbar on modal open
+  // Disable background scroll on modal open
   useEffect(() => {
     const handleWindowWheel = (event) => {
       if (searchModal && !searchRef?.current.contains(event.target)) {
@@ -38,29 +38,6 @@ export default function SearchBase({ children }) {
 
     return () => document.removeEventListener("mousedown", handler);
   }, [searchModal]);
-
-  // Open Search Modal on "/" press
-
-  // useEffect(() => {
-  //   let keysPressed = {};
-
-  //   const handleKeyDown = (event) => {
-  //     keysPressed[event.key] = true;
-
-  //     if (keysPressed["Control"] && event.key === "/") {
-  //       showSearchModal(true);
-  //     }
-  //     if (event.key === "Escape") {
-  //       showSearchModal(false);
-  //     }
-  //   };
-
-  //   window.addEventListener("keydown", handleKeyDown);
-
-  //   return () => {
-  //     window.removeEventListener("keydown", handleKeyDown);
-  //   };
-  // }, []);
 
   // Open & Close search modal using keyboard shortcuts
   useEffect(() => {

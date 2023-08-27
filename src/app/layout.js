@@ -17,7 +17,7 @@ import SideBarBase from "./sidebar/SideBarBase";
 import NextTopLoader from "nextjs-toploader";
 import ScrollToTopButton from "./components/ScrollToTop";
 import CustomCursor from "./components/CustomCursor";
-import SmoothScroller from "./components/SmoothScroller";
+// import SmoothScroller from "./components/SmoothScroller";
 
 export const metadata = {
   title: "My Nemesis 6.0",
@@ -27,10 +27,10 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en">
       <body>
         <ThemeProvider>
-          <SmoothScroller />
+          {/* <SmoothScroller /> */}
           <ProductDataContext>
             <CustomIcons>
               <CustomCursor>
