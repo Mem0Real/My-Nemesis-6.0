@@ -34,17 +34,6 @@ export default function MyTable() {
 
   const { SearchIcon, CloseIcon } = useIcons();
 
-  const initialize = () => {
-    setCategoryData(data[0]);
-    setParentData(data[1]);
-    setChildData(data[2]);
-    setProductData(data[3]);
-  };
-
-  // useEffect(() => {
-  //   console.log(parentData);
-  // }, [parentData]);
-
   useEffect(() => {
     let category, parent, child;
     if (hasCookie("Category_Drop")) {
