@@ -32,8 +32,21 @@ export default function OrderTable() {
 
   const removeRef = useRef();
 
-  const [sortedData, setSortedData] = useState(order[0]);
-  const [sort, setSort] = useState("");
+  const [sortedData, setSortedData] = useState();
+  const [sort, setSort] = useState("createdAt");
+  const [asc, setAsc] = useState(true);
+
+  // Update sort Data when initial data changes
+  useEffect(() => {
+    setSortedData(order[0]);
+  }, [order[0]]);
+
+  // If updated toggleSort
+  useEffect(() => {
+    if (sortedData === order[0]) {
+      toggleSort(undefined, "initial");
+    }
+  }, [sortedData]);
 
   // Disable scrollbar on modal open
   useEffect(() => {
@@ -88,11 +101,54 @@ export default function OrderTable() {
     setCookie("Customer", cus);
   }, [cus]);
 
-  // Sort by date on initial
   useEffect(() => {
-    handleSort("updatedAt");
-  }, []);
+    handleSort();
+  }, [sort, asc]);
 
+  const toggleSort = (colName = null, initial = null) => {
+    colName && setSort(colName);
+
+    if (!initial) {
+      sort !== colName ? setAsc(true) : setAsc(!asc);
+    } else handleSort();
+  };
+
+  const handleSort = () => {
+    let sorted;
+
+    if (sortedData) {
+      if (asc === true) {
+        if (sort === "name") {
+          sorted = [...sortedData].sort((a, b) => {
+            if (a.id > b.id) return 1;
+            if (a.id < b.id) return -1;
+            return 0;
+          });
+        } else {
+          sorted = [...sortedData].sort((a, b) => {
+            if (a[sort] > b[sort]) return -1;
+            if (a[sort] < b[sort]) return 1;
+            return 0;
+          });
+        }
+      } else {
+        if (sort === "name") {
+          sorted = [...sortedData].sort((a, b) => {
+            if (a.id < b.id) return 1;
+            if (a.id > b.id) return -1;
+            return 0;
+          });
+        } else {
+          sorted = [...sortedData].sort((a, b) => {
+            if (a[sort] < b[sort]) return -1;
+            if (a[sort] > b[sort]) return 1;
+            return 0;
+          });
+        }
+      }
+      setSortedData(sorted);
+    }
+  };
   const customerDropDown = (customerId) => {
     if (!cus.id) {
       setCus({ id: customerId, open: true });
@@ -180,26 +236,6 @@ export default function OrderTable() {
     },
   };
 
-  const handleSort = (colName) => {
-    let sorted;
-    if (colName === "name") {
-      sorted = [...sortedData].sort((a, b) => {
-        if (a.id < b.id) return sort === colName ? 1 : -1;
-        if (a.id > b.id) return sort === colName ? -1 : 1;
-        return 0;
-      });
-    } else {
-      sorted = [...sortedData].sort((a, b) => {
-        if (a[colName] < b[colName]) return sort === colName ? -1 : 1;
-        if (a[colName] > b[colName]) return sort === colName ? 1 : -1;
-        return 0;
-      });
-    }
-
-    sort !== colName ? setSort(colName) : setSort("");
-    setSortedData(sorted);
-  };
-
   return (
     <OrderContext.Provider
       value={{
@@ -220,7 +256,7 @@ export default function OrderTable() {
               <tr className="">
                 <th
                   className="text-center md:text-start py-5 w-44"
-                  onClick={() => handleSort("name")}
+                  onClick={() => toggleSort("name")}
                 >
                   <motion.div className="mr-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
                     <motion.span>Name</motion.span>
@@ -228,7 +264,9 @@ export default function OrderTable() {
                       className="text-neutral-800 dark:text-neutral-200"
                       initial={{ rotate: -90 }}
                       animate={
-                        sort === "name" ? { rotate: 90 } : { rotate: -90 }
+                        sort === "name" && asc
+                          ? { rotate: 90 }
+                          : { rotate: -90 }
                       }
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
@@ -243,7 +281,7 @@ export default function OrderTable() {
                 </th>
                 <th
                   className="text-center py-5 w-36"
-                  onClick={() => handleSort("updatedAt")}
+                  onClick={() => toggleSort("createdAt")}
                 >
                   <motion.div className="mx-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
                     <motion.span>Order Date</motion.span>
@@ -251,7 +289,9 @@ export default function OrderTable() {
                       className="text-neutral-800 dark:text-neutral-200"
                       initial={{ rotate: -90 }}
                       animate={
-                        sort === "updatedAt" ? { rotate: 90 } : { rotate: -90 }
+                        sort === "createdAt" && asc
+                          ? { rotate: 90 }
+                          : { rotate: -90 }
                       }
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
@@ -261,9 +301,14 @@ export default function OrderTable() {
                 </th>
                 <th
                   className="text-center py-5 w-24"
-                  onClick={() => handleSort("delivered")}
+                  onClick={() => toggleSort("delivered")}
                 >
-                  <motion.div className="mx-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
+                  <motion.div
+                    className="mx-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3"
+                    initial={{ opacity: 0 }}
+                    animate={delivered ? { opacity: 1 } : { opacity: 0 }}
+                    exit={{ opacity: 0 }}
+                  >
                     <motion.span className="text-neutral-400 dark:text-neutral-600 px-2 py-1 rounded-full">
                       {NotDeliveredIcon}
                     </motion.span>
@@ -271,7 +316,9 @@ export default function OrderTable() {
                       className="text-neutral-800 dark:text-neutral-200"
                       initial={{ rotate: -90 }}
                       animate={
-                        sort === "delivered" ? { rotate: 90 } : { rotate: -90 }
+                        sort === "delivered" && asc
+                          ? { rotate: 90 }
+                          : { rotate: -90 }
                       }
                       transition={{ duration: 0.3, ease: "easeInOut" }}
                     >
@@ -293,7 +340,7 @@ export default function OrderTable() {
                 }
               >
                 <AnimatePresence key="customerRow">
-                  {sortedData.map((customer) =>
+                  {sortedData?.map((customer) =>
                     delivered ? (
                       <React.Fragment key={customer.id}>
                         <Customer customer={customer} />

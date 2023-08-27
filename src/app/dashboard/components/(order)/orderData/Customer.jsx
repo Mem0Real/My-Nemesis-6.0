@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Order from "./Order";
 
@@ -87,7 +87,7 @@ export default function Customer({ customer }) {
 
   const totalPrice = formatCurrency(invoiceTotal);
 
-  const orderDate = customer.updatedAt;
+  const orderDate = customer.createdAt;
 
   return [
     <motion.tr
@@ -226,10 +226,10 @@ export default function Customer({ customer }) {
             exit="close"
           >
             <td
-              colSpan={3}
-              className="bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
+              colSpan={4}
+              className="bg-neutral-400 dark:bg-neutral-700 text-neutral-800 dark:text-neutral-200"
             >
-              <div className="mx-auto">
+              <div className="mx-auto px-2">
                 <table className="table-fixed w-full overflow-hidden border-0">
                   <thead>
                     <tr>
