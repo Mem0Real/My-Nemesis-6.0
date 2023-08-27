@@ -26,7 +26,7 @@ export default function Order({
   removeAll,
   markDelivered,
 }) {
-  const [settings, showSettings] = useState(true);
+  const [settings, showSettings] = useState(false);
 
   const [delivered, showDelivered] = useState(false);
 
@@ -132,7 +132,7 @@ export default function Order({
             <AnimatePresence>
               {settings && (
                 <motion.div
-                  className="absolute top-10 md:-top-2 right-3 md:-right-[155px] w-36 h-24 py-3 bg-neutral-100/20 dark:bg-neutral-800/20 backdrop-blur-md border border-neutral-800 dark:border-neutral-500 rounded-md overflow-hidden"
+                  className="absolute top-10 md:-top-2 right-3 md:-right-[155px] w-36 h-24 py-3 bg-neutral-100/10 dark:bg-neutral-800/10 backdrop-blur-sm  border border-neutral-500 rounded-md overflow-hidden"
                   initial={{ opacity: 0, scale: 0.3, x: -25 }}
                   animate={
                     settings

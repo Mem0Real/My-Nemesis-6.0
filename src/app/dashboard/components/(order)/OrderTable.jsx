@@ -258,7 +258,7 @@ export default function OrderTable() {
                   className="text-center md:text-start py-5 w-44"
                   onClick={() => toggleSort("name")}
                 >
-                  <motion.div className="mr-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
+                  <motion.div className="mr-auto w-fit cursor-pointer border px-2 py-1 border-neutral-500 rounded-md flex items-center gap-3">
                     <motion.span>Name</motion.span>
                     <motion.span
                       className="text-neutral-800 dark:text-neutral-200"
@@ -275,7 +275,7 @@ export default function OrderTable() {
                   </motion.div>
                 </th>
                 <th className="text-center md:text-start py-5 w-32">
-                  <div className="mr-auto w-fit border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl ">
+                  <div className="mr-auto w-fit border px-2 py-1 border-neutral-500 rounded-md ">
                     Phone No.
                   </div>
                 </th>
@@ -283,7 +283,7 @@ export default function OrderTable() {
                   className="text-center py-5 w-36"
                   onClick={() => toggleSort("createdAt")}
                 >
-                  <motion.div className="mx-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3">
+                  <motion.div className="mx-auto w-fit cursor-pointer border px-2 py-1 border-neutral-500 rounded-md flex items-center gap-3">
                     <motion.span>Order Date</motion.span>
                     <motion.span
                       className="text-neutral-800 dark:text-neutral-200"
@@ -300,16 +300,16 @@ export default function OrderTable() {
                   </motion.div>
                 </th>
                 <th
-                  className="text-center py-5 w-24"
+                  className="text-center w-24"
                   onClick={() => toggleSort("delivered")}
                 >
                   <motion.div
-                    className="mx-auto w-fit cursor-pointer border px-2 py-1 border-neutral-700 dark:border-neutral-300 rounded-xl flex items-center gap-3"
+                    className="mx-auto w-fit cursor-pointer border px-2 border-neutral-500 rounded-md flex items-center gap-3"
                     initial={{ opacity: 0 }}
                     animate={delivered ? { opacity: 1 } : { opacity: 0 }}
                     exit={{ opacity: 0 }}
                   >
-                    <motion.span className="text-neutral-400 dark:text-neutral-600 px-2 py-1 rounded-full">
+                    <motion.span className="text-neutral-400 dark:text-neutral-600 px-2 py-1">
                       {NotDeliveredIcon}
                     </motion.span>
                     <motion.span

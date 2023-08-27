@@ -17,7 +17,7 @@ import { useIcons } from "@/app/utils/CustomIcons";
 
 const TableContext = createContext({});
 
-// TODO if entry is empty show empty data or smtn
+// TODO if entry is empty show empty data or smtn also make dropdowns show multiple when searched
 export default function MyTable() {
   const { data } = useDataContext();
 
@@ -25,30 +25,13 @@ export default function MyTable() {
   const [parentData, setParentData] = useState(data[1]);
   const [childData, setChildData] = useState(data[2]);
   const [productData, setProductData] = useState(data[3]);
-
-  const [mainCategory, setMainCategory] = useState([]);
-  const [mainParent, setMainParent] = useState([]);
-  const [mainChild, setMainChild] = useState([]);
-  const [mainItem, setMainItem] = useState([]);
-
-  const [empty, setEmpty] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
 
   const [cat, setCat] = useState({});
   const [par, setPar] = useState({});
   const [chi, setChi] = useState({});
 
   const { SearchIcon, CloseIcon } = useIcons();
-
-  const initialize = () => {
-    setCategoryData(data[0]);
-    setParentData(data[1]);
-    setChildData(data[2]);
-    setProductData(data[3]);
-  };
-
-  // useEffect(() => {
-  //   console.log(parentData);
-  // }, [parentData]);
 
   useEffect(() => {
     let category, parent, child;
@@ -74,8 +57,11 @@ export default function MyTable() {
     setCookie("Child_Drop", chi);
   }, [cat, par, chi]);
 
-  const handleChange = (e = null) => {
-    if (e) {
+  const handleChange = (e, clear = null) => {
+    setSearchValue(e.target.value);
+
+    if (clear) setSearchValue("");
+    else {
       const text = e.target.value;
 
       handleFilter(text);
@@ -181,18 +167,6 @@ export default function MyTable() {
           }
         });
       });
-
-      // console.info("Category");
-      // console.table(categoryArray);
-
-      // console.info("Parent");
-      // console.table(parentArray);
-
-      // console.info("child");
-      // console.table(childArray);
-
-      // console.info("product");
-      // console.table(productArray);
 
       setCategoryData(categoryArray);
       setParentData(parentArray);
@@ -414,7 +388,7 @@ export default function MyTable() {
               type="text"
               onChange={(e) => handleChange(e)}
               placeholder="Search..."
-              className="ms-5 ps-7 w-52 flex-initial flex items-center justify-evenly py-2 rounded-sm border-b hover:border-2 border-neutral-800 text-neutral-900  dark:border-neutral-200 dark:text-neutral-100 bg-neutral-100/20 dark:bg-neutral-800/20 backdrop-blur-sm border-offset-4 rounded-t-md placeholder:text-neutral-800 dark:placeholder:text-neutral-200"
+              className="ms-5 ps-7 w-52 flex-initial flex items-center justify-evenly py-2 rounded-sm border-b border-neutral-800 text-neutral-900  dark:border-neutral-200 dark:text-neutral-100 bg-neutral-100/20 dark:bg-neutral-800/20 backdrop-blur-sm border-offset-4 rounded-t-md placeholder:text-neutral-800 dark:placeholder:text-neutral-200"
             />
             <div className="relative w-52 py-4">
               <div className="text-base absolute left-4 md:left-6 -top-7 grid place-content-start z-10 text-neutral-600 dark:text-neutral-400">
@@ -422,7 +396,7 @@ export default function MyTable() {
               </div>
               <div
                 className="absolute right-0 md:-right-[17px] -top-8 grid place-content-start z-10 text-neutral-600 dark:text-neutral-400 cursor-pointer"
-                onClick={(e) => handleChange()}
+                onClick={(e) => handleChange(e, "clear")}
               >
                 {CloseIcon}
               </div>
