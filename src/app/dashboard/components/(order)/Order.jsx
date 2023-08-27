@@ -197,55 +197,6 @@ export default function Order({
               )}
             </AnimatePresence>
           </motion.div>
-          {/* {settings && (
-            <div className="flex w-full justify-center items-center mt-3 gap-6">
-              <AnimatePresence id="deliverToggle">
-                {delivered ? (
-                  <motion.button
-                    id="hideDeliveredBtn"
-                    className="px-2 py-1 text-sm bg-transparent border border-blue-500 rounded-lg"
-                    onClick={() => toggleDelivered()}
-                    whileHover={{
-                      backgroundColor: "#2563eb",
-                      borderRadius: "10px",
-                    }}
-                    whileTap={{
-                      scale: 0.95,
-                    }}
-                  >
-                    Hide Delivered
-                  </motion.button>
-                ) : (
-                  <motion.button
-                    id="showDeliveredBtn"
-                    className="px-3 py-2 text-sm bg-transparent border border-blue-700 rounded-lg"
-                    onClick={() => toggleDelivered()}
-                    whileHover={{
-                      backgroundColor: "#2563eb",
-                      borderRadius: "10px",
-                    }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    Show Delivered
-                  </motion.button>
-                )}
-              </AnimatePresence>
-              <motion.button
-                id="removeAllBtn"
-                className="px-2 py-1 text-sm bg-transparent border border-red-700 rounded-lg"
-                onClick={() => handleRemoveAll("customers")}
-                whileHover={{
-                  backgroundColor: "#dc2626",
-                  borderRadius: "10px",
-                }}
-                whileTap={{
-                  scale: 0.95,
-                }}
-              >
-                Remove all
-              </motion.button>
-            </div>
-          )} */}
         </div>
         <div className="md:mt-6 md:pb-5 min-h-screen text-neutral-800 dark:text-neutral-200">
           <Suspense
