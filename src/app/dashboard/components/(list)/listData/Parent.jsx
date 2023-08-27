@@ -13,12 +13,16 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useIcons } from "@/app/utils/CustomIcons";
 
 export default function Parent({ categoryId, parent }) {
-  const { data, handleAdd, handleEdit, handleDelete } = useDataContext();
+  const { handleAdd, handleEdit, handleDelete } = useDataContext();
 
-  const { cat, par, buttonVariants, contentVariants, toggleParDrop } =
-    useTableContext();
-
-  const children = data[2];
+  const {
+    childData,
+    cat,
+    par,
+    buttonVariants,
+    contentVariants,
+    toggleParDrop,
+  } = useTableContext();
 
   const { RightArrowIcon, PlusIcon, EditIcon, DeleteIcon } = useIcons();
 
@@ -110,7 +114,7 @@ export default function Parent({ categoryId, parent }) {
       )}
     </AnimatePresence>,
 
-    children.map(
+    childData.map(
       (child) =>
         child.ParentId === parent.id && (
           <React.Fragment key={child.id}>
