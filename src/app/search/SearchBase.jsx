@@ -39,6 +39,12 @@ export default function SearchBase({ children }) {
     return () => document.removeEventListener("mousedown", handler);
   }, [searchModal]);
 
+  useEffect(() => {
+    const html = document.querySelector("html");
+    if (searchModal) html.dataset.lenisPrevent = "";
+    else delete html.dataset.lenisPrevent;
+  }, [searchModal]);
+
   // Open & Close search modal using keyboard shortcuts
   useEffect(() => {
     const ctrl = (e) => e.ctrlKey && e.key === "k";

@@ -65,6 +65,12 @@ export default function Order({
   }, [removeAllModal]);
 
   useEffect(() => {
+    const html = document.querySelector("html");
+    if (removeAllModal) html.dataset.lenisPrevent = "";
+    else delete html.dataset.lenisPrevent;
+  }, [removeAllModal]);
+
+  useEffect(() => {
     if (hasCookie("Delivered"))
       showDelivered(JSON.parse(getCookie("Delivered")));
     else showDelivered(false);

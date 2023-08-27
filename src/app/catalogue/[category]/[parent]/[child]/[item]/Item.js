@@ -51,6 +51,12 @@ export default function Item({ item }) {
     return () => document.removeEventListener("mousedown", handler);
   }, [addToCartModal]);
 
+  useEffect(() => {
+    const html = document.querySelector("html");
+    if (addToCartModal) html.dataset.lenisPrevent = "";
+    else delete html.dataset.lenisPrevent;
+  }, [addToCartModal]);
+
   // Close addToCart Modal on key press "Esc"
   useEffect(() => {
     const esc = (e) => e.key === "Escape";

@@ -66,6 +66,12 @@ export default function List({ data, create, update, deleteItem, url }) {
     return () => document.removeEventListener("mousedown", handler);
   }, [addModal, editModal, deleteModal]);
 
+  useEffect(() => {
+    const html = document.querySelector("html");
+    if (addModal || editModal || deleteModal) html.dataset.lenisPrevent = "";
+    else delete html.dataset.lenisPrevent;
+  }, [addModal, editModal, deleteModal]);
+
   // Close modals using keyboard shortcut "Esc"
   useEffect(() => {
     const esc = (e) => e.key === "Escape";

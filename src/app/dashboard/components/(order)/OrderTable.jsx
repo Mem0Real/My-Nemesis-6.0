@@ -75,6 +75,12 @@ export default function OrderTable() {
     return () => document.removeEventListener("mousedown", handler);
   }, [removeModal]);
 
+  useEffect(() => {
+    const html = document.querySelector("html");
+    if (removeModal) html.dataset.lenisPrevent = "";
+    else delete html.dataset.lenisPrevent;
+  }, [removeModal]);
+
   // Close remove modal on keypress "Esc"
   useEffect(() => {
     const esc = (e) => e.key === "Escape";
