@@ -20,13 +20,15 @@ export default function ScrollPin() {
 	useLayoutEffect(() => {
 		gsap.registerPlugin(ScrollTrigger);
 
-		ScrollTrigger.create({
-			trigger: ".gallery",
-			start: "top +=40",
-			end: "bottom +=240",
-			pin: ".right",
+		const ctx = gsap.context(() => {
+			ScrollTrigger.create({
+				trigger: ".gallery",
+				start: "top +=40",
+				end: "bottom +=240",
+				pin: ".right",
+				markers: true,
+			});
 		});
-		const ctx = gsap.context({});
 
 		return () => ctx.revert();
 	}, []);
