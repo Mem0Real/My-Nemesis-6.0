@@ -44,10 +44,8 @@ export default function LocoSap() {
 
       gsap.set(text.current, {
         y: -50,
-        scale: 0.7,
       });
       gsap.to(text.current, {
-        scale: 1,
         y: 500,
         scrollTrigger: {
           trigger: text.current,
