@@ -57,6 +57,24 @@ body {
   }
 }
 
+::-webkit-scrollbar {
+  height: 5px;
+  width: 5px;
+  background: #fff3;
+  border-radius: 1ex;
+  -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ffff;
+  border-radius: 1ex;
+  -webkit-border-radius: 1ex;
+}
+
+::-webkit-scrollbar-corner {
+  background: #fff3;
+}
+
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {

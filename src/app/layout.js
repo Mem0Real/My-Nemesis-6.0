@@ -43,16 +43,12 @@ export default function RootLayout({ children }) {
                     <NextTopLoader showSpinner={false} color="#DC143C" />
                   </CartBase>
                   <div className="text-sm text-neutral-800 dark:text-neutral-200 z-20">
-                    <Suspense>
-                      <SideBarBase />
-                    </Suspense>
+                    <Suspense>{/* <SideBarBase /> */}</Suspense>
                   </div>
                   <ScrollToTopButton>
                     <div className={`min-h-screen`}>{children}</div>
                   </ScrollToTopButton>
-                  <div className="w-full">
-                    <Footer />
-                  </div>
+                  <div className="w-full">{/* <Footer /> */}</div>
                 </div>
               </CustomCursor>
             </CustomIcons>
