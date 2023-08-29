@@ -5,11 +5,20 @@ import { useEffect } from "react";
 
 const SmoothScroller = () => {
 	useEffect(() => {
+		const width = window.innerWidth;
+
+		const isMobile = width < 768;
+
+		const touchMultiplier = isMobile ? 1.0 : undefined;
+		const touchInertiaMultiplier = isMobile ? 10 : undefined;
+
 		const lenis = new Lenis({
 			smooth: true,
 			smoothTouch: true,
-			touchMultiplier: 1.0,
-			touchInertiaMultiplier: 10,
+			// touchMultiplier: isMobile ? 1.0 : 1.35,
+			// touchInertiaMultiplier: isMobile ? 10 : 13,
+			touchMultiplier,
+			touchInertiaMultiplier,
 			syncTouch: true,
 			smoothWheel: true,
 		});
