@@ -12,7 +12,7 @@ const Parallax = () => {
 	const imgY = useTransform(scrollY, [0, 100], [0, 110]);
 
 	return (
-		<div className="h-[116vh] bg-neutral-100 dark:bg-neutral-900 z-10">
+		<div className="h-[110vh] bg-neutral-100 dark:bg-neutral-900 z-10">
 			<Background />
 
 			<div className="relative h-screen w-screen flex flex-col justify-end items-center flex-wrap">
