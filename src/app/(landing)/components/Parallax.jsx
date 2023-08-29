@@ -2,12 +2,10 @@
 
 import Image from "next/image";
 import { motion, useTransform, useScroll } from "framer-motion";
-import Background from "../(landing)/components/Background";
+import Background from "./Background";
 
-const PinOnScroll = () => {
+const Parallax = () => {
 	const { scrollY } = useScroll();
-	// const y = useTransform(scrollY, [50, 500, 1000], [0, 400, -100]);
-	// const scale = useTransform(scrollY, [0, 1000], [1, 4]);
 	const y = useTransform(scrollY, [0, 150], [0, -260]);
 	const scale = useTransform(scrollY, [0, 100], [1, 2]);
 
@@ -15,24 +13,6 @@ const PinOnScroll = () => {
 
 	return (
 		<div className="h-[116vh] bg-neutral-100 dark:bg-neutral-900 z-10">
-			{/* <motion.div
-				style={{
-					// position: "sticky",
-					// bottom: 0,
-					// left: 0,
-					// right: 0,
-					// height: "100px",
-					background: "blue",
-					opacity: 0.8,
-					y: y,
-					textAlign: "center",
-				}}
-				className="h-24 grid place-items-center"
-			>
-				<motion.h2 className="text-5xl text-black" style={{ scale }}>
-					Howdy
-				</motion.h2>
-			</motion.div> */}
 			<Background />
 
 			<div className="relative h-screen w-screen flex flex-col justify-end items-center flex-wrap">
@@ -60,4 +40,4 @@ const PinOnScroll = () => {
 	);
 };
 
-export default PinOnScroll;
+export default Parallax;
