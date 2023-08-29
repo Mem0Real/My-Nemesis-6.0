@@ -6,10 +6,10 @@ import Background from "./Background";
 
 const Parallax = () => {
 	const { scrollY } = useScroll();
-	const y = useTransform(scrollY, [0, 150], [0, -260]);
-	const scale = useTransform(scrollY, [0, 100], [1, 2]);
+	const y = useTransform(scrollY, [0, 260], [0, -260]);
+	const scale = useTransform(scrollY, [0, 150], [1, 2]);
 
-	const imgY = useTransform(scrollY, [0, 100], [0, 100]);
+	const imgY = useTransform(scrollY, [0, 100], [0, 110]);
 
 	return (
 		<div className="h-[116vh] bg-neutral-100 dark:bg-neutral-900 z-10">
