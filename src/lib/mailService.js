@@ -3,7 +3,7 @@ const fs = require("fs");
 import { join } from "path";
 
 const path = process.cwd();
-const htmlPath = "src/lib/mail.html";
+const htmlPath = "public/mail.html";
 
 const location = join(path, htmlPath);
 const htmlTemplate = fs.readFileSync(location, "utf8");
