@@ -19,8 +19,8 @@ export default async function Parents({ categoryId }) {
 
 	if (isObjEmpty(parentData)) {
 		content = (
-			<div className="flex flex-col justify-around items-center text-sm w-screen bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 h-fit">
-				<h1>Empty</h1>
+			<div className="flex flex-col justify-around items-center text-lg w-screen bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 h-fit">
+				<h1>Empty Parent</h1>
 			</div>
 		);
 	} else {
@@ -52,7 +52,7 @@ export default async function Parents({ categoryId }) {
 							) : (
 								<div className="h-56 grid place-items-center">
 									<h1 className="italic text-neutral-600 dark:text-neutral-400">
-										No children
+										No Children
 									</h1>
 								</div>
 							)}

@@ -18,8 +18,8 @@ export default async function Items({ categoryId, parentId, childId }) {
 
 	if (isObjEmpty(itemsData)) {
 		content = (
-			<div className="flex flex-col justify-around items-center text-sm mb-1 w-screen bg-neutral-300 text-neutral-900 h-fit">
-				<h1>Empty</h1>
+			<div className="flex flex-col justify-around items-center text-lg w-screen bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 h-fit">
+				<h1>Empty Item</h1>
 			</div>
 		);
 	} else {
@@ -39,25 +39,33 @@ export default async function Items({ categoryId, parentId, childId }) {
 								className="text-3xl font-bold leading-8 mt-0 mb-5 text-center"
 							/>
 						</Link>
-						<div className="w-full">
-							<Suspense
-								fallback={
-									<h1 className="text-md text-center mx-auto">
-										Loading Images...
-									</h1>
-								}
-							>
-								<div className="group mx-auto w-[95%] border border-neutral-300 rounded-3xl shadow-neutral-400 hover:shadow-neutral-600 dark:shadow-neutral-900 dark:hover:shadow-black dark:border-neutral-700">
-									<Images
-										categoryId={categoryId}
-										parentId={parentId}
-										childId={childId}
-										itemId={item.id}
-										images={item.images}
-									/>
-								</div>
-							</Suspense>
-						</div>
+						{item.images.length > 0 ? (
+							<div className="w-full">
+								<Suspense
+									fallback={
+										<h1 className="text-md text-center mx-auto">
+											Loading Images...
+										</h1>
+									}
+								>
+									<div className="group mx-auto w-[95%] border border-neutral-300 rounded-3xl shadow-neutral-400 hover:shadow-neutral-600 dark:shadow-neutral-900 dark:hover:shadow-black dark:border-neutral-700">
+										<Images
+											categoryId={categoryId}
+											parentId={parentId}
+											childId={childId}
+											itemId={item.id}
+											images={item.images}
+										/>
+									</div>
+								</Suspense>
+							</div>
+						) : (
+							<div className="h-56 grid place-items-center">
+								<h1 className="italic text-neutral-600 dark:text-neutral-400">
+									No images
+								</h1>
+							</div>
+						)}
 					</CarouselHolder>
 				</div>
 			);

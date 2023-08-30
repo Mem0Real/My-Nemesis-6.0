@@ -7,11 +7,6 @@ import CarouselHolder from "./components/CarouselHolder";
 import CategoryLoader from "./components/(loader)/CategoryLoader";
 
 export default function Categories({ categories }) {
-	const oldText = (
-		<h1 className="md:ml-12 text-lg my-5 sm:my-9 bg-neutral-50 dark:bg-neutral-900 ring ring-neutral-500 dark:ring-neutral-700 ring-offset-2 ring-offset-neutral-400 dark:ring-offset-neutral-600 hover:ring-offset-1 hover:ring-neutral-400 dark:hover:ring-neutral-600 shadow-lg shadow-neutral-800 hover:shadow-neutral-600 dark:shadow-neutral-900 dark:hover:shadow-neutral-950 px-5 rounded-sm">
-			category.name
-		</h1>
-	);
 	const content = categories.map((category) => {
 		return (
 			<div
@@ -25,11 +20,19 @@ export default function Categories({ categories }) {
 							className="pt-5 text-3xl font-bold leading-8 mt-0 mb-5 text-center"
 						/>
 					</Link>
-					<div className="w-full">
-						<Suspense fallback={<CategoryLoader />}>
-							<Parents categoryId={category.id} parents={category.parents} />
-						</Suspense>
-					</div>
+					{category.parents.length > 0 ? (
+						<div className="w-full">
+							<Suspense fallback={<CategoryLoader />}>
+								<Parents categoryId={category.id} parents={category.parents} />
+							</Suspense>
+						</div>
+					) : (
+						<div className="h-56 grid place-items-center">
+							<h1 className="italic text-neutral-600 dark:text-neutral-400">
+								No Parents
+							</h1>
+						</div>
+					)}
 				</CarouselHolder>
 			</div>
 		);
