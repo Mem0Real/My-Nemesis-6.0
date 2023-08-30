@@ -38,7 +38,6 @@ export default function MyTable() {
 		data[1] !== parentData && setParentData(data[1]);
 		data[2] !== childData && setChildData(data[2]);
 		data[3] !== productData && setProductData(data[3]);
-		console.log("Updated");
 	}, [data]);
 
 	useEffect(() => {

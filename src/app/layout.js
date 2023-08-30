@@ -40,7 +40,9 @@ export default function RootLayout({ children }) {
 										<SearchBase>
 											<Navbar />
 										</SearchBase>
-										<NextTopLoader showSpinner={false} color="#DC143C" />
+										<div className=" bg-neutral-400/30 backdrop-blur-50">
+											<NextTopLoader showSpinner={false} />
+										</div>
 									</CartBase>
 									<div className="text-sm text-neutral-800 dark:text-neutral-200 z-20">
 										<Suspense>
