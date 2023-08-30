@@ -6,25 +6,26 @@ import Link from "next/link";
 
 import formatCurrency from "@/app/utils/formatCurrency";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { useInView } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 
 export default function SellerAnimator({ product, children }) {
 	const ref = useRef();
-
-	const { scrollYProgress } = useScroll({
-		target: ref,
-		offset: ["start end", "end center"],
-	});
-
-	const y = useTransform(scrollYProgress, [0, 0.5], [150, 0]);
-	const opacity = useTransform(scrollYProgress, [0, 0.5], [0.5, 1]);
+	const inView = useInView(ref);
 
 	return (
 		<motion.div
 			key={product.id}
 			className="flex flex-col gap-3 items-center w-full md:w-80 lg:w-72 mx-auto border border-neutral-300 dark:border-neutral-700 my-2"
 			ref={ref}
-			style={{ y, opacity }}
+			initial={{ opacity: 0, y: 100 }}
+			animate={{ opacity: inView ? 1 : 0, y: inView ? 0 : 100 }}
+			transition={{
+				duration: 1.3,
+				type: "spring",
+				bounce: 0.75,
+			}}
+			viewport={{ once: true }}
 		>
 			<Link
 				className="relative w-full mb-12"
