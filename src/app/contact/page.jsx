@@ -9,7 +9,7 @@ import Icons from "./components/Icons";
 import { motion } from "framer-motion";
 import { sendMessage } from "./utils/contactActions";
 import { toast } from "react-hot-toast";
-import Header from "../catalogue/components/Header";
+import Header from "../components/Header";
 
 const Contact = () => {
 	const [data, setData] = useState({ fullName: "", email: "", message: "" });

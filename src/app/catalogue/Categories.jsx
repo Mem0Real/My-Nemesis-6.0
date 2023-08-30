@@ -6,7 +6,7 @@ import CategoryLoader from "./components/(loader)/CategoryLoader";
 
 import Titles from "./components/Titles";
 import CarouselHolder from "./components/CarouselHolder";
-import Header from "./components/Header";
+import Header from "../components/Header";
 
 export default function Categories({ categories }) {
 	const content = categories.map((category) => {
