@@ -1,10 +1,12 @@
 import Link from "next/link";
 import { Suspense } from "react";
 import Parents from "./Parents";
-import Titles from "./components/Titles";
-import CarouselHolder from "./components/CarouselHolder";
 
 import CategoryLoader from "./components/(loader)/CategoryLoader";
+
+import Titles from "./components/Titles";
+import CarouselHolder from "./components/CarouselHolder";
+import Header from "./components/Header";
 
 export default function Categories({ categories }) {
 	const content = categories.map((category) => {
@@ -41,9 +43,7 @@ export default function Categories({ categories }) {
 	return (
 		<div className="flex flex-col justify-evenly items-center w-screen">
 			<div className="w-full flex flex-col items-center justify-center py-8 md:py-10 lg:py-12 mb-2 shadow-xl shadow-blue-600/20 dark:shadow-blue-400/10 text-neutral-800 dark:text-neutral-200 backdrop-blur-sm bg-neutral-200/40 dark:bg-neutral-800/40">
-				<h1 className="text-3xl md:text-4xl lg:text-5xl font-extralight italic">
-					Catalogue
-				</h1>
+				<Header title="Catalogue" className="font-extralight italic" />
 			</div>
 			{content}
 		</div>

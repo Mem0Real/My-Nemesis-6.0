@@ -9,6 +9,7 @@ import Icons from "./components/Icons";
 import { motion } from "framer-motion";
 import { sendMessage } from "./utils/contactActions";
 import { toast } from "react-hot-toast";
+import Header from "../catalogue/components/Header";
 
 const Contact = () => {
 	const [data, setData] = useState({ fullName: "", email: "", message: "" });
@@ -43,9 +44,7 @@ const Contact = () => {
 	return (
 		<PageWrapper>
 			<div className="w-full flex flex-col items-center justify-center py-8 md:py-10 lg:py-12 shadow-xl shadow-blue-600/20 dark:shadow-blue-400/10 text-neutral-800 dark:text-neutral-200">
-				<h1 className="text-3xl md:text-4xl lg:text-5xl font-extralight italic">
-					Contact Us
-				</h1>
+				<Header title="Contact Us" className="font-extralight italic" />
 			</div>
 			<div className="flex flex-col md:flex-row w-[95%] md:w-[70%] mx-auto box-border py-6">
 				<div className="flex-1 rounded-xl">
