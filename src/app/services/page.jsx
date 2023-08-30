@@ -6,7 +6,7 @@ import Image from "next/image";
 import PageWrapper from "../components/PageWrapper";
 
 import { motion } from "framer-motion";
-import Header from "../components/Header";
+import Header from "../components/(animations)/Header";
 
 const description = [
 	{

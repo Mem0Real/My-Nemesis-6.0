@@ -10,8 +10,7 @@ import { getCookie, hasCookie } from "cookies-next";
 
 import { motion, AnimatePresence } from "framer-motion";
 import formatCurrency from "@/app/utils/formatCurrency";
-import hover3d from "@/app/components/(animations)/hover";
-
+import Transformer from "@/app/skew/Transformer";
 const AddToCartModal = dynamic(() => import("@/app/cart/AddToCart"));
 
 export default function Item({ item }) {
@@ -24,20 +23,6 @@ export default function Item({ item }) {
 		useProductContext();
 
 	const addToCartRef = useRef();
-
-	const container = useRef();
-
-	const hoverHero = hover3d(container, {
-		x: 30,
-		y: -40,
-		z: 30,
-	});
-
-	const imageHover = hover3d(container, {
-		x: 20,
-		y: -5,
-		z: 11,
-	});
 
 	// Disable scrollbar on modal open
 	useEffect(() => {
@@ -160,10 +145,7 @@ export default function Item({ item }) {
 		},
 	};
 	return (
-		<div
-			ref={container}
-			className="flex gap-7 flex-wrap lg:flex-nowrap w-full justify-center sm:justify-normal mx-auto mb-12 py-20 md:py-24 lg:py-28"
-		>
+		<div className="flex gap-7 flex-wrap lg:flex-nowrap w-full justify-center sm:justify-normal mx-auto mb-12 py-20 md:py-24 lg:py-28">
 			<div className="flex sm:items-center flex-col flex-wrap sm:flex-row w-full gap-12">
 				<div className="flex-initial flex-wrap flex sm:flex-col gap-6 sm:gap-12 justify-center sm:justify-normal w-fit mx-auto border-b-4 sm:border-l-4 border-1 shadow-inner shadow-black order-2 sm:order-1">
 					{item.images &&
@@ -189,39 +171,20 @@ export default function Item({ item }) {
 							);
 						})}
 				</div>
-				<div
-					className="h-56 lg:h-3/5 w-full sm:w-auto grow order-1 sm:order-2 sm:mr-12 border border-neutral-800 dark:border-neutral-200 rounded-lg p-3 bg-neutral-100 dark:bg-neutral-900"
-					style={{
-						transform: hoverHero.transform,
-					}}
-				>
-					<AnimatePresence>
-						{activeImage && (
-							<motion.div
-								className="relative rounded-xl border border-neutral-100 dark:border-neutral-800 overflow-clip h-full w-full"
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								exit={{ opacity: 0 }}
-								transition={{
-									duration: 1,
-									ease: "easeInOut",
-								}}
-							>
-								<Image
-									src={activeImage}
-									fill={true}
-									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
-									alt="Image"
-									className="object-contain rounded-lg"
-									priority
-									style={{
-										transform: imageHover.transform,
-									}}
-								/>
-							</motion.div>
-						)}
-					</AnimatePresence>
-				</div>
+				{/* <div className="relative h-56 w-full sm:w-auto grow order-1 sm:order-2 sm:mr-12"> */}
+				{activeImage && (
+					<Transformer>
+						<Image
+							src={activeImage}
+							fill={true}
+							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+							alt="Image"
+							className="object-contain rounded-lg"
+							priority
+						/>
+					</Transformer>
+				)}
+				{/* </div> */}
 			</div>
 			<div className="h-fit w-[43em] justify-center sm:justify-normal mx-auto items-center">
 				<div className="">

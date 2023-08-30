@@ -2,13 +2,9 @@
 
 import { useState, useEffect } from "react";
 
-import {
-	motion,
-	useMotionTemplate,
-	useMotionValue,
-	useTransform,
-} from "framer-motion";
-
+import { motion, useMotionTemplate, useMotionValue } from "framer-motion";
+import { MouseEvent } from "react";
+// import { useTheme } from "next-themes";
 import { useThemeContext } from "@/context/ThemeProvider";
 
 export default function CarouselHolder({ children }) {
@@ -33,7 +29,7 @@ export default function CarouselHolder({ children }) {
 	}
 
 	return (
-		<motion.div
+		<div
 			className="group mx-auto w-[95%] relative rounded-xl border border-white/10 bg-gradient-to-r from-white/40 to-white/80 dark:from-black/40 dark:to-neutral-600/80 shadow-inner shadow-black/40 backdrop-blur-sm"
 			onMouseMove={handleMouseMove}
 		>
@@ -49,6 +45,8 @@ export default function CarouselHolder({ children }) {
 					//     )
 					// `,
 					// 		}}
+
+					style={{ skewX: `${mouseX}px`, skewY: `${mouseY}px` }}
 				/>
 			) : (
 				<motion.div
@@ -62,9 +60,10 @@ export default function CarouselHolder({ children }) {
 					//     )
 					// `,
 					// 		}}
+					style={{ skewX: `${mouseX}px`, skewY: `${mouseY}px` }}
 				/>
 			)}
 			{children}
-		</motion.div>
+		</div>
 	);
 }
