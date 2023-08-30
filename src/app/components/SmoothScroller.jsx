@@ -14,13 +14,13 @@ const SmoothScroller = () => {
 
 		const lenis = new Lenis({
 			smooth: true,
-			smoothTouch: true,
+			// smoothTouch: true,
 			// touchMultiplier: isMobile ? 1.0 : 1.35,
 			// touchInertiaMultiplier: isMobile ? 10 : 13,
 			touchMultiplier,
 			touchInertiaMultiplier,
-			syncTouch: true,
-			smoothWheel: true,
+			// syncTouch: true,
+			// smoothWheel: true,
 		});
 
 		function raf(time) {

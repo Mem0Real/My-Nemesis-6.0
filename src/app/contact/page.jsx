@@ -78,7 +78,6 @@ const Contact = () => {
 									placeholder=" "
 									onChange={handleChange}
 									value={data.fullName || ""}
-									autoFocus
 								/>
 								<label
 									htmlFor="fullName"
