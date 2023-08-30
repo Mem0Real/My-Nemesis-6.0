@@ -13,8 +13,8 @@ const SmoothScroller = () => {
 			smoothTouch: true,
 			// touchMultiplier: isMobile ? 1.0 : 1.35,
 			// touchInertiaMultiplier: isMobile ? 10 : 13,
-			touchMultiplier: 2,
-			touchInertiaMultiplier: 35,
+			touchMultiplier: 1,
+			touchInertiaMultiplier: 5,
 			syncTouch: true,
 			// smoothWheel: true,
 		});
