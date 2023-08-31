@@ -99,17 +99,14 @@ export default function MyTable() {
 		} else if (parentResults.length > 0) {
 			parentTree = getTree("parent", parentResults);
 			setCat({ id: parentResults[0].item.CategoryId, open: true });
-			// setPar({ id: parentResults[0].item.id, open: true });
 		} else if (childResults.length > 0) {
 			childTree = getTree("child", childResults);
 			setCat({ id: childResults[0].item.CategoryId, open: true });
 			setPar({ id: childResults[0].item.ParentId, open: true });
-			// setChi({ id: productResults[0].item.id, open: true });
 		} else if (productResults.length > 0) {
 			itemTree = getTree("item", productResults);
 			setCat({ id: productResults[0].item.CategoryId, open: true });
 			setPar({ id: productResults[0].item.ParentId, open: true });
-			// setChi({ id: productResults[0].item.ChildId, open: true });
 		} else {
 			setCat({ id: "", open: false });
 			setPar({ id: "", open: false });
