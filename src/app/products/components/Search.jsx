@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useREf, useRef } from "react";
 
 import useCustomRouter from "@/hooks/useCustomRouter";
 
@@ -10,12 +10,15 @@ import { motion } from "framer-motion";
 export default function SearchForm() {
 	const [text, setText] = useState({ search: "" });
 
+	const inputRef = useRef();
+
 	const { pushQuery, query } = useCustomRouter();
 
 	const { SearchIcon, CloseIcon } = useIcons();
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
+		inputRef.current.blur();
 		handleSearch(text);
 	};
 
@@ -27,18 +30,19 @@ export default function SearchForm() {
 			query.search = "";
 		}
 
-		if (null) {
+		if (clear) {
 			setText(() => ({ search: "" }));
 			query.search = "";
+			pushQuery(query);
 		}
 	};
 	const handleSearch = (query) => {
 		pushQuery(query);
 	};
 
-	// useEffect(() => {
-	//   handleSearch(text);
-	// }, [text, handleSearch]);
+	useEffect(() => {
+		handleSearch(text);
+	}, [text, handleSearch]);
 
 	return (
 		<form
@@ -53,12 +57,12 @@ export default function SearchForm() {
 				{SearchIcon}
 			</motion.button>
 			<input
+				ref={inputRef}
 				type="text"
 				name="search"
 				placeholder="Search"
 				className="ps-7 pe-2 w-36 lg:w-44 py-2 rounded-md text-neutral-800 dark:text-neutral-200 bg-neutral-100 dark:bg-neutral-800"
-				defaultValue={text.search || query.search || ""}
-				value={text.search || ""}
+				value={text?.search || query?.search || ""}
 				onChange={handleChange}
 			/>
 			<motion.button
