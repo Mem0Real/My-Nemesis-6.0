@@ -10,7 +10,7 @@ import { getCookie, hasCookie } from "cookies-next";
 
 import { motion, AnimatePresence } from "framer-motion";
 import formatCurrency from "@/app/utils/formatCurrency";
-import hover3d from "@/app/components/(animations)/hover";
+import Hover3d from "@/app/components/(animations)/Hover";
 
 const AddToCartModal = dynamic(() => import("@/app/cart/AddToCart"));
 
@@ -27,13 +27,13 @@ export default function Item({ item }) {
 
 	const container = useRef();
 
-	const hoverHero = hover3d(container, {
+	const hoverHero = Hover3d(container, {
 		x: 30,
 		y: -40,
 		z: 30,
 	});
 
-	const imageHover = hover3d(container, {
+	const imageHover = Hover3d(container, {
 		x: 20,
 		y: -5,
 		z: 11,
