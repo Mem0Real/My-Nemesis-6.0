@@ -165,7 +165,10 @@ export default function SearchModal({
 					</svg>
 					<span className="sr-only">Close modal</span>
 				</button>
-				<div className="relative flex items-center w-[90%] mx-auto">
+				<form
+					className="relative flex items-center w-[90%] mx-auto"
+					onSubmit={handleSubmit}
+				>
 					<div
 						className="absolute left-0 top-0 bottom-0 grid place-content-center text-neutral-700 dark:text-neutral-300"
 						onClick={handleSubmit}
@@ -182,7 +185,7 @@ export default function SearchModal({
 							ref={inputRef}
 						/>
 					</div>
-				</div>
+				</form>
 			</header>
 			<main>
 				<AnimatePresence>
