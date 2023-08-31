@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import SmoothScroller from "./SmoothScroller";
+// import SmoothScroller from "./SmoothScroller";
 
 export default function PageWrapper({ children }) {
 	return (
