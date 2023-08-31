@@ -27,18 +27,21 @@ export default function Item({ item }) {
 
 	const container = useRef();
 
-	const hoverHero = Hover3d(container, {
-		x: 30,
-		y: -40,
-		z: 30,
-	});
+	let hoverHero, imageHover;
 
-	const imageHover = Hover3d(container, {
-		x: 20,
-		y: -5,
-		z: 11,
-	});
+	if (item.images) {
+		hoverHero = Hover3d(container, {
+			x: 30,
+			y: -40,
+			z: 30,
+		});
 
+		imageHover = Hover3d(container, {
+			x: 20,
+			y: -5,
+			z: 11,
+		});
+	}
 	// Disable scrollbar on modal open
 	useEffect(() => {
 		const handleWindowWheel = (event) => {

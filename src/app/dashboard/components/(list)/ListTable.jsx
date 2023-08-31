@@ -17,7 +17,7 @@ import { useIcons } from "@/app/utils/CustomIcons";
 
 const TableContext = createContext({});
 
-// TODO if entry is empty show empty data or smtn also make dropdowns show multiple when searched
+// TODO make dropdowns show multiple when searched
 export default function MyTable() {
 	const { data } = useDataContext();
 
@@ -25,7 +25,7 @@ export default function MyTable() {
 	const [parentData, setParentData] = useState(data[1]);
 	const [childData, setChildData] = useState(data[2]);
 	const [productData, setProductData] = useState(data[3]);
-	const [searchValue, setSearchValue] = useState("");
+	const [searchValue, setSearchValue] = useState();
 
 	const [cat, setCat] = useState({});
 	const [par, setPar] = useState({});
@@ -65,10 +65,22 @@ export default function MyTable() {
 	}, [cat, par, chi]);
 
 	const handleChange = (e, clear = null) => {
-		setSearchValue(e.target.value);
-
-		if (clear) setSearchValue("");
+		if (e.target.value) setSearchValue(e.target.value);
 		else {
+			setSearchValue();
+			setCategoryData(data[0]);
+			setParentData(data[1]);
+			setChildData(data[2]);
+			setProductData(data[3]);
+		}
+
+		if (clear) {
+			setSearchValue();
+			setCategoryData(data[0]);
+			setParentData(data[1]);
+			setChildData(data[2]);
+			setProductData(data[3]);
+		} else {
 			const text = e.target.value;
 
 			handleFilter(text);
@@ -83,12 +95,25 @@ export default function MyTable() {
 
 		if (categoryResults.length > 0) {
 			categoryTree = getTree("category", categoryResults);
+			setCat({ id: categoryResults[0].item.id, open: true });
 		} else if (parentResults.length > 0) {
 			parentTree = getTree("parent", parentResults);
+			setCat({ id: parentResults[0].item.CategoryId, open: true });
+			// setPar({ id: parentResults[0].item.id, open: true });
 		} else if (childResults.length > 0) {
 			childTree = getTree("child", childResults);
+			setCat({ id: childResults[0].item.CategoryId, open: true });
+			setPar({ id: childResults[0].item.ParentId, open: true });
+			// setChi({ id: productResults[0].item.id, open: true });
 		} else if (productResults.length > 0) {
 			itemTree = getTree("item", productResults);
+			setCat({ id: productResults[0].item.CategoryId, open: true });
+			setPar({ id: productResults[0].item.ParentId, open: true });
+			// setChi({ id: productResults[0].item.ChildId, open: true });
+		} else {
+			setCat({ id: "", open: false });
+			setPar({ id: "", open: false });
+			setChi({ id: "", open: false });
 		}
 	};
 
@@ -395,6 +420,7 @@ export default function MyTable() {
 							type="text"
 							onChange={(e) => handleChange(e)}
 							placeholder="Search..."
+							value={searchValue || ""}
 							className="ms-5 ps-7 w-52 flex-initial flex items-center justify-evenly py-2 rounded-sm border-b border-neutral-800 text-neutral-900  dark:border-neutral-200 dark:text-neutral-100 bg-neutral-100/20 dark:bg-neutral-800/20 backdrop-blur-sm border-offset-4 rounded-t-md placeholder:text-neutral-800 dark:placeholder:text-neutral-200"
 						/>
 						<div className="relative w-52 py-4">

@@ -223,7 +223,7 @@ export default function Slider({
 			<motion.div
 				className={`arrowLeft absolute top-0 bottom-0 -left-1 h-fit my-auto grid place-items-center z-10 cursor-pointer px-3 py-2`}
 				style={{ display: "block" }}
-				whileTap={{ scale: 0.8 }}
+				whileTap={{ scale: 0.95 }}
 				initial={{ opacity: 0 }}
 				whileHover={{ scale: 1.5 }}
 				onClick={handlePrev}
@@ -239,7 +239,7 @@ export default function Slider({
 				className={`arrowRight absolute top-0 bottom-0 -right-1 h-fit my-auto grid place-items-center z-10 cursor-pointer px-3 py-2`}
 				style={{ display: "block" }}
 				initial={{ opacity: 0 }}
-				whileTap={{ scale: 0.6 }}
+				whileTap={{ scale: 0.95 }}
 				whileHover={{ scale: 1.5 }}
 				onClick={handleNext}
 				animate={
