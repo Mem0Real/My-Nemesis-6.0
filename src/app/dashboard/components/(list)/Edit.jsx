@@ -17,8 +17,6 @@ export default function EditModal({
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  // const modalRef = useRef();
-
   // Show image if any
   useEffect(() => {
     let img;
@@ -79,13 +77,13 @@ export default function EditModal({
     const formData = formatData(editData);
 
     setLoading(() => true);
-    const toastId = toast.loading("Updating Item...");
+    const toastId = toast.loading(`Updating ${editData.id} ...`);
 
     const res = await update(formData);
 
     setLoading(() => false);
     toast.remove(toastId);
-    if (res?.error) toast.error(res.error, { duration: 10000 });
+    if (res?.error) toast.error(res.error, { duration: 4000 });
     else {
       toast.remove(toastId);
       toast.success(res.success);

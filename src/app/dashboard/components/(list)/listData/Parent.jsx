@@ -26,6 +26,25 @@ export default function Parent({ categoryId, parent }) {
 
 	const { RightArrowIcon, PlusIcon, EditIcon, DeleteIcon } = useIcons();
 
+	const matchingChildren = childData.filter(
+		({ ParentId }) => ParentId === parent.id
+	);
+
+	let content;
+	if (matchingChildren.length === 0) {
+		content = par.id === parent.id && par.open === true && (
+			<tr key={`${parent.id}-empty`}>
+				<td
+					colSpan={3}
+					align="center"
+					className="py-5 bg-neutral-200 dark:bg-neutral-700 text-sm italic font-extralight tracking-wider"
+				>
+					Empty
+				</td>
+			</tr>
+		);
+	}
+
 	return [
 		<AnimatePresence key={parent.id}>
 			{cat.id === categoryId && cat.open === true && (
@@ -117,13 +136,19 @@ export default function Parent({ categoryId, parent }) {
 			)}
 		</AnimatePresence>,
 
-		childData.map(
-			(child) =>
-				child.ParentId === parent.id && (
-					<React.Fragment key={child.id}>
-						<Child categoryId={categoryId} parentId={parent.id} child={child} />
-					</React.Fragment>
-				)
-		),
+		content
+			? content
+			: childData.map(
+					(child) =>
+						child.ParentId === parent.id && (
+							<React.Fragment key={child.id}>
+								<Child
+									categoryId={categoryId}
+									parentId={parent.id}
+									child={child}
+								/>
+							</React.Fragment>
+						)
+			  ),
 	];
 }
