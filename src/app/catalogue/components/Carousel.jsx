@@ -23,7 +23,15 @@ export default function Carousel({ length, children }) {
 			<motion.div
 				drag="x"
 				dragConstraints={{ right: 0, left: -width }}
-				className={`flex gap-12 items-center ${length < 4 && "justify-center"}`}
+				className={`flex gap-12 items-center ${
+					length <= 1
+						? "justify-center"
+						: length <= 2
+						? "justify-center lg:justify-normal"
+						: length <= 4
+						? "justify-center md:justify-normal"
+						: "justify-normal"
+				} `}
 			>
 				{/* {images.map((image, index) => {
 						return (
