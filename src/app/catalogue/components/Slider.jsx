@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useCallback } from "react";
+import React, { useRef, useCallback, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -30,6 +30,10 @@ export default function Slider({
 	parentId = null,
 	childId = null,
 }) {
+	const [hideLeft, setHideLeft] = useState(false);
+	const [hideRight, setHideRight] = useState(false);
+	const [controlledSwiper, setControlledSwiper] = useState(null);
+
 	const sliderRef = useRef(null);
 
 	const { RightIcon, LeftIcon } = useIcons();
@@ -45,8 +49,8 @@ export default function Slider({
 							key={parent.id}
 							className="flex flex-col items-center justify-between my-12"
 						>
-							<div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
-								<div className="relative w-56 h-56 mx-auto">
+							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
+								<div className="relative w-full h-full mx-auto">
 									{parent.image ? (
 										<Image
 											src={parent.image}
@@ -57,7 +61,7 @@ export default function Slider({
 											priority={true}
 										/>
 									) : (
-										<div className="w-56 h-56 mx-auto flex flex-col items-center justify-center text-neutral-700 dark:text-neutral-300">
+										<div className="w-full h-full mx-auto flex flex-col items-center justify-center text-neutral-700 dark:text-neutral-300">
 											<h1 className="text-xs italic">No Image</h1>
 										</div>
 									)}
@@ -85,8 +89,8 @@ export default function Slider({
 							key={child.id}
 							className="flex flex-col items-center justify-between my-12"
 						>
-							<div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
-								<div className="relative w-56 h-56 mx-auto">
+							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
+								<div className="relative w-full h-full mx-auto">
 									{child.image ? (
 										<Image
 											src={child.image}
@@ -97,7 +101,7 @@ export default function Slider({
 											priority={true}
 										/>
 									) : (
-										<div className="w-56 h-56 mx-auto flex flex-col items-center justify-center text-neutral-700 dark:text-neutral-300">
+										<div className="w-full h-full mx-auto flex flex-col items-center justify-center text-neutral-700 dark:text-neutral-300">
 											<h1 className="text-xs italic">No Image</h1>
 										</div>
 									)}
@@ -125,8 +129,8 @@ export default function Slider({
 							key={item.id}
 							className="flex flex-col items-center justify-between my-12"
 						>
-							<div className="border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
-								<div className="relative w-56 h-56 mx-auto">
+							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
+								<div className="relative w-full h-full mx-auto">
 									{items.image ? (
 										<Image
 											src={parent.image}
@@ -137,7 +141,7 @@ export default function Slider({
 											priority={true}
 										/>
 									) : (
-										<div className="w-56 h-56 mx-auto flex flex-col items-center justify-center text-neutral-700 dark:text-neutral-300">
+										<div className="w-full h-full mx-auto flex flex-col items-center justify-center text-neutral-700 dark:text-neutral-300">
 											<h1 className="text-xs italic">No Image</h1>
 										</div>
 									)}
@@ -176,16 +180,14 @@ export default function Slider({
 					modules={[Navigation, Pagination, A11y, Keyboard]}
 					spaceBetween={50}
 					slidesPerView={3}
-					// navigation={{ nextEl: ".arrowRight", prevEl: ".arrowLeft" }}
-					// navigation
 					pagination={{ dynamicBullets: true, clickable: true }}
-					// onSwiper={(swiper) => console.log(swiper)}
-					// onSlideChange={() => console.log("slide change")}
 					grabCursor={true}
 					keyboard={{
 						enabled: true,
 					}}
 					rewind={true}
+					centerInsufficientSlides={true}
+					watchOverflow={true}
 					breakpoints={{
 						1366: {
 							slidesPerView: 4,
@@ -203,26 +205,48 @@ export default function Slider({
 							slidesPerView: 1,
 						},
 					}}
+					onActiveIndexChange={(e) => {
+						if (e.isBeginning) {
+							setHideLeft(true);
+						} else if (e.isEnd) {
+							setHideRight(true);
+						} else {
+							setHideLeft(false);
+							setHideRight(false);
+						}
+					}}
+					onSwiper={setControlledSwiper}
 				>
 					{content}
 				</Swiper>
 			</div>
 			<motion.div
-				className={`arrowLeft absolute top-0 bottom-0 -left-1 h-fit my-auto grid place-items-center z-10 cursor-pointer`}
+				className={`arrowLeft absolute top-0 bottom-0 -left-1 h-fit my-auto grid place-items-center z-10 cursor-pointer px-3 py-2`}
 				style={{ display: "block" }}
-				whileTap={{ scale: 0.6 }}
-				whilehover={{ scale: 1.5 }}
-				exit={{ opacity: 0 }}
+				whileTap={{ scale: 0.8 }}
+				initial={{ opacity: 0 }}
+				whileHover={{ scale: 1.5 }}
 				onClick={handlePrev}
+				animate={
+					controlledSwiper?.isBeginning && controlledSwiper?.isEnd
+						? { opacity: 0 }
+						: { opacity: 1 }
+				}
 			>
 				{LeftIcon}
 			</motion.div>
 			<motion.div
-				className={`arrowRight absolute top-0 bottom-0 -right-1 h-fit my-auto grid place-items-center z-10 cursor-pointer`}
+				className={`arrowRight absolute top-0 bottom-0 -right-1 h-fit my-auto grid place-items-center z-10 cursor-pointer px-3 py-2`}
 				style={{ display: "block" }}
+				initial={{ opacity: 0 }}
 				whileTap={{ scale: 0.6 }}
-				exit={{ opacity: 0 }}
+				whileHover={{ scale: 1.5 }}
 				onClick={handleNext}
+				animate={
+					controlledSwiper?.isBeginning && controlledSwiper?.isEnd
+						? { opacity: 0 }
+						: { opacity: 1 }
+				}
 			>
 				{RightIcon}
 			</motion.div>
