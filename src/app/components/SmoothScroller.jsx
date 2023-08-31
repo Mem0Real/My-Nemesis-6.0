@@ -5,10 +5,7 @@ import { useEffect } from "react";
 
 const SmoothScroller = () => {
 	useEffect(() => {
-		const lenis = new Lenis({
-			smooth: true,
-			smoothWheel: true,
-		});
+		const lenis = new Lenis();
 
 		function raf(time) {
 			lenis.raf(time);
