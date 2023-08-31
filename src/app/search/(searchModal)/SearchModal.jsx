@@ -15,7 +15,12 @@ import { useIcons } from "@/app/utils/CustomIcons";
 
 const SearchDataContext = createContext({});
 
-export default function SearchModal({ searchModal, closeSearch, searchRef }) {
+export default function SearchModal({
+	searchModal,
+	closeSearch,
+	searchRef,
+	inputRef,
+}) {
 	const [searchQuery, setSearchQuery] = useState("");
 	const [searchWord, setSearchWord] = useState("");
 
@@ -27,15 +32,17 @@ export default function SearchModal({ searchModal, closeSearch, searchRef }) {
 
 	const { SearchIcon } = useIcons();
 
-	const inputRef = useRef(null);
 	const resultRef = useRef(null);
 
 	// Focus on load
 	useEffect(() => {
-		if (inputRef.current) {
-			inputRef.current.focus();
-		}
-	}, []);
+		setTimeout(() => {
+			if (searchModal && inputRef.current) {
+				inputRef.current.focus();
+				console.log("Focusing");
+			}
+		}, 500);
+	}, [searchModal]);
 
 	useEffect(() => {
 		if (searchModal) {

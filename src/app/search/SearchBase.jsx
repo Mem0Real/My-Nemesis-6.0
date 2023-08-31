@@ -9,7 +9,9 @@ import { motion, AnimatePresence } from "framer-motion";
 const SearchContext = createContext({});
 export default function SearchBase({ children }) {
 	const [searchModal, showSearchModal] = useState(false);
-	const searchRef = useRef();
+
+	const searchRef = useRef(null);
+	const inputRef = useRef(null);
 
 	// Disable scrollbar on modal open
 	useEffect(() => {
@@ -70,6 +72,7 @@ export default function SearchBase({ children }) {
 	}, []);
 
 	const handleSearch = () => {
+		inputRef.current && inputRef.current.focus();
 		showSearchModal(true);
 	};
 
@@ -93,24 +96,25 @@ export default function SearchBase({ children }) {
 		<SearchContext.Provider value={{ handleSearch, closeSearch }}>
 			{children}
 			<AnimatePresence>
-				{searchModal && (
-					<motion.div
-						key="innerCartM"
-						initial={"close"}
-						animate={searchModal ? "open" : "close"}
-						variants={variants}
-						exit={"close"}
-						className={`fixed top-0 bottom-0 right-0 left-0 z-40 bg-black/50 backdrop-blur-sm  flex ${
-							searchModal ? "pointer-events-auto" : "pointer-events-none"
-						}`}
-					>
-						<SearchModal
-							searchModal={searchModal}
-							closeSearch={closeSearch}
-							searchRef={searchRef}
-						/>
-					</motion.div>
-				)}
+				{/* {searchModal && ( */}
+				<motion.div
+					key="innerCartM"
+					initial={"close"}
+					animate={searchModal ? "open" : "close"}
+					variants={variants}
+					exit={"close"}
+					className={`fixed top-0 bottom-0 right-0 left-0 z-40 bg-black/50 backdrop-blur-sm  flex ${
+						searchModal ? "pointer-events-auto" : "pointer-events-none"
+					}`}
+				>
+					<SearchModal
+						searchModal={searchModal}
+						closeSearch={closeSearch}
+						searchRef={searchRef}
+						inputRef={inputRef}
+					/>
+				</motion.div>
+				{/* )} */}
 			</AnimatePresence>
 		</SearchContext.Provider>
 	);
