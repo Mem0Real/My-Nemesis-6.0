@@ -1,12 +1,21 @@
 import Link from "next/link";
-import { Suspense } from "react";
-import Parents from "./Parents";
+import { Suspense, lazy } from "react";
 
-import CategoryLoader from "./components/(loader)/CategoryLoader";
+// import Parents from "./Parents";
+// import CategoryLoader from "./components/(loader)/CategoryLoader";
 
-import Titles from "./components/Titles";
-import CarouselHolder from "./components/CarouselHolder";
-import Header from "../components/(animations)/Header";
+// import Titles from "./components/Titles";
+// import CarouselHolder from "./components/CarouselHolder";
+// import Header from "../components/(animations)/Header";
+
+const Parents = lazy(() => import("./Parents"));
+const CategoryLoader = lazy(() =>
+	import("./components/(loader)/CategoryLoader")
+);
+
+const Titles = lazy(() => import("./components/Titles"));
+const CarouselHolder = lazy(() => import("./components/CarouselHolder"));
+const Header = lazy(() => import("../components/(animations)/Header"));
 
 export default function Categories({ categories }) {
 	const content = categories.map((category) => {

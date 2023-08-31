@@ -1,8 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
+import { lazy } from "react";
 
-import SlickCarousel from "./components/SlickCarousel";
-import Carousel from "./components/Carousel";
+// import SlickCarousel from "./components/SlickCarousel";
+// import Carousel from "./components/Carousel";
+
+const Carousel = lazy(() => import("./components/Carousel"));
 
 export default async function Parents({ categoryId, parents }) {
 	return (
