@@ -33,9 +33,9 @@ export default function TopMask() {
 	let scaleText = useMotionValue(1);
 	let moveTextX = useMotionValue(0);
 
-	scale = transform(1, 20);
-	scaleText = transform(1, 0.2);
-	moveTextX = transform(0, -150);
+	scale = useTransform(scrollYProgress, [0, 1], [1, 20]);
+	scaleText = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
+	moveTextX = useTransform(scrollYProgress, [0, 1], [0, -150]);
 
 	return (
 		<div
