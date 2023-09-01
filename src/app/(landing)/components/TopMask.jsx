@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 
 import styles from "../styles/mask.module.scss";
+import Image from "next/image";
 
 export default function TopMask() {
 	const [isMobile, setIsMobile] = useState(false);
@@ -41,11 +42,12 @@ export default function TopMask() {
 		offset: ["start start", "end end"],
 	});
 
-	const scaleTransform = useTransform(scrollYProgress, [0, 1], [1, 20]);
-	const imageTransform = useTransform(scrollYProgress, [0, 1], [50, 0]);
+	const maskScaleTransform = useTransform(scrollYProgress, [0, 1], [1, 20]);
+	const imageScaleTransform = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
+	const imgPosTransform = useTransform(scrollYProgress, [0, 1], [50, -50]);
 
-	const scale = scaleTransform;
-	const imageX = imageTransform;
+	const scale = maskScaleTransform;
+	const x = imgPosTransform;
 
 	return (
 		<div ref={ref} className="relative z-10 h-[150vh] overflow-clip">
@@ -65,7 +67,22 @@ export default function TopMask() {
 							guarantee that you will find what you are looking for.
 						</p>
 					</div>
-					<div className="mx-auto mb-7 mt-4 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border border-gray-800 dark:border-gray-300 md:my-auto md:-mr-1 md:ml-auto md:w-[150px] md:min-w-[150px]" />
+					<div className="mx-auto mb-7 mt-4 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border border-gray-800 dark:border-gray-300 md:my-auto md:-mr-1 md:ml-auto md:w-[150px] md:min-w-[150px] z-20 overflow-hidden">
+						<motion.div
+							style={{ x, scale: imageScaleTransform }}
+							className="relative w-full h-full flex flex-col justify-center items-center z-10"
+						>
+							{/* <Image
+								src="/images/2.png"
+								alt=""
+								fill
+								sizes="(max-width: 1024) w-[100vw]"
+							/> */}
+							<h1 className="text-4xl w-[110%] text-white bg-blue-500 -skew-x-12 text-center">
+								Scroll
+							</h1>
+						</motion.div>
+					</div>
 				</div>
 			</motion.div>
 		</div>
