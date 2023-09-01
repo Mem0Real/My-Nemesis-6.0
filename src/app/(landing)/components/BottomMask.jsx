@@ -48,7 +48,7 @@ export default function BottomMask() {
 
 	const { scrollYProgress } = useScroll({
 		target: ref,
-		offset: ["start start", "end end"],
+		offset: ["start end", "end end"],
 	});
 
 	let scale, imageX;
@@ -74,7 +74,16 @@ export default function BottomMask() {
 					<div
 						className={`relative flex flex-col md:flex-row justify-end rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 p-12`}
 					>
-						<motion.div className="mx-auto my-12 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border-[2px] border-gray-800 dark:border-gray-300 md:my-auto md:-ml-1 md:mr-auto md:w-[150px] md:min-w-[150px]" />
+						<div className="mx-auto my-12 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border-[2px] border-gray-800 dark:border-gray-300 md:my-auto md:-ml-1 md:mr-auto md:w-[150px] md:min-w-[150px] overflow-hidden">
+							<motion.div
+								// style={{ x, y, scale: imgScale }}
+								className="relative w-full h-full flex flex-col justify-center items-center z-10 bg-neutral-100 dark:bg-neutral-900"
+							>
+								<h1 className="text-xl md:text-2xl lg:text-4xl w-[150%] bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center">
+									Ethio Machineries
+								</h1>
+							</motion.div>
+						</div>
 						<div className="flex h-full flex-col py-12 -mt-12 gap-12 text-right">
 							<h1 className="mb-5 max-w-[12ch] text-4xl font-bold leading-[0.85] md:my-auto md:text-6xl xl:text-7xl">
 								For all your purchase needs!
