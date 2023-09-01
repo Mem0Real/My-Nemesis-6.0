@@ -91,6 +91,8 @@ export default function MyTable() {
 		}
 	};
 	const handleSubmit = (e) => {
+		e.preventDefault();
+
 		if (e.target.value) setSearchValue(e.target.value);
 		else {
 			setSearchValue();
