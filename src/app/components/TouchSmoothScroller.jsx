@@ -3,9 +3,16 @@
 import Lenis from "@studio-freight/lenis";
 import { useEffect } from "react";
 
-const SmoothScroller = () => {
+const TouchSmoothScroller = () => {
 	useEffect(() => {
-		const lenis = new Lenis();
+		const lenis = new Lenis({
+			smooth: true,
+			smoothTouch: true,
+			touchMultiplier: 1.15,
+			touchInertiaMultiplier: 8,
+			syncTouch: true,
+			smoothWheel: true,
+		});
 
 		function raf(time) {
 			lenis.raf(time);
@@ -19,4 +26,4 @@ const SmoothScroller = () => {
 	return <></>;
 };
 
-export default SmoothScroller;
+export default TouchSmoothScroller;
