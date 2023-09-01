@@ -22,7 +22,7 @@ export default function TopMask() {
 	useEffect(() => {
 		const maskRect = maskRef.current.getBoundingClientRect();
 		setMaskPositionX(window.innerWidth - maskRect.width - 50);
-		setMaskPositionY(maskRect.height);
+		setMaskPositionY(maskRect.height / 2);
 	}, [maskRef]);
 
 	let scale = useMotionValue(1);
