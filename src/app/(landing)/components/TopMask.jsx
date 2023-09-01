@@ -58,7 +58,7 @@ export default function TopMask() {
 
 	const scale = maskScaleTransform;
 	const x = isMobile ? smImgXTransform : imgXTransform;
-	const y = isMobile ? smImgYTransform : imgYTransform;
+	const y = isMobile ? null : imgYTransform;
 	const imgScale = isMobile ? smImageScaleTransform : imageScaleTransform;
 
 	return (
@@ -82,16 +82,10 @@ export default function TopMask() {
 					<div className="mx-auto mb-7 mt-4 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border border-gray-800 dark:border-gray-300 md:my-auto md:-mr-1 md:ml-auto md:w-[150px] md:min-w-[150px] z-20 overflow-hidden">
 						<motion.div
 							style={{ x, y, scale: imgScale }}
-							className="relative w-full h-full flex flex-col justify-center items-center z-10"
+							className="relative w-full h-full flex flex-col justify-center items-center z-10 bg-neutral-100 dark:bg-neutral-900"
 						>
-							{/* <Image
-								src="/images/2.png"
-								alt=""
-								fill
-								sizes="(max-width: 1024) w-[100vw]"
-							/> */}
-							<h1 className="text-xl md:text-2xl lg:text-4xl w-[150%] text-white bg-blue-500 -skew-x-12 text-center">
-								Enjoy
+							<h1 className="text-xl md:text-2xl lg:text-4xl w-[150%] bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center">
+								Welcome
 							</h1>
 						</motion.div>
 					</div>
