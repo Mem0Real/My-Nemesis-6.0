@@ -19,10 +19,6 @@ export default function TopMask() {
 		offset: ["start start", "end end"],
 	});
 
-	const transform = (start, end) => {
-		return useTransform(scrollYProgress, [0, 1], [start, end]);
-	};
-
 	useEffect(() => {
 		const maskRect = maskRef.current.getBoundingClientRect();
 		setMaskPositionX(window.innerWidth - maskRect.width - 50);
