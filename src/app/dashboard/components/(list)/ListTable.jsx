@@ -17,7 +17,6 @@ import { useIcons } from "@/app/utils/CustomIcons";
 
 const TableContext = createContext({});
 
-// TODO make dropdowns show multiple when searched
 export default function MyTable() {
 	const { data } = useDataContext();
 
