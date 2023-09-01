@@ -54,11 +54,11 @@ export default function TopMask() {
 		[0, 0.5, 1],
 		[10, -5, 0]
 	);
-	const smImgYTransform = useTransform(scrollYProgress, [0, 1], [0, -10]);
+	const smImgYTransform = useTransform(scrollYProgress, [0, 1], [0, 50]);
 
 	const scale = maskScaleTransform;
 	const x = isMobile ? smImgXTransform : imgXTransform;
-	const y = isMobile ? null : imgYTransform;
+	const y = isMobile ? smImgYTransform : imgYTransform;
 	const imgScale = isMobile ? smImageScaleTransform : imageScaleTransform;
 
 	return (
