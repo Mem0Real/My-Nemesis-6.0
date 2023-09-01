@@ -1,9 +1,12 @@
+"use client";
+
 import React, {
 	useState,
 	useEffect,
 	createContext,
 	useContext,
 	Suspense,
+	useRef,
 } from "react";
 
 import { useDataContext } from "./List";
@@ -31,6 +34,8 @@ export default function MyTable() {
 	const [chi, setChi] = useState({});
 
 	const { SearchIcon, CloseIcon } = useIcons();
+
+	const inputRef = useRef();
 
 	useEffect(() => {
 		data[0] !== categoryData && setCategoryData(data[0]);
@@ -84,6 +89,22 @@ export default function MyTable() {
 
 			handleFilter(text);
 		}
+	};
+	const handleSubmit = (e) => {
+		if (e.target.value) setSearchValue(e.target.value);
+		else {
+			setSearchValue();
+			setCategoryData(data[0]);
+			setParentData(data[1]);
+			setChildData(data[2]);
+			setProductData(data[3]);
+		}
+
+		const text = e.target.value;
+
+		handleFilter(text);
+
+		inputRef.current.blur();
 	};
 
 	const handleFilter = (searchTerm) => {
@@ -412,8 +433,12 @@ export default function MyTable() {
 		>
 			<div className="table-container">
 				<div className="mx-auto w-[98%] overflow-auto">
-					<div className="flex flex-col items-center md:items-start w-full">
+					<form
+						className="flex flex-col items-center md:items-start w-full"
+						onSubmit={handleSubmit}
+					>
 						<input
+							ref={inputRef}
 							type="text"
 							onChange={(e) => handleChange(e)}
 							placeholder="Search..."
@@ -421,9 +446,12 @@ export default function MyTable() {
 							className="ms-5 ps-7 w-52 flex-initial flex items-center justify-evenly py-2 rounded-sm border-b border-neutral-800 text-neutral-900  dark:border-neutral-200 dark:text-neutral-100 bg-neutral-100/20 dark:bg-neutral-800/20 backdrop-blur-sm border-offset-4 rounded-t-md placeholder:text-neutral-800 dark:placeholder:text-neutral-200"
 						/>
 						<div className="relative w-52 py-4">
-							<div className="text-base absolute left-4 md:left-6 -top-7 grid place-content-start z-10 text-neutral-600 dark:text-neutral-400">
+							<button
+								type="submit"
+								className="text-base absolute left-4 md:left-6 -top-7 grid place-content-start z-10 text-neutral-600 dark:text-neutral-400"
+							>
 								{SearchIcon}
-							</div>
+							</button>
 							<div
 								className="absolute right-0 md:-right-[17px] -top-8 grid place-content-start z-10 text-neutral-600 dark:text-neutral-400 cursor-pointer"
 								onClick={(e) => handleChange(e, "clear")}
@@ -431,7 +459,7 @@ export default function MyTable() {
 								{CloseIcon}
 							</div>
 						</div>
-					</div>
+					</form>
 					<table className="table-fixed w-full text-sm">
 						<thead className="border-b border-black dark:border-white">
 							<tr className="">

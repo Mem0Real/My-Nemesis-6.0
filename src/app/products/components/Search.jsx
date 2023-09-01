@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useREf, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import useCustomRouter from "@/hooks/useCustomRouter";
 
@@ -10,19 +10,6 @@ import { motion } from "framer-motion";
 export default function SearchForm({ searchRef, searchInputRef }) {
 	const [text, setText] = useState({ search: "" });
 
-	useEffect(() => {
-		const handleInputBlur = () => {
-			const windowHeight = window.innerHeight;
-			const inputBottomPosition =
-				document.activeElement.getBoundingClientRect().bottom;
-
-			if (inputBottomPosition > windowHeight) {
-				document.activeElement.blur();
-			}
-		};
-
-		handleInputBlur();
-	}, []);
 	// const inputRef = useRef();
 
 	const { pushQuery, query } = useCustomRouter();
