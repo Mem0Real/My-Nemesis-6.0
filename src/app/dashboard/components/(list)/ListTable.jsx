@@ -63,6 +63,21 @@ export default function MyTable() {
 	}, []);
 
 	useEffect(() => {
+		const handleTouchOutside = (event) => {
+			if (inputRef.current && inputRef.current.contains(event.target)) {
+				inputRef.current.blur();
+			}
+		};
+
+		document.addEventListener("mousedown", handleTouchOutside);
+
+		return () => {
+			document.removeEventListener("mousedown", handleTouchOutside);
+		};
+	}, []);
+
+	// Set dropdown cookies
+	useEffect(() => {
 		setCookie("Category_Drop", cat);
 		setCookie("Parent_Drop", par);
 		setCookie("Child_Drop", chi);
@@ -92,19 +107,6 @@ export default function MyTable() {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		if (e.target.value) setSearchValue(e.target.value);
-		else {
-			setSearchValue();
-			setCategoryData(data[0]);
-			setParentData(data[1]);
-			setChildData(data[2]);
-			setProductData(data[3]);
-		}
-
-		const text = e.target.value;
-
-		handleFilter(text);
 
 		inputRef.current.blur();
 	};

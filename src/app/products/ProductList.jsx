@@ -71,12 +71,20 @@ export default function ProductList({ products, menu, totalPage, range }) {
 	}, []);
 
 	useEffect(() => {
-		let handler = (e) => {
-			if (!searchRef.current.contains(e.target)) {
+		const handleTouchOutside = (event) => {
+			if (
+				searchInputRef.current &&
+				searchInputRef.current.contains(event.target)
+			) {
 				searchInputRef.current.blur();
 			}
 		};
-		return () => document.removeEventListener("mousedown", handler);
+
+		document.addEventListener("mousedown", handleTouchOutside);
+
+		return () => {
+			document.removeEventListener("mousedown", handleTouchOutside);
+		};
 	}, []);
 
 	const toggleFilter = () => {
