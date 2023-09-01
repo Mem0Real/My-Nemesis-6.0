@@ -106,6 +106,7 @@ export default function MyTable() {
 			itemTree = getTree("item", productResults);
 			setCat({ id: productResults[0].item.CategoryId, open: true });
 			setPar({ id: productResults[0].item.ParentId, open: true });
+			setChi({ id: productResults[0].item.ChildId, open: true });
 		} else {
 			setCat({ id: "", open: false });
 			setPar({ id: "", open: false });

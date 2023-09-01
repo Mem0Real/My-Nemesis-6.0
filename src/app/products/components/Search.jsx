@@ -7,10 +7,23 @@ import useCustomRouter from "@/hooks/useCustomRouter";
 import { useIcons } from "@/app/utils/CustomIcons";
 import { motion } from "framer-motion";
 
-export default function SearchForm() {
+export default function SearchForm({ searchRef, searchInputRef }) {
 	const [text, setText] = useState({ search: "" });
 
-	const inputRef = useRef();
+	useEffect(() => {
+		const handleInputBlur = () => {
+			const windowHeight = window.innerHeight;
+			const inputBottomPosition =
+				document.activeElement.getBoundingClientRect().bottom;
+
+			if (inputBottomPosition > windowHeight) {
+				document.activeElement.blur();
+			}
+		};
+
+		handleInputBlur();
+	}, []);
+	// const inputRef = useRef();
 
 	const { pushQuery, query } = useCustomRouter();
 
@@ -18,7 +31,7 @@ export default function SearchForm() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		inputRef.current.blur();
+		searchInputRef.current.blur();
 		handleSearch(text);
 	};
 
@@ -46,6 +59,7 @@ export default function SearchForm() {
 
 	return (
 		<form
+			ref={searchRef}
 			className="flex justify-between relative border border-neutral-600 dark:border-neutral-400 rounded-md text-neutral-800 dark:text-neutral-200 bg-neutral-100 dark:bg-neutral-800"
 			onSubmit={handleSubmit}
 		>
@@ -57,7 +71,7 @@ export default function SearchForm() {
 				{SearchIcon}
 			</motion.button>
 			<input
-				ref={inputRef}
+				ref={searchInputRef}
 				type="text"
 				name="search"
 				placeholder="Search"

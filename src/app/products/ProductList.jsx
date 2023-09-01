@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, createContext, useContext, useEffect } from "react";
+import { useState, createContext, useContext, useEffect, useRef } from "react";
 import Image from "next/image";
 
 import { setCookie, getCookie, hasCookie, deleteCookie } from "cookies-next";
@@ -26,10 +26,12 @@ export default function ProductList({ products, menu, totalPage, range }) {
 	const [priceDrop, showPriceDrop] = useState(false);
 	const [filterDrop, showFilterDrop] = useState(false);
 
+	const searchRef = useRef(null);
+	const searchInputRef = useRef(null);
+
 	const { pushQuery } = useCustomRouter();
 
 	// Update filter dropdown state based on cookie data
-
 	useEffect(() => {
 		if (hasCookie("Filter_Drop")) {
 			const filter = JSON.parse(getCookie("Filter_Drop"));
@@ -66,6 +68,15 @@ export default function ProductList({ products, menu, totalPage, range }) {
 			const data = JSON.parse(getCookie("Product_PriceDrop"));
 			data && showPriceDrop(true);
 		} else showPriceDrop(false);
+	}, []);
+
+	useEffect(() => {
+		let handler = (e) => {
+			if (!searchRef.current.contains(e.target)) {
+				searchInputRef.current.blur();
+			}
+		};
+		return () => document.removeEventListener("mousedown", handler);
 	}, []);
 
 	const toggleFilter = () => {
@@ -178,7 +189,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
 
 				<div className="flex flex-col gap-6 w-screen z-10 backdrop-blur-md bg-neutral-200/60 dark:bg-neutral-800/60">
 					<div className="flex items-center justify-evenly md:justify-between gap-4 px-2 lg:px-5">
-						<Search />
+						<Search searchRef={searchRef} searchInputRef={searchInputRef} />
 						<Sort />
 					</div>
 
