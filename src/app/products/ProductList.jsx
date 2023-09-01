@@ -71,19 +71,14 @@ export default function ProductList({ products, menu, totalPage, range }) {
 	}, []);
 
 	useEffect(() => {
-		const handleTouchOutside = (event) => {
-			if (
-				searchInputRef.current &&
-				searchInputRef.current.contains(event.target)
-			) {
-				searchInputRef.current.blur();
-			}
+		const scrollBlur = (event) => {
+			searchInputRef.current.blur();
 		};
 
-		document.addEventListener("mousedown", handleTouchOutside);
+		document.addEventListener("scroll", scrollBlur);
 
 		return () => {
-			document.removeEventListener("mousedown", handleTouchOutside);
+			document.removeEventListener("scroll", scrollBlur);
 		};
 	}, []);
 

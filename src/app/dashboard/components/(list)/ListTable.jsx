@@ -63,16 +63,14 @@ export default function MyTable() {
 	}, []);
 
 	useEffect(() => {
-		const handleTouchOutside = (event) => {
-			if (inputRef.current && inputRef.current.contains(event.target)) {
-				inputRef.current.blur();
-			}
+		const scrollBlur = (event) => {
+			inputRef.current.blur();
 		};
 
-		document.addEventListener("mousedown", handleTouchOutside);
+		document.addEventListener("scroll", scrollBlur);
 
 		return () => {
-			document.removeEventListener("mousedown", handleTouchOutside);
+			document.removeEventListener("scroll", scrollBlur);
 		};
 	}, []);
 
