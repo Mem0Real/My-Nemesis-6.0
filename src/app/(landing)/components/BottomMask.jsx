@@ -92,7 +92,7 @@ export default function BottomMask() {
 					>
 						<div
 							ref={maskRef}
-							className="relative mx-auto md:mt-0 mb-12 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border-[2px] border-gray-800 dark:border-gray-300 md:my-auto md:-ml-1 md:mr-auto md:w-[150px] md:min-w-[150px] overflow-hidden"
+							className="mx-auto my-12 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border-[2px] border-gray-800 dark:border-gray-300 md:my-auto md:-ml-1 md:mr-auto md:w-[150px] md:min-w-[150px] overflow-hidden"
 						>
 							<motion.div className="absolute inset-0 w-full h-full flex flex-col justify-center items-center z-10 bg-neutral-100 dark:bg-neutral-900">
 								<motion.h1

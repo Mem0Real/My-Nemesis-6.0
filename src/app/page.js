@@ -16,9 +16,7 @@ export default function Home() {
 						<TopMask />
 					</div>
 					<BodySection />
-					<div className="mb-6 md:mb-12 lg:mb-24">
-						<BottomMask />
-					</div>
+					<BottomMask />
 				</div>
 			</div>
 		</>
