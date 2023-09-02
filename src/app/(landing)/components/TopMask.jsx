@@ -1,10 +1,7 @@
 "use client";
 
-import React, { useState, useEffect, useLayoutEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
-
-import styles from "../styles/mask.module.scss";
-import Image from "next/image";
 
 export default function TopMask() {
 	const [maskPositionX, setMaskPositionX] = useState(0);
@@ -39,7 +36,7 @@ export default function TopMask() {
 			className="relative z-10 h-[150vh] overflow-clip mt-6 md:-12 lg:mt-24"
 		>
 			<motion.div
-				className={`window absolute left-0 top-0 grid gap-2 p-3 pt-6 [grid-template-rows:4fr_1fr] origin-[${maskPositionX}_${maskPositionY}] md:origin-[94%_32%] lg:origin-[${maskPositionX}_${maskPositionY}] `}
+				className={`absolute left-0 top-0 grid gap-2 p-3 pt-6 [grid-template-rows:4fr_1fr] origin-[${maskPositionX}_${maskPositionY}] md:origin-[94%_32%] lg:origin-[${maskPositionX}_${maskPositionY}] `}
 				style={{ scale }}
 			>
 				<div
