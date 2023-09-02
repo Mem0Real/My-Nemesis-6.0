@@ -48,7 +48,7 @@ export default function BottomMask() {
 
 	const nmScroll = useScroll({
 		target: rootRef,
-		offset: ["start end", "end end"],
+		offset: ["start end", "end 120vh"],
 	});
 	const { scrollYProgress } = isMobile ? smScroll : nmScroll;
 
@@ -81,7 +81,7 @@ export default function BottomMask() {
 			<div ref={rootRef} className="relative z-10 h-[150vh] overflow-clip">
 				<motion.div
 					style={{ scale }}
-					className={`absolute left-0 right-0 bottom-0 grid w-screen h-screen pb-96 gap-2 p-3 [grid-template-rows:4fr_1fr] origin-[50%_40%] md:origin-[16%_48%] lg:origin-[8%_48%] xl:origin-[8%_36%]`}
+					className={`absolute left-0 right-0 bottom-0 grid w-screen h-screen pb-96 gap-2 p-3 [grid-template-rows:4fr_1fr] origin-[50%_30%] md:origin-[16%_48%] lg:origin-[8%_48%] xl:origin-[8%_36%]`}
 				>
 					{/* <div
 						ref={scaleRef}
