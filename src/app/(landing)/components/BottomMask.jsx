@@ -53,7 +53,10 @@ export default function BottomMask() {
 
 	return (
 		<main className=" bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg">
-			<div ref={rootRef} className="relative z-10 h-[150vh] overflow-clip">
+			<div
+				ref={rootRef}
+				className="relative z-10 h-[150vh] overflow-clip mt-6 md:-12 lg:mt-24"
+			>
 				<motion.div
 					style={{ scale }}
 					className={`absolute right-0 bottom-0 grid w-screen h-screen gap-2 p-6 pt-20 [grid-template-rows:4fr_1fr] origin-[50%_30%] md:origin-[16%_48%] lg:origin-[8%_48%]`}
