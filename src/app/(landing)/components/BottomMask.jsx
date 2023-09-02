@@ -43,7 +43,7 @@ export default function BottomMask() {
 
 	const smScroll = useScroll({
 		target: rootRef,
-		offset: ["-550px end", "center end"],
+		offset: ["start end", "center end"],
 	});
 
 	const nmScroll = useScroll({
