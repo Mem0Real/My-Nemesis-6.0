@@ -25,15 +25,17 @@ export default function TopMask() {
 	let scale = useMotionValue(1);
 	let scaleText = useMotionValue(1);
 	let moveTextX = useMotionValue(0);
+	let moveTextY = useMotionValue(0);
 
 	scale = useTransform(scrollYProgress, [0, 1], [1, 20]);
 	scaleText = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
-	moveTextX = useTransform(scrollYProgress, [0, 1], [0, -150]);
+	moveTextX = useTransform(scrollYProgress, [0, 1], [140, -300]);
+	moveTextY = useTransform(scrollYProgress, [0, 1], [0, -15]);
 
 	return (
 		<div
 			ref={rootRef}
-			className="relative z-10 h-[150vh] overflow-clip mt-6 md:-12 lg:mt-24"
+			className="relative z-10 h-[150vh] overflow-clip mt-6 md:mt-12 lg:mt-24"
 		>
 			<motion.div
 				className={`absolute left-0 top-0 grid gap-2 p-3 pt-6 [grid-template-rows:4fr_1fr] origin-[${maskPositionX}_${maskPositionY}] md:origin-[94%_32%] lg:origin-[${maskPositionX}_${maskPositionY}] `}
@@ -54,14 +56,14 @@ export default function TopMask() {
 					</div>
 					<div
 						ref={maskRef}
-						className="relative mx-auto mb-7 mt-4 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border border-gray-800 dark:border-gray-300 md:my-auto md:-mr-1 md:ml-auto md:w-[150px] md:min-w-[150px] z-20 overflow-hidden"
+						className="relative mx-auto my-12 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border border-gray-800 dark:border-gray-300 md:my-auto md:-mr-1 md:ml-auto md:w-[150px] md:min-w-[150px] z-20 overflow-hidden"
 					>
-						<motion.div className="absolute inset-0 w-full h-full flex flex-col justify-center items-center z-10 bg-neutral-100 dark:bg-neutral-900">
+						<motion.div className="absolute inset-0 w-full h-full flex flex-col justify-center items-start z-10 bg-neutral-100 dark:bg-neutral-900">
 							<motion.h1
-								className="text-xl md:text-2xl lg:text-4xl w-[150%] bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center"
-								style={{ scale: scaleText, x: moveTextX }}
+								className="text-xl md:text-2xl lg:text-4xl w-[400%] bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center"
+								style={{ scale: scaleText, x: moveTextX, y: moveTextY }}
 							>
-								Welcome to Ethio Machineries
+								Welcome to Ethio Machineries.
 							</motion.h1>
 						</motion.div>
 					</div>

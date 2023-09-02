@@ -5,17 +5,6 @@ import React, { useState, useEffect, useRef } from "react";
 
 import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 
-function useParallax(value, distance) {
-	return useTransform(value, [0, 1], [-distance, distance]);
-}
-
-function useScale(value, size) {
-	return useTransform(value, [0, 1], [size, 1]);
-}
-
-function useMove(value, distance) {
-	return useTransform(value, [0, 1], [distance, -distance]);
-}
 export default function BottomMask() {
 	const [maskPositionX, setMaskPositionX] = useState(0);
 	const [maskPositionY, setMaskPositionY] = useState(0);
@@ -43,13 +32,15 @@ export default function BottomMask() {
 	let scale = useMotionValue(20);
 	let scaleText = useMotionValue(0.1);
 	let moveTextX = useMotionValue(0);
+	let moveTextY = useMotionValue(0);
 
 	// console.info(maskPositionX);
 	// console.info(maskPositionY);
 
 	scale = useTransform(scrollYProgress, [0, 1], [20, 1]);
 	scaleText = useTransform(scrollYProgress, [0, 1], [0.1, 1]);
-	moveTextX = useTransform(scrollYProgress, [0, 1], [150, -100]);
+	moveTextX = useTransform(scrollYProgress, [0, 1], [300, -260]);
+	moveTextY = useTransform(scrollYProgress, [0, 1], [0, -15]);
 
 	return (
 		<main className=" bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg">
@@ -72,9 +63,9 @@ export default function BottomMask() {
 							<motion.div className="absolute inset-0 w-full h-full flex flex-col justify-center items-center z-10 bg-neutral-100 dark:bg-neutral-900">
 								<motion.h1
 									className="text-xl md:text-2xl lg:text-4xl w-[250%] bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center"
-									style={{ scale: scaleText, x: moveTextX }}
+									style={{ scale: scaleText, x: moveTextX, y: moveTextY }}
 								>
-									Thank you for visiting
+									Thank You For Visiting!
 								</motion.h1>
 							</motion.div>
 						</div>
@@ -86,10 +77,6 @@ export default function BottomMask() {
 						</div>
 					</div>
 				</motion.div>
-				<motion.div
-					className="w-12 h-12 bg-red-500 rounded-full z-50"
-					style={{ x: maskPositionX, y: maskPositionY }}
-				/>
 			</div>
 		</main>
 	);
