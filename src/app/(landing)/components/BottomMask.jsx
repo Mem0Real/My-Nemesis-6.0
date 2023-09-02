@@ -56,11 +56,16 @@ export default function BottomMask() {
 		target: rootRef,
 		offset: ["start 30vh", "end end"],
 	});
-	const { scrollYProgress } = isMobile
-		? smScroll
-		: isLaptop
-		? nmScroll
-		: lgScroll;
+	// const { scrollYProgress } = isMobile
+	// 	? smScroll
+	// 	: isLaptop
+	// 	? nmScroll
+	// 	: lgScroll;
+
+	const { scrollYProgress } = useScroll({
+		target: rootRef,
+		offset: ["start 150vh", "end end"],
+	});
 
 	useEffect(() => {
 		const maskRect = maskRef.current.getBoundingClientRect();
@@ -72,7 +77,6 @@ export default function BottomMask() {
 	}, [maskRef]);
 
 	let scale = useMotionValue(20);
-	let y = useMotionValue(0);
 	let scaleText = useMotionValue(0.1);
 	let moveTextX = useMotionValue(0);
 	let moveTextY = useMotionValue(0);
