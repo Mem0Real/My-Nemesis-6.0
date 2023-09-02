@@ -61,7 +61,7 @@ export default function TopMask() {
 								className="text-xl md:text-2xl lg:text-4xl w-[150%] bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center"
 								style={{ scale: scaleText, x: moveTextX }}
 							>
-								Welcome
+								Welcome to Ethio Machineries
 							</motion.h1>
 						</motion.div>
 					</div>
