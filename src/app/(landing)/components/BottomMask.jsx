@@ -44,7 +44,7 @@ export default function BottomMask() {
 
 	const smScroll = useScroll({
 		target: rootRef,
-		offset: ["start end", "end 150vh"],
+		offset: ["start 20vh", "end 100vh"],
 	});
 
 	const nmScroll = useScroll({
@@ -78,7 +78,7 @@ export default function BottomMask() {
 	let moveTextY = useMotionValue(0);
 
 	scale = useTransform(scrollYProgress, [0, 1], [20, 1]);
-	const mtSm = useTransform(scrollYProgress, [0, 1], [30, -50]);
+	const mtSm = useTransform(scrollYProgress, [0, 1], [30, -30]);
 	// const mtNm = useTransform(scrollYProgress, [0.5, 1], [30, 50]);
 
 	scaleText = useTransform(scrollYProgress, [0, 1], [0.1, 1]);
@@ -90,7 +90,7 @@ export default function BottomMask() {
 		<main className="bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg">
 			<div
 				ref={rootRef}
-				className="relative z-10 h-[150vh] lg:h-[180vh] xl:h-[150vh] overflow-clip"
+				className="relative z-10 h-[180vh] xl:h-[150vh] overflow-clip"
 			>
 				<motion.div
 					style={{ scale }}
