@@ -41,15 +41,16 @@ export default function BottomMask() {
 	const maskRef = useRef();
 	const scaleRef = useRef();
 
-	const { scrollYProgress } = isMobile
-		? useScroll({
-				target: rootRef,
-				offset: ["-550px end", "center end"],
-		  })
-		: useScroll({
-				target: rootRef,
-				offset: ["start end", "end end"],
-		  });
+	const smScroll = useScroll({
+		target: rootRef,
+		offset: ["-550px end", "center end"],
+	});
+
+	const nmScroll = useScroll({
+		target: rootRef,
+		offset: ["start end", "end end"],
+	});
+	const { scrollYProgress } = isMobile ? smScroll : nmScroll;
 
 	useEffect(() => {
 		const maskRect = maskRef.current.getBoundingClientRect();
@@ -69,12 +70,13 @@ export default function BottomMask() {
 	scale = useTransform(scrollYProgress, [0, 1], [20, 1]);
 	y = useTransform(scrollYProgress, [0.7, 1], [100, 150]);
 
+	const mtSm = useTransform(scrollYProgress, [0.5, 1], [10, 20]);
+	const mtNm = useTransform(scrollYProgress, [0.5, 1], [30, 50]);
+
 	scaleText = useTransform(scrollYProgress, [0, 1], [0.1, 1]);
 	moveTextX = useTransform(scrollYProgress, [0, 1], [300, -170]);
-	// moveTextY = useTransform(scrollYProgress, [0.5, 1], [30, 50]);
-	moveTextY = isMobile
-		? useTransform(scrollYProgress, [0.5, 1], [10, 20])
-		: useTransform(scrollYProgress, [0.5, 1], [30, 50]);
+
+	moveTextY = isMobile ? mtSm : mtNm;
 
 	return (
 		<main className="mx-auto bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg">
