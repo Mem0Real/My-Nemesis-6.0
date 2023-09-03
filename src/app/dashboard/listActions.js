@@ -6,6 +6,8 @@ import fs from "fs";
 
 import { revalidatePath, revalidateTag } from "next/cache";
 
+// TODO perhaps show error but still update image if old file not found
+
 export async function create(formData) {
 	"use server";
 
