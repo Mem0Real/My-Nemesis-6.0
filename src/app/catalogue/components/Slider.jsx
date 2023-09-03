@@ -40,7 +40,7 @@ export default function Slider({
 							key={item.id}
 							className="flex flex-col items-center justify-between my-12"
 						>
-							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
+							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl overflow-hidden">
 								<div className="relative w-full h-full mx-auto">
 									{items.images ? (
 										<Image
@@ -98,7 +98,7 @@ export default function Slider({
 							key={child.id}
 							className="flex flex-col items-center justify-between my-12"
 						>
-							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
+							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl overflow-hidden">
 								<div className="relative w-full h-full mx-auto">
 									{child.image ? (
 										<Image
@@ -156,7 +156,7 @@ export default function Slider({
 							key={parent.id}
 							className="flex flex-col items-center justify-between my-12"
 						>
-							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
+							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl overflow-hidden">
 								<div className="relative w-full h-full mx-auto">
 									{parent.image ? (
 										<Image
