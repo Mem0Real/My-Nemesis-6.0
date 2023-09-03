@@ -38,19 +38,21 @@ const SearchPage = async ({ searchParams }) => {
 						Showing results for &apos;{searchQuery}&apos;
 					</p>
 				</div>
-				<div className="flex flex-col justify-center items-center gap-8 text-center">
-					{firstArray && !isObjEmpty(firstArray) && (
-						<Categories>{firstArray}</Categories>
-					)}
-					{secondArray && !isObjEmpty(secondArray) && (
-						<Parents>{secondArray}</Parents>
-					)}
-					{thirdArray && !isObjEmpty(thirdArray) && (
-						<Children data={searchResult}>{thirdArray}</Children>
-					)}
-					{fourthArray && !isObjEmpty(fourthArray) && (
-						<Items data={searchResult}>{fourthArray} </Items>
-					)}
+				<div className="text-center py-24">
+					<div className="flex justify-evenly flex-wrap items-start gap-12 bg-neutral-100/20 dark:bg-neutral-800/20 backdrop-sepia">
+						{firstArray && !isObjEmpty(firstArray) && (
+							<Categories>{firstArray}</Categories>
+						)}
+						{secondArray && !isObjEmpty(secondArray) && (
+							<Parents>{secondArray}</Parents>
+						)}
+						{thirdArray && !isObjEmpty(thirdArray) && (
+							<Children data={searchResult}>{thirdArray}</Children>
+						)}
+						{fourthArray && !isObjEmpty(fourthArray) && (
+							<Items data={searchResult}>{fourthArray} </Items>
+						)}
+					</div>
 				</div>
 			</div>
 		);
@@ -65,19 +67,18 @@ const SearchPage = async ({ searchParams }) => {
 	}
 
 	return (
-		<div className="relative bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 pt-24">
-			<div className="bg-neutral-100/20 dark:bg-neutral-900/20 backdrop-blur-lg z-10">
-				{content}
-			</div>
-			<div className="absolute -top-28 md:top-10 left-0 w-1/2 h-1/2">
+		<div className="relative text-neutral-800 dark:text-neutral-100">
+			<div className="fixed h-56 w-56 oveflow-hidden z-0">
 				<Image
 					src={"/images/SearchBg.png"}
 					alt="Search"
 					fill
+					quality={100}
 					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
-					className="object-contain object-center z-0"
+					className="object-cover object-center z-20"
 				/>
 			</div>
+			<div className=" bg-neutral-100 dark:bg-neutral-900 z-10">{content}</div>
 		</div>
 	);
 };
