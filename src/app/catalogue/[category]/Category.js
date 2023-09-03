@@ -20,7 +20,7 @@ export default async function Category({ categoryId }) {
 			</div>
 			<div className="flex-initial min-h-screen w-full flex flex-col items-center">
 				<Suspense fallback={<ParentLoader />}>
-					<Parents categoryId={categoryId} />
+					<Parents category={categoryData} />
 				</Suspense>
 			</div>
 		</>

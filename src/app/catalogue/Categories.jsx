@@ -25,7 +25,7 @@ export default function Categories({ categories }) {
 					{category.parents.length > 0 ? (
 						<div className="w-full">
 							<Suspense fallback={<CategoryLoader />}>
-								<Parents categoryId={category.id} parents={category.parents} />
+								<Parents category={category} parents={category.parents} />
 							</Suspense>
 						</div>
 					) : (

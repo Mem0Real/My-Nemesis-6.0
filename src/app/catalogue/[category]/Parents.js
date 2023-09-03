@@ -8,12 +8,12 @@ import ChildLoader from "../components/(loader)/ChildLoader";
 import CarouselHolder from "../components/CarouselHolder";
 import Titles from "../components/Titles";
 
-export default async function Parents({ categoryId }) {
+export default async function Parents({ category }) {
 	let content;
 	function isObjEmpty(obj) {
 		return Object.keys(obj).length === 0;
 	}
-	const reference = { CategoryId: categoryId };
+	const reference = { CategoryId: category.id };
 
 	let parentData = await getCollectionData("parents", reference);
 
@@ -32,7 +32,7 @@ export default async function Parents({ categoryId }) {
 				>
 					<CarouselHolder>
 						<Link
-							href={`/catalogue/${categoryId}/${parent.id}`}
+							href={`/catalogue/${parent.CategoryId}/${parent.id}`}
 							className="flex-none"
 						>
 							<Titles
@@ -44,8 +44,8 @@ export default async function Parents({ categoryId }) {
 							{parent.children.length > 0 ? (
 								<Suspense fallback={<ChildLoader />}>
 									<Children
-										categoryId={categoryId}
-										parentId={parent.id}
+										category={category}
+										parent={parent}
 										childrenData={parent.children}
 									/>
 								</Suspense>

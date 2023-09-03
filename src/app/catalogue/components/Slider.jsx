@@ -13,22 +13,13 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useIcons } from "@/app/utils/CustomIcons";
 
-const images = [
-	"/images/1.png",
-	"/images/2.png",
-	"/images/3.png",
-	"/images/4.png",
-	"/images/5.png",
-	"/images/6.png",
-	"/images/7.png",
-];
 export default function Slider({
 	parents = null,
 	childrens = null,
 	items = null,
-	categoryId = null,
-	parentId = null,
-	childId = null,
+	category = null,
+	parent = null,
+	child = null,
 }) {
 	const [hideLeft, setHideLeft] = useState(false);
 	const [hideRight, setHideRight] = useState(false);
@@ -40,18 +31,36 @@ export default function Slider({
 
 	let content;
 
-	if (parents) {
-		content = parents.map((parent) => {
+	if (items) {
+		content = items.map((item) => {
 			return (
-				parent.CategoryId === categoryId && (
-					<SwiperSlide key={parent.id}>
+				item.ChildId === child.id && (
+					<SwiperSlide key={item.id}>
 						<div
-							key={parent.id}
+							key={item.id}
 							className="flex flex-col items-center justify-between my-12"
 						>
 							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
 								<div className="relative w-full h-full mx-auto">
-									{parent.image ? (
+									{items.images ? (
+										<Image
+											src={item.images[0]}
+											alt={parent.id}
+											fill={true}
+											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+											className="absolute object-contain"
+											priority={true}
+										/>
+									) : child.image ? (
+										<Image
+											src={child.image}
+											alt={parent.id}
+											fill={true}
+											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+											className="absolute object-contain"
+											priority={true}
+										/>
+									) : parent.image ? (
 										<Image
 											src={parent.image}
 											alt={parent.id}
@@ -69,10 +78,10 @@ export default function Slider({
 							</div>
 							<div className="w-56 border border-neutral-400 rounded-b-2xl text-center text-sm py-5 hover:underline underline-offset-2">
 								<Link
-									key={parent.id}
-									href={`/catalogue/${categoryId}/${parent.id}`}
+									key={item.id}
+									href={`/catalogue/${item.CategoryId}/${item.ParentId}/${item.ChildId}/${item.id}`}
 								>
-									<h1>{parent.name}</h1>
+									<h1>{item.name}</h1>
 								</Link>
 							</div>
 						</div>
@@ -83,7 +92,7 @@ export default function Slider({
 	} else if (childrens) {
 		content = childrens.map((child) => {
 			return (
-				child.ParentId === parentId && (
+				child.ParentId === parent.id && (
 					<SwiperSlide key={child.id}>
 						<div
 							key={child.id}
@@ -94,6 +103,24 @@ export default function Slider({
 									{child.image ? (
 										<Image
 											src={child.image}
+											alt={child.id}
+											fill={true}
+											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+											className="absolute object-contain"
+											priority={true}
+										/>
+									) : parent.image ? (
+										<Image
+											src={parent.image}
+											alt={child.id}
+											fill={true}
+											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+											className="absolute object-contain"
+											priority={true}
+										/>
+									) : category.image ? (
+										<Image
+											src={category.image}
 											alt={child.id}
 											fill={true}
 											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -120,20 +147,29 @@ export default function Slider({
 				)
 			);
 		});
-	} else if (items) {
-		content = items.map((item) => {
+	} else if (parents) {
+		content = parents.map((parent) => {
 			return (
-				item.ChildId === childId && (
-					<SwiperSlide key={item.id}>
+				parent.CategoryId === category.id && (
+					<SwiperSlide key={parent.id}>
 						<div
-							key={item.id}
+							key={parent.id}
 							className="flex flex-col items-center justify-between my-12"
 						>
 							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl">
 								<div className="relative w-full h-full mx-auto">
-									{items.image ? (
+									{parent.image ? (
 										<Image
 											src={parent.image}
+											alt={parent.id}
+											fill={true}
+											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+											className="absolute object-contain"
+											priority={true}
+										/>
+									) : category.image ? (
+										<Image
+											src={category.image}
 											alt={parent.id}
 											fill={true}
 											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
@@ -149,10 +185,10 @@ export default function Slider({
 							</div>
 							<div className="w-56 border border-neutral-400 rounded-b-2xl text-center text-sm py-5 hover:underline underline-offset-2">
 								<Link
-									key={item.id}
-									href={`/catalogue/${item.CategoryId}/${item.ParentId}/${item.ChildId}/${item.id}`}
+									key={parent.id}
+									href={`/catalogue/${category.id}/${parent.id}`}
 								>
-									<h1>{item.name}</h1>
+									<h1>{parent.name}</h1>
 								</Link>
 							</div>
 						</div>
