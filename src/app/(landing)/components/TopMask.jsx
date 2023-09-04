@@ -13,7 +13,11 @@ export default function TopMask() {
 	const scaleRef = useRef();
 	const containerRef = useRef();
 
-	const { scrollYProgress } = useScroll({
+	const small = useScroll({
+		target: rootRef,
+		offset: ["-50px start", "end end"],
+	});
+	const normal = useScroll({
 		target: rootRef,
 		offset: ["20px start", "end end"],
 	});
@@ -54,18 +58,20 @@ export default function TopMask() {
 	let smTextYPos = useMotionValue(0);
 	let textYPos = useMotionValue(0);
 
+	let smScale = useMotionValue(1);
 	let nmScale = useMotionValue(1);
 	let lgScale = useMotionValue(1);
 
-	smTextYPos = useTransform(scrollYProgress, [0, 1], [0, -50]);
-	textYPos = useTransform(scrollYProgress, [0, 1], [0, 0]);
+	smTextYPos = useTransform(small.scrollYProgress, [0, 1], [0, -50]);
+	textYPos = useTransform(normal.scrollYProgress, [0, 1], [0, 0]);
 
-	// scale = useTransform(scrollYProgress, [0, 1], ["100%", "3000%"]);
-	scaleText = useTransform(scrollYProgress, [0, 1], [1, 0.2]);
-	moveTextX = useTransform(scrollYProgress, [0, 1], [150, -150]);
+	// scale = useTransform(normal.scrollYProgress, [0, 1], ["100%", "3000%"]);
+	scaleText = useTransform(normal.scrollYProgress, [0, 1], [1, 0.2]);
+	moveTextX = useTransform(normal.scrollYProgress, [0, 1], [150, -150]);
 
-	nmScale = useTransform(scrollYProgress, [0, 1], ["100%", "1000%"]);
-	lgScale = useTransform(scrollYProgress, [0, 1], ["100%", "5000%"]);
+	smScale = useTransform(small.scrollYProgress, [0, 1], ["100%", "1500%"]);
+	nmScale = useTransform(normal.scrollYProgress, [0, 1], ["100%", "1000%"]);
+	lgScale = useTransform(normal.scrollYProgress, [0, 1], ["100%", "5000%"]);
 
 	if (width < 768) {
 		moveTextY = smTextYPos;
@@ -75,7 +81,9 @@ export default function TopMask() {
 		console.info("Not mobile");
 	}
 
-	if (width < 1440) {
+	if (width <= 1024) {
+		scale = smScale;
+	} else if (width <= 1440) {
 		scale = nmScale;
 		console.info("Normal");
 	} else {
@@ -119,10 +127,6 @@ export default function TopMask() {
 
 	return (
 		<div ref={rootRef} className="relative z-10 h-[150vh] overflow-clip">
-			<motion.div
-				className={`absolute w-2 h-2 rounded-full bg-red-500 z-50`}
-				style={{ x: origin.x, y: origin.y }}
-			/>
 			<motion.div
 				ref={bodyRef}
 				className={`flex flex-col justify-center items-center gap-2`}
