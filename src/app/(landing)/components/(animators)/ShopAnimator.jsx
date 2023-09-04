@@ -14,7 +14,7 @@ export default function ShopAnimator({ category, children, key }) {
 	});
 
 	const y = useTransform(scrollYProgress, [0, 0.3, 0.5, 0.7], [150, 0, 30, 0]);
-	const opacity = useTransform(scrollYProgress, [0, 0.3], [0.3, 1]);
+	const opacity = useTransform(scrollYProgress, [0, 0.7], [0, 1]);
 
 	return (
 		<motion.div

@@ -6,7 +6,6 @@ import Background from "./Background";
 
 const Parallax = () => {
 	const { scrollY } = useScroll();
-	// const y = useTransform(scrollY, [0, 250], [50, -270]);
 	const y = useTransform(scrollY, [0, 100], ["5vh", "-50vh"]);
 	const scale = useTransform(scrollY, [0, 150], [1, 2]);
 
