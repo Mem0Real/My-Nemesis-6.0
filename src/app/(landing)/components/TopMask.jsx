@@ -34,7 +34,7 @@ export default function TopMask() {
 	moveTextY = useTransform(scrollYProgress, [0, 1], [0, -20]);
 
 	return (
-		<div ref={rootRef} className="relative z-10 h-[150vh] overflow-clip mb-3">
+		<div ref={rootRef} className="relative z-10 h-[150vh] overflow-clip">
 			<motion.div
 				className={`absolute left-0 right-0 top-0 grid w-screen gap-2 p-3 [grid-template-rows:4fr_1fr] justify-content-center  origin-[${maskPositionX}_${maskPositionY}] md:origin-[94%_32%] lg:origin-[${maskPositionX}_${maskPositionY}] `}
 				style={{ scale }}
