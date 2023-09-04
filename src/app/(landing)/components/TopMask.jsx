@@ -15,7 +15,7 @@ export default function TopMask() {
 
 	const small = useScroll({
 		target: rootRef,
-		offset: ["-50px start", "end end"],
+		offset: ["start start", "end end"],
 	});
 	const normal = useScroll({
 		target: rootRef,
@@ -69,7 +69,7 @@ export default function TopMask() {
 	scaleText = useTransform(normal.scrollYProgress, [0, 1], [1, 0.2]);
 	moveTextX = useTransform(normal.scrollYProgress, [0, 1], [150, -150]);
 
-	smScale = useTransform(small.scrollYProgress, [0, 1], ["100%", "1500%"]);
+	smScale = useTransform(small.scrollYProgress, [0, 1], ["100%", "1000%"]);
 	nmScale = useTransform(normal.scrollYProgress, [0, 1], ["100%", "1000%"]);
 	lgScale = useTransform(normal.scrollYProgress, [0, 1], ["100%", "5000%"]);
 
