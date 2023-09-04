@@ -17,6 +17,7 @@ import SideBarBase from "./sidebar/SideBarBase";
 import NextTopLoader from "nextjs-toploader";
 import ScrollToTopButton from "./components/ScrollToTop";
 import CustomCursor from "./components/CustomCursor";
+import Loading from "./loading";
 
 export const metadata = {
 	title: "My Nemesis 6.0",
@@ -27,7 +28,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
 	return (
 		<html lang="en">
-			<body>
+			<body className="dark">
 				<ThemeProvider>
 					<ProductDataContext>
 						<CustomIcons>
@@ -43,12 +44,18 @@ export default function RootLayout({ children }) {
 										</div>
 									</CartBase>
 									<div className="text-sm text-neutral-800 dark:text-neutral-200 z-20">
-										<Suspense>
+										<Suspense
+											fallback={
+												<div className="p-3 rounded-full bg-neutral-100 dark:bg-neutral-800" />
+											}
+										>
 											<SideBarBase />
 										</Suspense>
 									</div>
 									<ScrollToTopButton>
-										<div className={`min-h-screen`}>{children}</div>
+										<div className={`min-h-screen`}>
+											<Suspense fallback={<Loading />}>{children}</Suspense>
+										</div>
 									</ScrollToTopButton>
 									<div className="w-full">
 										<Footer />

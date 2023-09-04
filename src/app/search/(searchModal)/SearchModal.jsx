@@ -39,7 +39,6 @@ export default function SearchModal({
 		setTimeout(() => {
 			if (searchModal && inputRef.current) {
 				inputRef.current.focus();
-				console.log("Focusing");
 			}
 		}, 500);
 	}, [searchModal]);

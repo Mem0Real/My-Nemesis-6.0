@@ -12,7 +12,6 @@ const SmoothScroller = () => {
 			requestAnimationFrame(raf);
 		}
 
-		console.log("SmoothIndeed");
 		requestAnimationFrame(raf);
 	}, []);
 

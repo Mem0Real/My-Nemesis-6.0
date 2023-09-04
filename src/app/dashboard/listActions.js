@@ -182,7 +182,6 @@ export async function create(formData) {
 			}
 			const query = await writeToDb(imageUrl);
 			if (query?.error) {
-				console.log(query.error);
 				return { error: `Error creating item ` };
 			} else {
 				revalidatePath("/catalogue");

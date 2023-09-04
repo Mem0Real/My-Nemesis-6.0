@@ -16,9 +16,6 @@ export default function InnerSlider({
 	parentId,
 	categoryId,
 }) {
-	console.log("ID: ", id);
-	console.info("Images Exist");
-
 	return (
 		<div className="w-full h-full">
 			<Swiper
