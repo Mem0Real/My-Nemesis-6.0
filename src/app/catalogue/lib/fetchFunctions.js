@@ -26,11 +26,7 @@ export async function getCollectionData(entry, reference) {
 				id: "asc",
 			},
 			where: reference,
-			select: {
-				id: true,
-				name: true,
-				description: true,
-				image: true,
+			include: {
 				[include]: {
 					orderBy: {
 						id: "asc",

@@ -14,7 +14,7 @@ export default async function Category({ categoryId }) {
 				<h1 className="flex-none mb-12 border border-x-0 border-3 rounded-md border-neutral-800 dark:border-neutral-200 md:px-6 md:py-4 text-4xl md:text-5xl lg:text-6xl font-semibold text-center w-fit">
 					{categoryData.name}
 				</h1>
-				<p className="h-24 text-center mt-4 md:mt-2 text-3xl">
+				<p className="h-24 text-center mt-4 md:mt-2 text-xl">
 					{categoryData.description}
 				</p>
 			</div>

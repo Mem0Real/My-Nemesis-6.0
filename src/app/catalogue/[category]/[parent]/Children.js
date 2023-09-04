@@ -7,7 +7,7 @@ import ItemLoader from "../../components/(loader)/ItemLoader";
 import CarouselHolder from "../../components/CarouselHolder";
 import Titles from "../../components/Titles";
 
-export default async function Children({ parent }) {
+export default async function Children({ parent, categoryId }) {
 	let content;
 
 	const reference = { ParentId: parent.id };
@@ -32,7 +32,7 @@ export default async function Children({ parent }) {
 				>
 					<CarouselHolder>
 						<Link
-							href={`/catalogue/${child.CategoryId}/${child.ParentId}/${child.id}`}
+							href={`/catalogue/${categoryId}/${child.ParentId}/${child.id}`}
 							className="flex-none"
 						>
 							<Titles
@@ -44,7 +44,11 @@ export default async function Children({ parent }) {
 							{child.items.length > 0 ? (
 								<Suspense fallback={<ItemLoader />}>
 									<div className="group mx-auto w-[95%] border border-neutral-300 rounded-3xl shadow-neutral-400 hover:shadow-neutral-600 dark:shadow-neutral-900 dark:hover:shadow-black dark:border-neutral-700">
-										<Items parent={parent} child={child} items={child.items} />
+										<Items
+											parent={parent}
+											child={child}
+											itemData={child.items}
+										/>
 									</div>
 								</Suspense>
 							) : (

@@ -4,6 +4,7 @@ import BodySection from "./(landing)/components/(sections)/BodySection";
 import Parallax from "./(landing)/components/Parallax";
 import TouchSmoothScroller from "./components/TouchSmoothScroller";
 
+// TODO Design skeleton for landing page
 export default function Home() {
 	return (
 		<>

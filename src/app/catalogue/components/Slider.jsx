@@ -12,6 +12,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { useIcons } from "@/app/utils/CustomIcons";
+import InnerSlider from "./InnerSlider";
 
 export default function Slider({
 	parents = null,
@@ -42,14 +43,13 @@ export default function Slider({
 						>
 							<div className="w-56 h-56 border border-neutral-400 border-b-0 rounded-t-2xl drop-shadow-xl overflow-hidden">
 								<div className="relative w-full h-full mx-auto">
-									{items.images ? (
-										<Image
-											src={item.images[0]}
-											alt={parent.id}
-											fill={true}
-											sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-											className="absolute object-contain"
-											priority={true}
+									{item.images.length > 0 ? (
+										<InnerSlider
+											images={item.images}
+											id={item.id}
+											childId={item.ChildId}
+											parentId={item.ParentId}
+											categoryId={item.CategoryId}
 										/>
 									) : child.image ? (
 										<Image
@@ -186,7 +186,7 @@ export default function Slider({
 							<div className="w-56 border border-neutral-400 rounded-b-2xl text-center text-sm py-5 hover:underline underline-offset-2">
 								<Link
 									key={parent.id}
-									href={`/catalogue/${category.id}/${parent.id}`}
+									href={`/catalogue/${parent.CategoryId}/${parent.id}`}
 								>
 									<h1>{parent.name}</h1>
 								</Link>

@@ -4,6 +4,6 @@ import SlickCarousel from "@/app/catalogue/components/SlickCarousel";
 import NestedCarousel from "@/app/catalogue/components/NestedCarousel";
 import Slider from "../../components/Slider";
 
-export default function Items({ parent, child, items }) {
-	return <Slider items={items} child={child} parent={parent} />;
+export default function Items({ parent, child, itemData }) {
+	return <Slider items={itemData} child={child} parent={parent} />;
 }
