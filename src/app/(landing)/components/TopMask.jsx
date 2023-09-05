@@ -88,7 +88,7 @@ export default function TopMask() {
 
 	mobileScale = useTransform(mobile.scrollYProgress, [0, 1], ["100%", "1500%"]);
 	tabletScale = useTransform(tablet.scrollYProgress, [0, 1], ["100%", "2000%"]);
-	laptopScale = useTransform(laptop.scrollYProgress, [0, 1], ["100%", "5000%"]);
+	laptopScale = useTransform(laptop.scrollYProgress, [0, 1], ["100%", "2000%"]);
 	desktopScale = useTransform(
 		desktop.scrollYProgress,
 		[0, 1],
@@ -127,10 +127,6 @@ export default function TopMask() {
 
 	return (
 		<div ref={rootRef} className="relative z-10 h-[150vh] overflow-clip">
-			<motion.div
-				className="w-5 h-5 rounded-full bg-blue-500 absolute z-50"
-				style={{ x: width <= 768 ? origin.x : origin.x + 50, y: origin.y }}
-			/>
 			<motion.div
 				ref={bodyRef}
 				className={`flex flex-col justify-center items-center gap-2`}
