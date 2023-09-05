@@ -18,7 +18,7 @@ export default function BottomMask() {
 
 	const mobile = useScroll({
 		target: rootRef,
-		offset: ["start 50px", "end -100vh"],
+		offset: ["start 50px", "end end"],
 	});
 	const tablet = useScroll({
 		target: rootRef,
@@ -72,29 +72,6 @@ export default function BottomMask() {
 	}, []);
 
 	const { width, height } = dimension;
-
-	const resize = () => {
-		setDimension({ width: window.innerWidth, height: window.innerHeight });
-
-		const containerWidth = containerRef.current.offsetWidth;
-		const bodyWidth = bodyRef.current.getBoundingClientRect().width;
-
-		const maskWidth = maskRef.current?.getBoundingClientRect().width / 2;
-		const maskRight = maskRef.current.getBoundingClientRect().right;
-
-		const maskDiff = bodyWidth - maskRight;
-		let centerX = containerWidth - maskDiff - maskWidth;
-
-		const containerHeight =
-			containerRef.current?.getBoundingClientRect().height;
-		const maskHeight = maskRef.current?.getBoundingClientRect().height;
-		let centerY = containerHeight - maskHeight;
-
-		console.info(centerX, centerY);
-		centerX = Math.round(centerX);
-		centerY = Math.round(centerY);
-		setOrigin({ x: centerX, y: centerY });
-	};
 
 	let scale = useMotionValue(1);
 	let scaleText = useMotionValue(1);
@@ -170,7 +147,7 @@ export default function BottomMask() {
 	return (
 		<div
 			ref={rootRef}
-			className="relative z-10 min-h-[150vh] max-h-[200vh] overflow-clip pt-96"
+			className="relative z-10 min-h-[150vh] max-h-[200vh] overflow-clip pt-[100vh]"
 		>
 			<motion.div
 				className="w-5 h-5 rounded-md bg-orange-800 absolute z-50"
