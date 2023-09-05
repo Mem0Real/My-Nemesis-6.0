@@ -34,25 +34,15 @@ export default function TopMask() {
 		const resize = () => {
 			setDimension({ width: window.innerWidth, height: window.innerHeight });
 
-			const windowWidth = window.innerWidth;
-			const bodyWidth = bodyRef.current.getBoundingClientRect().width;
 			const containerWidth = containerRef.current.offsetWidth;
-
-			const scaleWidth = scaleRef.current.offsetWidth;
-			const mask = maskRef.current.getBoundingClientRect();
-
-			const bodyDiff = windowWidth - containerWidth;
-			const bodyDiffStart = bodyDiff / 2;
-
-			const containerEnd = bodyDiffStart + containerWidth;
+			const bodyWidth = bodyRef.current.getBoundingClientRect().width;
 
 			const maskWidth = maskRef.current?.getBoundingClientRect().width / 2;
-			const maskPos = maskRef.current?.getBoundingClientRect().x;
-			// let centerX = maskPos + maskWidth;
+			const maskRight = maskRef.current.getBoundingClientRect().right;
 
-			const maskDiff = bodyWidth - mask.right;
-
+			const maskDiff = bodyWidth - maskRight;
 			let centerX = containerWidth - maskDiff - maskWidth;
+
 			const containerHeight =
 				containerRef.current?.getBoundingClientRect().height;
 			const maskHeight = maskRef.current?.getBoundingClientRect().height;
@@ -88,7 +78,7 @@ export default function TopMask() {
 	let laptopScale = useMotionValue(1);
 	let desktopScale = useMotionValue(1);
 
-	mobileTextYPos = useTransform(mobile.scrollYProgress, [0, 1], [0, -30]);
+	mobileTextYPos = useTransform(mobile.scrollYProgress, [0, 1], [0, -10]);
 	tabletTextYPos = useTransform(tablet.scrollYProgress, [0, 1], [0, 30]);
 	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [0, 40]);
 	desktopTextYPos = useTransform(desktop.scrollYProgress, [0, 1], [0, 60]);
@@ -124,40 +114,6 @@ export default function TopMask() {
 	} else {
 		scale = desktopScale;
 	}
-
-	// Set Width
-	useEffect(() => {
-		// const windowWidth = window?.innerWidth;
-		// const containerWidth = containerRef.current?.getBoundingClientRect().width;
-		// const scaleBodyWidth = scaleRef.current?.getBoundingClientRect().width;
-		// const maskWidth = maskRef.current?.getBoundingClientRect().width / 2;
-		// const maskPos = maskRef.current?.getBoundingClientRect().x;
-		// const centerX = maskPos + maskWidth;
-		// setOriginX(parseInt(centerX));
-		// const emptySpaceWindow = windowWidth - containerWidth;
-		// const emptySpaceBody = containerWidth - scaleBodyWidth;
-		// const maskDistanceX =
-		// 	emptySpaceWindow / 2 + containerWidth - emptySpaceBody / 2;
-	}, []);
-
-	// Set Height
-	useLayoutEffect(() => {
-		// const rootHeight = rootRef.current?.getBoundingClientRect().height;
-		// const containerHeight =
-		// 	containerRef.current?.getBoundingClientRect().height;
-		// const scaleBodyHeight = scaleRef.current?.getBoundingClientRect().height;
-		// const maskHeight = maskRef.current?.getBoundingClientRect().height;
-		// const emptyWindow = rootHeight - containerHeight;
-		// const emptyContainer = containerHeight - maskHeight;
-		// const tew = emptyWindow / 2;
-		// const tec = emptyContainer / 2;
-		// const maskCenterY = maskHeight / 2;
-		// let emptyBody = scaleBodyHeight - maskHeight;
-		// emptyBody = emptyBody / 2;
-		// // const maskDistanceY = emptyContainer + emptyBody + maskCenterY;
-		// const maskDistanceY = tew + tec + maskCenterY;
-		// setOriginY(emptyContainer);
-	}, []);
 
 	const mobileOriginX = origin.x;
 	const tabletOriginX = origin.x + 40;
