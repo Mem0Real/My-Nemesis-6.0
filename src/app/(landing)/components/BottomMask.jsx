@@ -149,10 +149,10 @@ export default function BottomMask() {
 			ref={rootRef}
 			className="relative z-10 h-[120vh] overflow-clip pt-[25vh] bg-neutral-100 dark:bg-neutral-900"
 		>
-			<motion.div
+			{/* <motion.div
 				className="w-5 h-5 rounded-md bg-orange-800 absolute z-50"
 				style={{ x: laptopOriginX, y: laptopOriginY }}
-			/>
+			/> */}
 			<motion.div
 				ref={bodyRef}
 				className={`flex flex-col justify-end items-center gap-2`}
@@ -179,7 +179,7 @@ export default function BottomMask() {
 			>
 				<div
 					ref={containerRef}
-					className={`relative flex flex-col w-full md:flex-row justify-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-5`}
+					className={`py-[25vh] relative flex flex-col w-full md:flex-row justify-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-5`}
 				>
 					<div
 						ref={scaleRef}
