@@ -12,7 +12,7 @@ export default function Home() {
 			<div className="relative min-h-screen h-fit min-w-screen flex flex-col items-center justify-center gap-0 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 z-0">
 				<Parallax />
 
-				<div className="bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg z-20 mx-auto pt-28 pb-56 w-screen">
+				<div className="bg-neutral-100 dark:bg-neutral-800 backdrop-blur-lg z-20 mx-auto pt-28 pb-12 w-screen">
 					<TopMask />
 					<BodySection />
 					<BottomMask />

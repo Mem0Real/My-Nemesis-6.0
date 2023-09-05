@@ -18,7 +18,7 @@ export default function BottomMask() {
 
 	const mobile = useScroll({
 		target: rootRef,
-		offset: ["start 50px", "end end"],
+		offset: ["start 50px", "end 100vh"],
 	});
 	const tablet = useScroll({
 		target: rootRef,
@@ -147,7 +147,7 @@ export default function BottomMask() {
 	return (
 		<div
 			ref={rootRef}
-			className="relative z-10 min-h-[150vh] max-h-[200vh] overflow-clip py-[50vh]"
+			className="relative z-10 min-h-[120vh] max-h-[200vh] overflow-clip pt-[25vh] bg-neutral-100 dark:bg-neutral-900"
 		>
 			<motion.div
 				className="w-5 h-5 rounded-md bg-orange-800 absolute z-50"
