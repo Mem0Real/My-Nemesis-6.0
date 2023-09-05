@@ -88,12 +88,11 @@ export default function TopMask() {
 	let laptopScale = useMotionValue(1);
 	let desktopScale = useMotionValue(1);
 
-	mobileTextYPos = useTransform(mobile.scrollYProgress, [0, 1], [0, -40]);
+	mobileTextYPos = useTransform(mobile.scrollYProgress, [0, 1], [0, -30]);
 	tabletTextYPos = useTransform(tablet.scrollYProgress, [0, 1], [0, 30]);
 	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [0, 40]);
 	desktopTextYPos = useTransform(desktop.scrollYProgress, [0, 1], [0, 60]);
 
-	// scale = useTransform(normal.scrollYProgress, [0, 1], ["100%", "3000%"]);
 	scaleText = useTransform(laptop.scrollYProgress, [0, 1], [1, 0.2]);
 	moveTextX = useTransform(laptop.scrollYProgress, [0, 1], [150, -150]);
 
