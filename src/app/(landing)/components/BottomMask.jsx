@@ -139,7 +139,7 @@ export default function BottomMask() {
 	const laptopOriginX = origin.x + 50;
 	const desktopOriginX = origin.x + 100;
 
-	const mobileOriginY = origin.y;
+	const mobileOriginY = origin.y + 10;
 	const tabletOriginY = origin.y + 80;
 	const laptopOriginY = origin.y + 60;
 	const desktopOriginY = origin.y + 80;
