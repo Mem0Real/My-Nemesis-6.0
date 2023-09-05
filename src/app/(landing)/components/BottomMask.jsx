@@ -139,15 +139,15 @@ export default function BottomMask() {
 	const laptopOriginX = origin.x + 50;
 	const desktopOriginX = origin.x + 100;
 
-	const mobileOriginY = origin.y - 160;
-	const tabletOriginY = origin.y + 80;
-	const laptopOriginY = origin.y + 60;
+	const mobileOriginY = origin.y + 40;
+	const tabletOriginY = origin.y + 120;
+	const laptopOriginY = origin.y + 160;
 	const desktopOriginY = origin.y + 80;
 
 	return (
 		<div
 			ref={rootRef}
-			className="relative z-10 h-[120vh] overflow-clip pt-[25vh] bg-neutral-100 dark:bg-neutral-900"
+			className="relative z-10 min-h-[120vh] overflow-clip pt-[25vh] bg-neutral-100 dark:bg-neutral-900"
 		>
 			{/* <motion.div
 				className="w-5 h-5 rounded-md bg-orange-800 absolute z-50"
@@ -179,7 +179,7 @@ export default function BottomMask() {
 			>
 				<div
 					ref={containerRef}
-					className={`py-[25vh] relative flex flex-col w-full md:flex-row justify-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-5`}
+					className={`pt-[25vh] relative flex flex-col w-full md:flex-row justify-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-5`}
 				>
 					<div
 						ref={scaleRef}
