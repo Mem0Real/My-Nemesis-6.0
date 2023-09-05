@@ -15,7 +15,7 @@ export default function TopMask() {
 
 	const small = useScroll({
 		target: rootRef,
-		offset: ["start start", "end end"],
+		offset: ["start 50px", "end end"],
 	});
 	const normal = useScroll({
 		target: rootRef,
