@@ -161,12 +161,12 @@ export default function TopMask() {
 	}, []);
 
 	const mobileOriginX = origin.x;
-	const tabletOriginX = origin.x + 70;
+	const tabletOriginX = origin.x + 40;
 	const laptopOriginX = origin.x + 50;
 	const desktopOriginX = origin.x + 100;
 
 	const mobileOriginY = origin.y;
-	const tabletOriginY = origin.y - 50;
+	const tabletOriginY = origin.y + 80;
 	const laptopOriginY = origin.y + 20;
 	const desktopOriginY = origin.y + 50;
 
