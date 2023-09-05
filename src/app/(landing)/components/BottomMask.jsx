@@ -147,7 +147,7 @@ export default function BottomMask() {
 	return (
 		<div
 			ref={rootRef}
-			className="relative z-10 min-h-[150vh] max-h-[200vh] overflow-clip pt-[100vh]"
+			className="relative z-10 min-h-[150vh] max-h-[200vh] overflow-clip py-[50vh]"
 		>
 			<motion.div
 				className="w-5 h-5 rounded-md bg-orange-800 absolute z-50"
