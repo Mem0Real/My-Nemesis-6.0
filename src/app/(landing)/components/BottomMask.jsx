@@ -18,7 +18,7 @@ export default function BottomMask() {
 
 	const mobile = useScroll({
 		target: rootRef,
-		offset: ["start 50px", "end 50vh"],
+		offset: ["start 50px", "end -100vh"],
 	});
 	const tablet = useScroll({
 		target: rootRef,
