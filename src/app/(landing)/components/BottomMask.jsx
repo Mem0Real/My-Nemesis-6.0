@@ -6,6 +6,9 @@ import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 export default function BottomMask() {
 	const [dimension, setDimension] = useState({ width: 0, height: 0 });
 	const [origin, setOrigin] = useState({ x: 0, y: 0 });
+	const [updatedOrigin, setUpdatedOrigin] = useState({ x: 0, y: 0 });
+
+	const [resized, setResized] = useState(false);
 
 	const rootRef = useRef();
 	const bodyRef = useRef();
@@ -31,7 +34,8 @@ export default function BottomMask() {
 	});
 
 	useEffect(() => {
-		const resize = () => {
+		const resize = (res = true) => {
+			console.log("Resized");
 			setDimension({ width: window.innerWidth, height: window.innerHeight });
 
 			const containerWidth = containerRef.current.offsetWidth;
@@ -48,13 +52,19 @@ export default function BottomMask() {
 			const maskHeight = maskRef.current?.getBoundingClientRect().height;
 			let centerY = containerHeight - maskHeight;
 
+			console.info(centerX, centerY);
 			centerX = Math.round(centerX);
 			centerY = Math.round(centerY);
 			setOrigin({ x: centerX, y: centerY });
+
+			if (res === true) {
+				setUpdatedOrigin({ x: centerX, y: centerY });
+				setResized(true);
+			}
 		};
 
 		window.addEventListener("resize", resize);
-		resize();
+		resize(false);
 
 		return () => {
 			window.removeEventListener("resize", resize);
@@ -62,6 +72,29 @@ export default function BottomMask() {
 	}, []);
 
 	const { width, height } = dimension;
+
+	const resize = () => {
+		setDimension({ width: window.innerWidth, height: window.innerHeight });
+
+		const containerWidth = containerRef.current.offsetWidth;
+		const bodyWidth = bodyRef.current.getBoundingClientRect().width;
+
+		const maskWidth = maskRef.current?.getBoundingClientRect().width / 2;
+		const maskRight = maskRef.current.getBoundingClientRect().right;
+
+		const maskDiff = bodyWidth - maskRight;
+		let centerX = containerWidth - maskDiff - maskWidth;
+
+		const containerHeight =
+			containerRef.current?.getBoundingClientRect().height;
+		const maskHeight = maskRef.current?.getBoundingClientRect().height;
+		let centerY = containerHeight - maskHeight;
+
+		console.info(centerX, centerY);
+		centerX = Math.round(centerX);
+		centerY = Math.round(centerY);
+		setOrigin({ x: centerX, y: centerY });
+	};
 
 	let scale = useMotionValue(1);
 	let scaleText = useMotionValue(1);
@@ -83,36 +116,45 @@ export default function BottomMask() {
 	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [0, 40]);
 	desktopTextYPos = useTransform(desktop.scrollYProgress, [0, 1], [0, 60]);
 
-	scaleText = useTransform(laptop.scrollYProgress, [0, 1], [1, 0.2]);
-	moveTextX = useTransform(laptop.scrollYProgress, [0, 1], [150, -150]);
+	scaleText = useTransform(laptop.scrollYProgress, [0, 1], [0.8, 0.6]);
+	moveTextX = useTransform(laptop.scrollYProgress, [0, 1], [250, -200]);
 
-	mobileScale = useTransform(mobile.scrollYProgress, [0, 1], ["100%", "1500%"]);
-	tabletScale = useTransform(tablet.scrollYProgress, [0, 1], ["100%", "2000%"]);
-	laptopScale = useTransform(laptop.scrollYProgress, [0, 1], ["100%", "5000%"]);
-	desktopScale = useTransform(
-		desktop.scrollYProgress,
-		[0, 1],
-		["100%", "5000%"]
-	);
+	mobileScale = useTransform(mobile.scrollYProgress, [0, 1], [15, 1]);
+	tabletScale = useTransform(tablet.scrollYProgress, [0, 1], [20, 1]);
+	laptopScale = useTransform(laptop.scrollYProgress, [0, 1], [25, 1]);
+	desktopScale = useTransform(desktop.scrollYProgress, [0, 1], [30, 1]);
 
-	if (width <= 768) {
-		moveTextY = mobileTextYPos;
-	} else if (width <= 1024) {
-		moveTextY = tabletTextYPos;
-	} else if (width <= 1400) {
-		moveTextY = laptopTextYPos;
+	if (resized) {
+		if (origin.x === updatedOrigin.x && origin.y === updatedOrigin.y) {
+			if (origin.x !== 0 && origin.y !== 0 && width <= 768) {
+				scale = mobileScale;
+				moveTextY = mobileTextYPos;
+			} else if (origin.x !== 0 && origin.y !== 0 && width <= 1024) {
+				scale = tabletScale;
+				moveTextY = tabletTextYPos;
+			} else if (origin.x !== 0 && origin.y !== 0 && width <= 1400) {
+				scale = laptopScale;
+				moveTextY = laptopTextYPos;
+			} else if (origin.x !== 0 && origin.y !== 0 && width > 1400) {
+				scale = desktopScale;
+				moveTextY = desktopTextYPos;
+			}
+			setResized(false);
+		}
 	} else {
-		moveTextY = desktopTextYPos;
-	}
-
-	if (width <= 768) {
-		scale = mobileScale;
-	} else if (width <= 1024) {
-		scale = tabletScale;
-	} else if (width <= 1440) {
-		scale = laptopScale;
-	} else {
-		scale = desktopScale;
+		if (origin.x !== 0 && origin.y !== 0 && width <= 768) {
+			scale = mobileScale;
+			moveTextY = mobileTextYPos;
+		} else if (origin.x !== 0 && origin.y !== 0 && width <= 1024) {
+			scale = tabletScale;
+			moveTextY = tabletTextYPos;
+		} else if (origin.x !== 0 && origin.y !== 0 && width <= 1400) {
+			scale = laptopScale;
+			moveTextY = laptopTextYPos;
+		} else if (origin.x !== 0 && origin.y !== 0 && width > 1400) {
+			scale = desktopScale;
+			moveTextY = desktopTextYPos;
+		}
 	}
 
 	const mobileOriginX = origin.x;
@@ -122,17 +164,21 @@ export default function BottomMask() {
 
 	const mobileOriginY = origin.y;
 	const tabletOriginY = origin.y + 80;
-	const laptopOriginY = origin.y + 20;
-	const desktopOriginY = origin.y + 50;
+	const laptopOriginY = origin.y + 60;
+	const desktopOriginY = origin.y + 80;
 
 	return (
 		<div
 			ref={rootRef}
-			className="relative z-10 min-h-[150vh] max-h-[200vh] overflow-clip"
+			className="relative z-10 min-h-[150vh] max-h-[200vh] overflow-clip pt-96"
 		>
 			<motion.div
+				className="w-5 h-5 rounded-md bg-orange-800 absolute z-50"
+				style={{ x: laptopOriginX, y: laptopOriginY }}
+			/>
+			<motion.div
 				ref={bodyRef}
-				className={`flex flex-col justify-center items-center gap-2`}
+				className={`flex flex-col justify-end items-center gap-2`}
 				style={{
 					scale,
 					transformOrigin: `${
@@ -156,7 +202,7 @@ export default function BottomMask() {
 			>
 				<div
 					ref={containerRef}
-					className={`relative flex flex-col md:flex-row justify-between items-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-3 md:px-6 lg:px-9 xl:px-12 py-2 md:py-6`}
+					className={`relative flex flex-col w-full md:flex-row justify-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-5`}
 				>
 					<div
 						ref={scaleRef}
@@ -174,7 +220,7 @@ export default function BottomMask() {
 						ref={maskRef}
 						className="relative mx-auto my-12 box-content aspect-[5/8] w-[100px] min-w-[100px] rounded-full border border-gray-800 dark:border-gray-300 md:my-auto md:-mr-1 md:ml-auto md:w-[150px] md:min-w-[150px] z-20 overflow-hidden"
 					>
-						<motion.div className="w-full h-full flex flex-col justify-center items-center z-10 bg-neutral-100 dark:bg-neutral-900">
+						<motion.div className="absolute inset-0 w-full h-full flex flex-col justify-center items-center z-10 bg-neutral-100 dark:bg-neutral-900">
 							<motion.h1
 								className="text-xl md:text-2xl lg:text-4xl w-[200%] bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center"
 								style={{ scale: scaleText, x: moveTextX, y: moveTextY }}
