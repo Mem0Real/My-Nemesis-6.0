@@ -18,7 +18,7 @@ const Parallax = () => {
 					className="h-fit w-56 md:w-72 lg:w-fit mx-auto bg-transparent overflow-hidden flex flex-col justify-center items-center"
 					style={{ scale, y }}
 				>
-					<h1 className="text-2xl md:text-3xl lg:text-4xl xl:text-6xl lg:px-5 rounded-lg italic font-black text-center text-neutral-800 dark:text-neutral-100">
+					<h1 className="text-2xl md:text-3xl xl:text-4xl lg:px-5 rounded-lg italic font-black text-center text-neutral-800 dark:text-neutral-100">
 						Ethio Machineries
 					</h1>
 				</motion.div>
@@ -29,7 +29,7 @@ const Parallax = () => {
 					alt="dark"
 					className="object-cover object-bottom"
 					src="/images/Building.png"
-					sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw"
+					sizes="(max-width: 768px) 50vw, (max-width: 1024px) 75vw, (max-width: 1200px) 100vw"
 					quality={100}
 					priority
 				/>
