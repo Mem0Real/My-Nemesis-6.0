@@ -90,8 +90,8 @@ export default function BottomMask() {
 
 	mobileTextYPos = useTransform(mobile.scrollYProgress, [0, 1], [0, -10]);
 	tabletTextYPos = useTransform(tablet.scrollYProgress, [0, 1], [0, 30]);
-	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [0, 40]);
-	desktopTextYPos = useTransform(desktop.scrollYProgress, [0, 1], [0, 60]);
+	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [0, 20]);
+	desktopTextYPos = useTransform(desktop.scrollYProgress, [0, 1], [0, 20]);
 
 	scaleText = useTransform(laptop.scrollYProgress, [0, 1], [0.8, 0.6]);
 	moveTextX = useTransform(laptop.scrollYProgress, [0, 1], [250, -200]);
@@ -137,11 +137,11 @@ export default function BottomMask() {
 	const mobileOriginX = origin.x;
 	const tabletOriginX = origin.x + 40;
 	const laptopOriginX = origin.x + 50;
-	const desktopOriginX = origin.x + 100;
+	const desktopOriginX = origin.x + 50;
 
 	const mobileOriginY = origin.y + 40;
-	const tabletOriginY = origin.y + 120;
-	const laptopOriginY = origin.y + 160;
+	const tabletOriginY = origin.y + 70;
+	const laptopOriginY = origin.y + 100;
 	const desktopOriginY = origin.y + 80;
 
 	return (
