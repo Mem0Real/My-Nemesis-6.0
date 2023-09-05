@@ -13,13 +13,21 @@ export default function TopMask() {
 	const scaleRef = useRef();
 	const containerRef = useRef();
 
-	const small = useScroll({
+	const mobile = useScroll({
 		target: rootRef,
 		offset: ["start 50px", "end end"],
 	});
-	const normal = useScroll({
+	const tablet = useScroll({
+		target: rootRef,
+		offset: ["start 10px", "end end"],
+	});
+	const laptop = useScroll({
 		target: rootRef,
 		offset: ["start start", "end end"],
+	});
+	const desktop = useScroll({
+		target: rootRef,
+		offset: ["start 150px", "end end"],
 	});
 
 	useEffect(() => {
@@ -41,11 +49,6 @@ export default function TopMask() {
 			const maskWidth = maskRef.current?.getBoundingClientRect().width / 2;
 			const maskPos = maskRef.current?.getBoundingClientRect().x;
 			// let centerX = maskPos + maskWidth;
-
-			console.info("BW:", bodyWidth);
-			console.info("SW:", scaleWidth);
-			console.info("CW:", containerWidth);
-			console.info("MAsk", bodyWidth - mask.right);
 
 			const maskDiff = bodyWidth - mask.right;
 
@@ -75,25 +78,33 @@ export default function TopMask() {
 	let moveTextX = useMotionValue(0);
 	let moveTextY = useMotionValue(0);
 
-	let smTextYPos = useMotionValue(0);
-	let textYPos = useMotionValue(0);
-	let lgTextYPos = useMotionValue(0);
+	let mobileTextYPos = useMotionValue(0);
+	let tabletTextYPos = useMotionValue(0);
+	let laptopTextYPos = useMotionValue(0);
+	let desktopTextYPos = useMotionValue(0);
 
-	let smScale = useMotionValue(1);
-	let nmScale = useMotionValue(1);
-	let lgScale = useMotionValue(1);
+	let mobileScale = useMotionValue(1);
+	let tabletScale = useMotionValue(1);
+	let laptopScale = useMotionValue(1);
+	let desktopScale = useMotionValue(1);
 
-	smTextYPos = useTransform(small.scrollYProgress, [0, 1], [0, -50]);
-	textYPos = useTransform(normal.scrollYProgress, [0, 1], [0, 20]);
-	lgTextYPos = useTransform(normal.scrollYProgress, [0, 1], [0, 40]);
+	mobileTextYPos = useTransform(mobile.scrollYProgress, [0, 1], [0, -40]);
+	tabletTextYPos = useTransform(normal.scrollYProgress, [0, 1], [0, -20]);
+	laptopTextYPos = useTransform(normal.scrollYProgress, [0, 1], [0, 40]);
+	desktopTextYPos = useTransform(normal.scrollYProgress, [0, 1], [0, 60]);
 
 	// scale = useTransform(normal.scrollYProgress, [0, 1], ["100%", "3000%"]);
 	scaleText = useTransform(normal.scrollYProgress, [0, 1], [1, 0.2]);
 	moveTextX = useTransform(normal.scrollYProgress, [0, 1], [150, -150]);
 
-	smScale = useTransform(small.scrollYProgress, [0, 1], ["100%", "1500%"]);
-	nmScale = useTransform(normal.scrollYProgress, [0, 1], ["100%", "2000%"]);
-	lgScale = useTransform(normal.scrollYProgress, [0, 1], ["100%", "5000%"]);
+	mobileScale = useTransform(mobile.scrollYProgress, [0, 1], ["100%", "1500%"]);
+	tabletScale = useTransform(tablet.scrollYProgress, [0, 1], ["100%", "2000%"]);
+	laptopScale = useTransform(laptop.scrollYProgress, [0, 1], ["100%", "5000%"]);
+	desktopScale = useTransform(
+		desktop.scrollYProgress,
+		[0, 1],
+		["100%", "5000%"]
+	);
 
 	if (width <= 768) {
 		moveTextY = smTextYPos;
@@ -145,6 +156,16 @@ export default function TopMask() {
 		// setOriginY(emptyContainer);
 	}, []);
 
+	const mobileOriginX = origin.x;
+	const tabletOriginX = origin.x + 70;
+	const laptopOriginX = origin.x + 50;
+	const desktopOriginX = origin.x + 100;
+
+	const mobileOriginY = origin.y;
+	const tabletOriginY = origin.y - 50;
+	const laptopOriginY = origin.y + 20;
+	const desktopOriginY = origin.y + 50;
+
 	return (
 		<div ref={rootRef} className="relative z-10 h-[150vh] overflow-clip">
 			<motion.div
@@ -156,8 +177,22 @@ export default function TopMask() {
 				className={`flex flex-col justify-center items-center gap-2`}
 				style={{
 					scale,
-					transformOrigin: `${width <= 768 ? origin.x : origin.x + 50}px ${
-						origin.y
+					transformOrigin: `${
+						width <= 768
+							? mobileOriginX
+							: width <= 1024
+							? tabletOriginX
+							: width <= 1440
+							? laptopOriginX
+							: desktopOriginX
+					}px ${
+						width <= 768
+							? mobileOriginY
+							: width <= 1024
+							? tabletOriginY
+							: width <= 1440
+							? laptopOriginY
+							: desktopOriginY
 					}px`,
 				}}
 			>
