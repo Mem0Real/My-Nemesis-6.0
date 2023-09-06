@@ -230,7 +230,7 @@ export default function BottomMask() {
 								className="text-xl md:text-2xl lg:text-3xl w-[200%] shadow-greenGlow  shadow-neutral-300 dark:shadow-blue-700/30 bg-transparent text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center font-semibold italic"
 								style={{ scale: scaleText, x: moveTextX, y: moveTextY }}
 							>
-								Come Back Soon!
+								Browse for More!
 							</motion.h1>
 						</motion.div>
 					</div>
