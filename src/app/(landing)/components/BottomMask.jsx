@@ -35,7 +35,6 @@ export default function BottomMask() {
 
 	useEffect(() => {
 		const resize = (res = true) => {
-			console.log("Resized");
 			setDimension({ width: window.innerWidth, height: window.innerHeight });
 
 			const containerWidth = containerRef.current.offsetWidth;
@@ -105,7 +104,7 @@ export default function BottomMask() {
 
 	mobileTextYPos = useTransform(mobile.scrollYProgress, [0, 1], [0, -10]);
 	tabletTextYPos = useTransform(tablet.scrollYProgress, [0, 1], [0, 30]);
-	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [100, 50]);
+	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [100, 20]);
 	desktopTextYPos = useTransform(desktop.scrollYProgress, [0, 1], [40, 20]);
 
 	mobileScaleText = useTransform(laptop.scrollYProgress, [0, 1], [1, 1.2]);

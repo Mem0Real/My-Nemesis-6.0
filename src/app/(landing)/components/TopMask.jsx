@@ -6,6 +6,8 @@ import { motion, useScroll, useTransform, useMotionValue } from "framer-motion";
 export default function TopMask() {
 	const [dimension, setDimension] = useState({ width: 0, height: 0 });
 	const [origin, setOrigin] = useState({ x: 0, y: 0 });
+	const [updatedOrigin, setUpdatedOrigin] = useState({ x: 0, y: 0 });
+	const [resized, setResized] = useState(false);
 
 	const rootRef = useRef();
 	const bodyRef = useRef();
@@ -27,11 +29,11 @@ export default function TopMask() {
 	});
 	const desktop = useScroll({
 		target: rootRef,
-		offset: ["start 150px", "end end"],
+		offset: ["start 50px", "end end"],
 	});
 
 	useEffect(() => {
-		const resize = () => {
+		const resize = (res = true) => {
 			setDimension({ width: window.innerWidth, height: window.innerHeight });
 
 			const containerWidth = containerRef.current.offsetWidth;
@@ -51,6 +53,11 @@ export default function TopMask() {
 			centerX = Math.round(centerX);
 			centerY = Math.round(centerY);
 			setOrigin({ x: centerX, y: centerY });
+
+			if (res === true) {
+				setUpdatedOrigin({ x: centerX, y: centerY });
+				setResized(true);
+			}
 		};
 
 		window.addEventListener("resize", resize);
@@ -80,11 +87,11 @@ export default function TopMask() {
 
 	mobileTextYPos = useTransform(mobile.scrollYProgress, [0, 1], [0, -10]);
 	tabletTextYPos = useTransform(tablet.scrollYProgress, [0, 1], [0, 30]);
-	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [0, 40]);
-	desktopTextYPos = useTransform(desktop.scrollYProgress, [0, 1], [0, 60]);
+	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [0, -20]);
+	desktopTextYPos = useTransform(desktop.scrollYProgress, [0, 1], [0, 40]);
 
 	scaleText = useTransform(laptop.scrollYProgress, [0, 1], [1, 0.2]);
-	moveTextX = useTransform(laptop.scrollYProgress, [0, 1], [150, -150]);
+	moveTextX = useTransform(laptop.scrollYProgress, [0, 1], [200, -150]);
 
 	mobileScale = useTransform(mobile.scrollYProgress, [0, 1], ["100%", "1500%"]);
 	tabletScale = useTransform(tablet.scrollYProgress, [0, 1], ["100%", "2000%"]);
@@ -95,35 +102,67 @@ export default function TopMask() {
 		["100%", "5000%"]
 	);
 
-	if (width <= 768) {
-		moveTextY = mobileTextYPos;
-	} else if (width <= 1024) {
-		moveTextY = tabletTextYPos;
-	} else if (width <= 1400) {
-		moveTextY = laptopTextYPos;
+	// if (width <= 768) {
+	// 	moveTextY = mobileTextYPos;
+	// } else if (width <= 1024) {
+	// 	moveTextY = tabletTextYPos;
+	// } else if (width <= 1400) {
+	// 	moveTextY = laptopTextYPos;
+	// } else {
+	// 	moveTextY = desktopTextYPos;
+	// }
+
+	// if (width <= 768) {
+	// 	scale = mobileScale;
+	// } else if (width <= 1024) {
+	// 	scale = tabletScale;
+	// } else if (width <= 1440) {
+	// 	scale = laptopScale;
+	// } else {
+	// 	scale = desktopScale;
+	// }
+	if (resized) {
+		if (origin.x === updatedOrigin.x && origin.y === updatedOrigin.y) {
+			if (origin.x !== 0 && origin.y !== 0 && width <= 768) {
+				scale = mobileScale;
+				moveTextY = mobileTextYPos;
+			} else if (origin.x !== 0 && origin.y !== 0 && width <= 1024) {
+				scale = tabletScale;
+				moveTextY = tabletTextYPos;
+			} else if (origin.x !== 0 && origin.y !== 0 && width <= 1400) {
+				scale = laptopScale;
+				moveTextY = laptopTextYPos;
+			} else if (origin.x !== 0 && origin.y !== 0 && width > 1400) {
+				scale = desktopScale;
+				moveTextY = desktopTextYPos;
+			}
+			setResized(false);
+		}
 	} else {
-		moveTextY = desktopTextYPos;
+		if (origin.x !== 0 && origin.y !== 0 && width <= 768) {
+			scale = mobileScale;
+			moveTextY = mobileTextYPos;
+		} else if (origin.x !== 0 && origin.y !== 0 && width <= 1024) {
+			scale = tabletScale;
+			moveTextY = tabletTextYPos;
+		} else if (origin.x !== 0 && origin.y !== 0 && width <= 1400) {
+			scale = laptopScale;
+			moveTextY = laptopTextYPos;
+		} else if (origin.x !== 0 && origin.y !== 0 && width > 1400) {
+			scale = desktopScale;
+			moveTextY = desktopTextYPos;
+		}
 	}
 
-	if (width <= 768) {
-		scale = mobileScale;
-	} else if (width <= 1024) {
-		scale = tabletScale;
-	} else if (width <= 1440) {
-		scale = laptopScale;
-	} else {
-		scale = desktopScale;
-	}
-
-	const mobileOriginX = origin.x;
+	const mobileOriginX = origin.x + 20;
 	const tabletOriginX = origin.x + 40;
 	const laptopOriginX = origin.x + 50;
-	const desktopOriginX = origin.x + 100;
+	const desktopOriginX = origin.x + 50;
 
-	const mobileOriginY = origin.y;
-	const tabletOriginY = origin.y + 80;
-	const laptopOriginY = origin.y + 20;
-	const desktopOriginY = origin.y + 50;
+	const mobileOriginY = origin.y - 20;
+	const tabletOriginY = origin.y - 40;
+	const laptopOriginY = origin.y - 20;
+	const desktopOriginY = origin.y + 20;
 
 	return (
 		<div ref={rootRef} className="relative z-10 h-[150vh] overflow-clip">
@@ -153,7 +192,7 @@ export default function TopMask() {
 			>
 				<div
 					ref={containerRef}
-					className={`relative flex flex-col md:flex-row justify-between items-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-3 md:px-6 lg:px-9 xl:px-12 py-2 md:py-6`}
+					className={`relative flex flex-col w-full md:flex-row justify-between items-start rounded-3xl bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200 px-3 md:px-6 lg:px-9 xl:px-12 py-2 md:py-6`}
 				>
 					<div
 						ref={scaleRef}
