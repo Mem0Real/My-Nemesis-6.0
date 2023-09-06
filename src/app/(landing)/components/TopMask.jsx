@@ -173,10 +173,10 @@ export default function TopMask() {
 							className="w-full h-full flex flex-col justify-center items-center z-10 bg-neutral-100 dark:bg-neutral-900"
 						>
 							<motion.h1
-								className="text-xl md:text-2xl lg:text-4xl w-[150%] bg-neutral-300 dark:bg-neutral-700 text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center tracking-widest"
+								className="text-xl md:text-2xl lg:text-4xl w-[150%] shadow-greenGlow  shadow-neutral-300 dark:shadow-blue-700/30 bg-transparent text-neutral-900 dark:text-neutral-100 text-center font-semibold italic"
 								style={{ scale: scaleText, x: moveTextX, y: moveTextY }}
 							>
-								Welcome
+								Welcome!
 							</motion.h1>
 						</motion.div>
 					</div>
