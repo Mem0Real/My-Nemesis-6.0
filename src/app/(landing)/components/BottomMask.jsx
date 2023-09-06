@@ -26,7 +26,7 @@ export default function BottomMask() {
 	});
 	const laptop = useScroll({
 		target: rootRef,
-		offset: ["start start", "end end"],
+		offset: ["start 150px", "end end"],
 	});
 	const desktop = useScroll({
 		target: rootRef,
@@ -83,18 +83,35 @@ export default function BottomMask() {
 	let laptopTextYPos = useMotionValue(0);
 	let desktopTextYPos = useMotionValue(0);
 
+	let mobileTextXPos = useMotionValue(0);
+	let tabletTextXPos = useMotionValue(0);
+	let laptopTextXPos = useMotionValue(0);
+	let desktopTextXPos = useMotionValue(0);
+
+	let mobileScaleText = useMotionValue(1);
+	let tabletScaleText = useMotionValue(1);
+	let laptopScaleText = useMotionValue(1);
+	let desktopScaleText = useMotionValue(1);
+
 	let mobileScale = useMotionValue(1);
 	let tabletScale = useMotionValue(1);
 	let laptopScale = useMotionValue(1);
 	let desktopScale = useMotionValue(1);
 
+	mobileTextXPos = useTransform(mobile.scrollYProgress, [0, 1], [250, -250]);
+	tabletTextXPos = useTransform(tablet.scrollYProgress, [0, 1], [250, -200]);
+	laptopTextXPos = useTransform(laptop.scrollYProgress, [0, 1], [500, -200]);
+	desktopTextXPos = useTransform(desktop.scrollYProgress, [0, 1], [250, -200]);
+
 	mobileTextYPos = useTransform(mobile.scrollYProgress, [0, 1], [0, -10]);
 	tabletTextYPos = useTransform(tablet.scrollYProgress, [0, 1], [0, 30]);
-	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [0, 20]);
-	desktopTextYPos = useTransform(desktop.scrollYProgress, [0, 1], [0, 20]);
+	laptopTextYPos = useTransform(laptop.scrollYProgress, [0, 1], [100, 50]);
+	desktopTextYPos = useTransform(desktop.scrollYProgress, [0, 1], [40, 20]);
 
-	scaleText = useTransform(laptop.scrollYProgress, [0, 1], [0.8, 0.6]);
-	moveTextX = useTransform(laptop.scrollYProgress, [0, 1], [250, -200]);
+	mobileScaleText = useTransform(laptop.scrollYProgress, [0, 1], [1, 1.2]);
+	tabletScaleText = useTransform(laptop.scrollYProgress, [0, 1], [0.8, 0.6]);
+	laptopScaleText = useTransform(laptop.scrollYProgress, [0, 1], [0.8, 0.6]);
+	desktopScaleText = useTransform(laptop.scrollYProgress, [0, 1], [0.8, 0.6]);
 
 	mobileScale = useTransform(mobile.scrollYProgress, [0, 1], [15, 1]);
 	tabletScale = useTransform(tablet.scrollYProgress, [0, 1], [20, 1]);
@@ -106,15 +123,23 @@ export default function BottomMask() {
 			if (origin.x !== 0 && origin.y !== 0 && width <= 768) {
 				scale = mobileScale;
 				moveTextY = mobileTextYPos;
+				moveTextX = mobileTextXPos;
+				scaleText = mobileScaleText;
 			} else if (origin.x !== 0 && origin.y !== 0 && width <= 1024) {
 				scale = tabletScale;
 				moveTextY = tabletTextYPos;
+				moveTextX = tabletTextXPos;
+				scaleText = tabletScaleText;
 			} else if (origin.x !== 0 && origin.y !== 0 && width <= 1400) {
 				scale = laptopScale;
 				moveTextY = laptopTextYPos;
+				moveTextX = laptopTextXPos;
+				scaleText = laptopScaleText;
 			} else if (origin.x !== 0 && origin.y !== 0 && width > 1400) {
 				scale = desktopScale;
 				moveTextY = desktopTextYPos;
+				moveTextX = desktopTextXPos;
+				scaleText = desktopScaleText;
 			}
 			setResized(false);
 		}
@@ -122,15 +147,23 @@ export default function BottomMask() {
 		if (origin.x !== 0 && origin.y !== 0 && width <= 768) {
 			scale = mobileScale;
 			moveTextY = mobileTextYPos;
+			moveTextX = mobileTextXPos;
+			scaleText = mobileScaleText;
 		} else if (origin.x !== 0 && origin.y !== 0 && width <= 1024) {
 			scale = tabletScale;
 			moveTextY = tabletTextYPos;
+			moveTextX = tabletTextXPos;
+			scaleText = tabletScaleText;
 		} else if (origin.x !== 0 && origin.y !== 0 && width <= 1400) {
 			scale = laptopScale;
 			moveTextY = laptopTextYPos;
+			moveTextX = laptopTextXPos;
+			scaleText = laptopScaleText;
 		} else if (origin.x !== 0 && origin.y !== 0 && width > 1400) {
 			scale = desktopScale;
 			moveTextY = desktopTextYPos;
+			moveTextX = desktopTextXPos;
+			scaleText = desktopScaleText;
 		}
 	}
 
@@ -147,12 +180,8 @@ export default function BottomMask() {
 	return (
 		<div
 			ref={rootRef}
-			className="relative z-10 min-h-[120vh] overflow-clip pt-[25vh] bg-neutral-100 dark:bg-neutral-900"
+			className="relative z-10 min-h-[120vh] overflow-clip bg-neutral-100 dark:bg-neutral-900"
 		>
-			{/* <motion.div
-				className="w-5 h-5 rounded-md bg-orange-800 absolute z-50"
-				style={{ x: laptopOriginX, y: laptopOriginY }}
-			/> */}
 			<motion.div
 				ref={bodyRef}
 				className={`flex flex-col justify-end items-center gap-2`}
