@@ -1,21 +1,41 @@
 "use client";
 
-import React, { useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
+import {
+	AnimatePresence,
+	motion,
+	useScroll,
+	useTransform,
+	useWillChange,
+} from "framer-motion";
 
 export default function AnimatedTextWord({ word, className }) {
-	const [text, showText] = useState(false);
+	const [text, setText] = useState(0);
+
+	const willChange = useWillChange();
 
 	const containerRef = useRef();
 
 	const letters = word.split("");
 
 	const { scrollYProgress } = useScroll({
-		ref: containerRef,
-		offset: ["start end"],
+		target: containerRef,
+		offset: [`start end`, "end center"],
 	});
-	const viewPort = useTransform(scrollYProgress, [0, 1], [false, true]);
 
+	const len = letters.length;
+	const letter = useTransform(scrollYProgress, [0, 1], [0, len]);
+
+	useEffect(() => {
+		const showLetter = letter.on("change", (value) => {
+			console.log(Math.round(value));
+			setText(Math.round(value));
+		});
+
+		return () => showLetter();
+	}, [letter]);
+
+	// console.log(letters.length);
 	const container = {
 		hidden: { opacity: 0 },
 		visible: (i = 1) => ({
@@ -30,14 +50,14 @@ export default function AnimatedTextWord({ word, className }) {
 	const children = {
 		hidden: {
 			opacity: 0,
-			y: 0,
 		},
 
 		visible: {
 			opacity: 1,
-			y: 50,
+			rotate: 90,
 		},
 	};
+
 	return (
 		<motion.div
 			id="container"
@@ -47,12 +67,35 @@ export default function AnimatedTextWord({ word, className }) {
 			initial="hidden"
 			whileInView="visible"
 		>
-			{/* {letters.map((letter, index) => (
-				<motion.span id={index} key={index} variants={children}>
+			{/* {letters.map(
+				(letter, index) =>
+					index < text && (
+						<AnimatePresence key={index}>
+							<motion.span
+								layout
+								id={index}
+								itemID={index + "item"}
+								key={index}
+								variants={children}
+								initial="hidden"
+								animate={index < text ? "visible" : "hidden"}
+								exit="hidden"
+								transition={{
+									duration: 0.4,
+									ease: "easeInOut",
+								}}
+							>
+								{letter}
+							</motion.span>
+						</AnimatePresence>
+					)
+			)} */}
+
+			{letters.map((letter, index) => (
+				<motion.span key={index} className="italic px-0.5" variants={children}>
 					{letter}
 				</motion.span>
-			))} */}
-			<motion.h1>{letters}</motion.h1>
+			))}
 		</motion.div>
 
 		// <motion.div
