@@ -31,10 +31,6 @@ export default function SideBarComponent({ data }) {
 
 	const categories = data;
 
-	// const parents = data[1];
-	// const children = data[2];
-	// const products = data[3];
-
 	const { RightArrowIcon } = useIcons();
 
 	const buttonVariants = {
