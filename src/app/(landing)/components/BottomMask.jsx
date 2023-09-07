@@ -51,7 +51,6 @@ export default function BottomMask() {
 			const maskHeight = maskRef.current?.getBoundingClientRect().height;
 			let centerY = containerHeight - maskHeight;
 
-			console.info(centerX, centerY);
 			centerX = Math.round(centerX);
 			centerY = Math.round(centerY);
 			setOrigin({ x: centerX, y: centerY });

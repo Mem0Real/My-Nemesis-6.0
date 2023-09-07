@@ -31,8 +31,9 @@ const raleway = Raleway({
 	display: "swap",
 });
 
-export default function NavComponents({ session }) {
+export default function NavComponents({ session, hidden }) {
 	const [isOpen, setIsOpen] = useState(false);
+	const [closed, setClosed] = useState(false);
 
 	const { openCartModal, newCart } = useCartContext();
 	const { handleSearch } = useSearchContext();
@@ -44,7 +45,7 @@ export default function NavComponents({ session }) {
 	const { SearchIcon, CartIcon } = useIcons();
 
 	useEffect(() => {
-		let handler = (e) => {
+		const handler = (e) => {
 			if (!menuRef.current.contains(e.target)) {
 				setIsOpen(false);
 			}
@@ -54,6 +55,16 @@ export default function NavComponents({ session }) {
 
 		return () => document.removeEventListener("mousedown", handler);
 	}, []);
+
+	useEffect(() => {
+		if (hidden) {
+			setIsOpen(false);
+			setClosed(true);
+		} else {
+			closed && setIsOpen(true);
+			setClosed(false);
+		}
+	}, [hidden]);
 
 	const handleSignOut = async () => {
 		await signOut({ redirect: false });

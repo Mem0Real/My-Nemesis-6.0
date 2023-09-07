@@ -2,7 +2,7 @@ import "./globals.css";
 
 import { Suspense } from "react";
 
-import Navbar from "./components/Navbar";
+import NavbarBase from "./components/NavbarBase";
 import Footer from "./components/Footer";
 
 import ProductDataContext from "@/context/ProductContext";
@@ -37,7 +37,7 @@ export default function RootLayout({ children }) {
 								<div className="flex flex-col justify-between h-full overflow-x-hidden no-scrollbar overflow-y-auto overscroll-y-none relative transition-all ease-in-out duration-1000">
 									<CartBase>
 										<SearchBase>
-											<Navbar />
+											<NavbarBase />
 										</SearchBase>
 										<div className=" bg-neutral-400/30 backdrop-blur-50">
 											<NextTopLoader showSpinner={false} />
