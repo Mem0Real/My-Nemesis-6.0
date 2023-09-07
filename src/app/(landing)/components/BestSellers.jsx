@@ -22,6 +22,7 @@ export default function BestSellers({ products, children }) {
 					sizes="(max-width: 768) 50vw, (max-width: 1024) 100vw"
 					className="object-cover object-center"
 					priority
+					alt="sales"
 				/>
 
 				<div className="w-full mx-auto flex justify-center items-center h-full overflow-hidden">
