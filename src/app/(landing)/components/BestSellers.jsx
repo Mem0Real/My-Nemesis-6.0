@@ -15,7 +15,7 @@ export default function BestSellers({ products, children }) {
 	return (
 		<div className="min-h-screen flex flex-col items-center justify-start py-3 md:py-24 gap-6 bg-neutral-100 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200">
 			{children}
-			<div className="relative w-full mx-auto flex flex-col gap-1 justify-center items-center py-20 text-neutral-200">
+			<div className="relative shadow-myShadow1 shadow-black w-full mx-auto flex flex-col gap-1 justify-center items-center py-20 text-neutral-200">
 				<Image
 					src="/images/salesBg.jpg"
 					fill
