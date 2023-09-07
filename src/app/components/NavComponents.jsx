@@ -212,7 +212,7 @@ export default function NavComponents({ session, hidden }) {
 			<AnimatePresence>
 				{isOpen && (
 					<motion.div
-						className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-40 bg-neutral-100/70 dark:bg-neutral-900/70 backdrop-blur-3xl pb-5`}
+						className={`w-full flex-grow lg:flex lg:items-center lg:w-auto z-40`}
 						initial="close"
 						animate={isOpen ? "open" : "close"}
 						exit="close"
