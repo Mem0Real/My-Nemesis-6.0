@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { useThemeContext } from "@/context/ThemeProvider";
 
 import { motion } from "framer-motion";
+import { useSidebarContext } from "../SideBarComponent";
 
 const Path = (props) => {
 	const [currentTheme, setCurrentTheme] = useState();
@@ -30,11 +31,13 @@ const Path = (props) => {
 	);
 };
 
-export const MenuToggle = ({ toggle }) => {
+export const MenuToggle = () => {
+	const { toggleSidebar } = useSidebarContext();
+
 	return (
 		<button
-			onClick={toggle}
-			className="outline-none border-none cursor-pointer absolute top-[17px] left-[19px] w-[30px] h-[30px] rounded-full"
+			onClick={toggleSidebar}
+			className="outline-none border-none cursor-pointer absolute top-[17px] left-[19px] w-[30px] h-[30px] rounded-full z-10"
 			style={{
 				userSelect: "none",
 				msUserSelect: "none",
