@@ -1,9 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
-
 import TopMask from "./(landing)/components/TopMask";
 import BottomMask from "./(landing)/components/BottomMask";
-import BodySection from "./(landing)/components/(sections)/BodySection";
 import Parallax from "./(landing)/components/Parallax";
 import TouchSmoothScroller from "./components/TouchSmoothScroller";
 
@@ -11,6 +7,8 @@ import { fetchProducts, fetchCategories } from "./(landing)/util/getData";
 import Company from "./(landing)/components/Company";
 import BestSellers from "./(landing)/components/BestSellers";
 import TextAnimation from "./(landing)/components/(animators)/TextAnimation";
+import ShopCategory from "./(landing)/components/ShopCategory";
+import ServiceShow from "./(landing)/components/ServiceShow";
 
 // TODO Design skeleton for landing page
 export default async function Home() {
@@ -26,7 +24,6 @@ export default async function Home() {
 
 				<div className="bg-neutral-100 dark:bg-neutral-800 z-20 mx-auto pt-28 pb-12 w-screen backdrop-blur-lg">
 					<TopMask />
-					{/* <BodySection /> */}
 					<Company />
 
 					<BestSellers products={products}>
@@ -35,6 +32,15 @@ export default async function Home() {
 							sentence="Best Sellers"
 						/>
 					</BestSellers>
+
+					<ShopCategory categories={categories}>
+						<TextAnimation
+							className="text-4xl md:text-5xl font-semibold my-5 pb-5"
+							sentence="Shop By Category"
+						/>
+					</ShopCategory>
+
+					<ServiceShow />
 					<BottomMask />
 				</div>
 			</div>

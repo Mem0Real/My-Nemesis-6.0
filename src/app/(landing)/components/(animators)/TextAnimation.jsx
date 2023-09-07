@@ -56,37 +56,35 @@ export default function TextAnimation({ sentence, className }) {
 	};
 
 	return (
-		<div className="bg-neutral-100 dark:bg-neutral-900 flex flex-col gap-4 w-fit mx-auto">
+		<motion.div
+			ref={ref}
+			className="relative flex items-center justify-center gap-4"
+			initial="hidden"
+			exit="hidden"
+			whileInView="visible"
+			variants={container}
+			viewport={{ once: true }}
+		>
+			{words.map((word, index) => (
+				<motion.div
+					key={index}
+					className="flex items-center justify-center gap-0 w-full md:w-fit text-neutral-800 dark:text-neutral-200 pb-0 md:pb-1 lg:pb-2"
+					variants={children}
+				>
+					{word.split("").map((letter, nestIndex) => (
+						<motion.p key={nestIndex} variants={nest} className={className}>
+							{letter}
+						</motion.p>
+					))}
+				</motion.div>
+			))}
 			<motion.div
-				ref={ref}
-				className="relative flex items-center justify-center gap-6"
+				className="h-1 absolute bottom-6 md:bottom-4 lg:bottom-4 left-0 right-0 z-10 justify-start origin-[0%_0%] bg-neutral-900 dark:bg-neutral-100"
 				initial="hidden"
 				exit="hidden"
-				whileInView="visible"
-				variants={container}
-				viewport={{ once: true }}
-			>
-				{words.map((word, index) => (
-					<motion.div
-						key={index}
-						className="flex items-center justify-center gap-0 w-full md:w-fit text-neutral-800 dark:text-neutral-200 pb-2"
-						variants={children}
-					>
-						{word.split("").map((letter, nestIndex) => (
-							<motion.p key={nestIndex} variants={nest} className="text-7xl">
-								{letter}
-							</motion.p>
-						))}
-					</motion.div>
-				))}
-				<motion.div
-					className="h-1 absolute bottom-0 left-0 right-0 z-10 justify-start origin-[0%_0%] bg-neutral-900 dark:bg-neutral-100"
-					initial="hidden"
-					exit="hidden"
-					animate={isInView && "visible"}
-					variants={underline}
-				/>
-			</motion.div>
-		</div>
+				animate={isInView && "visible"}
+				variants={underline}
+			/>
+		</motion.div>
 	);
 }
