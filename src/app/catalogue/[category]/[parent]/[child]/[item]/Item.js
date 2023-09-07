@@ -193,7 +193,7 @@ export default function Item({ item }) {
 						})}
 				</div>
 				<div
-					className="h-56 lg:h-3/5 w-full sm:w-auto grow order-1 sm:order-2 sm:mr-12 border border-neutral-800 dark:border-neutral-200 rounded-lg p-3 bg-neutral-100 dark:bg-neutral-900"
+					className="w-56 h-72 mx-auto self-start grow order-1 sm:order-2 sm:mr-12 border border-neutral-800 dark:border-neutral-200 rounded-lg p-3 bg-neutral-100 dark:bg-neutral-900"
 					style={{
 						transform: hoverHero.transform,
 					}}

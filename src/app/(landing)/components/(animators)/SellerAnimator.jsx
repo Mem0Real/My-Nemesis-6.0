@@ -6,25 +6,51 @@ import Link from "next/link";
 
 import formatCurrency from "@/app/utils/formatCurrency";
 
-import { motion, useScroll, useTransform } from "framer-motion";
+import { easeInOut, motion, useScroll, useTransform } from "framer-motion";
 
-export default function SellerAnimator({ product, children }) {
+export default function SellerAnimator({
+	product,
+	children,
+	fromRight = null,
+}) {
 	const ref = useRef();
 
-	const { scrollYProgress } = useScroll({
+	const rtl = useScroll({
 		target: ref,
-		offset: ["start end", "end center"],
+		offset: ["start 80vh", "end 20vh"],
 	});
 
-	const y = useTransform(scrollYProgress, [0, 0.5], [150, 0]);
-	const opacity = useTransform(scrollYProgress, [0, 0.5], [0.5, 1]);
+	const ltr = useScroll({
+		target: ref,
+		offset: ["start 150vh", "end 20vh"],
+	});
+
+	const MoveXToLeft = useTransform(
+		rtl.scrollYProgress,
+		[0, 1],
+		["120vw", "-120vw"],
+		{
+			ease: easeInOut,
+		}
+	);
+
+	const MoveXToRight = useTransform(
+		ltr.scrollYProgress,
+		[0, 1],
+		["-150vw", "150vw"],
+		{
+			ease: easeInOut,
+		}
+	);
 
 	return (
 		<motion.div
 			key={product.id}
-			className="flex flex-col gap-3 items-center w-full md:w-80 lg:w-72 mx-auto border border-neutral-300 dark:border-neutral-700 my-2"
+			className={`"flex flex-col gap-3 items-center w-1/3 mx-auto border-4 border-neutral-300 dark:border-neutral-800 rounded-md bg-neutral-300/20 dark:bg-neutral-600/20  my-2"`}
 			ref={ref}
-			style={{ y, opacity }}
+			style={{
+				x: fromRight ? MoveXToLeft : MoveXToRight,
+			}}
 		>
 			<Link
 				className="relative w-full mb-12"
@@ -34,7 +60,7 @@ export default function SellerAnimator({ product, children }) {
 					SALE
 				</h2>
 				<motion.div
-					className="mt-4 basis-3/5 cursor-pointer relative h-72 md:h-56 lg:h-44 w-[90%] mx-auto"
+					className="mt-4 basis-3/5 cursor-pointer relative h-72 md:h-56 lg:h-40 w-[90%] mx-auto"
 					whileHover={{
 						scale: 1.1,
 						transition: { duration: 0.4, ease: "easeInOut" },

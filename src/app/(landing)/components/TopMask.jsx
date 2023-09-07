@@ -102,25 +102,6 @@ export default function TopMask() {
 		["100%", "5000%"]
 	);
 
-	// if (width <= 768) {
-	// 	moveTextY = mobileTextYPos;
-	// } else if (width <= 1024) {
-	// 	moveTextY = tabletTextYPos;
-	// } else if (width <= 1400) {
-	// 	moveTextY = laptopTextYPos;
-	// } else {
-	// 	moveTextY = desktopTextYPos;
-	// }
-
-	// if (width <= 768) {
-	// 	scale = mobileScale;
-	// } else if (width <= 1024) {
-	// 	scale = tabletScale;
-	// } else if (width <= 1440) {
-	// 	scale = laptopScale;
-	// } else {
-	// 	scale = desktopScale;
-	// }
 	if (resized) {
 		if (origin.x === updatedOrigin.x && origin.y === updatedOrigin.y) {
 			if (origin.x !== 0 && origin.y !== 0 && width <= 768) {
@@ -212,7 +193,7 @@ export default function TopMask() {
 							className="w-full h-full flex flex-col justify-center items-center z-10 bg-neutral-100 dark:bg-neutral-900"
 						>
 							<motion.h1
-								className="text-xl md:text-2xl lg:text-4xl w-[150%] shadow-greenGlow  shadow-neutral-300 dark:shadow-blue-700/30 bg-transparent text-neutral-900 dark:text-neutral-100 text-center font-semibold italic"
+								className="text-xl md:text-2xl lg:text-4xl w-[150%] shadow-greenGlow  shadow-blue-600/60 dark:shadow-blue-700/30 bg-transparent text-neutral-900 dark:text-neutral-100 text-center font-semibold italic"
 								style={{ scale: scaleText, x: moveTextX, y: moveTextY }}
 							>
 								Welcome!
