@@ -17,7 +17,7 @@ export default function BestSellers({ products, children }) {
 			{children}
 			<div className="relative shadow-myShadow1 shadow-black w-full mx-auto flex flex-col gap-1 justify-center items-center py-20 text-neutral-200">
 				<Image
-					src="/images/salesBg.jpg"
+					src="/images/salesBg.webp"
 					fill
 					sizes="(max-width: 768) 50vw, (max-width: 1024) 100vw"
 					className="object-cover object-center"
