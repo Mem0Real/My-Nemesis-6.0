@@ -62,7 +62,7 @@ export default function BottomMask() {
 		};
 
 		window.addEventListener("resize", resize);
-		resize(false);
+		resize();
 
 		return () => {
 			window.removeEventListener("resize", resize);
@@ -178,7 +178,7 @@ export default function BottomMask() {
 	return (
 		<div
 			ref={rootRef}
-			className="relative z-10 min-h-[120vh] overflow-clip bg-neutral-100 dark:bg-neutral-900"
+			className="relative z-10 min-h-[120vh] -mb-12 overflow-clip bg-neutral-100 dark:bg-neutral-900"
 		>
 			<motion.div
 				ref={bodyRef}

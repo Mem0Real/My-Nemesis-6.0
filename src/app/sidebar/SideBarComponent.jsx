@@ -25,6 +25,8 @@ const sidebar = {
 			damping: 40,
 		},
 	},
+	visible: { opacity: 1 },
+	hidden: { opacity: 0 },
 };
 
 const SidebarContext = createContext({});
@@ -243,7 +245,7 @@ export default function SideBarComponent({ data }) {
 						hidden && !openSidebar
 							? "bg-transparent"
 							: "bg-white/90 dark:bg-black/95"
-					} h-full -z-10 rounded-br-md`}
+					} h-full -z-10 rounded-br-md transition-all duration-300 ease-in-out`}
 					variants={sidebar}
 				/>
 				<Navigation categories={categories} />

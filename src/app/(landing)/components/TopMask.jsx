@@ -135,7 +135,7 @@ export default function TopMask() {
 		}
 	}
 
-	const mobileOriginX = origin.x + 20;
+	const mobileOriginX = origin.x;
 	const tabletOriginX = origin.x + 40;
 	const laptopOriginX = origin.x + 50;
 	const desktopOriginX = origin.x + 50;

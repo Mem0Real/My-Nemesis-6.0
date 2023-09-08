@@ -57,10 +57,10 @@ export default function NavComponents({ session, hidden }) {
 	}, []);
 
 	useEffect(() => {
-		if (hidden) {
+		if (hidden && isOpen) {
 			setIsOpen(false);
 			setClosed(true);
-		} else {
+		} else if (!hidden) {
 			closed && setIsOpen(true);
 			setClosed(false);
 		}

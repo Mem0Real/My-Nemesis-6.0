@@ -40,8 +40,8 @@ export const MenuToggle = () => {
 		<motion.button
 			onClick={toggleSidebar}
 			className={`${
-				hidden && "invisible hidden"
-			} outline-none border-none cursor-pointer absolute top-[17px] left-[19px] w-[30px] h-[30px] rounded-full z-50`}
+				hidden ? "invisible" : "visible"
+			} outline-none border-none cursor-pointer absolute top-[17px] left-[19px] w-[30px] h-[30px] rounded-full z-50 transition-all duration-300 ease-in-out`}
 			style={{
 				userSelect: "none",
 				msUserSelect: "none",
