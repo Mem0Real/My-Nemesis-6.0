@@ -163,7 +163,6 @@ export default function Item({ item }) {
 		},
 	};
 
-	console.log(item.price === 0);
 	return (
 		<div
 			ref={container}

@@ -1,4 +1,6 @@
-import { useState } from "react";
+"use client";
+
+import { useRef, useState } from "react";
 import { sendOrder } from "./CartActions";
 
 import { useProductContext } from "@/context/ProductContext";
@@ -16,39 +18,77 @@ export default function ContactInfo({
 	const [user, setUser] = useState({});
 	const [loading, setLoading] = useState(false);
 
+	const nameInput = useRef(null);
+	const phoneInput = useRef(null);
+	const nameLabel = useRef(null);
+	const phoneLabel = useRef(null);
+	const phoneContainer = useRef(null);
+
 	const { setPurchasedData } = useProductContext();
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 
-		setLoading(() => true);
-		const toastId = toast.loading("Sending Purchased data. Please wait...");
-
-		const res = await sendOrder(user, cartList, orderTotalPrice);
-
-		setLoading(() => false);
-
-		toast.remove(toastId);
-		if (res.error) {
-			toast.remove(toastId);
-			toast.error(res.error, {
-				duration: 5000,
-			});
+		if (!user.fullname || !user.phone) {
+			if (!user.fullname) {
+				nameInput.current.focus();
+				nameInput.current.classList.remove(
+					"border-neutral-800",
+					"dark:border-neutral-200"
+				);
+				nameInput.current.classList.add("focus:border-red-600");
+			} else if (!user.phone) {
+				phoneInput.current.focus();
+				phoneContainer.current.classList.remove(
+					"border-neutral-800",
+					"dark:border-neutral-200"
+				);
+				phoneContainer.current.classList.add("border-red-600");
+			}
 		} else {
+			setLoading(() => true);
+			const toastId = toast.loading("Sending Purchased data. Please wait...");
+
+			const res = await sendOrder(user, cartList, orderTotalPrice);
+
+			setLoading(() => false);
+
 			toast.remove(toastId);
-			toast.success(res.success, {
-				duration: 2000,
-				id: toastId,
-			});
-			setPurchasedData(() => cartList);
-			setUser(() => {});
-			closeInfoModal();
-			clearCart(true);
+			if (res.error) {
+				toast.remove(toastId);
+				toast.error(res.error, {
+					duration: 5000,
+				});
+			} else {
+				toast.remove(toastId);
+				toast.success(res.success, {
+					duration: 2000,
+					id: toastId,
+				});
+				setPurchasedData(() => cartList);
+				setUser(() => {});
+				closeInfoModal();
+				clearCart(true);
+			}
 		}
 	};
 
 	const handleChange = (e) => {
 		setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+		// console.log(e.target.value);
+		if (e.target.name === "fullname" && e.target.value) {
+			nameInput.current.classList.remove("border-red-600");
+			nameInput.current.classList.add(
+				"border-neutral-800",
+				"dark:border-neutral-200"
+			);
+		} else if (e.target.name === "phone" && e.target.value) {
+			phoneContainer.current.classList.remove("border-red-600");
+			phoneContainer.current.classList.add(
+				"border-neutral-800",
+				"dark:border-neutral-200"
+			);
+		}
 	};
 
 	const entrance = {
@@ -104,6 +144,7 @@ export default function ContactInfo({
 					<div className=" border p-5 py-12 rounded-md shadow-inner shadow-neutral-500 w-[95%]">
 						<div className="relative z-0 mb-9 group">
 							<input
+								ref={nameInput}
 								id="fullname"
 								name="fullname"
 								type="text"
@@ -111,8 +152,10 @@ export default function ContactInfo({
 								className="block py-2.5 ps-2 w-full text-sm text-neutral-700 dark:text-neutral-300 bg-transparent border-0 border-b-2 border-neutral-800 dark:border-neutral-200 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
 								value={user?.fullname || ""}
 								onChange={handleChange}
+								// required
 							/>
 							<label
+								ref={nameLabel}
 								htmlFor="fullname"
 								className="text-base absolute peer-placeholder-shown:text-sm
                     text-neutral-700 dark:text-neutral-300 duration-300 transform -translate-y-9
@@ -125,20 +168,26 @@ export default function ContactInfo({
 							</label>
 						</div>
 
-						<div className="relative z-0 mb-6 group flex flex-row-reverse items-center border-0 border-b-2 border-neutral-400 dark:border-neutral-600 gap-2 ">
+						<div
+							ref={phoneContainer}
+							className="relative z-0 mb-6 group flex flex-row-reverse items-center border-0 border-b-2 border-neutral-800 dark:border-neutral-200  gap-2 "
+						>
 							<input
+								ref={phoneInput}
 								id="phone"
 								name="phone"
 								type="number"
-								className="block py-2.5 px-0 w-full text-sm text-neutral-800 dark:text-neutral-200 bg-transparent appearance-none dark:border-neutral-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+								className="block py-2.5 px-0 w-full text-sm text-neutral-800 dark:text-neutral-200 bg-transparent appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer"
 								value={user?.phone || ""}
 								placeholder=" "
 								onChange={handleChange}
+								// required
 							/>
 							<p className="text-sm text-neutral-500 peer-focus:opacity-100 peer-placeholder-shown:opacity-0 bg-transparent py-2 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 transition-opacity ease-in duration-100">
 								+251
 							</p>
 							<label
+								ref={phoneLabel}
 								htmlFor="phone"
 								className="peer-focus:font-medium absolute text-sm text-neutral-500 dark:text-neutral-400 duration-300 transform -translate-y-9 scale-75 top-3 -z-10 origin-[0] left-0 peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500  peer-placeholder-shown:scale-100  peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-9"
 							>
