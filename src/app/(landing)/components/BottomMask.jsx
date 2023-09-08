@@ -96,7 +96,7 @@ export default function BottomMask() {
 	let laptopScale = useMotionValue(1);
 	let desktopScale = useMotionValue(1);
 
-	mobileTextXPos = useTransform(mobile.scrollYProgress, [0, 1], [250, -250]);
+	mobileTextXPos = useTransform(mobile.scrollYProgress, [0, 1], [180, -180]);
 	tabletTextXPos = useTransform(tablet.scrollYProgress, [0, 1], [250, -200]);
 	laptopTextXPos = useTransform(laptop.scrollYProgress, [0, 1], [500, -200]);
 	desktopTextXPos = useTransform(desktop.scrollYProgress, [0, 1], [250, -200]);
@@ -226,7 +226,7 @@ export default function BottomMask() {
 					>
 						<motion.div className="absolute inset-0 w-full h-full flex flex-col justify-center items-center z-10 bg-neutral-100 dark:bg-neutral-900">
 							<motion.h1
-								className="text-xl md:text-2xl lg:text-3xl w-[200%] shadow-greenGlow shadow-blue-600/60 dark:shadow-blue-700/30 bg-transparent text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center font-semibold italic"
+								className="text-base md:text-lg lg:text-xl w-[150%] shadow-greenGlow shadow-blue-600/60 dark:shadow-blue-700/30 bg-transparent text-neutral-900 dark:text-neutral-100 -skew-x-12 text-center font-semibold italic"
 								style={{ scale: scaleText, x: moveTextX, y: moveTextY }}
 							>
 								Browse for More!

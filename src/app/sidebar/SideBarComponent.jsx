@@ -245,10 +245,10 @@ export default function SideBarComponent({ data }) {
 						hidden && !openSidebar
 							? "bg-transparent"
 							: "bg-white/90 dark:bg-black/95"
-					} h-full -z-10 rounded-br-md transition-all duration-300 ease-in-out`}
+					} h-full -z-10 rounded-br-md transition-all duration-300 ease-in-out min-h-screen`}
 					variants={sidebar}
 				/>
-				<Navigation categories={categories} />
+				<Navigation categories={categories} open={openSidebar} />
 				<MenuToggle />
 			</motion.nav>
 		</SidebarContext.Provider>

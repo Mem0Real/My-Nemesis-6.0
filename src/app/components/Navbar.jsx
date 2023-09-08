@@ -27,7 +27,7 @@ export default function Navbar({ session }) {
 
 	const variants = {
 		visible: { opacity: 1, y: 0 },
-		hidden: { opacity: 0, y: -25 },
+		hidden: { opacity: 0, y: -85 },
 	};
 	return (
 		<motion.nav
