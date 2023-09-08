@@ -46,7 +46,7 @@ export default function Navbar({ session }) {
 						<div className="flex justify-evenly items-center">
 							<div className="relative h-10 w-10 mx-2 lg:mx-0">
 								<Image
-									src="/images/nemesisLogo.jpg"
+									src="/images/nemesisLogo.webp"
 									alt="logo"
 									fill={true}
 									sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"

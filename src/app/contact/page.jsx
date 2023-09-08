@@ -50,7 +50,7 @@ const Contact = () => {
 				<div className="flex-1 rounded-xl">
 					<div className="relative z-0 w-full h-full flex flex-col items-center justify-center gap-5 py-12 md:py-0">
 						<Image
-							src="/images/contact-page.jpg"
+							src="/images/contact-page.webp"
 							fill
 							sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw"
 							alt="Contact"
