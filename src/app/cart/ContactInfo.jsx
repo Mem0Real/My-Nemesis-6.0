@@ -75,7 +75,6 @@ export default function ContactInfo({
 
 	const handleChange = (e) => {
 		setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-		// console.log(e.target.value);
 		if (e.target.name === "fullname" && e.target.value) {
 			nameInput.current.classList.remove("border-red-600");
 			nameInput.current.classList.add(

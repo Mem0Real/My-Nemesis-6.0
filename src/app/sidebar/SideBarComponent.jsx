@@ -33,7 +33,7 @@ const SidebarContext = createContext({});
 
 export default function SideBarComponent({ data }) {
 	const [hidden, setHidden] = useState(false);
-	const [barHide, setBarHide] = useState(false);
+	const [pos, setPos] = useState(0);
 
 	const [openSidebar, setOpenSidebar] = useState(false);
 	const [openParent, setOpenParent] = useState({ id: null, open: false });
@@ -63,6 +63,8 @@ export default function SideBarComponent({ data }) {
 	}
 
 	useEffect(() => {
+		openSidebar ? setPos(scrollY.current) : setPos(0);
+
 		return openSidebar
 			? scrollY.on("change", () => update("opened"))
 			: scrollY.on("change", () => update());
@@ -236,7 +238,7 @@ export default function SideBarComponent({ data }) {
 				className={`left-0 w-[300px] h-fit`}
 				style={{
 					position: openSidebar ?? hidden ? "absolute" : "fixed",
-					top: openSidebar ? `${scrollY.current + 64}px` : "64px",
+					top: openSidebar ? `${pos + 64}px` : "64px",
 				}}
 				onViewportLeave={() => setOpenSidebar(false)}
 			>
