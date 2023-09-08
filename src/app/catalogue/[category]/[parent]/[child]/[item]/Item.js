@@ -162,6 +162,8 @@ export default function Item({ item }) {
 			},
 		},
 	};
+
+	console.log(item.price === 0);
 	return (
 		<div
 			ref={container}
@@ -250,7 +252,13 @@ export default function Item({ item }) {
 						</div>
 						<div className="flex gap-4 w-full">
 							<h1 className="text-sm font-semibold">Quantity:</h1>
-							<h2 className="ms-3 text-sm">{quantity}</h2>
+							<h2
+								className={`ms-3 text-sm ${
+									quantity < 5 && "italic font-light text-red-600"
+								}`}
+							>
+								{quantity === 0 ? "Out of stock" : quantity}
+							</h2>
 						</div>
 						<div className="flex gap-4 w-full items-center">
 							<h1 className="text-sm font-semibold">Price:</h1>
@@ -260,16 +268,17 @@ export default function Item({ item }) {
 								</h2>
 							)}
 						</div>
-						<div className="self-center">
+						<div className={`self-center`}>
 							<motion.button
+								disabled={quantity === 0}
 								key="addCategory"
 								whileTap={{
-									scale: 0.95,
+									scale: quantity !== 0 ? 0.95 : 0,
 								}}
 								whileHover={{
-									borderRadius: "12px",
+									borderRadius: quantity !== 0 ? "12px" : "",
 								}}
-								className="px-2 py-1 rounded-lg outline outline-1"
+								className={`px-2 py-1 rounded-lg outline outline-1 disabled:bg-neutral-700 dark:disabled:bg-neutral-400`}
 								onClick={handleOrder}
 							>
 								Add to Cart
