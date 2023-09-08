@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef, createContext, useContext } from "react";
-import { motion, useCycle } from "framer-motion";
+import { motion, useScroll } from "framer-motion";
 import { useDimensions } from "@/hooks/useDimensions";
 
 import { MenuToggle } from "./components/MenuToggle";
@@ -30,7 +30,8 @@ const sidebar = {
 const SidebarContext = createContext({});
 
 export default function SideBarComponent({ data }) {
-	const [isOpen, toggleOpen] = useCycle(false, true);
+	const [hidden, setHidden] = useState(false);
+	const [barHide, setBarHide] = useState(false);
 
 	const [openSidebar, setOpenSidebar] = useState(false);
 	const [openParent, setOpenParent] = useState({ id: null, open: false });
@@ -41,11 +42,35 @@ export default function SideBarComponent({ data }) {
 
 	const { height } = useDimensions(containerRef);
 
+	const { scrollY } = useScroll();
+
+	const { scrollYProgress } = useScroll({
+		target: containerRef,
+		offset: ["start start", "end end"],
+	});
+
+	function update(status = null) {
+		if (!status) {
+			if (scrollY?.current < scrollY?.prev) {
+				setHidden(false);
+			} else if (scrollY?.current > 100 && scrollY?.current > scrollY?.prev) {
+				setHidden(true);
+			}
+		}
+		scrollYProgress < 0.3 && setOpenSidebar(false);
+	}
+
+	useEffect(() => {
+		return openSidebar
+			? scrollY.on("change", () => update("opened"))
+			: scrollY.on("change", () => update());
+	}, [openSidebar]);
+
 	// Close on click outside
 	useEffect(() => {
 		let handler = (e) => {
 			if (!containerRef.current.contains(e.target)) {
-				setOpenSidebar(() => false);
+				setOpenSidebar(false);
 			}
 		};
 
@@ -55,6 +80,11 @@ export default function SideBarComponent({ data }) {
 	}, []);
 
 	const categories = data;
+
+	const svgVariant = {
+		visible: { opacity: 1 },
+		hidden: { opacity: 0 },
+	};
 
 	const buttonVariants = {
 		open: {
@@ -115,73 +145,6 @@ export default function SideBarComponent({ data }) {
 				y: { stiffness: 1000 },
 			},
 		},
-	};
-
-	const menuParentVariants = {
-		open: {
-			transition: {
-				staggerChildren: 0.1,
-				staggerDirection: 1,
-				when: "afterChildren",
-			},
-		},
-		closed: {
-			transition: {
-				staggerChildren: 0.1,
-				staggerDirection: -1,
-				when: "afterChildren",
-			},
-		},
-	};
-	const menuParentItemVariants = {
-		closed: {
-			opacity: 0,
-		},
-		open: { opacity: 1 },
-	};
-
-	const menuChildVariants = {
-		closedChild: {
-			transition: {
-				staggerChildren: 0.1,
-				staggerDirection: -1,
-			},
-		},
-		openChild: {
-			transition: {
-				staggerChildren: 0.1,
-				staggerDirection: 1,
-			},
-		},
-	};
-	const menuChildItemVariants = {
-		closedChild: {
-			opacity: 0,
-		},
-		openChild: { opacity: 1 },
-	};
-
-	const menuProductVariants = {
-		closedProduct: {
-			transition: {
-				staggerChildren: 0.1,
-				staggerDirection: -1,
-				when: "afterChildren",
-			},
-		},
-		openProduct: {
-			transition: {
-				staggerChildren: 0.1,
-				staggerDirection: 1,
-				when: "afterChildren",
-			},
-		},
-	};
-	const menuProductItemVariants = {
-		closedProduct: {
-			opacity: 0,
-		},
-		openProduct: { opacity: 1 },
 	};
 
 	const toggleSidebar = () => {
@@ -247,20 +210,16 @@ export default function SideBarComponent({ data }) {
 	return (
 		<SidebarContext.Provider
 			value={{
+				hidden,
 				openSidebar,
 				openParent,
 				openChild,
 				openProduct,
+				svgVariant,
 				buttonVariants,
 				menuVariants,
 				itemVariants,
 				nestedItemVariants,
-				menuParentVariants,
-				menuParentItemVariants,
-				menuChildVariants,
-				menuChildItemVariants,
-				menuProductVariants,
-				menuProductItemVariants,
 				toggleSidebar,
 				toggleParent,
 				toggleChild,
@@ -268,14 +227,23 @@ export default function SideBarComponent({ data }) {
 			}}
 		>
 			<motion.nav
-				initial={false}
+				initial="closed"
 				animate={openSidebar ? "open" : "closed"}
 				// custom={height}
 				ref={containerRef}
-				className="absolute top-0 left-0 bottom-0 w-[300px] h-fit"
+				className={`left-0 w-[300px] h-fit`}
+				style={{
+					position: openSidebar ?? hidden ? "absolute" : "fixed",
+					top: openSidebar ? `${scrollY.current + 64}px` : "64px",
+				}}
+				onViewportLeave={() => setOpenSidebar(false)}
 			>
 				<motion.div
-					className="absolute top-0 right-0 bottom-0 w-[300px] bg-white/90 dark:bg-black/95 h-full -z-10 rounded-br-md"
+					className={`absolute top-[${scrollY.current}px] right-0 w-[300px] ${
+						hidden && !openSidebar
+							? "bg-transparent"
+							: "bg-white/90 dark:bg-black/95"
+					} h-full -z-10 rounded-br-md`}
 					variants={sidebar}
 				/>
 				<Navigation categories={categories} />

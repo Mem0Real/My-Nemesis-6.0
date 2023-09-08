@@ -34,10 +34,14 @@ const Path = (props) => {
 export const MenuToggle = () => {
 	const { toggleSidebar } = useSidebarContext();
 
+	const { svgVariant, hidden } = useSidebarContext();
+
 	return (
-		<button
+		<motion.button
 			onClick={toggleSidebar}
-			className="outline-none border-none cursor-pointer absolute top-[17px] left-[19px] w-[30px] h-[30px] rounded-full z-10"
+			className={`${
+				hidden && "invisible hidden"
+			} outline-none border-none cursor-pointer absolute top-[17px] left-[19px] w-[30px] h-[30px] rounded-full z-50`}
 			style={{
 				userSelect: "none",
 				msUserSelect: "none",
@@ -66,6 +70,6 @@ export const MenuToggle = () => {
 					}}
 				/>
 			</svg>
-		</button>
+		</motion.button>
 	);
 };

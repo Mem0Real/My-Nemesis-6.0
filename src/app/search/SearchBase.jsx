@@ -80,7 +80,7 @@ export default function SearchBase({ children }) {
 		showSearchModal(false);
 	};
 
-	const variants = {
+	const containerVariant = {
 		open: {
 			opacity: 1,
 			display: "flex",
@@ -92,29 +92,49 @@ export default function SearchBase({ children }) {
 			},
 		},
 	};
+	const modalVariant = {
+		open: {
+			opacity: 1,
+			display: "flex",
+			y: 0,
+		},
+		close: {
+			opacity: 0,
+			y: -50,
+			transitionEnd: {
+				display: "none",
+			},
+		},
+	};
 	return (
 		<SearchContext.Provider value={{ handleSearch, closeSearch }}>
 			{children}
 			<AnimatePresence>
-				{/* {searchModal && ( */}
 				<motion.div
-					key="innerCartM"
+					className="bg-black/50 backdrop-blur-sm w-full"
 					initial={"close"}
 					animate={searchModal ? "open" : "close"}
-					variants={variants}
 					exit={"close"}
-					className={`fixed top-0 bottom-0 right-0 left-0 z-40 bg-black/50 backdrop-blur-sm  flex ${
-						searchModal ? "pointer-events-auto" : "pointer-events-none"
-					}`}
+					variants={containerVariant}
 				>
-					<SearchModal
-						searchModal={searchModal}
-						closeSearch={closeSearch}
-						searchRef={searchRef}
-						inputRef={inputRef}
-					/>
+					<motion.div
+						key="innerCartM"
+						// initial={"close"}
+						// animate={searchModal ? "open" : "close"}
+						variants={modalVariant}
+						// exit={"close"}
+						className={`fixed top-0 bottom-0 right-0 left-0 z-40 flex ${
+							searchModal ? "pointer-events-auto" : "pointer-events-none"
+						}`}
+					>
+						<SearchModal
+							searchModal={searchModal}
+							closeSearch={closeSearch}
+							searchRef={searchRef}
+							inputRef={inputRef}
+						/>
+					</motion.div>
 				</motion.div>
-				{/* )} */}
 			</AnimatePresence>
 		</SearchContext.Provider>
 	);
