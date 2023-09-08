@@ -220,7 +220,7 @@ export default async function ProductsPage({ params, searchParams }) {
 				<div className="flex flex-col items-center gap-20 bg-neutral-100 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen z-10">
 					<div className="fixed h-screen w-screen z-0 bg-neutral-100/40 dark:bg-neutral-800/40">
 						<Image
-							src="/images/ProductBg3.png"
+							src="/images/ProductBg3.webp"
 							fill
 							sizes="(max-width: 768px) 100vw"
 							alt="Product"

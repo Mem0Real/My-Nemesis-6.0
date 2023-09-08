@@ -70,7 +70,7 @@ const SearchPage = async ({ searchParams }) => {
 		<div className="relative text-neutral-800 dark:text-neutral-100">
 			<div className="fixed h-56 w-56 oveflow-hidden z-0">
 				<Image
-					src={"/images/SearchBg.png"}
+					src={"/images/SearchBg.webp"}
 					alt="Search"
 					fill
 					quality={100}

@@ -28,7 +28,7 @@ const Parallax = () => {
 					fill
 					alt="dark"
 					className="object-cover object-bottom"
-					src="/images/Building.png"
+					src="/images/Building.webp"
 					sizes="(max-width: 768px) 200vw, (max-width: 1024px) 150vw, (max-width: 1200px) 100vw"
 					quality={100}
 					priority
