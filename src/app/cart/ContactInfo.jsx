@@ -4,13 +4,13 @@ import { sendOrder } from "./CartActions";
 import { useProductContext } from "@/context/ProductContext";
 import { toast } from "react-hot-toast";
 import { motion } from "framer-motion";
-import { setCookie } from "cookies-next";
 
 export default function ContactInfo({
 	cartList,
 	orderTotalPrice,
 	clearCart,
 	closeInfoModal,
+	infoModal,
 	infoModalRef,
 }) {
 	const [user, setUser] = useState({});
@@ -50,10 +50,19 @@ export default function ContactInfo({
 	const handleChange = (e) => {
 		setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
 	};
+
+	const entrance = {
+		open: { x: "0vw" },
+		close: { x: "50vw" },
+	};
 	return (
-		<section
-			className="h-fit my-auto w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
+		<motion.section
 			ref={infoModalRef}
+			className="h-fit my-auto w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] ml-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-200 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200"
+			animate={infoModal ? "open" : "close"}
+			initial="close"
+			exit="close"
+			variants={entrance}
 		>
 			<header className="pb-4 relative">
 				<button
@@ -174,6 +183,6 @@ export default function ContactInfo({
 					</div>
 				</form>
 			</main>
-		</section>
+		</motion.section>
 	);
 }

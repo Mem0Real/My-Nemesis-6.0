@@ -12,6 +12,7 @@ export default function AddModal({
 	create,
 	addData,
 	setAddData,
+	addModal,
 }) {
 	const [imageSrc, setImageSrc] = useState();
 	const [images, setImages] = useState([]);
@@ -63,10 +64,18 @@ export default function AddModal({
 		}
 	};
 
+	const entrance = {
+		open: { x: "0vw" },
+		close: { x: "50vw" },
+	};
 	return (
-		<section
-			className="h-[95%] w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] my-5 md:py-3 mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-300 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200"
+		<motion.section
 			ref={addRef}
+			className="h-[95%] w-[90%] sm:w-[75%] md:w-[40%] lg:w-[30%] my-5 md:py-3 ml-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-300 dark:bg-neutral-900 text-neutral-800 dark:text-neutral-200"
+			animate={addModal ? "open" : "close"}
+			initial="close"
+			exit="close"
+			variants={entrance}
 		>
 			<header className="pb-4 relative">
 				<button
@@ -321,6 +330,6 @@ export default function AddModal({
 					Submit
 				</motion.button>
 			</form>
-		</section>
+		</motion.section>
 	);
 }

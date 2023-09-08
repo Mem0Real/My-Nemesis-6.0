@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, useRef, createContext, useContext } from "react";
 import { useRouter } from "next/navigation";
 
@@ -136,10 +138,19 @@ export default function SearchModal({
 		},
 	};
 
+	const entrance = {
+		visible: { y: 0 },
+		hidden: { y: -100 },
+	};
+
 	return (
-		<section
-			className="h-fit mt-12 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[60%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-100 dark:bg-neutral-900"
+		<motion.section
 			ref={searchRef}
+			className="h-fit mt-12 w-[90%] sm:w-[85%] md:w-[70%] lg:w-[60%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-100 dark:bg-neutral-900"
+			initial="hidden"
+			animate={searchModal ? "visible" : "hidden"}
+			exit="hidden"
+			variants={entrance}
 		>
 			<header className="pb-4 relative">
 				<button
@@ -205,7 +216,7 @@ export default function SearchModal({
 					)}
 				</AnimatePresence>
 			</main>
-		</section>
+		</motion.section>
 	);
 }
 export const useSearchDataContext = () => useContext(SearchDataContext);

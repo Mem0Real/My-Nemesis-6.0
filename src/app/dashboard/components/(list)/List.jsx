@@ -241,6 +241,7 @@ export default function List({ data, create, update, deleteItem, url }) {
 							addData={addData}
 							setAddData={setAddData}
 							create={create}
+							addModal={addModal}
 						/>
 					</motion.div>
 				)}
@@ -264,6 +265,7 @@ export default function List({ data, create, update, deleteItem, url }) {
 							editData={editData}
 							setEditData={setEditData}
 							update={update}
+							editModal={editModal}
 						/>
 					</motion.div>
 				)}
@@ -286,6 +288,7 @@ export default function List({ data, create, update, deleteItem, url }) {
 							closeDeleteModal={closeDeleteModal}
 							deleteData={deleteData}
 							deleteItem={deleteItem}
+							deleteModal={deleteModal}
 						/>
 					</motion.div>
 				)}

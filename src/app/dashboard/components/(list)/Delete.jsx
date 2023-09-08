@@ -7,6 +7,7 @@ export default function DeleteModal({
 	closeDeleteModal,
 	deleteData,
 	deleteItem,
+	deleteModal,
 }) {
 	const [loading, setLoading] = useState(false);
 
@@ -27,10 +28,19 @@ export default function DeleteModal({
 		}
 	};
 
+	const entrance = {
+		open: { y: 0 },
+		close: { y: -500 },
+	};
+
 	return (
-		<section
-			className="my-auto w-[80%] md:w-[65%] lg:w-[40%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-300 dark:bg-neutral-900 "
+		<motion.section
 			ref={deleteRef}
+			className="my-auto w-[80%] md:w-[65%] lg:w-[40%] mx-auto overflow-y-scroll no-scrollbar rounded-lg bg-neutral-300 dark:bg-neutral-900 "
+			animate={deleteModal ? "open" : "close"}
+			initial="close"
+			exit="close"
+			variants={entrance}
 		>
 			<header className="p-4 relative">
 				<button
@@ -114,6 +124,6 @@ export default function DeleteModal({
 					Cancel
 				</motion.button>
 			</footer>
-		</section>
+		</motion.section>
 	);
 }
