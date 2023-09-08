@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { fetchCategories } from "../(landing)/util/getData";
 import FooterComponents from "./FooterComponents";
+import Image from "next/image";
 
 export default async function Footer() {
 	const categories = await fetchCategories();
@@ -56,17 +57,26 @@ export default async function Footer() {
 				</div>
 			</div>
 			<div
-				className="h-16 text-xl flex justify-between items-center shadow-inner 
-    shadow-neutral-500 bg-neutral-50 dark:bg-neutral-950 text-neutral-800 dark:text-neutral-200"
+				className="h-fit text-xl flex flex-col md:flex-row gap-6 md:gap-0 justify-between items-center shadow-inner 
+    shadow-neutral-500 bg-neutral-50 dark:bg-neutral-950 text-neutral-800 dark:text-neutral-200 px-5"
 			>
-				<div className="ms-4">
-					<p>Nemesis</p>
-				</div>
-				<div className="me-4">
-					<div className="flex flex-col md:flex-row justify-between items-center">
-						<p>Web developed by:</p>
-						<p className="px-6">Mem0Real</p>
-					</div>
+				<p>Ethio-Machineries</p>
+				<p className="text-sm font-light">©2023 All Rights Reserved!</p>
+				<div className="self-start w-full md:w-44 lg:w-56 flex justify-evenly md:justify-between items-center text-sm font-light text-center">
+					<p className="flex-1">Web developed by:</p>
+					<Link
+						href="https://github.com/Mem0Real"
+						className="relative flex-1 w-24 h-24"
+						target="_blank"
+					>
+						<Image
+							src="/images/Mem0real.webp"
+							alt="Mem0Real"
+							fill
+							sizes="(max-width: 768px) 100vw"
+							className="object-contain object-center"
+						/>
+					</Link>
 				</div>
 			</div>
 		</div>

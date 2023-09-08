@@ -72,7 +72,7 @@ export default function ProductList({ products, menu, totalPage, range }) {
 
 	useEffect(() => {
 		const scrollBlur = (event) => {
-			searchInputRef.current.blur();
+			searchInputRef?.current?.blur();
 		};
 
 		document.addEventListener("scroll", scrollBlur);

@@ -57,7 +57,7 @@ export default function Navbar({ session }) {
 							<h1
 								className={`px-6 hidden lg:block text-lg uppercase font-medium tracking-wider`}
 							>
-								Nemesis
+								EM
 							</h1>
 						</div>
 					</Link>
