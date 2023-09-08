@@ -201,9 +201,7 @@ export default function List({ data, create, update, deleteItem, url }) {
 					Category list
 				</h1>
 				<div className="md:mt-6 md:pb-5">
-					<Suspense fallback={<h1>Loading...</h1>}>
-						<ListTable />
-					</Suspense>
+					<ListTable />
 
 					<div className="flex flex-col w-full justify-center items-center mt-5">
 						<motion.button

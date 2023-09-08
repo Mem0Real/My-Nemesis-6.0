@@ -10,6 +10,7 @@ const Order = dynamic(() => import("./components/(order)/Order"));
 
 import { motion, AnimatePresence } from "framer-motion";
 import ButtonLoader from "./components/ButtonLoader";
+import ListLoader from "./components/ListLoader";
 
 export default function AdminActions({
 	data,
@@ -111,13 +112,7 @@ export default function AdminActions({
 			<div className="flex flex-col w-full bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200 min-h-screen">
 				<AnimatePresence key="list">
 					{showList && (
-						<Suspense
-							fallback={
-								<h1 className="text-2xl bg-neutral-300 dark:bg-neutral-800 text-neutral-800 dark:text-neutral-200">
-									Loading...
-								</h1>
-							}
-						>
+						<Suspense fallback={<ListLoader />}>
 							<motion.div
 								key="inner-list"
 								animate={showList ? "openTable" : "closeTable"}
