@@ -17,12 +17,12 @@ export default function SellerAnimator({
 
 	const rtl = useScroll({
 		target: ref,
-		offset: ["start 80vh", "end 20vh"],
+		offset: ["start 80vh", "end 10vh"],
 	});
 
 	const ltr = useScroll({
 		target: ref,
-		offset: ["start 150vh", "end 20vh"],
+		offset: ["start end", "end 10vh"],
 	});
 
 	const MoveXToLeft = useTransform(
@@ -46,7 +46,7 @@ export default function SellerAnimator({
 	return (
 		<motion.div
 			key={product.id}
-			className={`"flex flex-col gap-3 items-center w-1/3 mx-auto border-4 border-neutral-300 dark:border-neutral-800 rounded-md bg-neutral-300/20 dark:bg-neutral-600/20  my-2"`}
+			className={`"flex flex-col gap-3 items-center w-full mx-auto border-4 border-neutral-300 dark:border-neutral-800 rounded-md bg-neutral-300/20 dark:bg-neutral-600/20  my-2"`}
 			ref={ref}
 			style={{
 				x: fromRight ? MoveXToLeft : MoveXToRight,
@@ -60,7 +60,7 @@ export default function SellerAnimator({
 					SALE
 				</h2>
 				<motion.div
-					className="mt-4 basis-3/5 cursor-pointer relative h-72 md:h-56 lg:h-40 w-[90%] mx-auto"
+					className="mt-4 basis-3/5 cursor-pointer relative h-56 w-72 mx-auto"
 					whileHover={{
 						scale: 1.1,
 						transition: { duration: 0.4, ease: "easeInOut" },

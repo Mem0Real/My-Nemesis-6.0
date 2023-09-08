@@ -18,7 +18,7 @@ export async function fetchProducts() {
 			images: true,
 			price: true,
 		},
-		take: 20,
+		take: 10,
 	});
 
 	return products;
