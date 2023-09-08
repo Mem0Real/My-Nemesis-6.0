@@ -56,7 +56,7 @@ export const MenuItems = ({ id, parents }) => {
 								key={parent.id}
 								id={parent.id}
 								category={id}
-								children={parent.children}
+								childrens={parent.children}
 							/>
 						);
 					})}

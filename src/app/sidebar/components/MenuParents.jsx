@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useSidebarContext } from "../SideBarComponent";
 import { MenuChildren } from "./MenuChildren";
 
-export const MenuParents = ({ id, category, children }) => {
+export const MenuParents = ({ id, category, childrens }) => {
 	const { RightArrowIcon } = useIcons();
 	const {
 		openParent,
@@ -61,8 +61,8 @@ export const MenuParents = ({ id, category, children }) => {
 						</motion.button>
 					</motion.div>
 					<motion.ul variants={menuVariants} className="px-3">
-						{children?.length > 0 &&
-							children.map((child) => {
+						{childrens?.length > 0 &&
+							childrens.map((child) => {
 								return (
 									<MenuChildren
 										key={child.id}
